@@ -7,27 +7,34 @@
 
 #light__main {
     background: white;
+
     .about__wrap,
     .fleet__wrap,
     .contacts__wrap {
         border-bottom: 1px solid rgba(5, 29, 66, 0.15);
     }
+
     .about__title {
         color: #051d42;
     }
+
     .about__par {
         color: #051d42;
     }
+
     .hide__btn {
         border-top: 1px rgb(5, 29, 66, 0.5) solid;
         border-left: 1px rgb(5, 29, 66, 0.5) solid;
+
         &:hover {
             border-top: 1px rgb(5, 29, 66, 0.9) solid;
             border-left: 1px rgb(5, 29, 66, 0.9) solid;
+
             path {
                 fill: rgb(5, 29, 66, 0.9);
             }
         }
+
         path {
             fill: rgb(5, 29, 66, 0.5);
             transition: all 0.3s;
@@ -41,6 +48,7 @@
     .fleet_title {
         color: #051d42;
     }
+
     .params__title {
         color: #051d42;
     }
@@ -56,9 +64,11 @@
             color: #051d42;
         }
     }
+
     .contacts__address__title {
         color: #051d42;
     }
+
     .contacts__address__text {
         color: #051d42;
     }
@@ -66,25 +76,30 @@
 
 #light__footer {
     background-color: white;
+
     .footer__container {
         span {
             color: #051d42;
         }
     }
+
     .links__item {
         border: 1px #051d42 solid;
+
         path {
             fill: #051d42;
         }
 
         &:hover {
             border: 1px rgb(5, 29, 66, 0.8) solid;
+
             path {
                 fill: rgb(5, 29, 66, 0.8);
             }
         }
     }
 }
+
 .main__container {
     margin: 0 auto;
     width: 1200px;
@@ -187,6 +202,7 @@
     margin: 0 auto;
     text-align: justify;
     width: 800px;
+
     li {
         margin-bottom: 15px;
     }
@@ -288,7 +304,7 @@
 }
 
 .contacts__address {
-    width: 480px;
+    width: 550px;
 
     span {
         font-size: 14px;
@@ -317,6 +333,7 @@
 
 .contacts__address__map {
     margin-top: 15px;
+    width: 550px;
     border: none;
     border-radius: 15px;
     box-shadow: 0px 0px 7px rgb(255, 255, 255, 0.5);
@@ -435,12 +452,14 @@
     .content__container {
         padding: 0 10px;
     }
+
     .moove__block {
         width: 100%;
         flex-direction: column;
         align-items: center;
         gap: 70px;
     }
+
     .about {
         width: 600px;
         height: fit-content;
@@ -448,6 +467,7 @@
 
     .about__wrap {
         height: 830px;
+
         &.active {
             height: 970px;
         }
@@ -460,8 +480,25 @@
     .hide__btn__wrap {
         left: 42%;
     }
+
     .about__par__last {
         height: 100px;
+    }
+
+    .contacts {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        gap: 30px;
+        align-items: center;
+    }
+
+    .contacts__address {
+        width: 500px;
+    }
+
+    .contacts__address__map {
+        width: 500px;
     }
 }
 
@@ -473,6 +510,7 @@
 
     .about__wrap {
         height: 660px;
+
         &.active {
             height: 870px;
         }
@@ -496,6 +534,7 @@
 
     .about__wrap {
         height: 560px;
+
         &.active {
             height: 940px;
         }

@@ -68,7 +68,7 @@ const Feedback: React.FC = () => {
                     {errors.message && <img src={cross} alt='cross-img' />}
                     <Field type="text" id="message" name="message" placeholder={t("message")} as='textarea' />
                 </div>
-                <button className={s.message__btn}>{t("send")}</button>
+                <button className={s.message__btn} type='submit'>{t("send")}</button>
             </Form>
         )}
         </Formik>

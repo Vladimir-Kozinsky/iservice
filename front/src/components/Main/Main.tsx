@@ -129,7 +129,7 @@ const Main: React.FC = () => {
                                         <span className={s.contacts__address__text} >{t("addres3")}</span>
                                         <iframe className={s.contacts__address__map}
                                             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2924.7158185199273!2d74.60902077150811!3d42.85773337372006!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389eb633eb4a865f%3A0xda48af2b2a2e4b59!2sVefa%20Center!5e0!3m2!1sen!2sae!4v1672640878930!5m2!1sen!2sae"
-                                            width="550" height="350" loading="lazy" >
+                                             height="350" loading="lazy" >
                                         </iframe>
                                     </div>
                                     <div className={s.contacts__feedBack}>
