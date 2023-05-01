@@ -1,7 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 // import aircraftReducer from './reducers/aircraftReducer'
 // import apuReducer from './reducers/apuReducer'
-import authReducer from './reducers/authReducer'
+import authReducer from './reducers/authReducer/authReducer'
 // import engineReducer from './reducers/engineReducer'
 
 export const store = configureStore({

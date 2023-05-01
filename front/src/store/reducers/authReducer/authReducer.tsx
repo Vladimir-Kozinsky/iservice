@@ -1,5 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios';
+import { IAuthState } from './authReducerTypes';
+import { IUser } from '../../../types/types';
+import userAPI from '../../../API/userAPI';
 // import userAPI from '../../API/userAPI';
 // import { ISignUpValues } from '../../components/SignUp/SignUp';
 // import { IAuthState, IUser } from '../../types/types';
@@ -12,12 +15,7 @@ const initialState: any = {
         firstName: null,
         lastName: null,
         position: null,
-    },
-    isAuth: false,
-    isAuthError: false,
-    isSuccessMessage: false,
-    isSignUpError: false,
-    signUpErrorMessage: ''
+    }
 }
 
 const authSlice = createSlice({
@@ -61,53 +59,25 @@ const authSlice = createSlice({
         // }
     },
     extraReducers: (builder) => {
-        // builder.addCase(signIn.fulfilled, (state: IAuthState, action: PayloadAction<IUser>) => {
-        //     state.user = action.payload;
-        //     state.isAuth = true;
-        //     state.isAuthError = false;
-        //     if (action.payload._id) window.localStorage.setItem("user-id", action.payload._id)
-        //     if (action.payload.email) window.localStorage.setItem("user-email", action.payload.email)
-        //     if (action.payload.firstName) window.localStorage.setItem("user-firstName", action.payload.firstName)
-        //     if (action.payload.lastName) window.localStorage.setItem("user-lastName", action.payload.lastName)
-        //     if (action.payload.position) window.localStorage.setItem("user-position", action.payload.position)
-        // })
-        // builder.addCase(signIn.rejected, (state: IAuthState) => {
-        //     state.isAuthError = true;
-        // })
-        // builder.addCase(signUp.fulfilled, (state: IAuthState) => {
-        //     state.isSuccessMessage = true;
-        // })
-        // builder.addCase(signUp.rejected, (state: IAuthState, action: PayloadAction<any>) => {
-        //     state.isSignUpError = true;
-        //     state.signUpErrorMessage = action.payload
-        // })
-        // builder.addCase(checkAuth.fulfilled, (state: IAuthState, action: PayloadAction<boolean>) => {
-        //     state.isAuth = action.payload;
-        // })
+        builder.addCase(signIn.fulfilled, (state: IAuthState, action: PayloadAction<IUser>) => {
+            state.user = action.payload
+        })
+        builder.addCase(signIn.rejected, (state: IAuthState) => {
+
+
+        })
+
     },
 })
 
-// export const signIn = createAsyncThunk(
-//     'auth/signIn',
-//     async ({ email, password }: { email: string, password: string }, thunkAPI) => {
-//         const response = await userAPI.signIn(email, password);
-//         return response.data.user;
-//     }
-// )
+export const signIn = createAsyncThunk(
+    'auth/signIn',
+    async ({ email, password }: { email: string, password: string }, thunkAPI) => {
+        const response = await userAPI.signIn(email, password);
+        return response.data.user;
+    }
+)
 
-// export const signUp = createAsyncThunk(
-//     'auth/signUp',
-//     async ({ email, password, firstName, lastName, position }: ISignUpValues, thunkAPI) => {
-//         try {
-//             const response = await userAPI.signUp(email, password, firstName, lastName, position);
-//             return response.data.message
-//         } catch (error) {
-//             if (axios.isAxiosError(error)) {
-//                 return thunkAPI.rejectWithValue(error.response?.statusText)
-//             }
-//         }
-//     }
-// )
 
 // export const checkAuth = createAsyncThunk(
 //     'auth/checkAuth',
