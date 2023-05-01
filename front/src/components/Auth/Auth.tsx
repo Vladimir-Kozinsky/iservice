@@ -11,6 +11,7 @@ import { CSSTransition, Transition } from 'react-transition-group';
 
 import Loader from '../../common/Loader/Loader';
 import Input from '../../common/inputs/Input';
+import { signIn } from '../../store/reducers/authReducer/authReducer';
 
 
 export interface IAuthValues {
@@ -67,7 +68,7 @@ class Auth extends React.Component<AuthPropsType> {
                 <div className={s.auth}>
                     <h4 className={classNames(s.auth__header, s.auth__header__welcome)}>Welcome back!</h4>
                     <h3 className={classNames(s.auth__header, s.auth__header__signin)}>Sign in to your account</h3>
-                    <h5 className={classNames(s.auth__header, s.auth__header__signup)}>Don't have an account? <br/> Please contact New Way Cargo Airlines team.</h5>
+                    <h5 className={classNames(s.auth__header, s.auth__header__signup)}>Don't have an account? <br /> Please contact New Way Cargo Airlines team.</h5>
                     <Formik
                         initialValues={{
                             email: '',
@@ -139,8 +140,8 @@ const mapStateToProps = (state: any) => {
     }
 }
 
-const mapDispatchToProps = { 
-    // signIn 
+const mapDispatchToProps = {
+    signIn
 };
 
 function WithNavigateAuth(props: any) {

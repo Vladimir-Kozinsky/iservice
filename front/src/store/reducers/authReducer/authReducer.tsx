@@ -15,7 +15,9 @@ const initialState: any = {
         firstName: null,
         lastName: null,
         position: null,
-    }
+    },
+    isAuthError: false,
+    isAuth: false
 }
 
 const authSlice = createSlice({
@@ -59,7 +61,7 @@ const authSlice = createSlice({
         // }
     },
     extraReducers: (builder) => {
-        builder.addCase(signIn.fulfilled, (state: IAuthState, action: PayloadAction<IUser>) => {
+        builder.addCase(signIn.fulfilled, (state: IAuthState, action: PayloadAction<any>) => {
             state.user = action.payload
         })
         builder.addCase(signIn.rejected, (state: IAuthState) => {

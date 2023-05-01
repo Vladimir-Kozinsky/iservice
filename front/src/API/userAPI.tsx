@@ -7,18 +7,17 @@ const proxy = axios.create({
 
 const userAPI = {
     async signIn(email: string, password: string) {
-        console.log(email, password)
-        const response = await proxy.post('/auth', { email, password });
+        const response = await proxy.post('/auth/signin', { email, password });
         return response;
     },
-      async isAuth(id: string) {
-        const response = await proxy.get(`/token?id=${id}`);
-        return response;
-    },
-    async signOut(id: string) {
-        const response = await proxy.post(`/signout`, { id: id });
-        return response;
-    }
+    //   async isAuth(id: string) {
+    //     const response = await proxy.get(`/token?id=${id}`);
+    //     return response;
+    // },
+    // async signOut(id: string) {
+    //     const response = await proxy.post(`/signout`, { id: id });
+    //     return response;
+    // }
 }
 
 export default userAPI;

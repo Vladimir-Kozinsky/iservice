@@ -29,7 +29,7 @@ const Input: React.FC<any> = (props) => {
             <input className={s.input__field} {...props} />
             <Transition
                 nodeRef={nodeRef}
-                in={props.error}
+                in={props.error ? true : false}
                 timeout={500}
                 onExited={() => setErrorMessage(null)}
                 unmountOnExit >
