@@ -18,5 +18,5 @@ export class CreateUserDto {
     readonly password: string;
     
     @IsNotEmpty()
-    readonly isAuth: boolean;
+    readonly role: string;
   }

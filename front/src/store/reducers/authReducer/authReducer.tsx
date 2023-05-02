@@ -3,8 +3,8 @@ import axios from 'axios';
 import { IAuthState } from './authReducerTypes';
 import { IUser } from '../../../types/types';
 import userAPI from '../../../API/userAPI';
+import { ISignUpValues } from '../../../components/SignUp/SignUp';
 // import userAPI from '../../API/userAPI';
-// import { ISignUpValues } from '../../components/SignUp/SignUp';
 // import { IAuthState, IUser } from '../../types/types';
 
 const initialState: any = {
@@ -15,6 +15,7 @@ const initialState: any = {
         firstName: null,
         lastName: null,
         position: null,
+        role: null
     },
     isAuthError: false,
     isAuth: false
@@ -65,7 +66,12 @@ const authSlice = createSlice({
             state.user = action.payload
         })
         builder.addCase(signIn.rejected, (state: IAuthState) => {
+            //TODO
+        })
+        builder.addCase(signUp.fulfilled, (state: IAuthState) => {
 
+        })
+        builder.addCase(signUp.rejected, (state: IAuthState, action: PayloadAction<any>) => {
 
         })
 
@@ -77,6 +83,20 @@ export const signIn = createAsyncThunk(
     async ({ email, password }: { email: string, password: string }, thunkAPI) => {
         const response = await userAPI.signIn(email, password);
         return response.data.user;
+    }
+)
+
+export const signUp = createAsyncThunk(
+    'auth/signUp',
+    async (candidate: ISignUpValues, thunkAPI) => {
+        try {
+            const response = await userAPI.signUp(candidate);
+            return response.data.message
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                return thunkAPI.rejectWithValue(error.response?.statusText)
+            }
+        }
     }
 )
 

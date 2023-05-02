@@ -4,14 +4,9 @@ import reportWebVitals from './reportWebVitals';
 import { Provider } from 'react-redux';
 import { store } from './store/store';
 import { createBrowserRouter, RouterProvider, useLocation, useOutlet } from "react-router-dom";
-// import Auth from './components/Auth/Auth';
-// import SignUp from './components/SignUp/SignUp';
-// import Dashboard from './components/Dashboard/Dashboard';
+import SignUp from './components/SignUp/SignUp';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import s from './index.module.scss';
-// import Aircrafts from './components/Aircrafts/Aircrafts';
-// import Engines from './components/Engines/Engines';
-// import Apus from './components/Apus/Apus';
 import Main from './components/Main/Main';
 import './18n';
 import Auth from './components/Auth/Auth';
@@ -26,7 +21,7 @@ interface IRoutes {
 const routes: IRoutes[] = [
   { path: '/', name: 'Main', element: <Main />, nodeRef: createRef() },
   { path: '/auth', name: 'Auth', element: <Auth />, nodeRef: createRef() },
-  // { path: '/signup', name: 'SignUp', element: <SignUp />, nodeRef: createRef() },
+  { path: '/signup', name: 'SignUp', element: <SignUp />, nodeRef: createRef() },
   // { path: '/dashboard/*', name: 'Dashboard', element: <Dashboard />, nodeRef: createRef() },
   // { path: '/dashboard/aircrafts', name: 'Aircrafts', element: <Aircrafts />, nodeRef: createRef() },
   // { path: '/dashboard/engines', name: 'Engines', element: <Engines />, nodeRef: createRef() },

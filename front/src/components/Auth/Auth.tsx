@@ -1,18 +1,15 @@
+import s from './Auth.module.scss';
 import classNames from 'classnames';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import React from 'react';
 import Button from '../../common/buttons/Button';
-import s from './Auth.module.scss';
-// import { signIn } from './../../store/reducers/authReducer';
 import { connect } from "react-redux";
-import { Link, NavigateFunction, useNavigate } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import { compose } from 'redux';
 import { CSSTransition, Transition } from 'react-transition-group';
-
 import Loader from '../../common/Loader/Loader';
 import Input from '../../common/inputs/Input';
 import { signIn } from '../../store/reducers/authReducer/authReducer';
-
 
 export interface IAuthValues {
     email: string;

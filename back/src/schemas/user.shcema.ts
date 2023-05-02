@@ -19,14 +19,17 @@ export class User {
     @Prop({ required: true })
     lastName: string;
 
+    @ApiProperty({example: 'engineer', description: "User position"})
     @Prop({ required: true })
     position: string;
 
+    @ApiProperty({example: '_1234qwer', description: "User password"})
     @Prop({ required: true })
     password: string;
 
+    @ApiProperty({example: 'admin', description: "User role, admin or user"})
     @Prop({ required: true })
-    isAuth: boolean;
+    role: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

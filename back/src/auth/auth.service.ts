@@ -7,14 +7,16 @@ import { CreateUserDto } from 'src/dto/create-user.dto';
 import { User } from 'src/schemas/user.shcema';
 import * as bcrypt from 'bcryptjs';
 
-
 @Injectable()
 export class AuthService {
     constructor(@InjectModel(User.name) private readonly userModel: Model<User>, private jwtService: JwtService) { }
 
     async signup(createUserDto: CreateUserDto) {
-        const createdUser = await this.userModel.create(createUserDto);
-        return createdUser;
+        const candidate = await this.userModel.findOne({ email: createUserDto.email });
+        if (candidate) throw new HttpException('User with this email already exists', HttpStatus.BAD_REQUEST);
+        const hashPassword = await bcrypt.hash(createUserDto.password, 5);
+        const user = await this.userModel.create({ ...createUserDto, password: hashPassword });
+        return this.generateToken(user);
     }
 
     async signin(authUserDto: AuthUserDto) {
@@ -29,7 +31,7 @@ export class AuthService {
     }
 
     private async generateToken(user: User) {
-        const payload = {...user};
+        const payload = { ...user };
         return {
             token: this.jwtService.sign(payload)
         }
@@ -37,10 +39,8 @@ export class AuthService {
 
     private async validateUser(authUserDto: AuthUserDto) {
         const user = await this.getUserByEmail(authUserDto.email);
-        // const passwordEquals = await bcrypt.compare(authUserDto.password, user.password) second argument to be encrypted password;
-        const passwordEquals = authUserDto.password === user.password ? true : false;
+        const passwordEquals = await bcrypt.compare(authUserDto.password, user.password);
         if (user && passwordEquals) return user;
-    
         throw new UnauthorizedException({ message: 'Incorrect email or password' })
     }
 }

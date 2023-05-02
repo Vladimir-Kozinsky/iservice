@@ -5,4 +5,5 @@ export interface IUser {
     lastName: string;
     position: string;
     password: string;
+    role: string;
 }
