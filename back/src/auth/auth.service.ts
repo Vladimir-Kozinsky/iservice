@@ -9,7 +9,11 @@ import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class AuthService {
-    constructor(@InjectModel(User.name) private readonly userModel: Model<User>, private jwtService: JwtService) { }
+    constructor(
+        @InjectModel(User.name)
+        private readonly userModel: Model<User>,
+        private jwtService: JwtService
+    ) { }
 
     async signup(createUserDto: CreateUserDto) {
         const candidate = await this.userModel.findOne({ email: createUserDto.email });
@@ -19,7 +23,7 @@ export class AuthService {
         return this.generateToken(user);
     }
 
-    async signin(authUserDto: AuthUserDto) {
+    async signIn(authUserDto: AuthUserDto) {
         const user = await this.validateUser(authUserDto);
         return this.generateToken(user);
     }
@@ -31,9 +35,16 @@ export class AuthService {
     }
 
     private async generateToken(user: User) {
-        const payload = { ...user };
+        const payload = {
+            _id: user._id,
+            email: user.email,
+            firstName: user.firstName,
+            lastName: user.lastName,
+            position: user.position,
+            role: user.role,
+        }
         return {
-            token: this.jwtService.sign(payload)
+            access_token: await this.jwtService.signAsync(payload)
         }
     }
 

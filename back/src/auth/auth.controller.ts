@@ -22,7 +22,7 @@ export class AuthController {
     @ApiResponse({ status: 200, type: User })
     @Post('signin')
     @HttpCode(200)
-    async signin(@Body() authUserDto: AuthUserDto): Promise<{ token: string }> {
-        return await this.authService.signin(authUserDto)
+    async signIn(@Body() authUserDto: AuthUserDto) {
+        return await this.authService.signIn(authUserDto)
     }
 }
