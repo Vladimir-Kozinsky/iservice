@@ -54,4 +54,9 @@ export class AuthService {
         if (user && passwordEquals) return user;
         throw new UnauthorizedException({ message: 'Incorrect email or password' })
     }
+
+    async getUsers() {
+        const users = await this.userModel.find().exec();
+        return users
+    }
 }

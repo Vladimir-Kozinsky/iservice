@@ -6,10 +6,14 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
+import { Reflector } from '@nestjs/core';
+import { ROLES_KEY } from './roles-auth.decorator';
 
 @Injectable()
-export class AuthGuard implements CanActivate {
-    constructor(private jwtService: JwtService) { }
+export class RolesGuard implements CanActivate {
+    constructor(private jwtService: JwtService,
+        private reflector: Reflector
+    ) { }
 
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
@@ -19,6 +23,15 @@ export class AuthGuard implements CanActivate {
             throw new UnauthorizedException();
         }
         try {
+            const requiredRoles = this.reflector.getAllAndOverride(ROLES_KEY, [
+                context.getHandler(),
+                context.getClass(),
+            ]);
+
+            if (!requiredRoles) {
+                return true;
+            }
+
             const payload = await this.jwtService.verifyAsync(
                 token,
                 {
@@ -28,6 +41,7 @@ export class AuthGuard implements CanActivate {
             // 💡 We're assigning the payload to the request object here
             // so that we can access it in our route handlers
             request['user'] = payload;
+            return requiredRoles.some((role: string) => payload.role?.includes(role));
         } catch {
             throw new UnauthorizedException();
         }
