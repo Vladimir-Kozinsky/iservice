@@ -9,17 +9,29 @@ import { SignOutUserDto } from 'src/dto/signout-user.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { Token } from 'src/schemas/token.schema';
 import { TokenUserDto } from 'src/dto/token-user.dto';
-import jwt, { JwtService } from '@nestjs/jwt';
+import { JwtService } from '@nestjs/jwt';
+const nodemailer = require('nodemailer');
 
 @Injectable()
 export class AuthService {
+    transporter: any;
     constructor(
         @InjectModel(User.name)
         private readonly userModel: Model<User>,
         @InjectModel(Token.name)
         private readonly tokenModel: Model<Token>,
         private jwtService: JwtService
-    ) { }
+    ) {
+        this.transporter = nodemailer.createTransport({
+            host: process.env.SMTP_HOST,
+            port: process.env.SMTP_PORT,
+            secure: false,
+            auth: {
+                user: process.env.SMTP_USER,
+                pass: process.env.SMTP_PASSWORD,
+            },
+        });
+    }
 
     async signup(createUserDto: CreateUserDto) {
         const candidate = await this.userModel.findOne({ email: createUserDto.email });
@@ -79,7 +91,19 @@ export class AuthService {
     }
 
     private async sendActivationMail(to: string, link: string) {
-
+        await this.transporter.sendActivationMail({
+            from: process.env.SMTP_USER,
+            to,
+            subject: 'Activation mail custom' + process.env.API_URL,
+            text: 'образец текста',
+            html:
+                `
+            <div>
+                <h1>Для активации акаунта перейдите по ссылке</h1>
+                <a href="${link}">${link}</a>
+            </div>
+            `
+        })
     }
 
     async getUsers() {
