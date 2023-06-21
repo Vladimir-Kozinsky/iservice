@@ -1,0 +1,87 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora&family=Manrope&display=swap");
+
+.header {
+    background: white;
+    box-shadow: 0px 0px 7px rgb(5, 29, 66, 0.3);
+    position: fixed;
+    width: 100vw;
+    left: 0px;
+    top: 0px;
+    z-index: 10;
+}
+
+.header_container {
+    margin: 0 auto;
+    max-width: 1200px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header__logo {
+    display: flex;
+    align-items: center;
+
+    img {
+        position: relative;
+        top: -10px;
+        width: 70px;
+    }
+
+    .header__logo__title {
+        color: #051d42;
+        font-family: Manrope;
+        margin-left: 20px;
+        font-size: 24px;
+    }
+}
+
+.header__nav {
+    margin-right: 20px;
+    display: flex;
+    align-items: center;
+
+    .header__nav__imgWrap {
+        border-radius: 50%;
+        width: 35px;
+        height: 35px;
+        overflow: hidden;
+        box-shadow: 0px 0px 7px rgb(5, 29, 66, 0.3);
+        margin-right: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3 ease-in-out;
+
+        &:hover {
+            cursor: pointer;
+            box-shadow: 0px 0px 8px rgb(5, 29, 66, 0.5);
+        }
+
+        img {
+            width: 30px;
+
+        }
+    }
+
+    span {
+        margin-right: 20px;
+        color: #051d42;
+        font-family: Manrope;
+        font-size: 16px;
+        font-weight: 600;
+    }
+}
+
+@media (max-width: 480px) {
+    .header_container {
+        margin: 0 auto;
+        max-width: 1200px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .header__nav {
+        margin: 0 0 10px 0;
+    }
+}

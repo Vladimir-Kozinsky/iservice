@@ -10,6 +10,7 @@ import s from './index.module.scss';
 import Main from './components/Main/Main';
 import './18n';
 import Auth from './components/Auth/Auth';
+import Dashboard from './components/Dashboard/Dashboard';
 
 interface IRoutes {
   path: string;
@@ -22,7 +23,7 @@ const routes: IRoutes[] = [
   { path: '/', name: 'Main', element: <Main />, nodeRef: createRef() },
   { path: '/auth', name: 'Auth', element: <Auth />, nodeRef: createRef() },
   { path: '/signup', name: 'SignUp', element: <SignUp />, nodeRef: createRef() },
-  // { path: '/dashboard/*', name: 'Dashboard', element: <Dashboard />, nodeRef: createRef() },
+  { path: '/dashboard/*', name: 'Dashboard', element: <Dashboard />, nodeRef: createRef() },
   // { path: '/dashboard/aircrafts', name: 'Aircrafts', element: <Aircrafts />, nodeRef: createRef() },
   // { path: '/dashboard/engines', name: 'Engines', element: <Engines />, nodeRef: createRef() },
   // { path: '/dashboard/apus', name: 'Apus', element: <Apus />, nodeRef: createRef() },
@@ -47,8 +48,6 @@ function Example() {
   const { nodeRef } =
     routes.find((route) => route.path === location.pathname) ?? {}
   return (
-    <div className={s.container}>
-      <div className={s.background__circle}></div>
       <SwitchTransition>
         <CSSTransition
           key={location.pathname}
@@ -65,13 +64,12 @@ function Example() {
           unmountOnExit
         >
           {(state) => (
-            <div ref={nodeRef} className={s.page}>
+            <div ref={nodeRef} className={s.container}>
               {currentOutlet}
             </div>
           )}
         </CSSTransition>
       </SwitchTransition>
-    </div >
   )
 }
 

@@ -32,6 +32,14 @@ export class User {
     @ApiProperty({ example: 'admin', description: "User role, admin or user" })
     @Prop({ required: true })
     role: string;
+
+    @ApiProperty({ example: 'true', description: "Show user is activated or not" })
+    @Prop({ default: false })
+    isActivated: boolean;
+
+    @ApiProperty({ example: 'true', description: "Activation link" })
+    @Prop({ required: true })
+    activationLink: string;
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

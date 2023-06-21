@@ -1,0 +1,39 @@
+.dashboard {
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+}
+
+.main {
+    margin: 0 auto;
+    max-width: 1200px;
+    position: relative;
+}
+.dashboard__content__back {
+    position: absolute;
+    height: 750px;
+    width: 1000px;
+    top: 0%;
+    left: -130px;
+    background-image: url("./../../assets/img/png//plane_sheme2.png");
+    background-size: 1000px;
+    background-repeat: no-repeat;
+    background-position: 0% 20%;
+    opacity: 0.15;
+    transform: rotate(-50deg);
+}
+
+.dashboard__content__back2 {
+    position: absolute;
+    height: 750px;
+    width: 1000px;
+    top: 850px;
+    left: 650px;
+    background-image: url("./../../assets/img/png//plane_sheme2.png");
+    background-size: 1000px;
+    background-repeat: no-repeat;
+    background-position: 0% 20%;
+    opacity: 0.15;
+    transform: rotate(-100deg);
+}

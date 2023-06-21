@@ -1,23 +1,22 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios';
-import { IAuthState } from './authReducerTypes';
-import { IUser } from '../../../types/types';
+import { IAuthRejectResponse, IAuthState } from './authReducerTypes';
 import userAPI from '../../../API/userAPI';
 import { ISignUpValues } from '../../../components/SignUp/SignUp';
+import jwt_decode from "jwt-decode";
 // import userAPI from '../../API/userAPI';
 // import { IAuthState, IUser } from '../../types/types';
 
-const initialState: any = {
+const initialState: IAuthState = {
     user: {
         _id: null,
         email: null,
-        password: null,
         firstName: null,
         lastName: null,
         position: null,
         role: null
     },
-    isAuthError: false,
+    authErrorMessage: '',
     isAuth: false
 }
 
@@ -62,11 +61,17 @@ const authSlice = createSlice({
         // }
     },
     extraReducers: (builder) => {
-        builder.addCase(signIn.fulfilled, (state: IAuthState, action: PayloadAction<any>) => {
-            state.user = action.payload
+        builder.addCase(signIn.fulfilled, (state: IAuthState, action: PayloadAction<string>) => {
+            localStorage.setItem('token', action.payload);
+            const decoded = jwt_decode(action.payload) as any;
+            delete decoded.exp;
+            delete decoded.iat;
+            state.user = decoded;
+            state.isAuth = true;
+            state.authErrorMessage = '';
         })
-        builder.addCase(signIn.rejected, (state: IAuthState) => {
-            //TODO
+        builder.addCase(signIn.rejected, (state: IAuthState, action: PayloadAction<any>) => {
+            state.authErrorMessage = action.payload.message;
         })
         builder.addCase(signUp.fulfilled, (state: IAuthState) => {
 
@@ -81,8 +86,13 @@ const authSlice = createSlice({
 export const signIn = createAsyncThunk(
     'auth/signIn',
     async ({ email, password }: { email: string, password: string }, thunkAPI) => {
-        const response = await userAPI.signIn(email, password);
-        return response.data.user;
+        try {
+            const response = await userAPI.signIn(email, password);
+            return response.data.access_token;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IAuthRejectResponse);
+        }
+
     }
 )
 

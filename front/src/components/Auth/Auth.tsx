@@ -18,7 +18,7 @@ export interface IAuthValues {
 
 type AuthPropsType = {
     signIn: ({ email, password }: IAuthValues) => void;
-    isAuthError: boolean;
+    authErrorMessage: string;
     isAuth: boolean;
     navigate: NavigateFunction
 }
@@ -40,16 +40,16 @@ class Auth extends React.Component<AuthPropsType> {
         this.setAuthError = this.setAuthError.bind(this);
     }
     componentDidUpdate(prevProps: AuthPropsType) {
-        if (this.props.isAuthError !== prevProps.isAuthError) {
-            this.setAuthError(this.props.isAuthError);
+        if (this.props.authErrorMessage !== prevProps.authErrorMessage) {
+            this.setAuthError(this.props.authErrorMessage);
         }
         if (this.props.isAuth !== prevProps.isAuth) {
             if (this.props.isAuth) this.props.navigate("/dashboard");
         }
     }
 
-    setAuthError(isAuthError: boolean) {
-        if (isAuthError) {
+    setAuthError(authErrorMessage: string) {
+        if (authErrorMessage.length) {
             this.setState({ isAuthError: true });
         } else {
             this.setState({ isAuthError: false });
@@ -59,6 +59,7 @@ class Auth extends React.Component<AuthPropsType> {
     render(): React.ReactNode {
         return (
             <div className={s.auth__container}>
+                <div className={s.background__circle}></div>
                 <Transition in={this.state.isLoader} timeout={400} unmountOnExit mountOnEnter >
                     {(state) => <Loader state={state} />}
                 </Transition>
@@ -112,7 +113,7 @@ class Auth extends React.Component<AuthPropsType> {
                                 }}
                                 unmountOnExit
                             >
-                                <div ref={this.myRef} className={s.auth__message}>Incorrect e-mail or password</div>
+                                <div ref={this.myRef} className={s.auth__message}>{this.props.authErrorMessage}</div>
                             </CSSTransition>
                             <div className={s.auth__form__block}>
                                 <Field type="email" id="email" name="email" placeholder="john@acme.com" error={errors.email} as={Input} />
@@ -132,7 +133,7 @@ class Auth extends React.Component<AuthPropsType> {
 
 const mapStateToProps = (state: any) => {
     return {
-        isAuthError: state.auth.isAuthError,
+        authErrorMessage: state.auth.authErrorMessage,
         isAuth: state.auth.isAuth
     }
 }
