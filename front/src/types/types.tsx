@@ -5,4 +5,5 @@ export interface IUser {
     lastName: string | null;
     position: string | null;
     role: string | null;
+    isActivated: string | null;
 }

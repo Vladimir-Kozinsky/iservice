@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from './roles-auth.decorator';
+import 'dotenv/config';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -18,7 +19,7 @@ export class RolesGuard implements CanActivate {
     async canActivate(context: ExecutionContext): Promise<boolean> {
         const request = context.switchToHttp().getRequest();
         const token = this.extractTokenFromHeader(request);
-
+        
         if (!token) {
             throw new UnauthorizedException();
         }
@@ -27,6 +28,7 @@ export class RolesGuard implements CanActivate {
                 context.getHandler(),
                 context.getClass(),
             ]);
+            
 
             if (!requiredRoles) {
                 return true;
@@ -35,7 +37,7 @@ export class RolesGuard implements CanActivate {
             const payload = await this.jwtService.verifyAsync(
                 token,
                 {
-                    secret: process.env.PRIVATE_KEY
+                    secret: process.env.JWT_REFRESH_SECRET
                 }
             );
             // 💡 We're assigning the payload to the request object here
@@ -45,7 +47,6 @@ export class RolesGuard implements CanActivate {
         } catch {
             throw new UnauthorizedException();
         }
-        return true;
     }
 
     private extractTokenFromHeader(request: Request): string | undefined {

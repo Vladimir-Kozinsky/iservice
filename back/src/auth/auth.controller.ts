@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, Post, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from 'src/dto/create-user.dto';
 import { AuthUserDto } from 'src/dto/auth-user.dto';
@@ -7,9 +7,10 @@ import { User } from 'src/schemas/user.schema';
 import { AuthGuard } from './auth.guard';
 import { Roles } from './roles-auth.decorator';
 import { RolesGuard } from './roles.guard';
-import cookieParser from 'cookie-parser';
-import { SignOutUserDto } from 'src/dto/signout-user.dto';
-import { Response } from 'express';
+import { Request, Response } from 'express';
+import { HashUserDto } from 'src/dto/hash-user.dto';
+import { ResponseMessageDto } from 'src/dto/response-message.dto';
+import 'dotenv/config';
 
 @ApiTags('Auth')
 @Controller('/auth')
@@ -17,37 +18,42 @@ export class AuthController {
     constructor(private readonly authService: AuthService) { }
 
     @ApiOperation({ summary: 'Sign up' })
-    @ApiResponse({ status: 201, type: User })
+    @ApiResponse({ status: 201, type: HashUserDto })
     @Post('signup')
     @HttpCode(201)
-    async signup(@Res({ passthrough: true }) response: Response, @Body() createUserDto: CreateUserDto) {
+    async signup(@Body() createUserDto: CreateUserDto, @Res({ passthrough: true }) response: Response) {
         const userData = await this.authService.signup(createUserDto)
         response.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 1000, httpOnly: true });
         return userData;
     }
 
     @ApiOperation({ summary: 'Sign in' })
-    @ApiResponse({ status: 200, type: User })
+    @ApiResponse({ status: 200, type: HashUserDto })
     @Post('signin')
     @HttpCode(200)
-    async signIn(@Body() authUserDto: AuthUserDto) {
-        return await this.authService.signIn(authUserDto)
+    async signIn(@Body() authUserDto: AuthUserDto, @Res({ passthrough: true }) response: Response) {
+        const userData = await this.authService.signIn(authUserDto);
+        response.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 1000, httpOnly: true });
+        return userData;
     }
 
     @ApiOperation({ summary: 'Sign out' })
-    @ApiResponse({ status: 200, type: User })
+    @ApiResponse({ status: 200, type: ResponseMessageDto })
     @Post('signout')
     @HttpCode(200)
-    async signOut(@Body() authUserDto: AuthUserDto) {
-        // return await this.authService.signout(SignOutUserDto)
+    async signOut(@Req() request: Request) {
+        const { refreshToken } = request.cookies;
+        return await this.authService.signout(refreshToken);
     }
 
     @ApiOperation({ summary: 'Activation' })
-    @ApiResponse({ status: 200, type: User })
+    @ApiResponse({ status: 200 })
     @Get('activate/:link')
     @HttpCode(200)
-    async activate(@Body() authUserDto: AuthUserDto) {
-        // return await this.authService.signout(SignOutUserDto)
+    async activate(@Req() request: Request, @Res() response: Response) {
+        const activationLink = request.params.link;
+        await this.authService.activateUser(activationLink);
+        response.redirect(process.env.CLIENT_URL);
     }
 
 

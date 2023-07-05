@@ -37,7 +37,7 @@ export class User {
     @Prop({ default: false })
     isActivated: boolean;
 
-    @ApiProperty({ example: 'true', description: "Activation link" })
+    @ApiProperty({ example: 'c6d589ce-538d-48bd-85b9-2cde71c9152f', description: "Activation link" })
     @Prop({ required: true })
     activationLink: string;
 }

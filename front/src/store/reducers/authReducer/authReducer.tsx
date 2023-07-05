@@ -14,7 +14,8 @@ const initialState: IAuthState = {
         firstName: null,
         lastName: null,
         position: null,
-        role: null
+        role: null,
+        isActivated: null
     },
     authErrorMessage: '',
     isAuth: false
@@ -79,6 +80,23 @@ const authSlice = createSlice({
         builder.addCase(signUp.rejected, (state: IAuthState, action: PayloadAction<any>) => {
 
         })
+        builder.addCase(signOut.fulfilled, (state: IAuthState, action: PayloadAction<string>) => {
+            state.user = {
+                _id: null,
+                email: null,
+                firstName: null,
+                lastName: null,
+                position: null,
+                role: null,
+                isActivated: null
+            }
+            state.isAuth = false;
+            localStorage.removeItem('token');
+
+        })
+        builder.addCase(signOut.rejected, (state: IAuthState, action: PayloadAction<any>) => {
+
+        })
 
     },
 })
@@ -88,7 +106,7 @@ export const signIn = createAsyncThunk(
     async ({ email, password }: { email: string, password: string }, thunkAPI) => {
         try {
             const response = await userAPI.signIn(email, password);
-            return response.data.access_token;
+            return response.data.accessToken;
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response.data as IAuthRejectResponse);
         }
@@ -102,6 +120,20 @@ export const signUp = createAsyncThunk(
         try {
             const response = await userAPI.signUp(candidate);
             return response.data.message
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                return thunkAPI.rejectWithValue(error.response?.statusText)
+            }
+        }
+    }
+)
+export const signOut = createAsyncThunk(
+    'auth/signOut',
+    async (str: undefined, thunkAPI) => {
+        try {
+            console.log('auth reduser send')
+            const response = await userAPI.signOut();
+            return response.data.accessToken;
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 return thunkAPI.rejectWithValue(error.response?.statusText)

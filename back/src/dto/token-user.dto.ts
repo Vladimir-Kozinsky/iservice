@@ -20,21 +20,18 @@ export class TokenUserDto {
   readonly position: string;
 
   @IsNotEmpty()
-  readonly password: string;
-
-  @IsNotEmpty()
   readonly role: string;
-  
+
   @IsNotEmpty()
   readonly isActivated: boolean;
 
-  constructor(model: User) {
-    this._id = model._id;
-    this.email = model.email;
-    this.firstName = model.firstName;
-    this.lastName = model.lastName;
-    this.position = model.position;
-    this.role = model.role;
-    this.isActivated = model.isActivated;
+  constructor(user: User) {
+    this._id = user._id;
+    this.email = user.email;
+    this.firstName = user.firstName;
+    this.lastName = user.lastName;
+    this.position = user.position;
+    this.role = user.role;
+    this.isActivated = user.isActivated;
   }
 }

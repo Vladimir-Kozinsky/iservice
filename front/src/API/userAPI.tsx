@@ -21,10 +21,11 @@ const userAPI = {
     //     const response = await proxy.get(`/token?id=${id}`);
     //     return response;
     // },
-    // async signOut(id: string) {
-    //     const response = await proxy.post(`/signout`, { id: id });
-    //     return response;
-    // }
+    async signOut() {
+        console.log('jnghfdrf FGB')
+        const response = await proxy.post(`/auth/signout`);
+        return response;
+    }
 }
 
 proxy.interceptors.request.use(config => {

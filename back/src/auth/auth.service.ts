@@ -5,11 +5,11 @@ import { AuthUserDto } from 'src/dto/auth-user.dto';
 import { CreateUserDto } from 'src/dto/create-user.dto';
 import { User } from 'src/schemas/user.schema';
 import * as bcrypt from 'bcryptjs';
-import { SignOutUserDto } from 'src/dto/signout-user.dto';
 import { v4 as uuidv4 } from 'uuid';
 import { Token } from 'src/schemas/token.schema';
-import { TokenUserDto } from 'src/dto/token-user.dto';
 import { JwtService } from '@nestjs/jwt';
+import 'dotenv/config';
+import { TokenUserDto } from 'src/dto/token-user.dto';
 const nodemailer = require('nodemailer');
 
 @Injectable()
@@ -23,8 +23,7 @@ export class AuthService {
         private jwtService: JwtService
     ) {
         this.transporter = nodemailer.createTransport({
-            host: process.env.SMTP_HOST,
-            port: process.env.SMTP_PORT,
+            service: "gmail",
             secure: false,
             auth: {
                 user: process.env.SMTP_USER,
@@ -39,33 +38,38 @@ export class AuthService {
         const hashPassword = await bcrypt.hash(createUserDto.password, 5);
         const activationLink = uuidv4();
         const user = await this.userModel.create({ ...createUserDto, password: hashPassword, activationLink: activationLink });
-        await this.sendActivationMail(createUserDto.email, activationLink);
+        await this.sendActivationMail(createUserDto.email, `${process.env.API_URL}/auth/activate/${activationLink}`);
         const tokenUserDto = new TokenUserDto(user);
         const tokens = await this.generateTokens({ ...tokenUserDto });
         await this.saveToken(tokenUserDto._id, tokens.refreshToken);
-        return { ...tokens, tokenUserDto }
+        return { ...tokens }
     }
 
     async signIn(authUserDto: AuthUserDto) {
         const user = await this.validateUser(authUserDto);
-        return this.generateTokens(user);
+        const tokenUserDto = new TokenUserDto(user);
+        const tokens = await this.generateTokens({ ...tokenUserDto });
+        await this.saveToken(tokenUserDto._id, tokens.refreshToken);
+        return { ...tokens }
     }
 
-    async signout(_id: SignOutUserDto) {
-        const user = await this.userModel.findOne({ _id: _id }).exec();
-        console.log(user)
-        return _id;
+    async signout(refreshToken: string) {
+        const token = await this.tokenModel.deleteOne({ refreshToken });
+        if (!token.deletedCount) throw new HttpException('Token not found ', HttpStatus.NOT_FOUND)
+        return {
+            message: 'User succesfully sign out'
+        };
     }
 
     async getUserByEmail(email: string) {
-        const user = await this.userModel.findOne({ email: email }).exec();
+        const user = await this.userModel.findOne({ email: email });
         if (!user) throw new HttpException("User with this e-mail doesn't exist", HttpStatus.BAD_REQUEST);
         return user;
     }
 
     private async generateTokens(user: TokenUserDto) {
-        const accessToken = await this.jwtService.signAsync(user, { expiresIn: '15m' });
-        const refreshToken = await this.jwtService.signAsync(user, { expiresIn: '15d' });
+        const accessToken = await this.jwtService.signAsync({ ...user }, { secret: process.env.JWT_ACCESS_SECRET, expiresIn: '15m' });
+        const refreshToken = await this.jwtService.signAsync({ ...user }, { secret: process.env.JWT_REFRESH_SECRET, expiresIn: '15d' });
         return {
             accessToken,
             refreshToken
@@ -73,7 +77,7 @@ export class AuthService {
     }
 
     private async saveToken(userId: Types.ObjectId, refreshToken: string) {
-        const tokenData = await this.tokenModel.findOne({ user: userId }).exec();
+        const tokenData = await this.tokenModel.findOne({ user: userId });
         if (tokenData) {
             tokenData.refreshToken = refreshToken;
             tokenData.save();
@@ -87,23 +91,41 @@ export class AuthService {
         const user = await this.getUserByEmail(authUserDto.email);
         const passwordEquals = await bcrypt.compare(authUserDto.password, user.password);
         if (user && passwordEquals) return user;
-        throw new UnauthorizedException({ message: 'Incorrect e-mail or password' })
+        throw new UnauthorizedException('Incorrect e-mail or password')
     }
 
     private async sendActivationMail(to: string, link: string) {
-        await this.transporter.sendActivationMail({
+        await this.transporter.sendMail({
             from: process.env.SMTP_USER,
             to,
             subject: 'Activation mail custom' + process.env.API_URL,
-            text: 'образец текста',
+            text: '',
+            credentials: '',
             html:
                 `
-            <div>
-                <h1>Для активации акаунта перейдите по ссылке</h1>
-                <a href="${link}">${link}</a>
-            </div>
-            `
+                 <div>
+                    <h1>Для активации акаунта перейдите по ссылке</h1>
+                    <a href="${link}">${link}</a>
+                 </div>
+                `
+        }, function (error, info) {
+            if (error) {
+                console.log(error)
+            } else {
+                console.log('EMAIL SENT')
+            }
         })
+    }
+
+    async activateUser(activationLink: string) {
+
+        const user = await this.userModel.findOne({ activationLink }).exec();
+        if (!user) {
+            throw new Error('Неккоректная ссылка активации')
+        }
+        user.isActivated = true;
+        await user.save();
+        return user;
     }
 
     async getUsers() {

@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../common/buttons/Button';
 import logo from './../../assets/img/png/logo_short.png';
 import avatar from './../../assets/img/png/avatar.png';
+import { signIn, signOut } from '../../store/reducers/authReducer/authReducer';
 
 type HeaderProps = {
     theme?: string
@@ -15,8 +16,7 @@ const Header = ({ theme }: HeaderProps) => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const logout = () => {
-        // dispatch(signOut());
-        navigate('/auth');
+        dispatch(signOut());
     }
     const color = theme === "white" ? "white" : "white__dark"
     return (
@@ -28,9 +28,9 @@ const Header = ({ theme }: HeaderProps) => {
                 </div>
                 <div className={s.header__nav} >
                     <div className={s.header__nav__imgWrap} >
-                       <img  src={avatar} alt="user-avatar"/> 
+                        <img src={avatar} alt="user-avatar" />
                     </div>
-                    
+
                     <span>{`${user.firstName} ${user.lastName}`}</span>
                     <Button text='Log Out' color={color} btnType='button' handler={logout} />
                 </div>
