@@ -74,8 +74,14 @@ const authSlice = createSlice({
         builder.addCase(signIn.rejected, (state: IAuthState, action: PayloadAction<any>) => {
             state.authErrorMessage = action.payload.message;
         })
-        builder.addCase(signUp.fulfilled, (state: IAuthState) => {
-
+        builder.addCase(signUp.fulfilled, (state: IAuthState, action: PayloadAction<string>) => {
+            localStorage.setItem('token', action.payload);
+            const decoded = jwt_decode(action.payload) as any;
+            delete decoded.exp;
+            delete decoded.iat;
+            state.user = decoded;
+            state.isAuth = true;
+            state.authErrorMessage = '';
         })
         builder.addCase(signUp.rejected, (state: IAuthState, action: PayloadAction<any>) => {
 
@@ -119,11 +125,9 @@ export const signUp = createAsyncThunk(
     async (candidate: ISignUpValues, thunkAPI) => {
         try {
             const response = await userAPI.signUp(candidate);
-            return response.data.message
-        } catch (error) {
-            if (axios.isAxiosError(error)) {
-                return thunkAPI.rejectWithValue(error.response?.statusText)
-            }
+            return response.data.accessToken;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IAuthRejectResponse);
         }
     }
 )

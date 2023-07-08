@@ -4,7 +4,8 @@ import { ISignUpValues } from "../components/SignUp/SignUp";
 import { IAuthResponse } from "../models/response/AuthResponce";
 
 const proxy = axios.create({
-    baseURL: generalAPIData.baseURL
+    withCredentials: true,
+    baseURL: generalAPIData.baseURL,
 })
 
 const userAPI = {

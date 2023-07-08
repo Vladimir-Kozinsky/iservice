@@ -2,6 +2,8 @@ import React from "react";
 import s from './Dashboard.module.scss'
 import HeaderMain from "../Main/HeaderMain/HeaderMain";
 import Header from "../Header/Header";
+import { compose } from "@reduxjs/toolkit";
+import { withAuthRedirect } from "../HOC/withAuthRedirect";
 
 type DashboardProps = {
 
@@ -20,4 +22,4 @@ const Dashboard: React.FC<DashboardProps> = () => {
     )
 }
 
-export default Dashboard;
+export default compose(withAuthRedirect)(Dashboard);

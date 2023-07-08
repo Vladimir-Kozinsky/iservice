@@ -1,11 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import s from './Header.module.scss';
 import { AppDispatch } from '../../store/store';
-import { useNavigate } from 'react-router-dom';
 import Button from '../../common/buttons/Button';
 import logo from './../../assets/img/png/logo_short.png';
 import avatar from './../../assets/img/png/avatar.png';
-import { signIn, signOut } from '../../store/reducers/authReducer/authReducer';
+import { signOut } from '../../store/reducers/authReducer/authReducer';
 
 type HeaderProps = {
     theme?: string
@@ -14,7 +13,6 @@ type HeaderProps = {
 const Header = ({ theme }: HeaderProps) => {
     const user = useSelector((state: any) => state.auth.user);
     const dispatch = useDispatch<AppDispatch>();
-    const navigate = useNavigate();
     const logout = () => {
         dispatch(signOut());
     }
