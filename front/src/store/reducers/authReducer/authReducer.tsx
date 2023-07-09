@@ -103,6 +103,18 @@ const authSlice = createSlice({
         builder.addCase(signOut.rejected, (state: IAuthState, action: PayloadAction<any>) => {
 
         })
+        builder.addCase(refreshToken.fulfilled, (state: IAuthState, action: PayloadAction<string>) => {
+            localStorage.setItem('token', action.payload);
+            const decoded = jwt_decode(action.payload) as any;
+            delete decoded.exp;
+            delete decoded.iat;
+            state.user = decoded;
+            state.isAuth = true;
+            state.authErrorMessage = '';
+        })
+        builder.addCase(refreshToken.rejected, (state: IAuthState, action: PayloadAction<any>) => {
+            state.authErrorMessage = action.payload.message;
+        })
 
     },
 })
@@ -137,6 +149,20 @@ export const signOut = createAsyncThunk(
         try {
             console.log('auth reduser send')
             const response = await userAPI.signOut();
+            return response.data.accessToken;
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                return thunkAPI.rejectWithValue(error.response?.statusText)
+            }
+        }
+    }
+)
+export const refreshToken = createAsyncThunk(
+    'auth/refresh',
+    async (str: undefined, thunkAPI) => {
+        try {
+            const response = await userAPI.refreshToken();
+            console.log(response.data);
             return response.data.accessToken;
         } catch (error) {
             if (axios.isAxiosError(error)) {

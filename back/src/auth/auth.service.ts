@@ -61,15 +61,15 @@ export class AuthService {
         };
     }
 
-    async getUserByEmail(email: string) {
+   private async getUserByEmail(email: string) {
         const user = await this.userModel.findOne({ email: email });
         if (!user) throw new HttpException("User with this e-mail doesn't exist", HttpStatus.BAD_REQUEST);
         return user;
     }
 
     private async generateTokens(user: TokenUserDto) {
-        const accessToken = await this.jwtService.signAsync({ ...user }, { secret: process.env.JWT_ACCESS_SECRET, expiresIn: '15m' });
-        const refreshToken = await this.jwtService.signAsync({ ...user }, { secret: process.env.JWT_REFRESH_SECRET, expiresIn: '15d' });
+        const accessToken = await this.jwtService.signAsync({ ...user }, { secret: process.env.JWT_ACCESS_SECRET, expiresIn: '1m' });
+        const refreshToken = await this.jwtService.signAsync({ ...user }, { secret: process.env.JWT_REFRESH_SECRET, expiresIn: '1m' });
         return {
             accessToken,
             refreshToken
@@ -81,10 +81,10 @@ export class AuthService {
         if (tokenData) {
             tokenData.refreshToken = refreshToken;
             tokenData.save();
-        }
+            return tokenData;
+        } 
         const token = await this.tokenModel.create({ user: userId, refreshToken })
         return token
-
     }
 
     private async validateUser(authUserDto: AuthUserDto) {
@@ -128,8 +128,44 @@ export class AuthService {
         return user;
     }
 
+    private async validateAccessToken(token: string) {
+        try {
+            const userData = await this.jwtService.verify(token, { secret: process.env.JWT_ACCESS_SECRET });
+            return userData;
+        } catch (error) {
+            return null;
+        }
+    }
+
+    private async validateRefreshToken(token: string) {
+        try {
+            const userData = await this.jwtService.verify(token, { secret: process.env.JWT_REFRESH_SECRET });
+            return userData;
+        } catch (error) {
+            return null;
+        }
+    }
+
+    private async findToken(token: string) {
+        const tokenData = await this.tokenModel.findOne({ refreshToken: token });
+        return tokenData;
+    }
+
+    async refresh(refreshToken: string) {
+        if (!refreshToken) throw new UnauthorizedException('Refresh token not found');
+        const userData = await this.validateRefreshToken(refreshToken);
+        const tokenFromDB = await this.findToken(refreshToken);
+        if (!userData || !tokenFromDB) throw new UnauthorizedException('Token is not valid')
+        const user = await this.userModel.findById(userData._id);
+        const tokenUserDto = new TokenUserDto(user);
+        const tokens = await this.generateTokens({ ...tokenUserDto });
+        await this.saveToken(tokenUserDto._id, tokens.refreshToken);
+        return { ...tokens }
+    }
+
     async getUsers() {
         const users = await this.userModel.find().exec();
         return users
     }
+
 }

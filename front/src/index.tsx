@@ -1,8 +1,8 @@
-import React, { createRef, ReactNode, RefObject } from 'react';
+import React, { createRef, ReactNode, RefObject, useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
-import { Provider } from 'react-redux';
-import { store } from './store/store';
+import { Provider, useDispatch } from 'react-redux';
+import { AppDispatch, store } from './store/store';
 import { createBrowserRouter, RouterProvider, useLocation, useOutlet } from "react-router-dom";
 import SignUp from './components/SignUp/SignUp';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
@@ -11,6 +11,7 @@ import Main from './components/Main/Main';
 import './18n';
 import Auth from './components/Auth/Auth';
 import Dashboard from './components/Dashboard/Dashboard';
+import { refreshToken } from './store/reducers/authReducer/authReducer';
 
 interface IRoutes {
   path: string;
@@ -43,33 +44,37 @@ const router = createBrowserRouter([
 
 
 function Example() {
+  const dispatch = useDispatch<AppDispatch>();
   const location = useLocation()
   const currentOutlet = useOutlet()
   const { nodeRef } =
     routes.find((route) => route.path === location.pathname) ?? {}
+  useEffect(() => {
+    dispatch(refreshToken())
+  }, [])
   return (
-      <SwitchTransition>
-        <CSSTransition
-          key={location.pathname}
-          nodeRef={nodeRef}
-          timeout={300}
-          classNames={{
-            enter: s.enter,
-            enterActive: s.enterActive,
-            enterDone: s.enterDone,
-            exit: s.exit,
-            exitActive: s.exitActive,
-            exitDone: s.exitDone,
-          }}
-          unmountOnExit
-        >
-          {(state) => (
-            <div ref={nodeRef} className={s.container}>
-              {currentOutlet}
-            </div>
-          )}
-        </CSSTransition>
-      </SwitchTransition>
+    <SwitchTransition>
+      <CSSTransition
+        key={location.pathname}
+        nodeRef={nodeRef}
+        timeout={300}
+        classNames={{
+          enter: s.enter,
+          enterActive: s.enterActive,
+          enterDone: s.enterDone,
+          exit: s.exit,
+          exitActive: s.exitActive,
+          exitDone: s.exitDone,
+        }}
+        unmountOnExit
+      >
+        {(state) => (
+          <div ref={nodeRef} className={s.container}>
+            {currentOutlet}
+          </div>
+        )}
+      </CSSTransition>
+    </SwitchTransition>
   )
 }
 

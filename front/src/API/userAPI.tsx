@@ -26,7 +26,14 @@ const userAPI = {
         console.log('jnghfdrf FGB')
         const response = await proxy.post(`/auth/signout`);
         return response;
+    },
+
+    async refreshToken() {
+        const response = await proxy.get('/auth/refresh');
+        return response;
     }
+
+
 }
 
 proxy.interceptors.request.use(config => {

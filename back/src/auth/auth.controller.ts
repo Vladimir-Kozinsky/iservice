@@ -56,6 +56,17 @@ export class AuthController {
         response.redirect(process.env.CLIENT_URL);
     }
 
+    @ApiOperation({ summary: 'Refresh' })
+    @ApiResponse({ status: 200 })
+    @Get('refresh')
+    @HttpCode(200)
+    async refresh(@Req() request: Request, @Res({ passthrough: true }) response: Response) {
+        const { refreshToken } = request.cookies;
+        const userData = await this.authService.refresh(refreshToken);
+        response.cookie('refreshToken', userData.refreshToken, { maxAge: 30 * 24 * 60 * 1000, httpOnly: true });
+        return userData;
+    }
+
 
     @UseGuards(AuthGuard)
     @ApiOperation({ summary: 'Get users' })

@@ -5,13 +5,11 @@ import Loader from "../../common/Loader/Loader";
 import classNames from "classnames";
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../store/store";
+import { AppDispatch, RootState } from "../../store/store";
 import { signIn } from "../../store/reducers/authReducer/authReducer";
 import Button from "../../common/buttons/Button";
 import Input from '../../common/inputs/Input';
 import { useNavigate } from "react-router-dom";
-import { compose } from "@reduxjs/toolkit";
-import { withAuthRedirect } from "../HOC/withAuthRedirect";
 
 export interface IAuthValues {
     email: string;
@@ -21,10 +19,10 @@ export interface IAuthValues {
 const Auth: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
-    const [isAuthError, setIsAuthError] = useState();
+    const [isAuthError, setIsAuthError] = useState<string>();
     const [isLoader, setIsLoader] = useState<boolean | undefined>(false);
-    const isAuth = useSelector((state: any) => state.auth.isAuth);
-    const authErrorMessage = useSelector((state: any) => state.auth.authErrorMessage);
+    const isAuth = useSelector((state: RootState) => state.auth.isAuth);
+    const authErrorMessage = useSelector((state: RootState) => state.auth.authErrorMessage);
     const nodeRef = useRef(null);
     useEffect(() => {
         if (isAuth) navigate("/dashboard");
@@ -78,7 +76,7 @@ const Auth: React.FC = () => {
                 }) => (
                     <Form className={s.auth__form}>
                         <CSSTransition
-                            in={isAuthError? true : false}
+                            in={isAuthError ? true : false}
                             nodeRef={nodeRef}
                             timeout={500}
                             classNames={{
@@ -104,4 +102,4 @@ const Auth: React.FC = () => {
     )
 }
 
-export default Auth ;
+export default Auth;
