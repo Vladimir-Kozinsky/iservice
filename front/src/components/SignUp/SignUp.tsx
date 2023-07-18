@@ -138,4 +138,4 @@ const SignUp: React.FC = () => {
     )
 }
 
-export default compose(withAuthRedirect)(SignUp);
+export default SignUp;

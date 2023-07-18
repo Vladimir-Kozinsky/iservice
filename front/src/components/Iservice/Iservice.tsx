@@ -7,6 +7,10 @@ import { withAuthRedirect } from "../HOC/withAuthRedirect";
 import Profile from "./Profile/Profile";
 import Dashboard from "./Dashboard/Dashboard";
 import Footer from "../Footer/Footer";
+import NewAircraftForm from "./Dashboard/NewAircraftForm/NewAircraftForm";
+import Aircrafts from "./Aircrafts/Aircrafts";
+import Engines from "./Engines/Engines";
+import Apus from "./Apus/Apus";
 
 
 const Iservice: React.FC = () => {
@@ -19,12 +23,19 @@ const Iservice: React.FC = () => {
                 <nav className={s.nav} >
                     <div className={s.nav_container}>
                         <NavLink className={s.nav_container_link} to="profile">Profile</NavLink>
-                        <NavLink className={s.nav_container_link} to="dashboard">Dashboard</NavLink>
+                        <NavLink className={s.nav_container_link} to="/i-service">Dashboard</NavLink>
+                        <NavLink className={s.nav_container_link} to="aircrafts">Aircrafts</NavLink>
+                        <NavLink className={s.nav_container_link} to="engines">Engines</NavLink>
+                        <NavLink className={s.nav_container_link} to="apus">APUs</NavLink>
                     </div>
                 </nav>
                 <Routes>
                     <Route path="profile" element={<Profile />} />
-                    <Route path="dashboard" element={<Dashboard />} />
+                    <Route path="/" element={<Dashboard />} />
+                    <Route path="aircrafts" element={<Aircrafts />} />
+                    <Route path="engines" element={<Engines />} />
+                    <Route path="apus" element={<Apus />} />
+                    <Route path="aircrafts/new-aircraft" element={<NewAircraftForm />} />
                 </Routes>
             </main>
             <Footer theme="light" />

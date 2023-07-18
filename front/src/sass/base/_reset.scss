@@ -9,3 +9,9 @@
     font-size: $size;
     font-weight: 600;
 }
+
+@mixin dashboard_page () {
+    grid-area: b;
+    box-shadow: -2px 0px 7px -3px rgb(5, 29, 66, 0.3);
+    padding: 20px;
+}

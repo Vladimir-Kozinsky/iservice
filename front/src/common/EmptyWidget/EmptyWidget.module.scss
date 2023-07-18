@@ -1,0 +1,21 @@
+.emptyWidget {
+    position: relative;
+    width: 180px;
+    height: 130px;
+    background-color: rgb(28, 61, 91, 0.5);
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+
+    &:hover {
+        cursor: pointer;
+        background-color: rgb(28, 61, 91, 0.4);
+    }
+
+    .emptyWidget__cross__img {
+        width: 70px;
+        height: 70px;
+    }
+}

@@ -1,8 +1,6 @@
 @import "../../../sass/main.scss";
 
-.dashboard {
+.engines {
     @include dashboard_page();
-    display: flex;
-    gap: 20px;
 }
 
