@@ -68,8 +68,8 @@ export class AuthService {
     }
 
     private async generateTokens(user: TokenUserDto) {
-        const accessToken = await this.jwtService.signAsync({ ...user }, { secret: process.env.JWT_ACCESS_SECRET, expiresIn: '1m' });
-        const refreshToken = await this.jwtService.signAsync({ ...user }, { secret: process.env.JWT_REFRESH_SECRET, expiresIn: '1m' });
+        const accessToken = await this.jwtService.signAsync({ ...user }, { secret: process.env.JWT_ACCESS_SECRET, expiresIn: '15m' });
+        const refreshToken = await this.jwtService.signAsync({ ...user }, { secret: process.env.JWT_REFRESH_SECRET, expiresIn: '15d' });
         return {
             accessToken,
             refreshToken

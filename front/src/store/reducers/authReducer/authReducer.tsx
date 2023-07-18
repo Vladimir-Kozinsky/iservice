@@ -17,7 +17,8 @@ const initialState: IAuthState = {
         role: null,
         isActivated: null
     },
-    authErrorMessage: '',
+    errorMessage: '',
+
     isAuth: false
 }
 
@@ -69,10 +70,10 @@ const authSlice = createSlice({
             delete decoded.iat;
             state.user = decoded;
             state.isAuth = true;
-            state.authErrorMessage = '';
+            state.errorMessage = '';
         })
         builder.addCase(signIn.rejected, (state: IAuthState, action: PayloadAction<any>) => {
-            state.authErrorMessage = action.payload.message;
+            state.errorMessage = action.payload.message;
         })
         builder.addCase(signUp.fulfilled, (state: IAuthState, action: PayloadAction<string>) => {
             localStorage.setItem('token', action.payload);
@@ -81,10 +82,10 @@ const authSlice = createSlice({
             delete decoded.iat;
             state.user = decoded;
             state.isAuth = true;
-            state.authErrorMessage = '';
+            state.errorMessage = '';
         })
         builder.addCase(signUp.rejected, (state: IAuthState, action: PayloadAction<any>) => {
-
+            state.errorMessage = action.payload.message;
         })
         builder.addCase(signOut.fulfilled, (state: IAuthState, action: PayloadAction<string>) => {
             state.user = {
@@ -101,7 +102,7 @@ const authSlice = createSlice({
 
         })
         builder.addCase(signOut.rejected, (state: IAuthState, action: PayloadAction<any>) => {
-
+            state.errorMessage = action.payload.message;
         })
         builder.addCase(refreshToken.fulfilled, (state: IAuthState, action: PayloadAction<string>) => {
             localStorage.setItem('token', action.payload);
@@ -110,10 +111,10 @@ const authSlice = createSlice({
             delete decoded.iat;
             state.user = decoded;
             state.isAuth = true;
-            state.authErrorMessage = '';
+            state.errorMessage = '';
         })
         builder.addCase(refreshToken.rejected, (state: IAuthState, action: PayloadAction<any>) => {
-            state.authErrorMessage = action.payload.message;
+            state.errorMessage = action.payload.message;
         })
 
     },
@@ -162,7 +163,6 @@ export const refreshToken = createAsyncThunk(
     async (str: undefined, thunkAPI) => {
         try {
             const response = await userAPI.refreshToken();
-            console.log(response.data);
             return response.data.accessToken;
         } catch (error) {
             if (axios.isAxiosError(error)) {
@@ -172,14 +172,6 @@ export const refreshToken = createAsyncThunk(
     }
 )
 
-
-// export const checkAuth = createAsyncThunk(
-//     'auth/checkAuth',
-//     async (id: string) => {
-//         const response = await userAPI.isAuth(id);
-//         return response.data.isAuth
-//     }
-// )
 
 // export const { hideAuthSuccessMessage, clearSignUpErrorMessage, signOut, setUser } = authSlice.actions
 export default authSlice.reducer;

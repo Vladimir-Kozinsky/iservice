@@ -3,10 +3,14 @@ import userAvatar from '../../assets/img/png/user-avatar.png'
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import Button from '../../common/buttons/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch } from '../../store/store';
+import { AppDispatch, RootState } from '../../store/store';
 import { useNavigate, Navigate } from "react-router-dom";
 import Input from '../../common/inputs/Input';
 import { signUp } from '../../store/reducers/authReducer/authReducer';
+import { withAuthRedirect } from '../HOC/withAuthRedirect';
+import { compose } from '@reduxjs/toolkit';
+import { useEffect, useRef } from 'react';
+import { CSSTransition } from 'react-transition-group';
 
 export interface ISignUpValues {
     email: string;
@@ -17,20 +21,37 @@ export interface ISignUpValues {
     role: string;
 }
 
-const SignUp = () => {
+const SignUp: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
-    const isAuth = useSelector((state: any) => state.auth.isAuth)
-    const isSignUpError = useSelector((state: any) => state.auth.isSignUpError)
-    const signUpErrorMessage = useSelector((state: any) => state.auth.signUpErrorMessage)
+    const errorMessage = useSelector((state: RootState) => state.auth.errorMessage);
+    const isAuth = useSelector((state: RootState) => state.auth.isAuth);
+    const nodeRef = useRef(null);
+
+    useEffect(() => {
+        if (isAuth) navigate("/i-service");
+    }, [isAuth])
+
     return (
         <div className={s.signout__container}>
-            {isAuth ? <Navigate to="/dashboard" replace={true} /> : null}
             <div className={s.signout} >
                 <div className={s.signout__avatar} >
-                    <img className={s.signout__avatar__img} src={userAvatar} />
+                    <img className={s.signout__avatar__img} src={userAvatar} alt='avatar' />
                 </div>
                 <h3 className={s.signout__header}>Create an Account</h3>
+                <CSSTransition
+                    in={errorMessage ? true : false}
+                    nodeRef={nodeRef}
+                    timeout={500}
+                    classNames={{
+                        ...s,
+                        enterActive: s['enter-active'],
+                    }}
+                    unmountOnExit
+                >
+                    <div ref={nodeRef} className={s.auth__message}>{errorMessage}</div>
+                </CSSTransition>
+
                 <Formik
                     initialValues={{
                         email: '',
@@ -68,7 +89,7 @@ const SignUp = () => {
                         values: ISignUpValues,
                         { setSubmitting }: FormikHelpers<ISignUpValues>
                     ) => {
-                        console.log('submit')
+                        console.log(values)
                         dispatch(signUp(values));
                     }}
                 >
@@ -104,9 +125,7 @@ const SignUp = () => {
                                 <Field type="text" id="role" name="role"
                                     placeholder="Role" error={errors.role} as={Input} />
                             </div>
-                            {isSignUpError
-                                ? <div className={s.error_message}>{'* ' + signUpErrorMessage}</div>
-                                : null}
+
                             <div className={s.auth__form__btns} >
                                 <Button text="Cancel" color="white" btnType="button" handler={() => navigate("/auth")} />
                                 <Button text="Sign Up" color="green" btnType="submit" />
@@ -119,4 +138,4 @@ const SignUp = () => {
     )
 }
 
-export default SignUp;
+export default compose(withAuthRedirect)(SignUp);

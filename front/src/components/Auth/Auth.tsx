@@ -22,10 +22,11 @@ const Auth: React.FC = () => {
     const [isAuthError, setIsAuthError] = useState<string>();
     const [isLoader, setIsLoader] = useState<boolean | undefined>(false);
     const isAuth = useSelector((state: RootState) => state.auth.isAuth);
-    const authErrorMessage = useSelector((state: RootState) => state.auth.authErrorMessage);
+    const authErrorMessage = useSelector((state: RootState) => state.auth.errorMessage);
     const nodeRef = useRef(null);
+    
     useEffect(() => {
-        if (isAuth) navigate("/dashboard");
+        if (isAuth) navigate("/i-service");
         if (authErrorMessage) setIsAuthError(authErrorMessage);
     }, [isAuth, authErrorMessage])
 

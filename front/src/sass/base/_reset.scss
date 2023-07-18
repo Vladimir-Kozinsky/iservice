@@ -1,0 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Lora&family=Manrope&display=swap");
+
+@mixin blue_text ($size: 16px) {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    color: $blue_text_color;
+    font-family: Manrope, sans-serif;
+    font-size: $size;
+    font-weight: 600;
+}

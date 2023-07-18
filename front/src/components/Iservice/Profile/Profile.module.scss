@@ -1,0 +1,42 @@
+@import "./../../../sass/main.scss";
+
+.profile {
+    grid-area: b;
+    background-color: rgb(255, 255, 255, 0.4);
+    padding: 20px;
+    box-shadow: -2px 0px 7px -3px rgb(5, 29, 66, 0.3);
+    position: relative;
+}
+
+.profile__header {
+    @include blue_text(26px);
+    text-align: center;
+}
+
+.user {
+    @include blue_text();
+    margin: 50px 0 0 50px;
+
+    .user__block {
+        display: flex;
+        margin-bottom: 20px;
+
+        .user__block__title {
+            display: block;
+            width: 120px;
+            color: gray;
+        }
+
+        span:last-child {
+            padding-left: 20px;
+        }
+    }
+}
+
+.profile__buttons {
+    position: absolute;
+    width: calc(100% - 40px) ;
+    display: flex;
+    justify-content: space-between;
+    bottom: 20px;
+}

@@ -3,22 +3,23 @@
 .signout__container {
     position: relative;
     width: 100%;
-    height: 100vh;
     overflow: hidden;
-    font-family: "Manrope";
     overflow-y: auto;
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: #1c3d5b;
+    height: 100vh;
 }
 
 .signout {
+    margin: 20px 0;
     border: #0a2640 2px solid;
     background-color: #ffffff;
     border-radius: 25px;
-    width: 350px;
+    width: 550px;
     position: relative;
-    padding: 30px 0;
+    padding: 20px 0;
 }
 
 .signout__avatar {
@@ -41,16 +42,21 @@
 .signout__header {
     text-align: center;
     font-size: 26px;
-    margin-top: 10px;
+    margin: 5px 0 15px;
     font-family: Manrope;
     font-weight: 700;
+}
+
+.auth__form {
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .auth__form__link {
     position: relative;
     margin: 10px auto;
     height: 65px;
-    width: 235px;
+    width: fit-content;
 
     label {
         margin-left: 20px;
@@ -66,14 +72,12 @@
     justify-content: space-between;
 }
 
-.error_message {
-    position: relative;
-    z-index: 10;
-    top: 5px;
-    color: rgb(180, 0, 0);
-    margin-left: 60px;
-    width: 300px;
+.auth__message {
+    position: absolute;
+    width: 240px;
+    left: calc(50% - 120px);
     height: 25px;
+    top: 172px;
     display: flex;
     font-size: 14px;
     font-family: Manrope;
@@ -82,30 +86,46 @@
     color: rgb(180, 0, 0);
     border-radius: 24px;
     background-color: rgb(255, 0, 0, 0.1);
+    transform: scaleX(1);
+}
+
+.enter-active {
+    animation: scale 0.5s forwards;
+}
+
+@keyframes scale {
+    0% {
+        transform: scaleX(0);
+    }
+
+    100% {
+        transform: scaleX(1);
+    }
 }
 
 @media (max-width: 768px) {
     .signout__container {
         display: block;
-        margin: 20px 0 20px 0 ; 
-        height: fit-content;
+
     }
+
     .signout {
-        margin: 0 auto;
+        margin: 20px auto;
+        width: 350px;
     }
 }
 
 @media (max-width: 480px) {
     .signout__container {
         display: block;
-        margin: 20px 0 20px 0 ; 
-        height: fit-content;
+
     }
+
     .signout {
         width: 290px;
         padding: 25px 0px;
 
-        margin: 0 auto;
+        margin: 20px auto;
     }
 
     .signout__header {

@@ -3,7 +3,7 @@ import { IUser } from "../../../types/types";
 export interface IAuthState {
     user: IUser;
     isAuth: boolean;
-    authErrorMessage: string;
+    errorMessage: string;
 }
 
 export interface IAuthRejectResponse {
