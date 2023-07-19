@@ -4,6 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import mongoose, { HydratedDocument, Types } from 'mongoose';
 import { Limit } from './limit.schema';
 import { Leg } from './leg.schema';
+import { Engine } from './engine.schema';
 
 export type AircraftDocument = HydratedDocument<Aircraft>;
 
@@ -22,6 +23,10 @@ export class Aircraft {
     @ApiProperty({ example: 'EX-76009', description: "Aircraft registration number" })
     @Prop({ required: true })
     regNum: string;
+
+    @ApiProperty({ example: '1989-01-30', description: "Aircraft manufacturere date" })
+    @Prop({ required: true })
+    manufDate: string;
 
     @ApiProperty({ example: '45231:00', description: "Aircraft FH at the time of adding to the system" })
     @Prop({ required: true })
@@ -56,19 +61,19 @@ export class Aircraft {
     csnAtLastOverhaul: string;
 
     @ApiProperty({ example: '1, 25981', description: "Installed engines" })
-    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Engine'})
+    @Prop({ ref: 'Engine' })
     engines: [Engine];
 
     @ApiProperty({ example: 'none', description: "APU" })
-    @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'Apu'})
+    @Prop({ ref: 'Apu' })
     apu: Apu;
 
     @ApiProperty({ example: 'none', description: "Legs" })
-    @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'Leg'})
+    @Prop({ ref: 'Leg' })
     legs: [Leg];
 
     @ApiProperty({ example: 'none', description: "Limit" })
-    @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'Limit'})
+    @Prop({ ref: 'Limit' })
     limits: [Limit];
 
 }
