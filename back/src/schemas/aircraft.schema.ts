@@ -67,7 +67,7 @@ export class Aircraft {
 
     @ApiProperty({ example: 'none', description: "APU" })
     @Prop({ ref: 'Apu' })
-    apu: Apu;
+    apu: [Apu];
 
     @ApiProperty({ example: 'none', description: "Legs" })
     @Prop({ ref: 'Leg' })
