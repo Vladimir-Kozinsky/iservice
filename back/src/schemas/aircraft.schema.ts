@@ -5,6 +5,7 @@ import mongoose, { HydratedDocument, Types } from 'mongoose';
 import { Limit } from './limit.schema';
 import { Leg } from './leg.schema';
 import { Engine } from './engine.schema';
+import { Apu } from './apu.schema';
 
 export type AircraftDocument = HydratedDocument<Aircraft>;
 

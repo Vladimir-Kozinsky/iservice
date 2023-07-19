@@ -3,6 +3,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { HydratedDocument, Types } from 'mongoose';
 import { Limit } from './limit.schema';
+import { EngineHistory } from './engineHistory.schema';
 
 export type ApuDocument = HydratedDocument<Apu>;
 

@@ -3,6 +3,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import mongoose, { HydratedDocument, Types } from 'mongoose';
 import { Limit } from './limit.schema';
+import { EngineHistory } from './engineHistory.schema';
 
 export type EngineDocument = HydratedDocument<Engine>;
 
@@ -26,7 +27,7 @@ export class Engine {
     @Prop({ required: true })
     tsn: string;
 
-    @ApiProperty({ example: '45697:00', description: "Engine Time Since New" })
+    @ApiProperty({ example: 'none', description: "Engine removal/instolation action" })
     @Prop({ ref: 'EngineHistory' })
     engineHistory: EngineHistory
 
