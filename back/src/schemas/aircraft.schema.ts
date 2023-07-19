@@ -2,6 +2,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import mongoose, { HydratedDocument, Types } from 'mongoose';
+import { Limit } from './limit.schema';
 
 export type AircraftDocument = HydratedDocument<Aircraft>;
 
