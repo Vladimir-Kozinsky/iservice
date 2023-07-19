@@ -1,7 +1,7 @@
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { HydratedDocument, Types } from 'mongoose';
+import mongoose, { HydratedDocument, Types } from 'mongoose';
 
 export type AircraftDocument = HydratedDocument<Aircraft>;
 
@@ -13,33 +13,62 @@ export class Aircraft {
     @Prop({ required: true })
     type: string;
 
-    @ApiProperty({ example: 'Jhon', description: "User first name" })
+    @ApiProperty({ example: '25891', description: "Aircraft manufacturer's Serial Number" })
     @Prop({ required: true })
-    firstName: string;
+    msn: string;
 
-    @ApiProperty({ example: 'Smidt', description: "User last name" })
+    @ApiProperty({ example: 'EX-76009', description: "Aircraft registration number" })
     @Prop({ required: true })
-    lastName: string;
+    regNum: string;
 
-    @ApiProperty({ example: 'engineer', description: "User position" })
+    @ApiProperty({ example: '45231:00', description: "Aircraft FH at the time of adding to the system" })
     @Prop({ required: true })
-    position: string;
+    initFh: string;
 
-    @ApiProperty({ example: '_1234qwer', description: "User password" })
+    @ApiProperty({ example: '5231', description: "Aircraft FC at the time of adding to the system" })
     @Prop({ required: true })
-    password: string;
+    initFc: string;
 
-    @ApiProperty({ example: 'admin', description: "User role, admin or user" })
+    @ApiProperty({ example: '45231:00', description: "Current FH" })
     @Prop({ required: true })
-    role: string;
+    fh: string;
 
-    @ApiProperty({ example: 'true', description: "Show user is activated or not" })
-    @Prop({ default: false })
-    isActivated: boolean;
-
-    @ApiProperty({ example: 'c6d589ce-538d-48bd-85b9-2cde71c9152f', description: "Activation link" })
+    @ApiProperty({ example: '4523', description: "Current FC" })
     @Prop({ required: true })
-    activationLink: string;
+    fc: string;
+
+    @ApiProperty({ example: '4', description: "The number of aircraft overhauls." })
+    @Prop({ required: false })
+    overhaulNum: number;
+
+    @ApiProperty({ example: '2024-01-30', description: "Last overhaul date" })
+    @Prop({ required: false })
+    lastOverhaulDate: string;
+
+    @ApiProperty({ example: '45231:00', description: "FH at the time of last overhaul" })
+    @Prop({ required: false })
+    tsnAtLastOverhaul: string;
+
+    @ApiProperty({ example: '4523', description: "FC at the time of last overhaul" })
+    @Prop({ required: false })
+    csnAtLastOverhaul: string;
+
+    @ApiProperty({ example: '1, 25981', description: "Installed engines" })
+    @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Engine'})
+    engines: [Engine];
+
+    @ApiProperty({ example: 'none', description: "APU" })
+    @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'Apu'})
+    apu: Apu;
+
+    @ApiProperty({ example: 'none', description: "Legs" })
+    @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'Leg'})
+    legs: [Leg];
+
+    @ApiProperty({ example: 'none', description: "Limit" })
+    @Prop({type: mongoose.Schema.Types.ObjectId, ref: 'Limit'})
+    limits: [Limit];
+
 }
 
 export const AircraftSchema = SchemaFactory.createForClass(Aircraft);
