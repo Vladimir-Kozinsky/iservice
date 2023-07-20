@@ -13,7 +13,13 @@ export class AircraftService {
 
     async add(createAircraftDto: CreateAircraftDto) {
         const aircraft = await this.aircraftModel.findOne({ msn: createAircraftDto.msn });
-        if (aircraft) throw new HttpException('Aircaft with this msn already exists', HttpStatus.BAD_REQUEST);
+        if (aircraft) throw new HttpException('Aircraft with this msn already exists', HttpStatus.BAD_REQUEST);
         return await this.aircraftModel.create(createAircraftDto)
+    }
+
+    async getAircrafts() {
+        const aircrafts = await this.aircraftModel.find();
+        if (!aircrafts.length) throw new HttpException('Aircraft not found', HttpStatus.BAD_REQUEST);
+        return aircrafts;
     }
 }
