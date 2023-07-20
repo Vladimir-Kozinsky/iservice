@@ -1,11 +1,14 @@
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import Input from "../../../../common/inputs/Input";
 import s from "./NewAircraftForm.module.scss";
-import { CSSTransition } from "react-transition-group";
+import { CSSTransition, Transition } from "react-transition-group";
 import Button from "../../../../common/buttons/Button";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../store/store";
-import React, { useRef } from "react"
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../../store/store";
+import React, { useRef, useState } from "react"
+import { addAircraft } from "../../../../store/reducers/aircraftReducer/aircraftReducer";
+import Loader from "../../../../common/Loader/Loader";
+import { useNavigate } from "react-router-dom";
 
 export interface ICreateAircraftDto {
     type: string;
@@ -23,11 +26,16 @@ export interface ICreateAircraftDto {
 }
 
 const NewAircraftForm: React.FC = () => {
-
+    const dispatch = useDispatch<AppDispatch>();
     const aircraftErrorMessage = useSelector((state: RootState) => state.auth.errorMessage);
     const nodeRef = useRef(null);
+    const [isLoader, setIsLoader] = useState<boolean | undefined>(false);
+    const navigate = useNavigate();
     return (
         <div className={s.newAircraftForm}>
+            <Transition in={isLoader} timeout={400} unmountOnExit mountOnEnter >
+                {(state) => <Loader state={state} />}
+            </Transition>
             <h1 className={s.newAircraftForm__header} >Add new Aircraft</h1>
             <Formik
                 initialValues={{
@@ -73,9 +81,9 @@ const NewAircraftForm: React.FC = () => {
                         values.fh = values.initFh;
                         values.fc = values.initFc;
                         console.log(values)
-                        //setIsLoader(true);
-                        // await dispatch(signIn(values));
-                        // setIsLoader(false);
+                        setIsLoader(true);
+                        await dispatch(addAircraft(values));
+                        setIsLoader(false);
                     })()
 
                 }}
@@ -156,7 +164,7 @@ const NewAircraftForm: React.FC = () => {
                     <div className={s.btns}>
                         <Button text="Add" color="green" btnType="submit" />
                         <Button text="Back" color="white"
-                            handler={() => console.log('navigate to Aircrafts')} btnType={"button"} />
+                            handler={() => navigate('/i-service/aircrafts') } btnType={"button"} />
                     </div>
                 </Form>
             )}

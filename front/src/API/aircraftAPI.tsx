@@ -1,5 +1,7 @@
 import axios from "axios";
 import generalAPIData from "./generalData";
+import { ICreateAircraftDto } from "../components/Iservice/Dashboard/NewAircraftForm/NewAircraftForm";
+import { IAircraft } from "../types/types";
 
 const proxy = axios.create({
     baseURL: generalAPIData.baseURL,
@@ -7,10 +9,10 @@ const proxy = axios.create({
 })
 
 const aircraftAPI = {
-    // async addAircraft(aircraftData: any) {
-    //     const response = await proxy.post('/aircraft/add', aircraftData);
-    //     return response;
-    // },
+    async addAircraft(aircraftDto: ICreateAircraftDto) {
+        const response = await proxy.post('/aircraft/add', aircraftDto);
+        return response;
+    },
     // async deleteAircraft(aircraftId: string) {
     //     const response = await proxy.post('/aircraft/delete', { _id: aircraftId });
     //     return response;
