@@ -1,0 +1,82 @@
+@import "../../../../sass/main.scss";
+
+.aircraftFile {
+    @include dashboard_page ();
+}
+
+.aircraftFile__header {
+    @include blue_text(26px);
+    text-align: center;
+    
+}
+
+.aircraftFile__container {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 1fr 120px;
+    gap: 20px;
+}
+
+.info {
+    
+}
+
+.info__section {
+    //border: 1px solid rgb(128, 128, 128, 0.5);
+    display: flex;
+    justify-content: space-around;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: $box_shadow;
+
+    .info__section__block {
+        @include blue_text();
+        width: 220px;
+        display: flex;
+        gap: 5px;
+        margin-bottom: 5px;
+
+        .label__block {
+            width: 120px;
+        }
+
+        .span__block {
+           
+            width: 90px;
+        }
+    }
+}
+
+
+.widget__container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: flex-start;
+    column-gap: 20px;
+    row-gap: 20px;
+}
+
+.emptyWidget {
+    width: 80px;
+    height: 80px;
+    padding: 20px;
+    background-color: #f3f3f3;
+    border-radius: 15px;
+}
+
+
+.aircraftFile__container__buttons {
+    display: flex;
+    flex-direction: column;
+
+    button:last-child {
+        margin-top: 50px;
+    }
+}
+
+.aircraftFile__buttons {
+    position: absolute;
+    margin-top: 20px;
+    bottom: 20px;
+}

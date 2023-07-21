@@ -25,7 +25,7 @@ export class Aircraft {
     @Prop({ required: true })
     regNum: string;
 
-    @ApiProperty({ example: '1989-01-30', description: "Aircraft manufacturere date" })
+    @ApiProperty({ example: '1989-01-30', description: "Aircraft manufacture date" })
     @Prop({ required: true })
     manufDate: string;
 
