@@ -27,9 +27,13 @@ export class Engine {
     @Prop({ required: true })
     tsn: string;
 
+    @ApiProperty({ example: '4569', description: "Engine Cycles Since New" })
+    @Prop({ required: true })
+    csn: string;
+
     @ApiProperty({ example: 'none', description: "Engine removal/instolation action" })
     @Prop({ ref: 'EngineHistory' })
-    engineHistory: EngineHistory
+    engineHistory: [EngineHistory]
 
     @ApiProperty({ example: '4', description: "The number of engine overhauls." })
     @Prop({ required: false })
