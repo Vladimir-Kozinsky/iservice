@@ -23,7 +23,7 @@ export interface IAircraft {
     tsnAtLastOverhaul?: string | null;
     csnAtLastOverhaul?: string | null;
     engines: [];
-    apu: [];
+    apu: any;
     legs: [];
     limits: [];
 }

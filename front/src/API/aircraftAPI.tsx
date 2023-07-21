@@ -17,10 +17,10 @@ const aircraftAPI = {
     //     const response = await proxy.post('/aircraft/delete', { _id: aircraftId });
     //     return response;
     // },
-    // async getAircrafts() {
-    //     const response = await proxy.get('/aircrafts');
-    //     return response;
-    // },
+    async getAircrafts() {
+        const response = await proxy.get('/aircraft/aircrafts');
+        return response;
+    },
     // async getAircraft(msn: string) {
     //     const response = await proxy.get('/aircraft');
     //     return response;

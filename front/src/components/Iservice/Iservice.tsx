@@ -36,6 +36,7 @@ const Iservice: React.FC = () => {
                     <Route path="engines" element={<Engines />} />
                     <Route path="apus" element={<Apus />} />
                     <Route path="aircrafts/new-aircraft" element={<NewAircraftForm />} />
+                    <Route path="aircraft/*" element={<div>aircraft file</div>} />
                 </Routes>
             </main>
             <Footer theme="light" />

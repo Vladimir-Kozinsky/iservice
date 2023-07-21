@@ -3,6 +3,7 @@ import axios from 'axios';
 import { ICreateAircraftDto } from '../../../components/Iservice/Dashboard/NewAircraftForm/NewAircraftForm';
 import aircraftAPI from '../../../API/aircraftAPI';
 import { IAircraftRejectResponse, IAircraftState } from './aircraftReducerTypes';
+import { IAircraft } from '../../../types/types';
 
 const initialState: IAircraftState = {
     choosedAircraft: {
@@ -32,47 +33,22 @@ const aircraftSlice = createSlice({
     name: 'aircraft',
     initialState,
     reducers: {
-        // hideAuthSuccessMessage(state: IAuthState) {
-        //     state.isSuccessMessage = false;
-        // },
-        // clearSignUpErrorMessage(state: IAuthState) {
-        //     state.signUpErrorMessage = '';
-        //     state.isSignUpError = false;
-        // },
-        // signOut(state: IAuthState) {
-        //     state.isAuth = false;
-        //     state.user = {
-        //         _id: null,
-        //         email: null,
-        //         password: null,
-        //         firstName: null,
-        //         lastName: null,
-        //         position: null,
-        //     }
-        //     window.localStorage.removeItem("user-id");
-        //     window.localStorage.removeItem("user-email");
-        //     window.localStorage.removeItem("user-firstName");
-        //     window.localStorage.removeItem("user-lastName");
-        //     window.localStorage.removeItem("user-position");
-        // },
-        // setUser(state: IAuthState) {
-        //     const userId: string | null = window.localStorage.getItem("user-id");
-        //     if (userId?.length) state.user._id = userId;
-        //     const email: string | null = window.localStorage.getItem("user-email");
-        //     if (email?.length) state.user.email = email;
-        //     const firstName: string | null = window.localStorage.getItem("user-firstName");
-        //     if (firstName?.length) state.user.firstName = firstName;
-        //     const lastName: string | null = window.localStorage.getItem("user-lastName");
-        //     if (lastName?.length) state.user.lastName = lastName;
-        //     const position: string | null = window.localStorage.getItem("user-position");
-        //     if (position?.length) state.user.position = position;
-        // }
+        setChoosedAircraft(state: IAircraftState, action: PayloadAction<IAircraft>) {
+            state.choosedAircraft = action.payload;
+        },
+
     },
     extraReducers: (builder) => {
-        builder.addCase(addAircraft.fulfilled, (state: IAircraftState, action: PayloadAction<any>) => {
+        builder.addCase(addAircraft.fulfilled, (state: IAircraftState, action: PayloadAction<IAircraft>) => {
             state.choosedAircraft = action.payload;
         })
         builder.addCase(addAircraft.rejected, (state: any, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
+        })
+        builder.addCase(getAircrafts.fulfilled, (state: IAircraftState, action: PayloadAction<IAircraft[]>) => {
+            state.aircafts = action.payload;
+        })
+        builder.addCase(getAircrafts.rejected, (state: any, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
         })
 
@@ -92,6 +68,19 @@ export const addAircraft = createAsyncThunk(
 
     }
 )
+export const getAircrafts = createAsyncThunk(
+    'aircraft/aircrafts',
+    async (none, thunkAPI) => {
+        try {
+            const response = await aircraftAPI.getAircrafts();
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IAircraftRejectResponse);
+        }
 
-// export const { hideAuthSuccessMessage, clearSignUpErrorMessage, signOut, setUser } = authSlice.actions
+    }
+)
+
+export const { setChoosedAircraft } = aircraftSlice.actions
+
 export default aircraftSlice.reducer;
