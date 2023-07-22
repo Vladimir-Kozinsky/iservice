@@ -2,16 +2,17 @@ import axios from "axios";
 // import { FormValues } from "../components/Aircrafts/InstallEngine/InstallEngine";
 // import { RemEngFormDataType } from "../components/Aircrafts/RemovalEngine/RemovalEngine";
 import generalAPIData from "./generalData";
+import { ICreateEngineDto } from "../types/types";
 
 const proxy = axios.create({
     baseURL: generalAPIData.baseURL
 })
 
 const engineAPI = {
-    // async getEngines() {
-    //     const response = await proxy.get(`/engines`);
-    //     return response;
-    // },
+    async getEngines() {
+        const response = await proxy.get(`engine/engines`);
+        return response;
+    },
     // async getAvailEngines() {
     //     const response = await proxy.get(`/engines/available`);
     //     return response;
@@ -22,10 +23,10 @@ const engineAPI = {
     //     return response;
     // },
 
-    // async addEngine(engine: any) {
-    //     const response = await proxy.post('/engine/add', engine);
-    //     return response;
-    // },
+    async addEngine(engine: ICreateEngineDto) {
+        const response = await proxy.post('/engine/add', engine);
+        return response;
+    },
 
     // async updateEngine(engine: any) {
     //     const response = await proxy.post('/engine/update', engine);
