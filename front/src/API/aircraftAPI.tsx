@@ -1,7 +1,7 @@
 import axios from "axios";
 import generalAPIData from "./generalData";
-import { ICreateAircraftDto } from "../components/Iservice/Dashboard/NewAircraftForm/NewAircraftForm";
 import { IAircraft } from "../types/types";
+import { ICreateAircraftDto } from "../components/Iservice/Aircrafts/NewAircraftForm/NewAircraftForm";
 
 const proxy = axios.create({
     baseURL: generalAPIData.baseURL,

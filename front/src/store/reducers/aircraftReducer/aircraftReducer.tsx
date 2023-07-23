@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios';
-import { ICreateAircraftDto } from '../../../components/Iservice/Dashboard/NewAircraftForm/NewAircraftForm';
 import aircraftAPI from '../../../API/aircraftAPI';
 import { IAircraftRejectResponse, IAircraftState } from './aircraftReducerTypes';
 import { IAircraft } from '../../../types/types';
+import { ICreateAircraftDto } from '../../../components/Iservice/Aircrafts/NewAircraftForm/NewAircraftForm';
 
 const initialState: IAircraftState = {
     choosedAircraft: {

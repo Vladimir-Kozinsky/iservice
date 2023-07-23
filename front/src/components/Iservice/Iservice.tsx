@@ -7,11 +7,12 @@ import { withAuthRedirect } from "../HOC/withAuthRedirect";
 import Profile from "./Profile/Profile";
 import Dashboard from "./Dashboard/Dashboard";
 import Footer from "../Footer/Footer";
-import NewAircraftForm from "./Dashboard/NewAircraftForm/NewAircraftForm";
 import Aircrafts from "./Aircrafts/Aircrafts";
 import Engines from "./Engines/Engines";
 import Apus from "./Apus/Apus";
 import AircraftFile from "./Aircrafts/AircraftFile/AircraftFile";
+import NewAircraftForm from "./Aircrafts/NewAircraftForm/NewAircraftForm";
+import NewEngineForm from "./Engines/NewEngineForm/NewEngineForm";
 
 
 const Iservice: React.FC = () => {
@@ -37,6 +38,7 @@ const Iservice: React.FC = () => {
                     <Route path="engines" element={<Engines />} />
                     <Route path="apus" element={<Apus />} />
                     <Route path="aircrafts/new-aircraft" element={<NewAircraftForm />} />
+                    <Route path="engines/new-engine" element={<NewEngineForm />} />
                     <Route path="aircraft/*" element={<AircraftFile />} />
                 </Routes>
             </main>

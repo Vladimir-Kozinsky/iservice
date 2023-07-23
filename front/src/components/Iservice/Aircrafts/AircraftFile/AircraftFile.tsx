@@ -1,18 +1,20 @@
 import s from "./AircraftFile.module.scss";
-import { IAircraft } from "../../../../types/types";
 import Button from "../../../../common/buttons/Button";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
 import { sortEngines } from "../../../../utils/utils";
+import { IEngine } from "../../../../types/types";
 
 
 const AircraftFile = () => {
     const aircraft = useSelector((state: RootState) => state.aircraft.choosedAircraft);
 
-    const engines = () => sortEngines(aircraft.engines).map((engine: any) => (
+    const engines = () => sortEngines(aircraft.engines).map((engine: IEngine) => (
         <div className={s.info__section__block} >
             <div className={s.label__block}>
-                <label>{`ENG #${engine.engineHistory[engine.engineHistory.length - 1].position}`}</label>
+                <label>{`ENG #${engine.engineHistory.length ?
+                    engine.engineHistory[engine.engineHistory.length - 1].position
+                    : "N/A"}`}</label>
             </div>
             <div className={s.span__block} >
                 <span>{engine.msn}</span>
