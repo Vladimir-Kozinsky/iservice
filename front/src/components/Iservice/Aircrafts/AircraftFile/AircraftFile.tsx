@@ -4,10 +4,16 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
 import { sortEngines } from "../../../../utils/utils";
 import { IEngine } from "../../../../types/types";
+import AircraftFileWidget from "./AircraftFileWidget/AircraftFileWidget";
+import engineIcon from "../../../../assets/img/jpeg/engine-removal.jpg";
+import legsIcon from "../../../../assets/img/png/legs-icon.png";
+import printIcon from "../../../../assets/img/png/print-icon.png";
+import { useNavigate } from "react-router-dom";
 
 
 const AircraftFile = () => {
     const aircraft = useSelector((state: RootState) => state.aircraft.choosedAircraft);
+    const navigate = useNavigate();
 
     const engines = () => sortEngines(aircraft.engines).map((engine: IEngine) => (
         <div className={s.info__section__block} >
@@ -136,11 +142,15 @@ const AircraftFile = () => {
                     </div>
                 </div>
                 <div className={s.aircraftFile__container__buttons} >
-                    <Button text="Print Report" btnType="button" color="green" handler={() => console.log('print form')} />
+                    <AircraftFileWidget text="Legs" img={legsIcon} handler={() => navigate(`${aircraft.msn}/legs`)} />
+                    <AircraftFileWidget text="Print report" img={printIcon} handler={() => navigate(`${aircraft.msn}/report`)} />
+                    <AircraftFileWidget text="Install Engine" img={engineIcon} handler={() => navigate(`${aircraft.msn}/install-engine`)} />
+                    <AircraftFileWidget text="Remove Engine" img={engineIcon} handler={() => navigate(`${aircraft.msn}/remove-engine`)} />
+
                 </div>
             </div>
             <div className={s.aircraftFile__buttons} >
-                <Button text="Back" btnType="button" color="white" handler={() => console.log('back to aircafts')} />
+                <Button text="Back" btnType="button" color="white" handler={() => navigate('aircrafts')} />
             </div>
         </div >
     )

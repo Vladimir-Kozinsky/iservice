@@ -7,19 +7,16 @@
 .aircraftFile__header {
     @include blue_text(26px);
     text-align: center;
-    
+
 }
 
 .aircraftFile__container {
     margin-top: 50px;
     display: grid;
-    grid-template-columns: 1fr 120px;
+    grid-template-columns: 1fr 150px;
     gap: 20px;
 }
 
-.info {
-    
-}
 
 .info__section {
     //border: 1px solid rgb(128, 128, 128, 0.5);
@@ -41,7 +38,7 @@
         }
 
         .span__block {
-           
+
             width: 90px;
         }
     }
@@ -68,7 +65,9 @@
 
 .aircraftFile__container__buttons {
     display: flex;
-    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-content: flex-start;
 
     button:last-child {
         margin-top: 50px;
