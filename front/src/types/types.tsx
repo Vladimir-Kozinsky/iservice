@@ -33,6 +33,7 @@ export interface IEngine {
     type: string | null;
     msn: string | null;
     manufDate: string | null;
+    position: number | null;
     tsn: string | null;
     csn: string | null;
     overhaulNum?: number | null;
@@ -55,7 +56,7 @@ interface IEngineHistory {
     date: string;
     action: string;
     aircraft: string;
-    position: string;
+    position: number;
     aircraftTsn: string;
     aircraftCsn: string;
     engineTsn: string;

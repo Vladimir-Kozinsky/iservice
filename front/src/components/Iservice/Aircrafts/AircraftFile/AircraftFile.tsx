@@ -16,11 +16,9 @@ const AircraftFile = () => {
     const navigate = useNavigate();
 
     const engines = () => sortEngines(aircraft.engines).map((engine: IEngine) => (
-        <div className={s.info__section__block} >
+        <div key={engine.msn} className={s.info__section__block} >
             <div className={s.label__block}>
-                <label>{`ENG #${engine.engineHistory.length ?
-                    engine.engineHistory[engine.engineHistory.length - 1].position
-                    : "N/A"}`}</label>
+                <label>{`ENG #${engine.position}`}</label>
             </div>
             <div className={s.span__block} >
                 <span>{engine.msn}</span>

@@ -38,6 +38,7 @@ export class AircraftService {
         if (installedEngine) throw new HttpException('Engine has already installed', HttpStatus.BAD_REQUEST);
 
         engine.engineHistory.push(installDataDto);
+        engine.position = installDataDto.position;
         await engine.save();
 
         aircraft.engines.push(engine);
@@ -55,6 +56,7 @@ export class AircraftService {
         if (!aircraft) throw new HttpException('Aircraft not found', HttpStatus.BAD_REQUEST);
 
         engine.engineHistory.push(removalDataDto);
+        engine.position = 0;
         await engine.save();
 
         const index = aircraft.engines.findIndex((engine: Engine) => engine.msn === removalDataDto.engine)

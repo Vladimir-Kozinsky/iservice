@@ -21,7 +21,7 @@ export class InstallEngineDto {
 
     @ApiProperty({ example: '2', description: "Engine position" })
     @IsNotEmpty()
-    readonly position: string;
+    readonly position: number;
 
     @ApiProperty({ example: '2891:00', description: "Aircraft Time Since New" })
     @IsNotEmpty()

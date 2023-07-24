@@ -23,6 +23,10 @@ export class Engine {
     @Prop({ required: true })
     manufDate: string;
 
+    @ApiProperty({ example: '1', description: "Engine position" })
+    @Prop({ required: true })
+    position: number;
+
     @ApiProperty({ example: '45697:00', description: "Engine Time Since New" })
     @Prop({ required: true })
     tsn: string;

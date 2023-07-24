@@ -25,7 +25,7 @@ export class EngineHistory {
 
     @ApiProperty({ example: '2', description: 'Engine position' })
     @Prop({ required: true })
-    position: string;
+    position: number;
 
     @ApiProperty({ example: '2891:00', description: 'Aircraft Time Since New' })
     @Prop({ required: true })

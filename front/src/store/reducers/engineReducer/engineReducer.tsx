@@ -9,6 +9,7 @@ const initialState: IEngineState = {
         type: null,
         msn: null,
         manufDate: null,
+        position:null,
         tsn: null,
         csn: null,
         overhaulNum: null,
