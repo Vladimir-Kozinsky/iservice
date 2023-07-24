@@ -7,8 +7,6 @@ export type EngineHistoryDocument = HydratedDocument<EngineHistory>;
 @Schema()
 export class EngineHistory {
 
-    _id: Types.ObjectId
-
     @ApiProperty({ example: '2023-01-30', description: 'Action date' })
     @Prop({ required: true })
     date: string;
@@ -20,6 +18,10 @@ export class EngineHistory {
     @ApiProperty({ example: '25891', description: 'Aircraft MSN' })
     @Prop({ required: true })
     aircraft: string;
+
+    @ApiProperty({ example: '29891', description: 'Engine MSN' })
+    @Prop({ required: true })
+    engine: string;
 
     @ApiProperty({ example: '2', description: 'Engine position' })
     @Prop({ required: true })
