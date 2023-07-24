@@ -41,4 +41,21 @@ export class AircraftService {
 
         return aircraft.engines;
     }
+
+    async removeEngine(removalDataDto: InstallEngineDto) {
+        const engine = await this.engineModel.findOne({ msn: removalDataDto.engine });
+        if (!engine) throw new HttpException('Engine not found', HttpStatus.BAD_REQUEST);
+
+        const aircraft = await this.aircraftModel.findOne({ msn: removalDataDto.aircraft });
+        if (!aircraft) throw new HttpException('Aircraft not found', HttpStatus.BAD_REQUEST);
+
+        engine.engineHistory.push(removalDataDto);
+        await engine.save();
+
+        const index = aircraft.engines.findIndex((engine: Engine) => engine.msn === removalDataDto.engine)
+        aircraft.engines.splice(index, 1);
+        await aircraft.save();
+
+        return aircraft.engines;
+    }
 }

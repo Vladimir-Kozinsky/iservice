@@ -63,7 +63,7 @@ export class Aircraft {
 
     @ApiProperty({ example: '1, 25981', description: "Installed engines" })
     @Prop({ ref: 'Engine' })
-    engines: [Engine];
+    engines: Engine[];
 
     @ApiProperty({ example: 'none', description: "APU" })
     @Prop({ ref: 'Apu' })
@@ -71,11 +71,11 @@ export class Aircraft {
 
     @ApiProperty({ example: 'none', description: "Legs" })
     @Prop({ ref: 'Leg' })
-    legs: [Leg];
+    legs: Leg[];
 
     @ApiProperty({ example: 'none', description: "Limit" })
     @Prop({ ref: 'Limit' })
-    limits: [Limit];
+    limits: Limit[];
 
 }
 

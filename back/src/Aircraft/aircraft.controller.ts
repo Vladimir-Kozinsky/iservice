@@ -31,8 +31,16 @@ export class AircraftController {
     @ApiResponse({ status: 201, type: [Engine] })
     @Post('/engine/install')
     @HttpCode(201)
-    async installEngine(@Body() installData: InstallEngineDto) {
-        return await this.aircraftService.installEngine(installData);
+    async installEngine(@Body() installDataDto: InstallEngineDto) {
+        return await this.aircraftService.installEngine(installDataDto);
+    }
+   
+    @ApiOperation({ summary: 'Remove engine' })
+    @ApiResponse({ status: 201, type: [Engine] })
+    @Post('/engine/remove')
+    @HttpCode(201)
+    async removeEngine(@Body() removalDataDto: InstallEngineDto) {
+        return await this.aircraftService.removeEngine(removalDataDto);
     }
 
 
