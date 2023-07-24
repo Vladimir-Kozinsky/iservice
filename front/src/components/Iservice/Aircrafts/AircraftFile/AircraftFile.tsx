@@ -142,7 +142,7 @@ const AircraftFile = () => {
                     </div>
                 </div>
                 <div className={s.aircraftFile__container__buttons} >
-                    <AircraftFileWidget text="Legs" img={legsIcon} handler={() => navigate(`${aircraft.msn}/legs`)} />
+                    <AircraftFileWidget text="Legs" img={legsIcon} handler={() => navigate(`legs`)} />
                     <AircraftFileWidget text="Print report" img={printIcon} handler={() => navigate(`${aircraft.msn}/report`)} />
                     <AircraftFileWidget text="Install Engine" img={engineIcon} handler={() => navigate(`${aircraft.msn}/install-engine`)} />
                     <AircraftFileWidget text="Remove Engine" img={engineIcon} handler={() => navigate(`${aircraft.msn}/remove-engine`)} />

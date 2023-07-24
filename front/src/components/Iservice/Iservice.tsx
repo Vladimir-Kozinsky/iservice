@@ -13,6 +13,7 @@ import Apus from "./Apus/Apus";
 import AircraftFile from "./Aircrafts/AircraftFile/AircraftFile";
 import NewAircraftForm from "./Aircrafts/NewAircraftForm/NewAircraftForm";
 import NewEngineForm from "./Engines/NewEngineForm/NewEngineForm";
+import Legs from "./Aircrafts/Legs/Legs";
 
 
 const Iservice: React.FC = () => {
@@ -39,7 +40,8 @@ const Iservice: React.FC = () => {
                     <Route path="apus" element={<Apus />} />
                     <Route path="aircrafts/new-aircraft" element={<NewAircraftForm />} />
                     <Route path="engines/new-engine" element={<NewEngineForm />} />
-                    <Route path="aircraft/*" element={<AircraftFile />} />
+                    <Route path="aircraft/:aircraftId" element={<AircraftFile />} />
+                    <Route path="aircraft/:aircraftId/legs" element={<Legs />} />
                 </Routes>
             </main>
             <Footer theme="light" />
