@@ -33,6 +33,10 @@ export class AircraftService {
         const aircraft = await this.aircraftModel.findOne({ msn: installDataDto.aircraft });
         if (!aircraft) throw new HttpException('Aircraft not found', HttpStatus.BAD_REQUEST);
 
+
+        const installedEngine = aircraft.engines.find((engine: Engine) => engine.msn === installDataDto.engine);
+        if (installedEngine) throw new HttpException('Engine has already installed', HttpStatus.BAD_REQUEST);
+
         engine.engineHistory.push(installDataDto);
         await engine.save();
 
@@ -43,6 +47,7 @@ export class AircraftService {
     }
 
     async removeEngine(removalDataDto: InstallEngineDto) {
+
         const engine = await this.engineModel.findOne({ msn: removalDataDto.engine });
         if (!engine) throw new HttpException('Engine not found', HttpStatus.BAD_REQUEST);
 
@@ -53,9 +58,10 @@ export class AircraftService {
         await engine.save();
 
         const index = aircraft.engines.findIndex((engine: Engine) => engine.msn === removalDataDto.engine)
+        if (index < 0) throw new HttpException('Engine has already removed', HttpStatus.BAD_REQUEST);
         aircraft.engines.splice(index, 1);
         await aircraft.save();
-
         return aircraft.engines;
     }
+
 }
