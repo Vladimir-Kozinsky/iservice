@@ -4,6 +4,7 @@ import aircraftAPI from '../../../API/aircraftAPI';
 import { IAircraftRejectResponse, IAircraftState } from './aircraftReducerTypes';
 import { IAircraft } from '../../../types/types';
 import { ICreateAircraftDto } from '../../../components/Iservice/Aircrafts/NewAircraftForm/NewAircraftForm';
+import { INewLimitDto } from '../../../components/Iservice/Aircrafts/AircraftFile/NewLimit/NewLimit';
 
 const initialState: IAircraftState = {
     choosedAircraft: {
@@ -51,6 +52,12 @@ const aircraftSlice = createSlice({
         builder.addCase(getAircrafts.rejected, (state: any, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
         })
+        builder.addCase(addLimit.fulfilled, (state: IAircraftState, action: PayloadAction<any>) => {
+            state.choosedAircraft.limits.push(action.payload);
+        })
+        builder.addCase(addLimit.rejected, (state: any, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
+        })
 
 
     },
@@ -73,6 +80,19 @@ export const getAircrafts = createAsyncThunk(
     async (none, thunkAPI) => {
         try {
             const response = await aircraftAPI.getAircrafts();
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IAircraftRejectResponse);
+        }
+
+    }
+)
+
+export const addLimit = createAsyncThunk(
+    'aircraft/limit/add',
+    async (limitDto:INewLimitDto, thunkAPI) => {
+        try {
+            const response = await aircraftAPI.addLimit(limitDto);
             return response.data;
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response.data as IAircraftRejectResponse);

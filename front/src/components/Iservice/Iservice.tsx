@@ -14,6 +14,7 @@ import AircraftFile from "./Aircrafts/AircraftFile/AircraftFile";
 import NewAircraftForm from "./Aircrafts/NewAircraftForm/NewAircraftForm";
 import NewEngineForm from "./Engines/NewEngineForm/NewEngineForm";
 import Legs from "./Aircrafts/Legs/Legs";
+import NewLimit from "./Aircrafts/AircraftFile/NewLimit/NewLimit";
 
 
 const Iservice: React.FC = () => {
@@ -42,6 +43,7 @@ const Iservice: React.FC = () => {
                     <Route path="engines/new-engine" element={<NewEngineForm />} />
                     <Route path="aircraft/:aircraftId" element={<AircraftFile />} />
                     <Route path="aircraft/:aircraftId/legs" element={<Legs />} />
+                    <Route path="aircraft/:aircraftId/limit" element={<NewLimit />} />
                 </Routes>
             </main>
             <Footer theme="light" />

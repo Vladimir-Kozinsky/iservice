@@ -2,7 +2,7 @@ import s from "./AircraftFile.module.scss";
 import Button from "../../../../common/buttons/Button";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
-import { sortEngines } from "../../../../utils/utils";
+import { sortEngines, subtractFC, subtractFH } from "../../../../utils/utils";
 import { IEngine } from "../../../../types/types";
 import AircraftFileWidget from "./AircraftFileWidget/AircraftFileWidget";
 import engineIcon from "../../../../assets/img/jpeg/engine-removal.jpg";
@@ -16,14 +16,68 @@ const AircraftFile = () => {
     const navigate = useNavigate();
 
     const engines = () => sortEngines(aircraft.engines).map((engine: IEngine) => (
-        <div key={engine.msn} className={s.info__section__block} >
-            <div className={s.label__block}>
+        <div key={engine.msn} className={s.engine}>
+            <div className={s.engine__header}>
                 <label>{`ENG #${engine.position}`}</label>
             </div>
-            <div className={s.span__block} >
-                <span>{engine.msn}</span>
+            <div className={s.info__section__block} >
+                <div className={s.label__block}>
+                    <label>MSN:</label>
+                </div>
+                <div className={s.span__block} >
+                    <span>{engine.msn}</span>
+                </div>
+            </div>
+            <div className={s.info__section__block} >
+                <div className={s.label__block}>
+                    <label>Manuf. Date:</label>
+                </div>
+                <div className={s.span__block} >
+                    <span>{engine.manufDate}</span>
+                </div>
+            </div>
+            <div className={s.info__section__block} >
+                <div className={s.label__block}>
+                    <label>TSN:</label>
+                </div>
+                <div className={s.span__block} >
+                    <span>{engine.tsn}</span>
+                </div>
+            </div>
+            <div className={s.info__section__block} >
+                <div className={s.label__block}>
+                    <label>CSN:</label>
+                </div>
+                <div className={s.span__block} >
+                    <span>{engine.csn}</span>
+                </div>
+            </div>
+            <div className={s.info__section__block} >
+                <div className={s.label__block}>
+                    <label>Overhaul Date:</label>
+                </div>
+                <div className={s.span__block} >
+                    <span>{engine.lastOverhaulDate}</span>
+                </div>
+            </div>
+            <div className={s.info__section__block} >
+                <div className={s.label__block}>
+                    <label>TSLSV:</label>
+                </div>
+                <div className={s.span__block} >
+                    <span>{subtractFH(engine.tsn, engine.tsnAtLastOverhaul)}</span>
+                </div>
+            </div>
+            <div className={s.info__section__block} >
+                <div className={s.label__block}>
+                    <label>CSLSV:</label>
+                </div>
+                <div className={s.span__block} >
+                    <span>{subtractFC(engine.csn, engine.csnAtLastOverhaul)}</span>
+                </div>
             </div>
         </div>
+
     ))
 
     return (
@@ -128,22 +182,26 @@ const AircraftFile = () => {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
-                        <div className={s.info__section}>
+
+                        <div className={s.engines__section}>
                             {engines()}
                         </div>
 
+                        <div className={s.limits__section}>
+                            Limits
+                        </div>
+
+
                     </div>
-                    <div id='widget__container' className={s.widget__container} >
-                        widgets
-                    </div>
+                
                 </div>
                 <div className={s.aircraftFile__container__buttons} >
                     <AircraftFileWidget text="Legs" img={legsIcon} handler={() => navigate(`legs`)} />
                     <AircraftFileWidget text="Print report" img={printIcon} handler={() => navigate('report')} />
                     <AircraftFileWidget text="Install Engine" img={engineIcon} handler={() => navigate('install-engine')} />
                     <AircraftFileWidget text="Remove Engine" img={engineIcon} handler={() => navigate('remove-engine')} />
+                    <AircraftFileWidget text="new limit" img={engineIcon} handler={() => navigate('limit')} />
                 </div>
             </div>
             <div className={s.aircraftFile__buttons} >

@@ -19,31 +19,58 @@
 
 
 .info__section {
-    //border: 1px solid rgb(128, 128, 128, 0.5);
     display: flex;
     justify-content: space-around;
     padding: 20px;
     margin-bottom: 20px;
     box-shadow: $box_shadow;
+}
 
-    .info__section__block {
-        @include blue_text();
-        width: 220px;
-        display: flex;
-        gap: 5px;
-        margin-bottom: 5px;
+.info__section__block {
+    @include blue_text();
+    width: fit-content;
+    display: flex;
+    gap: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px dashed rgb(216, 216, 216);
 
-        .label__block {
-            width: 120px;
-        }
+    .label__block {
+        width: 120px;
+    }
 
-        .span__block {
+    .span__block {
 
-            width: 90px;
-        }
+        width: fit-content;
     }
 }
 
+.engines__section {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-bottom: 20px;
+    box-shadow: $box_shadow;
+    padding: 20px;
+
+    .engine {
+        width: 240px;
+    }
+
+    .engine__header {
+        @include blue_text();
+        text-align: center;
+        border-bottom: 2px #051d42 solid;
+        margin-bottom: 5px;
+    }
+}
+
+
+.limits__section {
+    margin-bottom: 60px;
+    box-shadow: $box_shadow;
+    padding: 20px;
+}
 
 .widget__container {
     display: flex;
