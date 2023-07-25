@@ -2,6 +2,7 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateAircraftDto } from 'src/dto/create-aircraft.dto';
+import { CreateLimitDto } from 'src/dto/create-limit.dto';
 import { InstallEngineDto } from 'src/dto/install-engine.dto';
 import { Aircraft } from 'src/schemas/aircraft.schema';
 import { Engine } from 'src/schemas/engine.schema';
@@ -64,6 +65,21 @@ export class AircraftService {
         aircraft.engines.splice(index, 1);
         await aircraft.save();
         return aircraft.engines;
+    }
+
+    async addLimit(createLimitDto: CreateLimitDto) {
+        const aircraft = await this.aircraftModel.findOne({ msn: createLimitDto.msn });
+        if (!aircraft) throw new HttpException('Aircraft not found', HttpStatus.BAD_REQUEST);
+
+        aircraft.limits.push({
+            title: createLimitDto.title,
+            dependence: createLimitDto.dependence,
+            threshold: createLimitDto.threshold
+        })
+
+        await aircraft.save();
+
+        return aircraft.limits[aircraft.limits.length - 1]
     }
 
 }

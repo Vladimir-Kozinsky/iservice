@@ -7,7 +7,7 @@ export type LimitDocument = HydratedDocument<Limit>;
 @Schema()
 export class Limit {
 
-    _id: Types.ObjectId
+    _id?: Types.ObjectId
 
     @ApiProperty({ example: 'Life limit', description: 'Limit title' })
     @Prop({ required: true})
