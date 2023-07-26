@@ -2,7 +2,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import mongoose, { HydratedDocument, Types } from 'mongoose';
-import { Limit } from './limit.schema';
+import { Limit, LimitSchema } from './limit.schema';
 import { Leg } from './leg.schema';
 import { Engine } from './engine.schema';
 import { Apu } from './apu.schema';
@@ -74,7 +74,7 @@ export class Aircraft {
     legs: Leg[];
 
     @ApiProperty({ example: 'none', description: "Limit" })
-    @Prop({ ref: 'Limit' })
+    @Prop({ type: [mongoose.SchemaTypes.ObjectId], ref: 'Limit' })
     limits: Limit[];
 
 }

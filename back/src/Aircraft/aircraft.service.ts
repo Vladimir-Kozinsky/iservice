@@ -3,9 +3,11 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateAircraftDto } from 'src/dto/create-aircraft.dto';
 import { CreateLimitDto } from 'src/dto/create-limit.dto';
+import { DeleteLimitDto } from 'src/dto/delete-limit.dto';
 import { InstallEngineDto } from 'src/dto/install-engine.dto';
 import { Aircraft } from 'src/schemas/aircraft.schema';
 import { Engine } from 'src/schemas/engine.schema';
+import { Limit } from 'src/schemas/limit.schema';
 
 @Injectable()
 export class AircraftService {
@@ -14,6 +16,8 @@ export class AircraftService {
         private readonly aircraftModel: Model<Aircraft>,
         @InjectModel(Engine.name)
         private readonly engineModel: Model<Engine>,
+        @InjectModel(Limit.name)
+        private readonly limitModel: Model<Limit>,
     ) { }
 
     async add(createAircraftDto: CreateAircraftDto) {
@@ -23,7 +27,8 @@ export class AircraftService {
     }
 
     async getAircrafts() {
-        const aircrafts = await this.aircraftModel.find();
+        const aircrafts = await this.aircraftModel.find()
+            .populate('limits');
         if (!aircrafts.length) throw new HttpException('Aircrafts not found', HttpStatus.BAD_REQUEST);
         return aircrafts;
     }
@@ -68,18 +73,37 @@ export class AircraftService {
     }
 
     async addLimit(createLimitDto: CreateLimitDto) {
+        const limit = await this.limitModel.create(createLimitDto);
         const aircraft = await this.aircraftModel.findOne({ msn: createLimitDto.msn });
         if (!aircraft) throw new HttpException('Aircraft not found', HttpStatus.BAD_REQUEST);
-
-        aircraft.limits.push({
-            title: createLimitDto.title,
-            dependence: createLimitDto.dependence,
-            threshold: createLimitDto.threshold
-        })
-
+        aircraft.limits.push(limit);
         await aircraft.save();
+        return limit;
+    }
 
-        return aircraft.limits[aircraft.limits.length - 1]
+    async delLimit(deleteLimitDto: DeleteLimitDto) {
+        const limit = await this.limitModel.deleteOne({ _id: deleteLimitDto.limitId });
+        if (!limit.deletedCount) throw new HttpException('Limit not found', HttpStatus.BAD_REQUEST);
+
+        const aircraft = await this.aircraftModel.findOne({ msn: deleteLimitDto.msn });
+        if (!aircraft) throw new HttpException('Aircraft not found', HttpStatus.BAD_REQUEST);
+
+        const index = aircraft.limits.findIndex((limit: Limit) => limit._id.toString() == deleteLimitDto.limitId)
+        if (index < 0) throw new HttpException('Limit has already deleted', HttpStatus.BAD_REQUEST);
+
+        aircraft.limits.splice(index, 1);
+        await aircraft.save()
+
+        return limit;
+    }
+
+    async updateLimit(deleteLimitDto: DeleteLimitDto) {
+        const limit = await this.limitModel.updateOne({ _id: deleteLimitDto.limitId }, { dependence: "fc" });
+        if (!limit) throw new HttpException('Limit not found', HttpStatus.BAD_REQUEST);
+
+        const aircraft = await this.aircraftModel.findOne({ msn: deleteLimitDto.msn }).populate('limits');
+
+        return limit
     }
 
 }

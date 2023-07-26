@@ -7,6 +7,7 @@ import { InstallEngineDto } from 'src/dto/install-engine.dto';
 import { Engine } from 'src/schemas/engine.schema';
 import { Limit } from 'src/schemas/limit.schema';
 import { CreateLimitDto } from 'src/dto/create-limit.dto';
+import { DeleteLimitDto } from 'src/dto/delete-limit.dto';
 
 @ApiTags('Aircraft')
 @Controller('/aircraft')
@@ -51,6 +52,22 @@ export class AircraftController {
     @HttpCode(201)
     async addLimit(@Body() createLimitDto: CreateLimitDto ) {
         return await this.aircraftService.addLimit(createLimitDto);
+    }
+
+    @ApiOperation({ summary: 'Delete limit' })
+    @ApiResponse({ status: 201, type: Limit })
+    @Post('/limit/delete')
+    @HttpCode(201)
+    async delLimit(@Body() deleteLimitDto: DeleteLimitDto ) {
+        return await this.aircraftService.delLimit(deleteLimitDto);
+    }
+
+    @ApiOperation({ summary: 'Update limit' })
+    @ApiResponse({ status: 201, type: Limit })
+    @Post('/limit/update')
+    @HttpCode(201)
+    async updateLimit(@Body() deleteLimitDto: DeleteLimitDto ) {
+        return await this.aircraftService.updateLimit(deleteLimitDto);
     }
 
 
