@@ -2,8 +2,8 @@ import s from "./AircraftFile.module.scss";
 import Button from "../../../../common/buttons/Button";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
-import { sortEngines, subtractFC, subtractFH } from "../../../../utils/utils";
-import { IEngine } from "../../../../types/types";
+import { sortEngines, subtractDatesFromNow, subtractFC, subtractFH } from "../../../../utils/utils";
+import { IAircraft, IEngine, ILimit } from "../../../../types/types";
 import AircraftFileWidget from "./AircraftFileWidget/AircraftFileWidget";
 import engineIcon from "../../../../assets/img/jpeg/engine-removal.jpg";
 import legsIcon from "../../../../assets/img/png/legs-icon.png";
@@ -79,6 +79,37 @@ const AircraftFile = () => {
         </div>
 
     ))
+
+    const limitSwitcher = (limit: ILimit, aircraft: IAircraft) => {
+        const dependence = limit.dependence as keyof typeof aircraft | string;
+        switch (dependence) {
+            case 'fh':
+                return subtractFH(limit.threshold, aircraft[dependence])
+            case 'fc':
+                return subtractFC(limit.threshold, aircraft[dependence])
+            case 'date':
+                return subtractDatesFromNow(limit.threshold)
+            default:
+                return "N/A";
+        }
+    }
+
+
+    const limits = () => aircraft.limits.map((limit: ILimit) => {
+
+        return (
+            <div className={s.info__section__block} >
+                <div className={s.label__block}>
+                    <label>{limit.title}:</label>
+                </div>
+                <div className={s.span__block} >
+                    <span>{limitSwitcher(limit, aircraft)}</span>
+                </div>
+            </div>
+        )
+    }
+
+    )
 
     return (
         <div className={s.aircraftFile} >
@@ -189,12 +220,13 @@ const AircraftFile = () => {
                         </div>
 
                         <div className={s.limits__section}>
-                            Limits
+
+                            {limits()}
                         </div>
 
 
                     </div>
-                
+
                 </div>
                 <div className={s.aircraftFile__container__buttons} >
                     <AircraftFileWidget text="Legs" img={legsIcon} handler={() => navigate(`legs`)} />
@@ -202,10 +234,11 @@ const AircraftFile = () => {
                     <AircraftFileWidget text="Install Engine" img={engineIcon} handler={() => navigate('install-engine')} />
                     <AircraftFileWidget text="Remove Engine" img={engineIcon} handler={() => navigate('remove-engine')} />
                     <AircraftFileWidget text="new limit" img={engineIcon} handler={() => navigate('limit')} />
+                    <AircraftFileWidget text="del limit" img={engineIcon} handler={() => navigate('limit/del')} />
                 </div>
             </div>
             <div className={s.aircraftFile__buttons} >
-                <Button text="Back" btnType="button" color="white" handler={() => navigate('aircrafts')} />
+                <Button text="Back" btnType="button" color="white" handler={() => navigate('/i-service/aircrafts')} />
             </div>
         </div >
     )
