@@ -1,8 +1,8 @@
 import axios from "axios";
 import generalAPIData from "./generalData";
-import { IAircraft } from "../types/types";
 import { ICreateAircraftDto } from "../components/Iservice/Aircrafts/NewAircraftForm/NewAircraftForm";
 import { INewLimitDto } from "../components/Iservice/Aircrafts/AircraftFile/NewLimit/NewLimit";
+import { IDelLimitDto } from "../components/Iservice/Aircrafts/AircraftFile/DelLimit/DelLimit";
 
 const proxy = axios.create({
     baseURL: generalAPIData.baseURL,
@@ -24,6 +24,10 @@ const aircraftAPI = {
     },
     async addLimit(limitDto: INewLimitDto) {
         const response = await proxy.post('/aircraft/limit/add', limitDto);
+        return response;
+    },
+    async delLimit(limitDto: IDelLimitDto) {
+        const response = await proxy.post('/aircraft/limit/delete', limitDto);
         return response;
     },
     // async getAircraft(msn: string) {

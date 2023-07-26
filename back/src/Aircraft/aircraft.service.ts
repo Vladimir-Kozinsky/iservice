@@ -94,7 +94,7 @@ export class AircraftService {
         aircraft.limits.splice(index, 1);
         await aircraft.save()
 
-        return limit;
+        return deleteLimitDto.limitId;
     }
 
     async updateLimit(deleteLimitDto: DeleteLimitDto) {

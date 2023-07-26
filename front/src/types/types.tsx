@@ -25,7 +25,7 @@ export interface IAircraft {
     engines: [];
     apu: any;
     legs: [];
-    limits: ILimits[];
+    limits: ILimit[];
 }
 
 export interface IEngine {

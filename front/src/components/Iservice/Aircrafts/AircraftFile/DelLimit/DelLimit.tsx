@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../../../../common/buttons/Button";
 import Select, { ActionMeta, SingleValue } from "react-select";
 import { ILimit } from "../../../../../types/types";
+import { delLimit } from "../../../../../store/reducers/aircraftReducer/aircraftReducer";
 
 export interface IDelLimitDto {
     msn: string;
@@ -66,22 +67,19 @@ const DelLimit = () => {
                 }}
                 validate={values => {
                     interface IDelLimitErrorsDto {
-                        title?: string;
-                        dependence?: string;
-                        threshold?: string;
+                        limitId?: string
                     }
                     const errors: IDelLimitErrorsDto = {};
-
+                    if (!selectedOption) errors.limitId = "Limit id should not be empty"
                     return errors;
                 }}
                 onSubmit={(values: IDelLimitDto) => {
                     (async () => {
                         if (aircraft.msn) values.msn = aircraft.msn;
                         values.limitId = selectedOption;
-                        console.log(values);
-                        //await dispatch(delLimit(values));
+                        await dispatch(delLimit(values));
+                        setSelectedOption('');
                     })()
-
                 }}
             >{({
                 values,
@@ -114,7 +112,7 @@ const DelLimit = () => {
                     <div className={s.btns}>
                         <Button text="Back" color="white"
                             handler={() => navigate(`/i-service/aircraft/${aircraft.msn}`)} btnType={"button"} />
-                        <Button text="Add" color="green" btnType="submit" />
+                        <Button text="Delete" color="red" btnType="submit" />
                     </div>
                 </Form>
             )}

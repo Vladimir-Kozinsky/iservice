@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import axios from 'axios';
 import aircraftAPI from '../../../API/aircraftAPI';
 import { IAircraftRejectResponse, IAircraftState } from './aircraftReducerTypes';
-import { IAircraft } from '../../../types/types';
+import { IAircraft, ILimit } from '../../../types/types';
 import { ICreateAircraftDto } from '../../../components/Iservice/Aircrafts/NewAircraftForm/NewAircraftForm';
 import { INewLimitDto } from '../../../components/Iservice/Aircrafts/AircraftFile/NewLimit/NewLimit';
+import { IDelLimitDto } from '../../../components/Iservice/Aircrafts/AircraftFile/DelLimit/DelLimit';
 
 const initialState: IAircraftState = {
     choosedAircraft: {
@@ -52,10 +52,25 @@ const aircraftSlice = createSlice({
         builder.addCase(getAircrafts.rejected, (state: any, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
         })
-        builder.addCase(addLimit.fulfilled, (state: IAircraftState, action: PayloadAction<any>) => {
+        builder.addCase(addLimit.fulfilled, (state: IAircraftState, action: PayloadAction<ILimit>) => {
             state.choosedAircraft.limits.push(action.payload);
+            const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
+            aircraft?.limits.push(action.payload);
         })
         builder.addCase(addLimit.rejected, (state: any, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
+        })
+        builder.addCase(delLimit.fulfilled, (state: IAircraftState, action: PayloadAction<string>) => {
+            const limitId = action.payload;
+            const index = state.choosedAircraft.limits.findIndex((limit: ILimit) => limit._id === limitId);
+            state.choosedAircraft.limits.splice(index, 1);
+
+            const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
+            const indexAircraftArr = aircraft?.limits.findIndex((limit: ILimit) => limit._id === limitId);
+            if (aircraft && (indexAircraftArr || indexAircraftArr === 0)) aircraft.limits.splice(indexAircraftArr, 1);
+
+        })
+        builder.addCase(delLimit.rejected, (state: any, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
         })
 
@@ -90,9 +105,22 @@ export const getAircrafts = createAsyncThunk(
 
 export const addLimit = createAsyncThunk(
     'aircraft/limit/add',
-    async (limitDto:INewLimitDto, thunkAPI) => {
+    async (limitDto: INewLimitDto, thunkAPI) => {
         try {
             const response = await aircraftAPI.addLimit(limitDto);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IAircraftRejectResponse);
+        }
+
+    }
+)
+
+export const delLimit = createAsyncThunk(
+    'aircraft/limit/delete',
+    async (limitDto: IDelLimitDto, thunkAPI) => {
+        try {
+            const response = await aircraftAPI.delLimit(limitDto);
             return response.data;
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response.data as IAircraftRejectResponse);
