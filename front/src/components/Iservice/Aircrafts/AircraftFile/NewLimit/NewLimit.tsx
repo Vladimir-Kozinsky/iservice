@@ -17,7 +17,7 @@ export interface INewLimitDto {
     threshold: string;
 }
 
-interface IEngOption {
+interface IOption {
     value: string | null | undefined;
     label: string | null;
 }
@@ -43,17 +43,18 @@ const NewLimit = () => {
     const navigate = useNavigate();
     const aircraft = useSelector((state: RootState) => state.aircraft.choosedAircraft);
     const aircraftErrorMessage = useSelector((state: RootState) => state.aircraft.errorMessage);
-    const [selectedEngOption, setSelectedEngOption] = useState<string | null>(null);
+    const [selectedOption, setSelectedOption] = useState<string>('');
 
-    const onChangeEng = (newValue: SingleValue<IEngOption>, actionMeta: ActionMeta<IEngOption>) => {
+
+    const onChangeOption = (newValue: SingleValue<IOption>, actionMeta: ActionMeta<IOption>) => {
         if (newValue?.value) {
-            setSelectedEngOption(newValue.value);
+            setSelectedOption(newValue.value);
         }
     }
 
-    const options: IEngOption[] = [
-        { value: aircraft.fh, label: 'FH' },
-        { value: aircraft.fc, label: 'FC' },
+    const options: IOption[] = [
+        { value: 'fh', label: 'Flight Hours' },
+        { value: 'fc', label: 'Flight Cycles' },
         { value: 'date', label: 'Date' },
     ]
 
@@ -64,7 +65,7 @@ const NewLimit = () => {
                 initialValues={{
                     msn: '',
                     title: 'Life limit',
-                    dependence: 'FH',
+                    dependence: 'fc',
                     threshold: '45000'
                 }}
                 validate={values => {
@@ -82,7 +83,7 @@ const NewLimit = () => {
                 }}
                 onSubmit={(values: INewLimitDto) => {
                     (async () => {
-                        console.log(values)
+                        values.dependence = selectedOption;
                         if (aircraft.msn) values.msn = aircraft.msn;
                         await dispatch(addLimit(values));
                     })()
@@ -120,20 +121,23 @@ const NewLimit = () => {
 
                         <div className={s.inputs__block}>
                             <label>Dependence<span>*</span></label>
-                            <Select options={options} onChange={onChangeEng} styles={customStyles} />
+                            <Select options={options} onChange={onChangeOption} styles={customStyles} />
                         </div>
 
                         <div className={s.inputs__block}>
                             <label>Threshold<span>*</span></label>
-                            <Field type="threshold" id="threshold" name="threshold"
-                                placeholder="45000:00" error={errors.title} as={Input} />
+                            {selectedOption === 'date'
+                                ? <Field type="date" id="threshold" name="threshold"
+                                    placeholder="" error={errors.title} as={Input} />
+                                : <Field type="threshold" id="threshold" name="threshold"
+                                    placeholder="45000:00" error={errors.title} as={Input} />}
                         </div>
 
                     </div>
                     <div className={s.btns}>
-                        <Button text="Add" color="green" btnType="submit" />
                         <Button text="Back" color="white"
-                            handler={() => navigate('/i-service/aircrafts')} btnType={"button"} />
+                            handler={() => navigate(`/i-service/aircraft/${aircraft.msn}`)} btnType={"button"} />
+                        <Button text="Add" color="green" btnType="submit" />
                     </div>
                 </Form>
             )}

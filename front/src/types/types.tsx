@@ -75,3 +75,10 @@ export interface ICreateEngineDto {
     tsnAtLastOverhaul?: string;
     csnAtLastOverhaul?: string;
 }
+
+ export interface ILimit {
+    _id: string;
+    title: string;
+    dependence: string;
+    threshold: string;
+}

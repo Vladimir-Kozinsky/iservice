@@ -41,3 +41,14 @@ export const subtractFC = (from: string | null | undefined, to: string | null | 
     return '';
 }
 
+export const subtractDatesFromNow = (from: string | null | undefined): string => {
+    if (from) {
+        const fromDate = new Date(from);
+        const currentDate = new Date();
+        const ms = +fromDate - +currentDate;
+        const days = Math.ceil(ms / 1000 / 3600 / 24);
+        return `${days}`;
+    }
+    return '';
+}
+
