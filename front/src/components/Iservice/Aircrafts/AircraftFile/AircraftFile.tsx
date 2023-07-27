@@ -8,6 +8,8 @@ import AircraftFileWidget from "./AircraftFileWidget/AircraftFileWidget";
 import engineIcon from "../../../../assets/img/jpeg/engine-removal.jpg";
 import legsIcon from "../../../../assets/img/png/legs-icon.png";
 import printIcon from "../../../../assets/img/png/print-icon.png";
+import timerIcon from "../../../../assets/img/jpeg/timer.jpg";
+import timerDelIcon from "../../../../assets/img/jpeg/timerDel.jpg";
 import { useNavigate } from "react-router-dom";
 
 
@@ -84,25 +86,26 @@ const AircraftFile = () => {
         const dependence = limit.dependence as keyof typeof aircraft | string;
         switch (dependence) {
             case 'fh':
-                return subtractFH(limit.threshold, aircraft[dependence])
+                return `${subtractFH(limit.threshold, aircraft[dependence])} FH`
             case 'fc':
-                return subtractFC(limit.threshold, aircraft[dependence])
+                return `${subtractFC(limit.threshold, aircraft[dependence])} FC`
             case 'date':
-                return subtractDatesFromNow(limit.threshold)
+                return `${subtractDatesFromNow(limit.threshold)} Days`
             default:
                 return "N/A";
         }
     }
 
 
-    const limits = () => aircraft.limits.map((limit: ILimit) => {
+    const limits = () => aircraft.limits.map((limit: ILimit, pos: number) => {
 
         return (
-            <div className={s.info__section__block} >
-                <div className={s.label__block}>
+            <div className={s.limit} >
+                <span>{`${pos + 1}.`}</span>
+                <div className={s.limit__title}>
                     <label>{limit.title}:</label>
                 </div>
-                <div className={s.span__block} >
+                <div className={s.limit__value} >
                     <span>{limitSwitcher(limit, aircraft)}</span>
                 </div>
             </div>
@@ -118,6 +121,7 @@ const AircraftFile = () => {
                 <div className={s.info__container}>
                     <div className={s.info}>
                         <div className={s.info__section}>
+                            <h3 className={s.section__header}>Aircraft Info</h3>
                             <div>
                                 <div className={s.info__section__block} >
                                     <div className={s.label__block}>
@@ -175,8 +179,8 @@ const AircraftFile = () => {
 
                         </div>
 
-                        <div className={s.info__section}>
-
+                        {aircraft.overhaulNum && <div className={s.info__section}>
+                            <h3 className={s.section__header}>Overhaul Info</h3>
                             <div>
                                 <div className={s.info__section__block} >
                                     <div className={s.label__block}>
@@ -213,14 +217,17 @@ const AircraftFile = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div>}
 
                         <div className={s.engines__section}>
+                            <h3 className={s.section__header}>Engines</h3>
+                            {!aircraft.engines.length && <span className={s.section__message} >No engines installed</span>}
                             {engines()}
                         </div>
 
                         <div className={s.limits__section}>
-
+                            <h3 className={s.section__header}>Limits</h3>
+                            {!aircraft.limits.length && <span className={s.section__message} >No limits set</span>}
                             {limits()}
                         </div>
 
@@ -233,8 +240,8 @@ const AircraftFile = () => {
                     <AircraftFileWidget text="Print report" img={printIcon} handler={() => navigate('report')} />
                     <AircraftFileWidget text="Install Engine" img={engineIcon} handler={() => navigate('install-engine')} />
                     <AircraftFileWidget text="Remove Engine" img={engineIcon} handler={() => navigate('remove-engine')} />
-                    <AircraftFileWidget text="new limit" img={engineIcon} handler={() => navigate('limit')} />
-                    <AircraftFileWidget text="del limit" img={engineIcon} handler={() => navigate('limit/del')} />
+                    <AircraftFileWidget text="new limit" img={timerIcon} handler={() => navigate('limit')} />
+                    <AircraftFileWidget text="del limit" img={timerDelIcon} handler={() => navigate('limit/del')} />
                 </div>
             </div>
             <div className={s.aircraftFile__buttons} >
