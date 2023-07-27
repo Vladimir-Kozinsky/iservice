@@ -27,7 +27,8 @@ const initialState: IAircraftState = {
         limits: []
     },
     aircafts: [],
-    errorMessage: null
+    errorMessage: null,
+    successMessage: null,
 }
 
 const aircraftSlice = createSlice({
@@ -37,11 +38,15 @@ const aircraftSlice = createSlice({
         setChoosedAircraft(state: IAircraftState, action: PayloadAction<IAircraft>) {
             state.choosedAircraft = action.payload;
         },
+        clearSuccessMessage(state: IAircraftState) {
+            state.successMessage = null;
+        },
 
     },
     extraReducers: (builder) => {
         builder.addCase(addAircraft.fulfilled, (state: IAircraftState, action: PayloadAction<IAircraft>) => {
             state.choosedAircraft = action.payload;
+            state.successMessage = "Aircraft successfully added";
         })
         builder.addCase(addAircraft.rejected, (state: any, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
@@ -56,6 +61,7 @@ const aircraftSlice = createSlice({
             state.choosedAircraft.limits.push(action.payload);
             const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
             aircraft?.limits.push(action.payload);
+            state.successMessage = "New limit successfully added";
         })
         builder.addCase(addLimit.rejected, (state: any, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
@@ -68,7 +74,7 @@ const aircraftSlice = createSlice({
             const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
             const indexAircraftArr = aircraft?.limits.findIndex((limit: ILimit) => limit._id === limitId);
             if (aircraft && (indexAircraftArr || indexAircraftArr === 0)) aircraft.limits.splice(indexAircraftArr, 1);
-
+            state.successMessage = "Limit successfully removed";
         })
         builder.addCase(delLimit.rejected, (state: any, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
@@ -129,6 +135,6 @@ export const delLimit = createAsyncThunk(
     }
 )
 
-export const { setChoosedAircraft } = aircraftSlice.actions
+export const { setChoosedAircraft, clearSuccessMessage } = aircraftSlice.actions
 
 export default aircraftSlice.reducer;

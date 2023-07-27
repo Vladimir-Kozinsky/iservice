@@ -10,6 +10,8 @@ import Input from "../../../../../common/inputs/Input";
 import Select, { ActionMeta, SingleValue } from "react-select";
 import { addLimit } from "../../../../../store/reducers/aircraftReducer/aircraftReducer";
 import { checkFCFormat, checkFHFormat } from "../../../../../utils/utils";
+import { compose } from "@reduxjs/toolkit";
+import withSuccessMessage from "../../../../../HOC/wirhSuccessMessage";
 
 export interface INewLimitDto {
     msn: string,
@@ -158,4 +160,4 @@ const NewLimit = () => {
     )
 }
 
-export default NewLimit;
+export default compose(withSuccessMessage)(NewLimit);

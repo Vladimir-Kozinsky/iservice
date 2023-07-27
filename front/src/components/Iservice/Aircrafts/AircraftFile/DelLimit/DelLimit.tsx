@@ -9,6 +9,8 @@ import Button from "../../../../../common/buttons/Button";
 import Select, { ActionMeta, SingleValue } from "react-select";
 import { ILimit } from "../../../../../types/types";
 import { delLimit } from "../../../../../store/reducers/aircraftReducer/aircraftReducer";
+import withSuccessMessage from "../../../../../HOC/wirhSuccessMessage";
+import { compose } from "@reduxjs/toolkit";
 
 export interface IDelLimitDto {
     msn: string;
@@ -121,4 +123,4 @@ const DelLimit = () => {
     )
 }
 
-export default DelLimit;
+export default compose(withSuccessMessage) (DelLimit);
