@@ -1,10 +1,11 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import aircraftAPI from '../../../API/aircraftAPI';
 import { IAircraftRejectResponse, IAircraftState } from './aircraftReducerTypes';
-import { IAircraft, ILimit } from '../../../types/types';
+import { IAircraft, IEngine, ILimit } from '../../../types/types';
 import { ICreateAircraftDto } from '../../../components/Iservice/Aircrafts/NewAircraftForm/NewAircraftForm';
 import { INewLimitDto } from '../../../components/Iservice/Aircrafts/AircraftFile/NewLimit/NewLimit';
 import { IDelLimitDto } from '../../../components/Iservice/Aircrafts/AircraftFile/DelLimit/DelLimit';
+import { IInstallEngineDto } from '../../../components/Iservice/Aircrafts/AircraftFile/InstallEngine/InstallEngine';
 
 const initialState: IAircraftState = {
     choosedAircraft: {
@@ -80,6 +81,16 @@ const aircraftSlice = createSlice({
             state.errorMessage = action.payload.message;
         })
 
+        builder.addCase(installEngine.fulfilled, (state: IAircraftState, action: PayloadAction<IEngine>) => {
+            state.choosedAircraft.engines.push(action.payload);
+            const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
+            aircraft?.engines.push(action.payload);
+            state.successMessage = "Engine successfully installed";
+        })
+        builder.addCase(installEngine.rejected, (state: any, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
+        })
+
 
     },
 })
@@ -127,6 +138,19 @@ export const delLimit = createAsyncThunk(
     async (limitDto: IDelLimitDto, thunkAPI) => {
         try {
             const response = await aircraftAPI.delLimit(limitDto);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IAircraftRejectResponse);
+        }
+
+    }
+)
+
+export const installEngine = createAsyncThunk(
+    'aircraft/engine/install',
+    async (installEngineDto: IInstallEngineDto, thunkAPI) => {
+        try {
+            const response = await aircraftAPI.installEngine(installEngineDto);
             return response.data;
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response.data as IAircraftRejectResponse);

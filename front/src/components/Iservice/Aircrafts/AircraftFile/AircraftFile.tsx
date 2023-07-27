@@ -238,8 +238,8 @@ const AircraftFile = () => {
                 <div className={s.aircraftFile__container__buttons} >
                     <AircraftFileWidget text="Legs" img={legsIcon} handler={() => navigate(`legs`)} />
                     <AircraftFileWidget text="Print report" img={printIcon} handler={() => navigate('report')} />
-                    <AircraftFileWidget text="Install Engine" img={engineIcon} handler={() => navigate('install-engine')} />
-                    <AircraftFileWidget text="Remove Engine" img={engineIcon} handler={() => navigate('remove-engine')} />
+                    <AircraftFileWidget text="Install Engine" img={engineIcon} handler={() => navigate('engine/install')} />
+                    <AircraftFileWidget text="Remove Engine" img={engineIcon} handler={() => navigate('engine/remove')} />
                     <AircraftFileWidget text="new limit" img={timerIcon} handler={() => navigate('limit')} />
                     <AircraftFileWidget text="del limit" img={timerDelIcon} handler={() => navigate('limit/del')} />
                 </div>

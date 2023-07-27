@@ -17,6 +17,7 @@ import Legs from "./Aircrafts/Legs/Legs";
 import NewLimit from "./Aircrafts/AircraftFile/NewLimit/NewLimit";
 import DelLimit from "./Aircrafts/AircraftFile/DelLimit/DelLimit";
 import SignUp from "../SignUp/SignUp";
+import InstallEngine from "./Aircrafts/AircraftFile/InstallEngine/InstallEngine";
 
 
 const Iservice: React.FC = () => {
@@ -40,7 +41,6 @@ const Iservice: React.FC = () => {
                     <Route path="signup" element={<SignUp />} />
                     <Route path="/" element={<Dashboard />} />
                     <Route path="aircrafts" element={<Aircrafts />} />
-                    <Route path="engines" element={<Engines />} />
                     <Route path="apus" element={<Apus />} />
                     <Route path="aircrafts/new-aircraft" element={<NewAircraftForm />} />
                     <Route path="engines/new-engine" element={<NewEngineForm />} />
@@ -48,6 +48,10 @@ const Iservice: React.FC = () => {
                     <Route path="aircraft/:aircraftId/legs" element={<Legs />} />
                     <Route path="aircraft/:aircraftId/limit" element={<NewLimit />} />
                     <Route path="aircraft/:aircraftId/limit/del" element={<DelLimit />} />
+                    <Route path="aircraft/:aircraftId/engine/install" element={<InstallEngine />} />
+
+                    <Route path="engines" element={<Engines />} />
+                    
                 </Routes>
             </main>
             <Footer theme="light" />

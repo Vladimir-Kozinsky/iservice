@@ -22,7 +22,7 @@ export interface IAircraft {
     lastOverhaulDate?: string | null;
     tsnAtLastOverhaul?: string | null;
     csnAtLastOverhaul?: string | null;
-    engines: [];
+    engines: IEngine[];
     apu: any;
     legs: [];
     limits: ILimit[];
@@ -76,7 +76,7 @@ export interface ICreateEngineDto {
     csnAtLastOverhaul?: string;
 }
 
- export interface ILimit {
+export interface ILimit {
     _id: string;
     title: string;
     dependence: string;
