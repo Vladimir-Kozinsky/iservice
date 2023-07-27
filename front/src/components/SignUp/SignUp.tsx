@@ -7,8 +7,6 @@ import { AppDispatch, RootState } from '../../store/store';
 import { useNavigate, Navigate } from "react-router-dom";
 import Input from '../../common/inputs/Input';
 import { signUp } from '../../store/reducers/authReducer/authReducer';
-import { withAuthRedirect } from '../HOC/withAuthRedirect';
-import { compose } from '@reduxjs/toolkit';
 import { useEffect, useRef } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
@@ -25,12 +23,7 @@ const SignUp: React.FC = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const errorMessage = useSelector((state: RootState) => state.auth.errorMessage);
-    const isAuth = useSelector((state: RootState) => state.auth.isAuth);
     const nodeRef = useRef(null);
-
-    useEffect(() => {
-        if (isAuth) navigate("/i-service");
-    }, [isAuth])
 
     return (
         <div className={s.signout__container}>

@@ -16,6 +16,7 @@ import NewEngineForm from "./Engines/NewEngineForm/NewEngineForm";
 import Legs from "./Aircrafts/Legs/Legs";
 import NewLimit from "./Aircrafts/AircraftFile/NewLimit/NewLimit";
 import DelLimit from "./Aircrafts/AircraftFile/DelLimit/DelLimit";
+import SignUp from "../SignUp/SignUp";
 
 
 const Iservice: React.FC = () => {
@@ -36,6 +37,7 @@ const Iservice: React.FC = () => {
                 </nav>
                 <Routes>
                     <Route path="profile" element={<Profile />} />
+                    <Route path="signup" element={<SignUp />} />
                     <Route path="/" element={<Dashboard />} />
                     <Route path="aircrafts" element={<Aircrafts />} />
                     <Route path="engines" element={<Engines />} />
