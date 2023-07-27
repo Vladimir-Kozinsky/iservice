@@ -9,6 +9,7 @@ import Button from "../../../../../common/buttons/Button";
 import Input from "../../../../../common/inputs/Input";
 import Select, { ActionMeta, SingleValue } from "react-select";
 import { addLimit } from "../../../../../store/reducers/aircraftReducer/aircraftReducer";
+import { checkFCFormat, checkFHFormat } from "../../../../../utils/utils";
 
 export interface INewLimitDto {
     msn: string,
@@ -76,9 +77,20 @@ const NewLimit = () => {
                     }
                     const errors: INewLimitErrorsDto = {};
                     if (!values.title) errors.title = 'Limit Title is required';
+                    if (values.title.length > 15) errors.title = 'Title lenfgth should be less then 15 characters';
+                    if (!values.title) errors.title = 'Limit Title is required';
                     if (!values.dependence) errors.dependence = 'Dependence is required';
-                    if (!values.threshold) errors.threshold = 'Threshold is required';
 
+                    switch (selectedOption) {
+                        case "fh":
+                            if (!checkFHFormat(values.threshold)) errors.threshold = 'Invalid format, the format should be like "123456:22"';
+                            break;
+                        case "fc":
+                            if (!checkFCFormat(values.threshold)) errors.threshold = 'Invalid format, the format should be like "23456"';
+                            break;
+                        default:
+                            break;
+                    }
                     return errors;
                 }}
                 onSubmit={(values: INewLimitDto) => {
@@ -130,7 +142,7 @@ const NewLimit = () => {
                                 ? <Field type="date" id="threshold" name="threshold"
                                     placeholder="" error={errors.title} as={Input} />
                                 : <Field type="threshold" id="threshold" name="threshold"
-                                    placeholder="45000:00" error={errors.title} as={Input} />}
+                                    placeholder="45000:00" error={errors.threshold} as={Input} />}
                         </div>
 
                     </div>
