@@ -39,7 +39,7 @@ export class AircraftController {
     }
    
     @ApiOperation({ summary: 'Remove engine' })
-    @ApiResponse({ status: 201, type: [Engine] })
+    @ApiResponse({ status: 201, type: Engine })
     @Post('/engine/remove')
     @HttpCode(201)
     async removeEngine(@Body() removalDataDto: InstallEngineDto) {
@@ -69,6 +69,4 @@ export class AircraftController {
     async updateLimit(@Body() deleteLimitDto: DeleteLimitDto ) {
         return await this.aircraftService.updateLimit(deleteLimitDto);
     }
-
-
 }

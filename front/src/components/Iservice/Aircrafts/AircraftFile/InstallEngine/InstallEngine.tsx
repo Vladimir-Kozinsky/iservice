@@ -12,13 +12,15 @@ import { getEngines } from "../../../../../store/reducers/engineReducer/engineRe
 import Input from "../../../../../common/inputs/Input";
 import { checkFCFormat, checkFHFormat } from "../../../../../utils/utils";
 import { installEngine } from "../../../../../store/reducers/aircraftReducer/aircraftReducer";
+import { compose } from "@reduxjs/toolkit";
+import withSuccessMessage from "../../../../../HOC/wirhSuccessMessage";
 
 export interface IInstallEngineDto {
     date: string;
     action: string;
     aircraft: string | null;
     engine: string;
-    position: string;
+    position: number;
     aircraftTsn: string | null;
     aircraftCsn: string | null;
     engineTsn: string;
@@ -61,12 +63,6 @@ const InstallEngine: React.FC = () => {
     const aircraftErrorMessage = useSelector((state: RootState) => state.aircraft.errorMessage);
     const engines = useSelector((state: RootState) => state.engine.engines);
     const [selectedOption, setSelectedOption] = useState<string>('');
-    const [selectedActionOption, setSelectedActionOption] = useState<string>('');
-
-    const actionOptions: IOption[] = [
-        { value: 'removal', label: 'Removal' },
-        { value: 'installation', label: 'Installation' }
-    ]
 
     const options: IOption[] = engines.map((engine: IEngine) => {
         return {
@@ -81,15 +77,10 @@ const InstallEngine: React.FC = () => {
         }
     }
 
-    const onChangeActionOption = (newValue: SingleValue<IOption>, actionMeta: ActionMeta<IOption>) => {
-        if (newValue?.value) {
-            setSelectedActionOption(newValue.value);
-        }
-    }
-
-    const findEngine = (msn: string) => {
+    const findEngine = (msn: string): IEngine | null => {
         const engine = engines.find((eng: IEngine) => eng.msn === msn);
-        return engine
+        if (!engine) return null;
+        return engine;
     }
 
 
@@ -104,16 +95,16 @@ const InstallEngine: React.FC = () => {
             <Formik
                 initialValues={{
                     date: '',
-                    action: 'Install',
+                    action: 'Installation',
                     aircraft: aircraft.msn,
-                    engine: '',
-                    position: '1',
+                    engine: selectedOption,
+                    position: 1,
                     aircraftTsn: aircraft.fh,
                     aircraftCsn: aircraft.fc,
-                    engineTsn: '',
-                    engineCsn: '',
-                    reason: ''
-                }}
+                    engineTsn: findEngine(selectedOption)?.tsn,
+                    engineCsn: findEngine(selectedOption)?.csn,
+                    reason: 'none'
+                } as IInstallEngineDto}
                 validate={values => {
                     interface IInstallErrorsDto {
                         date?: string;
@@ -129,7 +120,7 @@ const InstallEngine: React.FC = () => {
                     }
                     const errors: IInstallErrorsDto = {};
                     if (!values.date) errors.date = 'Installation date is required';
-                    if (!selectedActionOption) errors.action = 'Action is required';
+                    if (!values.action) errors.action = 'Action is required';
                     if (!values.aircraft) errors.aircraft = 'Aircaft is required';
                     if (!selectedOption) errors.engine = 'Engine is required';
                     if (!values.aircraftTsn) errors.aircraftTsn = 'Aircraft FH is required';
@@ -142,12 +133,10 @@ const InstallEngine: React.FC = () => {
                     if (!checkFHFormat(values.engineTsn)) errors.engineTsn = 'Invalid format, the format should be like "123456:22"';
                     if (!values.engineCsn) errors.engineCsn = 'Engine CSN is required';
                     if (!checkFCFormat(values.engineCsn)) errors.engineCsn = 'Invalid format, the format should be like "123456"';
-                    if (!values.reason && selectedActionOption === 'removal') errors.reason = 'Removal reason is required';
                     return errors;
                 }}
                 onSubmit={(values: IInstallEngineDto) => {
                     (async () => {
-                        values.action = selectedActionOption;
                         values.engine = selectedOption;
                         await dispatch(installEngine(values));
                     })()
@@ -184,15 +173,14 @@ const InstallEngine: React.FC = () => {
                             </div>
                             <div className={s.inputs__block}>
                                 <label>Action<span>*</span></label>
-                                <Select options={actionOptions} onChange={onChangeActionOption} styles={customStyles} />
+                                <Field type="text" id="action" name="action"
+                                    placeholder="installation" disabled error={errors.action} as={Input} />
                             </div>
                             <div className={s.inputs__block}>
                                 <label>Engine removal reason<span></span></label>
                                 <Field type="text" id="reason" name="reason"
-                                    placeholder="Overhaul" error={errors.reason}
-                                    disabled={selectedActionOption && selectedActionOption === 'removal'
-                                        ? false
-                                        : true} as={Input} />
+                                    placeholder="none" error={errors.reason}
+                                    disabled as={Input} />
                             </div>
                         </div>
                         <div className={s.inputs__section} >
@@ -248,4 +236,4 @@ const InstallEngine: React.FC = () => {
     )
 }
 
-export default InstallEngine;
+export default compose(withSuccessMessage)(InstallEngine) ;

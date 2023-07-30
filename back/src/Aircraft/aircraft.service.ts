@@ -43,6 +43,9 @@ export class AircraftService {
         const installedEngine = aircraft.engines.find((engine: Engine) => engine.msn === installDataDto.engine);
         if (installedEngine) throw new HttpException('Engine has already installed', HttpStatus.BAD_REQUEST);
 
+        const isEmptyEnginePos = aircraft.engines.find((engine: Engine) => engine.position === installDataDto.position);
+        if (isEmptyEnginePos) throw new HttpException(`Engine has already installed on ${installDataDto.position} position`, HttpStatus.BAD_REQUEST);
+
         engine.engineHistory.push(installDataDto);
         engine.position = installDataDto.position;
         await engine.save();
@@ -50,7 +53,7 @@ export class AircraftService {
         aircraft.engines.push(engine);
         await aircraft.save();
 
-        return aircraft.engines;
+        return engine;
     }
 
     async removeEngine(removalDataDto: InstallEngineDto) {

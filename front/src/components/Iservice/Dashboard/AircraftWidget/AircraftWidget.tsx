@@ -5,7 +5,7 @@ import apu from './../../../../assets/img/png/apu.png'
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../store/store';
-import { IAircraft } from '../../../../types/types';
+import { IAircraft, IEngine } from '../../../../types/types';
 import { type } from 'os';
 import { setChoosedAircraft } from '../../../../store/reducers/aircraftReducer/aircraftReducer';
 import { useNavigate } from 'react-router-dom';
@@ -14,10 +14,10 @@ type AircraftWidgetProps = {
     aircraft: IAircraft;
 }
 
-export const setEngine = (pos: number, engines: any): string | undefined => {
+export const setEngine = (pos: number, engines: IEngine[]): string | undefined => {
     if (pos && engines.length > 0) {
-        const eng = engines.find((e: any) => e.pos == pos);
-        if (eng) return eng.msn.toString();
+        const eng = engines.find((e: IEngine) => e.position == pos);
+        if (eng) return eng.msn?.toString();
     }
     return undefined;
 }
