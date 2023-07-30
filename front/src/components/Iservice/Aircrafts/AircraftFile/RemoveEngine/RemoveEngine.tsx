@@ -11,7 +11,7 @@ import { IEngine } from "../../../../../types/types";
 import { getEngines } from "../../../../../store/reducers/engineReducer/engineReducer";
 import Input from "../../../../../common/inputs/Input";
 import { checkFCFormat, checkFHFormat } from "../../../../../utils/utils";
-import { installEngine } from "../../../../../store/reducers/aircraftReducer/aircraftReducer";
+import { installEngine, removeEngine } from "../../../../../store/reducers/aircraftReducer/aircraftReducer";
 import { compose } from "@reduxjs/toolkit";
 import withSuccessMessage from "../../../../../HOC/wirhSuccessMessage";
 import withErrorMessage from "../../../../../HOC/wirhErrorMessage";
@@ -124,8 +124,7 @@ const RemoveEngine: React.FC = () => {
                     (async () => {
                         values.engine = selectedOption;
                         values.position = findEngine(selectedOption)?.position;
-                        console.log(values);
-                        // await dispatch(installEngine(values));
+                        await dispatch(removeEngine(values));
                     })()
 
                 }}
