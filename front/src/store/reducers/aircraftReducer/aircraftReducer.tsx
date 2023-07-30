@@ -97,7 +97,9 @@ const aircraftSlice = createSlice({
 
         builder.addCase(removeEngine.fulfilled, (state: IAircraftState, action: PayloadAction<IEngine>) => {
             const removedEngine = action.payload;
+            console.log(removedEngine)
             const choosedAircarftEngineIndex = state.choosedAircraft.engines.findIndex((engine: IEngine) => engine.msn === removedEngine.msn);
+            console.log(choosedAircarftEngineIndex);
             state.choosedAircraft.engines.splice(choosedAircarftEngineIndex, 1);
             const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
             const engineIndexAircraftArr = aircraft?.engines.findIndex((engine: IEngine) => engine.msn === removedEngine.msn);

@@ -72,7 +72,8 @@ export class AircraftService {
         if (index < 0) throw new HttpException('Engine has already removed', HttpStatus.BAD_REQUEST);
         aircraft.engines.splice(index, 1);
         await aircraft.save();
-        return aircraft.engines;
+        
+        return engine;
     }
 
     async addLimit(createLimitDto: CreateLimitDto) {
