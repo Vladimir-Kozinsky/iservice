@@ -1,5 +1,5 @@
 import { Field, Form, Formik } from "formik";
-import s from "./InstallEngine.module.scss";
+import s from "./RemoveEngine.module.scss";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../store/store";
 import { CSSTransition } from "react-transition-group";
@@ -16,12 +16,12 @@ import { compose } from "@reduxjs/toolkit";
 import withSuccessMessage from "../../../../../HOC/wirhSuccessMessage";
 import withErrorMessage from "../../../../../HOC/wirhErrorMessage";
 
-export interface IInstallEngineDto {
+export interface IRemoveEngineDto {
     date: string;
     action: string;
     aircraft: string | null;
     engine: string;
-    position: number;
+    position: number | null | undefined;
     aircraftTsn: string | null;
     aircraftCsn: string | null;
     engineTsn: string;
@@ -49,23 +49,13 @@ const customStyles = {
     }),
 }
 
-const actionOptions: IOption[] = [
-    { value: 'removal', label: 'Removal' },
-    { value: 'installation', label: 'Installation' }
-]
-
-
-
-const InstallEngine: React.FC = () => {
+const RemoveEngine: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const nodeRef = useRef(null);
     const navigate = useNavigate();
     const aircraft = useSelector((state: RootState) => state.aircraft.choosedAircraft);
-    const aircraftErrorMessage = useSelector((state: RootState) => state.aircraft.errorMessage);
-    const engines = useSelector((state: RootState) => state.engine.engines);
     const [selectedOption, setSelectedOption] = useState<string>('');
 
-    const options: IOption[] = engines.map((engine: IEngine) => {
+    const options: IOption[] = aircraft.engines.map((engine: IEngine) => {
         return {
             value: engine.msn,
             label: `${engine.type} ${engine.msn}`
@@ -79,33 +69,27 @@ const InstallEngine: React.FC = () => {
     }
 
     const findEngine = (msn: string): IEngine | null => {
-        const engine = engines.find((eng: IEngine) => eng.msn === msn);
+        const engine = aircraft.engines.find((eng: IEngine) => eng.msn === msn);
         if (!engine) return null;
         return engine;
     }
 
-
-
-    useEffect(() => {
-        dispatch(getEngines());
-    }, [])
-
     return (
         <div className={s.installEngine}>
-            <h1 className={s.installEngine__header} >Install Engine</h1>
+            <h1 className={s.installEngine__header} >Removal Engine</h1>
             <Formik
                 initialValues={{
                     date: '',
-                    action: 'Installation',
+                    action: 'Removal',
                     aircraft: aircraft.msn,
                     engine: selectedOption,
-                    position: 1,
+                    position: findEngine(selectedOption)?.position,
                     aircraftTsn: aircraft.fh,
                     aircraftCsn: aircraft.fc,
                     engineTsn: findEngine(selectedOption)?.tsn,
                     engineCsn: findEngine(selectedOption)?.csn,
-                    reason: 'none'
-                } as IInstallEngineDto}
+                    reason: ''
+                } as IRemoveEngineDto}
                 validate={values => {
                     interface IInstallErrorsDto {
                         date?: string;
@@ -129,17 +113,19 @@ const InstallEngine: React.FC = () => {
                     if (!values.aircraftCsn) errors.aircraftCsn = 'Aircraft FC is required';
                     if (values.aircraftCsn && !checkFCFormat(values.aircraftCsn)) errors.aircraftCsn = 'Invalid format, the format should be like "123456"';
 
-
+                    if (!values.reason) errors.reason = 'Engine removal reason is required';
                     if (!values.engineTsn) errors.engineTsn = 'Engine TSN is required';
                     if (!checkFHFormat(values.engineTsn)) errors.engineTsn = 'Invalid format, the format should be like "123456:22"';
                     if (!values.engineCsn) errors.engineCsn = 'Engine CSN is required';
                     if (!checkFCFormat(values.engineCsn)) errors.engineCsn = 'Invalid format, the format should be like "123456"';
                     return errors;
                 }}
-                onSubmit={(values: IInstallEngineDto) => {
+                onSubmit={(values: IRemoveEngineDto) => {
                     (async () => {
                         values.engine = selectedOption;
-                        await dispatch(installEngine(values));
+                        values.position = findEngine(selectedOption)?.position;
+                        console.log(values);
+                        // await dispatch(installEngine(values));
                     })()
 
                 }}
@@ -152,23 +138,11 @@ const InstallEngine: React.FC = () => {
                 handleSubmit,
             }) => (
                 <Form className={s.newAircraftForm__container}>
-                    <CSSTransition
-                        in={aircraftErrorMessage ? true : false}
-                        nodeRef={nodeRef}
-                        timeout={500}
-                        classNames={{
-                            ...s,
-                            enterActive: s['enter-active'],
-                        }}
-                        unmountOnExit
-                    >
-                        <div ref={nodeRef} className={s.newAircraftForm__message}>{aircraftErrorMessage}</div>
-                    </CSSTransition>
                     <div className={s.inputs}>
                         <div className={s.inputs__section} >
                             <h3 className={s.inputs__section__header}>General</h3>
                             <div className={s.inputs__block}>
-                                <label>Installation Date<span>*</span></label>
+                                <label>Removal Date<span>*</span></label>
                                 <Field type="date" id="date" name="date"
                                     placeholder="" error={errors.date} as={Input} />
                             </div>
@@ -178,10 +152,10 @@ const InstallEngine: React.FC = () => {
                                     placeholder="installation" disabled error={errors.action} as={Input} />
                             </div>
                             <div className={s.inputs__block}>
-                                <label>Engine removal reason<span></span></label>
+                                <label>Engine removal reason<span>*</span></label>
                                 <Field type="text" id="reason" name="reason"
                                     placeholder="none" error={errors.reason}
-                                    disabled as={Input} />
+                                    as={Input} />
                             </div>
                         </div>
                         <div className={s.inputs__section} >
@@ -210,8 +184,8 @@ const InstallEngine: React.FC = () => {
                             </div>
                             <div className={s.inputs__block}>
                                 <label>Position<span>*</span></label>
-                                <Field type="number" id="position" name="position"
-                                    placeholder='1' error={errors.position} max='4' min='1' as={Input} />
+                                <Field type="text" id="position" name="position"
+                                    placeholder={findEngine(selectedOption)?.position} disabled error={errors.position} as={Input} />
                             </div>
                             <div className={s.inputs__block}>
                                 <label>Engine TSN<span>*</span></label>
@@ -233,10 +207,10 @@ const InstallEngine: React.FC = () => {
                 </Form>
             )}
             </Formik>
-        </div>
+        </div >
     )
 }
 
-const EnhancedComponent = withSuccessMessage(InstallEngine);
+const EnhancedComponent = withSuccessMessage(RemoveEngine);
 
 export default compose(withErrorMessage)(EnhancedComponent);

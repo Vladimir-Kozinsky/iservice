@@ -4,6 +4,7 @@ import { ICreateAircraftDto } from "../components/Iservice/Aircrafts/NewAircraft
 import { INewLimitDto } from "../components/Iservice/Aircrafts/AircraftFile/NewLimit/NewLimit";
 import { IDelLimitDto } from "../components/Iservice/Aircrafts/AircraftFile/DelLimit/DelLimit";
 import { IInstallEngineDto } from "../components/Iservice/Aircrafts/AircraftFile/InstallEngine/InstallEngine";
+import { IRemoveEngineDto } from "../components/Iservice/Aircrafts/AircraftFile/RemoveEngine/RemoveEngine";
 
 const proxy = axios.create({
     baseURL: generalAPIData.baseURL,
@@ -34,6 +35,11 @@ const aircraftAPI = {
 
     async installEngine(installEngineDto: IInstallEngineDto) {
         const response = await proxy.post('/aircraft/engine/install', installEngineDto);
+        return response;
+    },
+
+    async removeEngine(removeEngineDto: IRemoveEngineDto) {
+        const response = await proxy.post('/aircraft/engine/remove', removeEngineDto);
         return response;
     }
     // async getAircraft(msn: string) {

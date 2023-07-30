@@ -18,6 +18,7 @@ import NewLimit from "./Aircrafts/AircraftFile/NewLimit/NewLimit";
 import DelLimit from "./Aircrafts/AircraftFile/DelLimit/DelLimit";
 import SignUp from "../SignUp/SignUp";
 import InstallEngine from "./Aircrafts/AircraftFile/InstallEngine/InstallEngine";
+import RemoveEngine from "./Aircrafts/AircraftFile/RemoveEngine/RemoveEngine";
 
 
 const Iservice: React.FC = () => {
@@ -49,6 +50,7 @@ const Iservice: React.FC = () => {
                     <Route path="aircraft/:aircraftId/limit" element={<NewLimit />} />
                     <Route path="aircraft/:aircraftId/limit/del" element={<DelLimit />} />
                     <Route path="aircraft/:aircraftId/engine/install" element={<InstallEngine />} />
+                    <Route path="aircraft/:aircraftId/engine/remove" element={<RemoveEngine />} />
 
                     <Route path="engines" element={<Engines />} />
                     

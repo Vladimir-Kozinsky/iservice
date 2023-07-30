@@ -6,6 +6,7 @@ import { ICreateAircraftDto } from '../../../components/Iservice/Aircrafts/NewAi
 import { INewLimitDto } from '../../../components/Iservice/Aircrafts/AircraftFile/NewLimit/NewLimit';
 import { IDelLimitDto } from '../../../components/Iservice/Aircrafts/AircraftFile/DelLimit/DelLimit';
 import { IInstallEngineDto } from '../../../components/Iservice/Aircrafts/AircraftFile/InstallEngine/InstallEngine';
+import { IRemoveEngineDto } from '../../../components/Iservice/Aircrafts/AircraftFile/RemoveEngine/RemoveEngine';
 
 const initialState: IAircraftState = {
     choosedAircraft: {
@@ -43,6 +44,9 @@ const aircraftSlice = createSlice({
             state.successMessage = null;
         },
 
+        clearErrorMessage(state: IAircraftState) {
+            state.errorMessage = null;
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(addAircraft.fulfilled, (state: IAircraftState, action: PayloadAction<IAircraft>) => {
@@ -91,7 +95,19 @@ const aircraftSlice = createSlice({
             state.errorMessage = action.payload.message;
         })
 
+        builder.addCase(removeEngine.fulfilled, (state: IAircraftState, action: PayloadAction<IEngine>) => {
+            const removedEngine = action.payload;
+            const choosedAircarftEngineIndex = state.choosedAircraft.engines.findIndex((engine: IEngine) => engine.msn === removedEngine.msn);
+            state.choosedAircraft.engines.splice(choosedAircarftEngineIndex, 1);
+            const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
+            const engineIndexAircraftArr = aircraft?.engines.findIndex((engine: IEngine) => engine.msn === removedEngine.msn);
+            if (aircraft && (engineIndexAircraftArr || engineIndexAircraftArr === 0)) aircraft.engines.splice(engineIndexAircraftArr, 1);
+            state.successMessage = "Engine successfully removed";
+        })
 
+        builder.addCase(removeEngine.rejected, (state: any, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
+        })
     },
 })
 
@@ -159,6 +175,19 @@ export const installEngine = createAsyncThunk(
     }
 )
 
-export const { setChoosedAircraft, clearSuccessMessage } = aircraftSlice.actions
+export const removeEngine = createAsyncThunk(
+    'aircraft/engine/remove',
+    async (removeEngineDto: IRemoveEngineDto, thunkAPI) => {
+        try {
+            const response = await aircraftAPI.removeEngine(removeEngineDto);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IAircraftRejectResponse);
+        }
+
+    }
+)
+
+export const { setChoosedAircraft, clearSuccessMessage, clearErrorMessage } = aircraftSlice.actions
 
 export default aircraftSlice.reducer;
