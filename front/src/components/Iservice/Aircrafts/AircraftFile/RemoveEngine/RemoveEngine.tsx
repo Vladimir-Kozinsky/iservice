@@ -201,7 +201,7 @@ const RemoveEngine: React.FC = () => {
                     <div className={s.btns}>
                         <Button text="Back" color="white"
                             handler={() => navigate(`/i-service/aircraft/${aircraft.msn}`)} btnType={"button"} />
-                        <Button text="Add" color="green" btnType="submit" />
+                        <Button text="Remove" color="green" btnType="submit" />
                     </div>
                 </Form>
             )}
