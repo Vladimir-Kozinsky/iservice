@@ -69,10 +69,6 @@ export class Aircraft {
     @Prop({ ref: 'Apu' })
     apu: [Apu];
 
-    @ApiProperty({ example: 'none', description: "Legs" })
-    @Prop({ ref: 'Leg' })
-    legs: Leg[];
-
     @ApiProperty({ example: 'none', description: "Limit" })
     @Prop({ type: [mongoose.SchemaTypes.ObjectId], ref: 'Limit' })
     limits: Limit[];
