@@ -7,7 +7,19 @@ export type LegDocument = HydratedDocument<Leg>;
 @Schema()
 export class Leg {
 
-    _id: Types.ObjectId
+    _id: Types.ObjectId;
+
+    @ApiProperty({ example: '25891', description: 'Aircraft MSN' })
+    @Prop({ required: true })
+    aircraft: string;
+
+    @ApiProperty({ example: '[25891]', description: 'Engine MSN' })
+    @Prop({ required: true })
+    engines: string[];
+
+    @ApiProperty({ example: '25891', description: 'APU MSN' })
+    @Prop({ required: true })
+    apu: string;
 
     @ApiProperty({ example: '2024-01-30', description: 'Depature date' })
     @Prop({ required: true })
