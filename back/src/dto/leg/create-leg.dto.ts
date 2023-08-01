@@ -8,7 +8,14 @@ export class CreateLegDto {
 
     @ApiProperty({ example: '[25891]', description: "Engine MSN" })
     @IsNotEmpty()
-    readonly engines: string[];
+    readonly engines: [
+        {
+            msn: string,
+            engineTsn: string,
+            engineCsn: string
+        }
+
+    ];
 
     @ApiProperty({ example: '25891', description: "APU MSN" })
     @IsNotEmpty()
@@ -54,4 +61,11 @@ export class CreateLegDto {
     @IsNotEmpty()
     readonly blockTime: string;
 
+    @ApiProperty({ example: '56006:40', description: 'Aircraft FH' })
+    @IsNotEmpty()
+    readonly fh: string;
+
+    @ApiProperty({ example: '6656', description: 'Aircraft FC' })
+    @IsNotEmpty()
+    readonly fc: string;
 }

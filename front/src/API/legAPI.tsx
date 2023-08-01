@@ -20,7 +20,7 @@ const legAPI = {
         const response = await proxy.get('/leg/legs');
         return response;
     },
-   
+
 }
 
 export default legAPI;

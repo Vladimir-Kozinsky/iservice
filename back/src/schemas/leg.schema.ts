@@ -15,7 +15,14 @@ export class Leg {
 
     @ApiProperty({ example: '[25891]', description: 'Engine MSN' })
     @Prop({ required: true })
-    engines: string[];
+    engines: [
+        {
+            msn: string,
+            engineTsn: string,
+            engineCsn: string
+        }
+
+    ];
 
     @ApiProperty({ example: '25891', description: 'APU MSN' })
     @Prop({ required: true })
@@ -60,6 +67,14 @@ export class Leg {
     @ApiProperty({ example: '6:40', description: 'Block time' })
     @Prop({ required: true })
     blockTime: string;
+
+    @ApiProperty({ example: '56006:40', description: 'Aircraft FH' })
+    @Prop({ required: true })
+    fh: string;
+
+    @ApiProperty({ example: '6656', description: 'Aircraft FC' })
+    @Prop({ required: true })
+    fc: string;
 }
 
 export const LegSchema = SchemaFactory.createForClass(Leg);

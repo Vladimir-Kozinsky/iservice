@@ -4,6 +4,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './reducers/authReducer/authReducer'
 import aircraftReducer from './reducers/aircraftReducer/aircraftReducer'
 import engineReducer from './reducers/engineReducer/engineReducer'
+import legReducer from './reducers/legReducer/legReducer'
 // import engineReducer from './reducers/engineReducer'
 
 export const store = configureStore({
@@ -12,6 +13,7 @@ export const store = configureStore({
         aircraft: aircraftReducer,
         engine: engineReducer,
         // apu: apuReducer
+        leg: legReducer
     }
 })
 

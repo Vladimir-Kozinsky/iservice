@@ -19,6 +19,8 @@ const initialState: ILegState = {
         blockOn: null,
         flightTime: null,
         blockTime: null,
+        fh: null,
+        fc: null,
     },
     legs: [],
     errorMessage: null,
@@ -48,7 +50,7 @@ const legSlice = createSlice({
         })
 
         builder.addCase(deleteLeg.fulfilled, (state: ILegState, action: PayloadAction<ILeg>) => {
-           // state.legs.push(action.payload); TO DO
+            // state.legs.push(action.payload); TO DO
             state.successMessage = "Leg successfully deleted";
         })
         builder.addCase(deleteLeg.rejected, (state: ILegState, action: PayloadAction<any>) => {
@@ -90,7 +92,7 @@ export const deleteLeg = createAsyncThunk(
 
 export const getLegs = createAsyncThunk(
     'leg/legs',
-    async (createLegDto: ICreateLegDto, thunkAPI) => {
+    async (none, thunkAPI) => {
         try {
             const response = await legAPI.getLegs();
             return response.data;

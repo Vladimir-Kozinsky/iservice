@@ -86,7 +86,7 @@ export interface ILimit {
 export interface ILeg {
     _id: string;
     aircraft: string;
-    engines: string[];
+    engines: ILegEngine[];
     apu: string;
     depDate: string;
     flightNumber: string;
@@ -98,4 +98,12 @@ export interface ILeg {
     blockOn: string;
     flightTime: string;
     blockTime: string;
+    fh: string;
+    fc: string;
+}
+
+export interface ILegEngine {
+    msn: string;
+    engineTsn: string;
+    engineCsn: string;
 }
