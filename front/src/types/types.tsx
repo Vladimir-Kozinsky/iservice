@@ -82,3 +82,20 @@ export interface ILimit {
     dependence: string;
     threshold: string;
 }
+
+export interface ILeg {
+    _id: string;
+    aircraft: string;
+    engines: string[];
+    apu: string;
+    depDate: string;
+    flightNumber: string;
+    from: string;
+    to: string;
+    blockOff: string;
+    takeOff: string;
+    landing: string;
+    blockOn: string;
+    flightTime: string;
+    blockTime: string;
+}
