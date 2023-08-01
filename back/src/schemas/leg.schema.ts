@@ -60,14 +60,6 @@ export class Leg {
     @ApiProperty({ example: '6:40', description: 'Block time' })
     @Prop({ required: true })
     blockTime: string;
-
-    @ApiProperty({ example: '45231:00', description: "Current FH" })
-    @Prop({ required: true })
-    fh: string;
-
-    @ApiProperty({ example: '4523', description: "Current FC" })
-    @Prop({ required: true })
-    fc: string;
 }
 
 export const LegSchema = SchemaFactory.createForClass(Leg);

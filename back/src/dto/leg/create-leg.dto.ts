@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty } from "class-validator";
 
-export class CreateAircraftDto {
+export class CreateLegDto {
     @ApiProperty({ example: '25891', description: "Aircraft MSN" })
     @IsNotEmpty()
     readonly aircraft: string;
@@ -53,13 +53,5 @@ export class CreateAircraftDto {
     @ApiProperty({ example: '6:40', description: 'Block time' })
     @IsNotEmpty()
     readonly blockTime: string;
-
-    @ApiProperty({ example: '45231:00', description: "Current FH" })
-    @IsNotEmpty()
-    readonly fh: string;
-
-    @ApiProperty({ example: '4523', description: "Current FC" })
-    @IsNotEmpty()
-    readonly fc: string;
 
 }
