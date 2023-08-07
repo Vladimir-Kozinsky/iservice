@@ -70,3 +70,30 @@ export const checkFCFormat = (str = ''): boolean => {
     if (num < 0) return false
     return true
 }
+
+export const calcTime = (depDate: string, startTime: string, endTime: string) => {
+    if (!depDate || !startTime || !endTime) return '00:00';
+    const startYear = +depDate.split('-')[0];
+    const startMonth = +depDate.split('-')[1];
+    const startDate = +depDate.split('-')[2];
+    const starthh = +startTime.split(':')[0];
+    const startmm = +startTime.split(':')[1];
+    const start = new Date() as any;
+    start.setUTCFullYear(startYear, startMonth, startDate);
+    start.setUTCHours(starthh, startmm);
+
+    const endYear = +depDate.split('-')[0];
+    const endMonth = +depDate.split('-')[1];
+    const endDate = +depDate.split('-')[2];
+    const endhh = +endTime.split(':')[0];
+    const endmm = +endTime.split(':')[1];
+    const end = new Date() as any;
+    end.setUTCFullYear(endYear, endMonth, endDate);
+    end.setUTCHours(endhh, endmm);
+
+    if (start > end) end.setUTCDate(endDate + 1);
+    const totalTimemm = Math.abs((end - start) / 1000 / 60);
+    const hh = Math.floor(totalTimemm / 60);
+    const mm = totalTimemm % 60;
+    return `${hh}:${mm}`
+}
