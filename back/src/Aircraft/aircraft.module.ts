@@ -6,6 +6,7 @@ import { AircraftService } from './aircraft.service';
 import { AircraftController } from './aircraft.controller';
 import { Engine, EngineSchema } from 'src/schemas/engine.schema';
 import { Limit, LimitSchema } from 'src/schemas/limit.schema';
+import { Apu, ApuSchema } from 'src/schemas/apu.schema';
 
 @Module({
   imports: [
@@ -16,6 +17,10 @@ import { Limit, LimitSchema } from 'src/schemas/limit.schema';
     MongooseModule.forFeature([{
       name: Engine.name,
       schema: EngineSchema
+    }]),
+    MongooseModule.forFeature([{
+      name: Apu.name,
+      schema: ApuSchema
     }]),
     MongooseModule.forFeature([{
       name: Limit.name,

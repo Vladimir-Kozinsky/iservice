@@ -4,6 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { HydratedDocument, Types } from 'mongoose';
 import { Limit } from './limit.schema';
 import { EngineHistory } from './engineHistory.schema';
+import { ApuHistory } from './apuHistory.schema';
 
 export type ApuDocument = HydratedDocument<Apu>;
 
@@ -28,8 +29,8 @@ export class Apu {
     tsn: string;
 
     @ApiProperty({ example: '45697:00', description: "APU Time Since New" })
-    @Prop({ ref: 'EngineHistory' })
-    engineHistory: EngineHistory
+    @Prop({ ref: 'ApuHistory' })
+    apuHistory: ApuHistory
 
     @ApiProperty({ example: '4', description: "The number of APU overhauls." })
     @Prop({ required: false })

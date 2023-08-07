@@ -66,8 +66,8 @@ export class Aircraft {
     engines: Engine[];
 
     @ApiProperty({ example: 'none', description: "APU" })
-    @Prop({ ref: 'Apu' })
-    apu: [Apu];
+    @Prop({type: mongoose.SchemaTypes.ObjectId, ref: 'Apu' })
+    apu: Apu;
 
     @ApiProperty({ example: 'none', description: "Limit" })
     @Prop({ type: [mongoose.SchemaTypes.ObjectId], ref: 'Limit' })

@@ -4,8 +4,10 @@ import { Model } from 'mongoose';
 import { CreateAircraftDto } from 'src/dto/create-aircraft.dto';
 import { CreateLimitDto } from 'src/dto/create-limit.dto';
 import { DeleteLimitDto } from 'src/dto/delete-limit.dto';
+import { InstallApuDto } from 'src/dto/apu/install-apu.dto';
 import { InstallEngineDto } from 'src/dto/install-engine.dto';
 import { Aircraft } from 'src/schemas/aircraft.schema';
+import { Apu } from 'src/schemas/apu.schema';
 import { Engine } from 'src/schemas/engine.schema';
 import { Limit } from 'src/schemas/limit.schema';
 
@@ -16,6 +18,8 @@ export class AircraftService {
         private readonly aircraftModel: Model<Aircraft>,
         @InjectModel(Engine.name)
         private readonly engineModel: Model<Engine>,
+        @InjectModel(Apu.name)
+        private readonly apuModel: Model<Apu>,
         @InjectModel(Limit.name)
         private readonly limitModel: Model<Limit>,
     ) { }
@@ -28,7 +32,7 @@ export class AircraftService {
 
     async getAircrafts() {
         const aircrafts = await this.aircraftModel.find()
-            .populate('limits');
+            .populate('apu').populate('limits');
         if (!aircrafts.length) throw new HttpException('Aircrafts not found', HttpStatus.BAD_REQUEST);
         return aircrafts;
     }
@@ -56,6 +60,23 @@ export class AircraftService {
         return engine;
     }
 
+    async installApu(installDataDto: InstallApuDto) {
+        const apu = await this.apuModel.findOne({ msn: installDataDto.apu });
+        if (!apu) throw new HttpException('Apu not found', HttpStatus.BAD_REQUEST);
+        const aircraft = await this.aircraftModel.findOne({ msn: installDataDto.aircraft });
+        if (!aircraft) throw new HttpException('Aircraft not found', HttpStatus.BAD_REQUEST);
+
+        const installedApu = aircraft.apu;
+        if (installedApu) throw new HttpException('Apu has already installed', HttpStatus.BAD_REQUEST);
+        aircraft.apu = apu;
+        await aircraft.save();
+
+        apu.apuHistory = installDataDto;
+        await apu.save();
+
+        return apu;
+    }
+
     async removeEngine(removalDataDto: InstallEngineDto) {
 
         const engine = await this.engineModel.findOne({ msn: removalDataDto.engine });
@@ -72,7 +93,7 @@ export class AircraftService {
         if (index < 0) throw new HttpException('Engine has already removed', HttpStatus.BAD_REQUEST);
         aircraft.engines.splice(index, 1);
         await aircraft.save();
-        
+
         return engine;
     }
 
