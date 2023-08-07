@@ -162,7 +162,7 @@ const Legs: React.FC = () => {
                         <div className={s.leg__title__value}>FH</div>
                         <div className={s.leg__title__value}>FC</div>
                     </div>
-                    {legs[0].engines.map((engine: ILegEngine,) => (
+                    {legs.length && legs[0].engines.map((engine: ILegEngine,) => (
                         <div className={s.leg__block}>
                             <div className={s.leg__title__value}>Engine</div>
                             <div className={s.leg__title__value}>TSN</div>
@@ -171,18 +171,13 @@ const Legs: React.FC = () => {
                     ))}
 
 
-
-
-
-
-
                     <button className={s.edit__btn} onClick={() => console.log('edit hendler')}></button>
                 </div>
                 {legsComp}
             </div>
             <div className={s.buttons} >
                 <Button text="Back" btnType="button" color="white" handler={() => navigate(`/i-service/aircraft/${aircraft.msn}`)} />
-                <Button text="Add" btnType="button" color="green" handler={() => setAddLegForm(true)} />
+                <Button text="Add" btnType="button" color="green" handler={() => navigate(`create`)}/>
             </div>
         </div>
     )

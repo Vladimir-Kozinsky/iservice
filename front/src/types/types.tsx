@@ -9,22 +9,22 @@ export interface IUser {
 }
 
 export interface IAircraft {
-    _id: string | null;
-    type: string | null;
-    msn: string | null;
-    regNum: string | null;
-    manufDate: string | null;
-    initFh: string | null;
-    initFc: string | null;
-    fh: string | null;
-    fc: string | null;
-    overhaulNum?: number | null;
-    lastOverhaulDate?: string | null;
-    tsnAtLastOverhaul?: string | null;
-    csnAtLastOverhaul?: string | null;
+    _id: string;
+    type: string;
+    msn: string;
+    regNum: string;
+    manufDate: string;
+    initFh: string;
+    initFc: string;
+    fh: string;
+    fc: string;
+    overhaulNum?: number;
+    lastOverhaulDate?: string;
+    tsnAtLastOverhaul?: string;
+    csnAtLastOverhaul?: string;
     engines: IEngine[];
     apu: any;
-    legs: [];
+    legs: ILeg[];
     limits: ILimit[];
 }
 
@@ -103,7 +103,7 @@ export interface ILeg {
 }
 
 export interface ILegEngine {
-    msn: string;
-    engineTsn: string;
-    engineCsn: string;
+    msn: string | null;
+    engineTsn: string | null;
+    engineCsn: string | null;
 }

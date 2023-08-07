@@ -8,23 +8,24 @@ import { IDelLimitDto } from '../../../components/Iservice/Aircrafts/AircraftFil
 import { IInstallEngineDto } from '../../../components/Iservice/Aircrafts/AircraftFile/InstallEngine/InstallEngine';
 import { IRemoveEngineDto } from '../../../components/Iservice/Aircrafts/AircraftFile/RemoveEngine/RemoveEngine';
 
+
 const initialState: IAircraftState = {
     choosedAircraft: {
-        _id: null,
-        type: null,
-        msn: null,
-        regNum: null,
-        manufDate: null,
-        initFh: null,
-        initFc: null,
-        fh: null,
-        fc: null,
-        overhaulNum: null,
-        lastOverhaulDate: null,
-        tsnAtLastOverhaul: null,
-        csnAtLastOverhaul: null,
+        _id: '',
+        type: '',
+        msn: '',
+        regNum: '',
+        manufDate: '',
+        initFh: '',
+        initFc: '',
+        fh: '',
+        fc: '',
+        overhaulNum: 0,
+        lastOverhaulDate: '',
+        tsnAtLastOverhaul: '',
+        csnAtLastOverhaul: '',
         engines: [],
-        apu: [],
+        apu: {},
         legs: [],
         limits: []
     },

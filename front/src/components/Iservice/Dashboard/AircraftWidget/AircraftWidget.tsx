@@ -76,7 +76,7 @@ const AircraftWidget: React.FC<AircraftWidgetProps> = ({ aircraft }) => {
                     </div>
                     <div className={s.engine}>
                         <img src={apu} alt="engine-icon" />
-                        <span>{`APU: ${cutData(aircraft.apu[0])}`}</span>
+                        <span>{`${cutData(aircraft.apu.msn)}`}</span>
                     </div>
                 </div >
 
