@@ -15,6 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 const AircraftFile = () => {
     const aircraft = useSelector((state: RootState) => state.aircraft.choosedAircraft);
+    const apu = aircraft.apu;
     const navigate = useNavigate();
 
     const engines = () => sortEngines(aircraft.engines).map((engine: IEngine) => (
@@ -223,6 +224,67 @@ const AircraftFile = () => {
                             <h3 className={s.section__header}>Engines</h3>
                             {!aircraft.engines.length && <span className={s.section__message} >No engines installed</span>}
                             {engines()}
+                            <div key={apu.msn} className={s.engine}>
+                                <div className={s.engine__header}>
+                                    <label>{`APU`}</label>
+                                </div>
+                                <div className={s.info__section__block} >
+                                    <div className={s.label__block}>
+                                        <label>MSN:</label>
+                                    </div>
+                                    <div className={s.span__block} >
+                                        <span>{apu.msn}</span>
+                                    </div>
+                                </div>
+                                <div className={s.info__section__block} >
+                                    <div className={s.label__block}>
+                                        <label>Manuf. Date:</label>
+                                    </div>
+                                    <div className={s.span__block} >
+                                        <span>{apu.manufDate}</span>
+                                    </div>
+                                </div>
+                                <div className={s.info__section__block} >
+                                    <div className={s.label__block}>
+                                        <label>TSN:</label>
+                                    </div>
+                                    <div className={s.span__block} >
+                                        <span>{apu.tsn}</span>
+                                    </div>
+                                </div>
+                                <div className={s.info__section__block} >
+                                    <div className={s.label__block}>
+                                        <label>CSN:</label>
+                                    </div>
+                                    <div className={s.span__block} >
+                                        <span>{apu.csn}</span>
+                                    </div>
+                                </div>
+                                <div className={s.info__section__block} >
+                                    <div className={s.label__block}>
+                                        <label>Overhaul Date:</label>
+                                    </div>
+                                    <div className={s.span__block} >
+                                        <span>{apu.lastOverhaulDate}</span>
+                                    </div>
+                                </div>
+                                <div className={s.info__section__block} >
+                                    <div className={s.label__block}>
+                                        <label>TSLSV:</label>
+                                    </div>
+                                    <div className={s.span__block} >
+                                        <span>{subtractFH(apu.tsn, apu.tsnAtLastOverhaul)}</span>
+                                    </div>
+                                </div>
+                                <div className={s.info__section__block} >
+                                    <div className={s.label__block}>
+                                        <label>CSLSV:</label>
+                                    </div>
+                                    <div className={s.span__block} >
+                                        <span>{subtractFC(apu.csn, apu.csnAtLastOverhaul)}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                         <div className={s.limits__section}>
