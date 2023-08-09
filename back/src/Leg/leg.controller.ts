@@ -1,9 +1,11 @@
-import { Controller, HttpCode, Get, Post, Body } from '@nestjs/common';
+import { Controller, HttpCode, Get, Post, Body, Param, Req, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { LegService } from './leg.service';
 import { Leg } from 'src/schemas/leg.schema';
 import { CreateLegDto } from 'src/dto/leg/create-leg.dto';
 import { Types } from 'mongoose';
+import { GetLegsDto } from 'src/dto/leg/get-legs.dto';
+import { ResponseLegsDto } from 'src/dto/leg/response-legs.dto';
 
 @ApiTags('Leg')
 @Controller('leg')
@@ -11,11 +13,11 @@ export class LegController {
     constructor(private readonly legService: LegService) { }
 
     @ApiOperation({ summary: 'Get legs' })
-    @ApiResponse({ status: 201, type: [Leg] })
+    @ApiResponse({ status: 201, type: ResponseLegsDto })
     @Get('/legs')
     @HttpCode(201)
-    async getAircafts() {
-        return await this.legService.getLegs();
+    async getAircafts(@Query() getLegsDto: GetLegsDto) {
+        return await this.legService.getLegs(getLegsDto);
     }
 
     @ApiOperation({ summary: 'Create leg' })
