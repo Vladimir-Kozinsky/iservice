@@ -31,8 +31,8 @@ export class LegService {
         const sortedLegs = filteredLegs.sort((a: Leg, b: Leg) => {
             const aLegDate = new Date(`${a.depDate} ${a.takeOff}`)
             const bLegDate = new Date(`${b.depDate} ${b.takeOff}`)
-            if (aLegDate.getTime() < bLegDate.getTime()) return -1;
-            if (aLegDate.getTime() > bLegDate.getTime()) return 1;
+            if (aLegDate.getTime() < bLegDate.getTime()) return 1;
+            if (aLegDate.getTime() > bLegDate.getTime()) return -1;
             return 0;
         })
 
@@ -43,7 +43,7 @@ export class LegService {
         //TO DO  PAGENATOR 
         const response = {
             totalPages: totalPages,
-            currentPage: getLegsDto.page,
+            currentPage: +getLegsDto.page,
             legs: legsPortion
         }
         return response;
