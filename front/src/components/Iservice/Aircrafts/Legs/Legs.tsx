@@ -2,12 +2,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import s from './Legs.module.scss';
 import React, { useEffect, useState } from "react";
 import { AppDispatch, RootState } from '../../../../store/store';
-import { Form, Formik, FormikHelpers } from 'formik';
+import { Field, Form, Formik, FormikHelpers } from 'formik';
 import Input from '../../../../common/inputs/Input';
 import Button from '../../../../common/buttons/Button';
 import { getLegs } from '../../../../store/reducers/legReducer/legReducer';
 import { ILeg, ILegEngine } from '../../../../types/types';
 import { useNavigate } from 'react-router-dom';
+import Pagenator from '../../../../common/Pagenator/Pagenator';
 
 interface IFilterValues {
     from: string;
@@ -20,6 +21,13 @@ const Legs: React.FC = () => {
     const [addLegForm, setAddLegForm] = useState(false);
     const aircraft = useSelector((state: RootState) => state.aircraft.choosedAircraft);
     const legs = useSelector((state: RootState) => state.leg.legs);
+    const totalPages = useSelector((state: RootState) => state.leg.totalPages);
+    const currentPage = useSelector((state: RootState) => state.leg.currentPage);
+    const [searchParam, setSearchParam] = useState({ from: '', to: '' });
+    const changePage = (page: number) => {
+        dispatch(getLegs({ aircraft: aircraft.msn, from: searchParam.from, to: searchParam.to, page: page }));
+    }
+
     const legsComp = legs.map((leg: ILeg) => {
         return (
             <div key={leg._id} className={s.leg}>
@@ -53,7 +61,7 @@ const Legs: React.FC = () => {
                     <div className={s.leg__title__value}>{leg.fc}</div>
                 </div>
                 {leg.engines.map((engine: ILegEngine,) => (
-                    <div className={s.leg__block}>
+                    <div key={engine.msn} className={s.leg__block}>
                         <div className={s.leg__title__value}>{engine.msn}</div>
                         <div className={s.leg__title__value}>{engine.engineTsn}</div>
                         <div className={s.leg__title__value}>{engine.engineCsn}</div>
@@ -78,7 +86,7 @@ const Legs: React.FC = () => {
     })
 
     useEffect(() => {
-        dispatch(getLegs())
+        //  dispatch(getLegs(aircraft.msn, from, to))
     }, [])
 
     return (
@@ -114,28 +122,51 @@ const Legs: React.FC = () => {
                     from: '',
                     to: ''
                 }}
+                validate={values => {
+                    interface IGetLegsErrorsDto {
+                        from?: string;
+                        to?: string;
+
+                    }
+                    const errors: IGetLegsErrorsDto = {};
+                    if (!values.from) errors.from = 'Date is required';
+                    if (!values.to) errors.to = 'Date is required';
+                    return errors;
+                }}
                 onSubmit={(
                     values: IFilterValues,
                     { setSubmitting }: FormikHelpers<IFilterValues>
                 ) => {
-                    // getLegsFunc(aircraft.msn, values.from, values.to, currentPage)
-                    //setSearchParam({ from: values.from, to: values.to })
+                    setSearchParam({ from: values.from, to: values.to });
+                    dispatch(getLegs({ aircraft: aircraft.msn, from: values.from, to: values.to, page: 1 }));
                 }}
             >
-                <Form className={s.legs__filter}>
-                    <div className={s.value__wrap}>
-                        <label>From</label>
-                        <Input type='date' id='from' name='from' placeholder='' />
-                    </div>
-                    <div className={s.value__wrap}>
-                        <label>To</label>
-                        <Input type='date' id='to' name='to' placeholder='' />
-                    </div>
-                    <Button text="Search" color="white" btnType="submit" />
-                </Form>
+                {({
+                    values,
+                    errors,
+                    touched,
+                    handleChange,
+                    handleBlur,
+                    handleSubmit,
+                }) => (
+                    <Form className={s.legs__filter}>
+                        <div className={s.value__wrap}>
+                            <label>From</label>
+                            <Field type='date' id='from' name='from'
+                                placeholder='' error={errors.from} as={Input} />
+                        </div>
+                        <div className={s.value__wrap}>
+                            <label>To</label>
+                            <Field type='date' id='to' name='to'
+                                placeholder='' error={errors.from} as={Input} />
+                        </div>
+                        <Button text="Search" color="white" btnType="submit" />
+                    </Form>
+                )}
             </Formik>
-            {/* <Pagenator totalPages={totalPages} currentPage={currentPage} changePage={changePage} /> */}
+
             <div className={s.legs}>
+                {totalPages ? <Pagenator totalPages={totalPages} currentPage={currentPage ? currentPage : 1} changePage={changePage} /> : null}
                 <div className={s.leg__title}>
                     <div className={s.leg__block}>
                         <div className={s.leg__title__value}>Date</div>
@@ -163,7 +194,7 @@ const Legs: React.FC = () => {
                         <div className={s.leg__title__value}>FC</div>
                     </div>
                     {legs.length && legs[0].engines.map((engine: ILegEngine,) => (
-                        <div className={s.leg__block}>
+                        <div key={engine.msn} className={s.leg__block}>
                             <div className={s.leg__title__value}>Engine</div>
                             <div className={s.leg__title__value}>TSN</div>
                             <div className={s.leg__title__value}>CSN</div>
@@ -177,7 +208,7 @@ const Legs: React.FC = () => {
             </div>
             <div className={s.buttons} >
                 <Button text="Back" btnType="button" color="white" handler={() => navigate(`/i-service/aircraft/${aircraft.msn}`)} />
-                <Button text="Add" btnType="button" color="green" handler={() => navigate(`create`)}/>
+                <Button text="Add" btnType="button" color="green" handler={() => navigate(`create`)} />
             </div>
         </div>
     )

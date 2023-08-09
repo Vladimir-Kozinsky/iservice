@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ICreateLegDto, ILegRejectResponse, ILegState } from './legReducerTypes';
+import { ICreateLegDto, IGetLegsDto, IGetLegsResponseDto, ILegRejectResponse, ILegState } from './legReducerTypes';
 import legAPI from '../../../API/legAPI';
 import { ILeg } from '../../../types/types';
 
@@ -23,6 +23,8 @@ const initialState: ILegState = {
         fc: null,
     },
     legs: [],
+    totalPages: null,
+    currentPage: null,
     errorMessage: null,
     successMessage: null,
 }
@@ -32,11 +34,11 @@ const legSlice = createSlice({
     initialState,
     reducers: {
 
-        clearSuccessMessage(state: ILegState) {
+        clearLegSuccessMessage(state: ILegState) {
             state.successMessage = null;
         },
 
-        clearErrorMessage(state: ILegState) {
+        clearLegErrorMessage(state: ILegState) {
             state.errorMessage = null;
         }
     },
@@ -57,8 +59,10 @@ const legSlice = createSlice({
             state.errorMessage = action.payload.message;
         })
 
-        builder.addCase(getLegs.fulfilled, (state: ILegState, action: PayloadAction<ILeg[]>) => {
-            state.legs = action.payload;
+        builder.addCase(getLegs.fulfilled, (state: ILegState, action: PayloadAction<IGetLegsResponseDto>) => {
+            state.legs = action.payload.legs;
+            state.totalPages = action.payload.totalPages;
+            state.currentPage = action.payload.currentPage;
         })
         builder.addCase(getLegs.rejected, (state: ILegState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
@@ -92,9 +96,9 @@ export const deleteLeg = createAsyncThunk(
 
 export const getLegs = createAsyncThunk(
     'leg/legs',
-    async (none, thunkAPI) => {
+    async (getLegsDto: IGetLegsDto, thunkAPI) => {
         try {
-            const response = await legAPI.getLegs();
+            const response = await legAPI.getLegs(getLegsDto);
             return response.data;
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response.data as ILegRejectResponse);
@@ -105,6 +109,6 @@ export const getLegs = createAsyncThunk(
 
 
 
-export const { clearSuccessMessage, clearErrorMessage } = legSlice.actions
+export const { clearLegSuccessMessage, clearLegErrorMessage } = legSlice.actions
 
 export default legSlice.reducer;

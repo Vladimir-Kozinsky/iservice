@@ -9,6 +9,9 @@ import Button from "../../../../../common/buttons/Button";
 import { useNavigate } from "react-router-dom";
 import { calcTime } from "../../../../../utils/utils";
 import { createLeg } from "../../../../../store/reducers/legReducer/legReducer";
+import { compose } from "@reduxjs/toolkit";
+import withErrorMessage from "../../../../../HOC/wirhErrorMessage";
+import withSuccessMessage from "../../../../../HOC/wirhSuccessMessage";
 
 
 const NewLeg = () => {
@@ -50,7 +53,7 @@ const NewLeg = () => {
         setFieldValue('fc', `${+fc + 1}`);
     }
 
-    
+
 
     return (
         <div className={s.leg} >
@@ -194,4 +197,6 @@ const NewLeg = () => {
     )
 }
 
-export default NewLeg;
+const EnhancedComponent = withSuccessMessage(NewLeg);
+
+export default compose(withErrorMessage)(EnhancedComponent);

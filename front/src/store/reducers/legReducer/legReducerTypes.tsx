@@ -20,6 +20,8 @@ export interface ILegState {
         fc: string | null;
     },
     legs: ILeg[],
+    totalPages: number | null;
+    currentPage: number | null;
     errorMessage: string | null;
     successMessage: string | null;
 }
@@ -46,4 +48,17 @@ export interface ICreateLegDto {
     blockTime: string;
     fh: string;
     fc: string;
+}
+
+export interface IGetLegsDto {
+    aircraft: string;
+    from: string;
+    to: string;
+    page: number;
+}
+
+export interface IGetLegsResponseDto {
+    totalPages: number;
+    currentPage: number;
+    legs: ILeg[];
 }
