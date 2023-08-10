@@ -2,6 +2,7 @@
 
 .legs {
     @include dashboard_page ();
+    position: relative;
 }
 
 .background__circle {

@@ -9,6 +9,8 @@ import { getLegs } from '../../../../store/reducers/legReducer/legReducer';
 import { ILeg, ILegEngine } from '../../../../types/types';
 import { useNavigate } from 'react-router-dom';
 import Pagenator from '../../../../common/Pagenator/Pagenator';
+import { Transition } from 'react-transition-group';
+import Loader from '../../../../common/Loader/Loader';
 
 interface IFilterValues {
     from: string;
@@ -24,8 +26,11 @@ const Legs: React.FC = () => {
     const totalPages = useSelector((state: RootState) => state.leg.totalPages);
     const currentPage = useSelector((state: RootState) => state.leg.currentPage);
     const [searchParam, setSearchParam] = useState({ from: '', to: '' });
-    const changePage = (page: number) => {
-        dispatch(getLegs({ aircraft: aircraft.msn, from: searchParam.from, to: searchParam.to, page: page }));
+    const [isLoader, setIsLoader] = useState<boolean | undefined>(false);
+    const changePage = async (page: number) => {
+        setIsLoader(true);
+        await dispatch(getLegs({ aircraft: aircraft.msn, from: searchParam.from, to: searchParam.to, page: page }));
+        setIsLoader(false);
     }
 
     const legsComp = legs.map((leg: ILeg) => {
@@ -91,6 +96,9 @@ const Legs: React.FC = () => {
 
     return (
         <div className={s.legs} >
+            <Transition in={isLoader} timeout={400} unmountOnExit mountOnEnter >
+                {(state) => <Loader state={state} />}
+            </Transition>
             <div className={s.aircraftInfo} >
                 <div className={s.aircraftInfo__wrap} >
                     <div className={s.aircraftInfo__block} >
@@ -133,12 +141,14 @@ const Legs: React.FC = () => {
                     if (!values.to) errors.to = 'Date is required';
                     return errors;
                 }}
-                onSubmit={(
+                onSubmit={async (
                     values: IFilterValues,
                     { setSubmitting }: FormikHelpers<IFilterValues>
                 ) => {
                     setSearchParam({ from: values.from, to: values.to });
-                    dispatch(getLegs({ aircraft: aircraft.msn, from: values.from, to: values.to, page: 1 }));
+                    setIsLoader(true);
+                    await dispatch(getLegs({ aircraft: aircraft.msn, from: values.from, to: values.to, page: 1 }));
+                    setIsLoader(false);
                 }}
             >
                 {({
