@@ -65,13 +65,16 @@
 
     .nav_container_link {
         @include blue_text();
-        margin-bottom: 5px;
+        margin-bottom: 10px;
         text-decoration: none;
         transition: all 0.2s ease-in-out;
+        left: 0px;
+        position: relative;
 
         &:hover {
             cursor: pointer;
             color: $blue_text_color_hover;
+            left: 5px;
         }
 
         &:active {

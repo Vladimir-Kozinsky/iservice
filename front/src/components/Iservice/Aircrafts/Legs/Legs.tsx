@@ -20,7 +20,8 @@ interface IFilterValues {
 const Legs: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
-    const [addLegForm, setAddLegForm] = useState(false);
+    const [legsEditMode, setlegsEditMode] = useState(false);
+    const [delMess, setDelMess] = useState(false);
     const aircraft = useSelector((state: RootState) => state.aircraft.choosedAircraft);
     const legs = useSelector((state: RootState) => state.leg.legs);
     const totalPages = useSelector((state: RootState) => state.leg.totalPages);
@@ -81,11 +82,11 @@ const Legs: React.FC = () => {
 
 
 
-                {/* {legsEditMode
+                {legsEditMode
                     && <div className={s.edit__btns} >
-                        <button className={s.edit__btns__edit} onClick={() => setEditLegForm(true)}></button>
+                        <button className={s.edit__btns__edit} onClick={() => console.log("edit leg form")}></button>
                         <button className={s.edit__btns__del} onClick={() => setDelMess(true)} ></button>
-                    </div>} */}
+                    </div>}
             </div>
         )
     })
@@ -212,7 +213,10 @@ const Legs: React.FC = () => {
                     ))}
 
 
-                    <button className={s.edit__btn} onClick={() => console.log('edit hendler')}></button>
+                    <button className={s.edit__btn} onClick={() => legsEditMode
+                        ? setlegsEditMode(false)
+                        : setlegsEditMode(true)}>
+                    </button>
                 </div>
                 {legsComp}
             </div>
