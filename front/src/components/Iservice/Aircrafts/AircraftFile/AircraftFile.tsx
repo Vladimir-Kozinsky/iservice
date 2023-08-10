@@ -11,12 +11,15 @@ import printIcon from "../../../../assets/img/png/print-icon.png";
 import timerIcon from "../../../../assets/img/jpeg/timer.jpg";
 import timerDelIcon from "../../../../assets/img/jpeg/timerDel.jpg";
 import { useNavigate } from "react-router-dom";
+import ReactToPrint from "react-to-print";
+import { useRef } from "react";
 
 
 const AircraftFile = () => {
     const aircraft = useSelector((state: RootState) => state.aircraft.choosedAircraft);
     const apu = aircraft.apu;
     const navigate = useNavigate();
+    const componentRef = useRef<HTMLDivElement>(null);
 
     const engines = () => sortEngines(aircraft.engines).map((engine: IEngine) => (
         <div key={engine.msn} className={s.engine}>
@@ -101,13 +104,37 @@ const AircraftFile = () => {
     const limits = () => aircraft.limits.map((limit: ILimit, pos: number) => {
 
         return (
-            <div className={s.limit} >
-                <span>{`${pos + 1}.`}</span>
-                <div className={s.limit__title}>
-                    <label>{limit.title}:</label>
+            // <div className={s.limit} >
+            //     <span>{`${pos + 1}.`}</span>
+            //     <div className={s.limit__title}>
+            //         <label>{limit.title}:</label>
+            //     </div>
+            //     <div className={s.limit__value} >
+            //         <span> {`Remain: ${limitSwitcher(limit, aircraft)}`}</span>
+            //         <span> {`Next: ${limit.threshold} ${limit.dependence.toUpperCase()}`}</span>
+            //     </div>
+            // </div>
+            <div key={pos} className={s.limit}>
+                <div className={s.limit__header}>
+                    <label>{limit.title}</label>
                 </div>
-                <div className={s.limit__value} >
-                    <span>{limitSwitcher(limit, aircraft)}</span>
+                <div className={s.info__section__block} >
+                    <div className={s.label__block}>
+                        <label>Remain:</label>
+                    </div>
+                    <div className={s.span__block} >
+                        <span>{`${limitSwitcher(limit, aircraft)}`}</span>
+                    </div>
+                </div>
+                <div className={s.info__section__block} >
+                    <div className={s.label__block}>
+                        <label>Next:</label>
+                    </div>
+                    <div className={s.span__block} >
+                        <span>{`${limit.threshold} ${limit.dependence !== "date"
+                            ? limit.dependence.toUpperCase()
+                            : ''}`}</span>
+                    </div>
                 </div>
             </div>
         )
@@ -120,7 +147,7 @@ const AircraftFile = () => {
             <h1 className={s.aircraftFile__header} >Aircraft File of {aircraft.msn}</h1>
             <div className={s.aircraftFile__container} >
                 <div className={s.info__container}>
-                    <div className={s.info}>
+                    <div ref={componentRef} className={s.info}>
                         <div className={s.info__section}>
                             <h3 className={s.section__header}>Aircraft Info</h3>
                             <div>
@@ -299,7 +326,14 @@ const AircraftFile = () => {
                 </div>
                 <div className={s.aircraftFile__container__buttons} >
                     <AircraftFileWidget text="Legs" img={legsIcon} handler={() => navigate(`legs`)} />
-                    <AircraftFileWidget text="Print report" img={printIcon} handler={() => navigate('report')} />
+                    <ReactToPrint
+                        trigger={() => <button className={s.print__btn} >
+                            <AircraftFileWidget text="Print report" img={printIcon}  />
+                        </button>}
+                        content={() => componentRef.current}
+                    />
+
+
                     <AircraftFileWidget text="Install Engine" img={engineIcon} handler={() => navigate('engine/install')} />
                     <AircraftFileWidget text="Remove Engine" img={engineIcon} handler={() => navigate('engine/remove')} />
                     <AircraftFileWidget text="new limit" img={timerIcon} handler={() => navigate('limit')} />

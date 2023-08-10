@@ -3,7 +3,7 @@ import s from "./AircraftFileWidget.module.scss"
 type IAircraftFileWidgetProps = {
     text: string;
     img: string;
-    handler: () => void;
+    handler?: () => void;
 }
 
 const AircraftFileWidget = ({ text, img, handler }: IAircraftFileWidgetProps) => {
