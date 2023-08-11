@@ -20,6 +20,10 @@ const legAPI = {
         const response = await proxy.get('/leg/legs', {params: getLegsDto});
         return response;
     },
+    async getLastTenLegs(aircraft: string) {
+        const response = await proxy.get('/leg/legs/last', {params: {aircraft: aircraft}});
+        return response;
+    },
 
 }
 

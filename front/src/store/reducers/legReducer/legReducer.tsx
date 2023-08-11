@@ -67,6 +67,15 @@ const legSlice = createSlice({
         builder.addCase(getLegs.rejected, (state: ILegState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
         })
+
+        builder.addCase(getlastTenLegs.fulfilled, (state: ILegState, action: PayloadAction<ILeg[]>) => {
+            state.legs = action.payload;
+            state.totalPages = 1;
+            state.currentPage = 1;
+        })
+        builder.addCase(getlastTenLegs.rejected, (state: ILegState, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
+        })
     },
 })
 
@@ -99,6 +108,18 @@ export const getLegs = createAsyncThunk(
     async (getLegsDto: IGetLegsDto, thunkAPI) => {
         try {
             const response = await legAPI.getLegs(getLegsDto);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as ILegRejectResponse);
+        }
+    }
+)
+
+export const getlastTenLegs = createAsyncThunk(
+    'leg/legs/last',
+    async (aircraft: string, thunkAPI) => {
+        try {
+            const response = await legAPI.getLastTenLegs(aircraft);
             return response.data;
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response.data as ILegRejectResponse);

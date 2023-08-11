@@ -5,7 +5,7 @@ import { AppDispatch, RootState } from '../../../../store/store';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import Input from '../../../../common/inputs/Input';
 import Button from '../../../../common/buttons/Button';
-import { getLegs } from '../../../../store/reducers/legReducer/legReducer';
+import { getLegs, getlastTenLegs } from '../../../../store/reducers/legReducer/legReducer';
 import { ILeg, ILegEngine } from '../../../../types/types';
 import { useNavigate } from 'react-router-dom';
 import Pagenator from '../../../../common/Pagenator/Pagenator';
@@ -76,12 +76,6 @@ const Legs: React.FC = () => {
 
                 {/* {editLegForm && <EditLegForm setAddLegForm={setEditLegForm} msn={aircraft.msn} fh={aircraft.fh} fc={aircraft.fc} leg={leg} />} */}
 
-
-
-
-
-
-
                 {legsEditMode
                     && <div className={s.edit__btns} >
                         <button className={s.edit__btns__edit} onClick={() => console.log("edit leg form")}></button>
@@ -92,7 +86,11 @@ const Legs: React.FC = () => {
     })
 
     useEffect(() => {
-        //  dispatch(getLegs(aircraft.msn, from, to))
+        (async () => {
+            setIsLoader(true);
+            await dispatch(getlastTenLegs(aircraft.msn))
+            setIsLoader(false);
+        })()
     }, [])
 
     return (
@@ -213,9 +211,10 @@ const Legs: React.FC = () => {
                     ))}
 
 
-                    <button className={s.edit__btn} onClick={() => legsEditMode
-                        ? setlegsEditMode(false)
-                        : setlegsEditMode(true)}>
+                    <button className={s.edit__btn}
+                        onClick={() => legsEditMode
+                            ? setlegsEditMode(false)
+                            : setlegsEditMode(true)}>
                     </button>
                 </div>
                 {legsComp}
