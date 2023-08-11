@@ -11,6 +11,7 @@ import { useNavigate } from 'react-router-dom';
 import Pagenator from '../../../../common/Pagenator/Pagenator';
 import { Transition } from 'react-transition-group';
 import Loader from '../../../../common/Loader/Loader';
+import DeleteMessage from '../../../../common/messages/DeleteMessage/DeleteMessage';
 
 interface IFilterValues {
     from: string;
@@ -95,6 +96,10 @@ const Legs: React.FC = () => {
 
     return (
         <div className={s.legs} >
+            {delMess && <DeleteMessage handleBack={() => setDelMess(false)}
+                handleSubmit={() => console.log('delete message')}
+                header='Would you like to delete this leg?'
+                text='The leg will be permanently deleted' />}
             <Transition in={isLoader} timeout={400} unmountOnExit mountOnEnter >
                 {(state) => <Loader state={state} />}
             </Transition>
