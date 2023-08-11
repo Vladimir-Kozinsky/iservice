@@ -20,6 +20,14 @@ export class LegController {
         return await this.legService.getLegs(getLegsDto);
     }
 
+    @ApiOperation({ summary: 'Get ten legs' })
+    @ApiResponse({ status: 201, type: [Leg] })
+    @Get('/legs/last')
+    @HttpCode(201)
+    async getLastTenLegs(@Query() getLastTenLegsDto: {aircraft: string}) {
+        return await this.legService.getLastTenLegs(getLastTenLegsDto.aircraft);
+    }
+
     @ApiOperation({ summary: 'Create leg' })
     @ApiResponse({ status: 201, type: Leg })
     @Post('/create')

@@ -28,25 +28,26 @@ export class LegService {
                 && (legDate < to || legDate.getTime() === to.getTime())
         })
 
-        const sortedLegs = filteredLegs.sort((a: Leg, b: Leg) => {
-            const aLegDate = new Date(`${a.depDate} ${a.takeOff}`)
-            const bLegDate = new Date(`${b.depDate} ${b.takeOff}`)
-            if (aLegDate.getTime() < bLegDate.getTime()) return 1;
-            if (aLegDate.getTime() > bLegDate.getTime()) return -1;
-            return 0;
-        })
+        const sortedLegs = this.sortLegs(filteredLegs);
 
         const totalPages = Math.ceil(sortedLegs.length / pageLegs);
 
         const legsPortion = sortedLegs.splice(getLegsDto.page * pageLegs - pageLegs, pageLegs);
-        
-        //TO DO  PAGENATOR 
+
         const response = {
             totalPages: totalPages,
             currentPage: +getLegsDto.page,
             legs: legsPortion
         }
         return response;
+    }
+
+    async getLastTenLegs(aircraft: string) {
+        const legs = await this.legModel.find({ aircraft: aircraft });
+        if (!legs.length) throw new HttpException('Aircraft legs not found', HttpStatus.BAD_REQUEST);
+        const sortedLegs = this.sortLegs(legs);
+        return sortedLegs.splice(0, 10);
+
     }
 
     async createLeg(createLegDto: CreateLegDto) {
@@ -58,4 +59,13 @@ export class LegService {
         return leg;
     }
 
+    private sortLegs(legs: Leg[]) {
+        return legs.sort((a: Leg, b: Leg) => {
+            const aLegDate = new Date(`${a.depDate} ${a.takeOff}`);
+            const bLegDate = new Date(`${b.depDate} ${b.takeOff}`);
+            if (aLegDate.getTime() < bLegDate.getTime()) return 1;
+            if (aLegDate.getTime() > bLegDate.getTime()) return -1;
+            return 0;
+        })
+    }
 }
