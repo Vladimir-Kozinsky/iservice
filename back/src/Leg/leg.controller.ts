@@ -24,7 +24,7 @@ export class LegController {
     @ApiResponse({ status: 201, type: [Leg] })
     @Get('/legs/last')
     @HttpCode(201)
-    async getLastTenLegs(@Query() getLastTenLegsDto: {aircraft: string}) {
+    async getLastTenLegs(@Query() getLastTenLegsDto: { aircraft: string }) {
         return await this.legService.getLastTenLegs(getLastTenLegsDto.aircraft);
     }
 
@@ -40,7 +40,7 @@ export class LegController {
     @ApiResponse({ status: 201, type: Leg })
     @Post('/delete')
     @HttpCode(201)
-    async deleteLeg(@Body() legId: Types.ObjectId) {
-        return await this.legService.deleteLeg(legId);
+    async deleteLeg(@Body() legId: { legId: Types.ObjectId }) {
+        return await this.legService.deleteLeg(legId.legId);
     }
 }

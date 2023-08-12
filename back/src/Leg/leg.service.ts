@@ -55,7 +55,9 @@ export class LegService {
     }
 
     async deleteLeg(legId: Types.ObjectId) {
-        const leg = this.legModel.findByIdAndRemove(legId);
+        const legForDelete = await this.legModel.findOne({ _id: legId });
+        if (!legForDelete) throw new HttpException('Leg not found', HttpStatus.BAD_REQUEST);
+        const leg = await this.legModel.findByIdAndRemove(legId);
         return leg;
     }
 
