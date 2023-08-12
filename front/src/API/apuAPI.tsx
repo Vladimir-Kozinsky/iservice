@@ -2,16 +2,17 @@ import axios from "axios";
 // import { RemApuFormDataType } from "../components/Aircrafts/RemovalApu/RemovalApu";
 // import { IApu } from "../types/types";
 import generalAPIData from "./generalData";
+import { ICreateApuDto } from "../types/types";
 
 const proxy = axios.create({
     baseURL: generalAPIData.baseURL
 })
 
 const apuAPI = {
-    // async getApus() {
-    //     const response = await proxy.get(`/apus`);
-    //     return response;
-    // },
+    async getApus() {
+        const response = await proxy.get(`apu/apus`);
+        return response;
+    },
     // async getAvailApus() {
     //     const response = await proxy.get(`/apus/available`);
     //     return response;
@@ -22,10 +23,10 @@ const apuAPI = {
     //     return response;
     // },
 
-    // async addApu(apu: IApu) {
-    //     const response = await proxy.post('/apu/add', apu);
-    //     return response;
-    // },
+    async addApu(apuDto: ICreateApuDto) {
+        const response = await proxy.post('/apu/add', apuDto);
+        return response;
+    },
 
     // async updateEngine(apu: IApu) {
     //     const response = await proxy.post('/apu/update', apu);

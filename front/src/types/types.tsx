@@ -56,6 +56,7 @@ interface IEngineHistory {
     date: string;
     action: string;
     aircraft: string;
+    engine: string;
     position: number;
     aircraftTsn: string;
     aircraftCsn: string;
@@ -106,4 +107,44 @@ export interface ILegEngine {
     msn: string | null;
     engineTsn: string | null;
     engineCsn: string | null;
+}
+
+export interface IApuHistory {
+    _id: string;
+    date: string;
+    action: string;
+    aircraft: string;
+    apu: string;
+    aircraftTsn: string;
+    aircraftCsn: string;
+    apuTsn: string;
+    apuCsn: string;
+    reason: string
+}
+
+export interface IApu {
+    _id: string;
+    type: string;
+    msn: string;
+    manufDate: string;
+    tsn: string;
+    csn: string;
+    overhaulNum?: number;
+    lastOverhaulDate: string;
+    tsnAtLastOverhaul: string;
+    csnAtLastOverhaul: string;
+    apuHistory: IApuHistory[];
+    limits: ILimits[];
+}
+
+export interface ICreateApuDto {
+    type: string;
+    msn: string;
+    manufDate: string;
+    tsn: string;
+    csn: string;
+    overhaulNum?: number;
+    lastOverhaulDate?: string;
+    tsnAtLastOverhaul?: string;
+    csnAtLastOverhaul?: string;
 }

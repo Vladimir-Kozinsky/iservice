@@ -16,4 +16,10 @@ export class ApuService {
         if (apu) throw new HttpException('Apu with this msn already exists', HttpStatus.BAD_REQUEST);
         return await this.apuModel.create(createApuDto);
     }
+
+    async getApus() {
+        const apus = await this.apuModel.find();
+        if (!apus.length) throw new HttpException('Apus not found', HttpStatus.BAD_REQUEST);
+        return apus;
+    }
 }

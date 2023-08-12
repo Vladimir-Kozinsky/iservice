@@ -3,7 +3,6 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import { HydratedDocument, Types } from 'mongoose';
 import { Limit } from './limit.schema';
-import { EngineHistory } from './engineHistory.schema';
 import { ApuHistory } from './apuHistory.schema';
 
 export type ApuDocument = HydratedDocument<Apu>;
@@ -27,6 +26,10 @@ export class Apu {
     @ApiProperty({ example: '45697:00', description: "APU Time Since New" })
     @Prop({ required: true })
     tsn: string;
+
+    @ApiProperty({ example: '45697:00', description: "APU Time Since New" })
+    @Prop({ required: true })
+    csn: string;
 
     @ApiProperty({ example: '45697:00', description: "APU Time Since New" })
     @Prop({ ref: 'ApuHistory' })

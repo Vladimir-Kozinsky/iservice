@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, Post } from '@nestjs/common';
 import { ApuService } from './apu.service';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { CreateApuDto } from 'src/dto/apu/create-apu.dto';
@@ -16,5 +16,12 @@ export class ApuController {
         return await this.apuService.add(createApuDto)
     }
 
+    @ApiOperation({ summary: 'Get APUs' })
+    @ApiResponse({ status: 201, type: [Apu] })
+    @Get('/apus')
+    @HttpCode(201)
+    async getApus() {
+        return await this.apuService.getApus();
+    }
 
 }

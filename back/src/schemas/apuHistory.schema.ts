@@ -23,7 +23,6 @@ export class ApuHistory {
     @Prop({ required: true })
     apu: string;
 
-
     @ApiProperty({ example: '2891:00', description: 'Aircraft Time Since New' })
     @Prop({ required: true })
     aircraftTsn: string;

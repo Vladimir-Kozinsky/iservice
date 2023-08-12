@@ -1,18 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit'
-// import aircraftReducer from './reducers/aircraftReducer'
-// import apuReducer from './reducers/apuReducer'
 import authReducer from './reducers/authReducer/authReducer'
 import aircraftReducer from './reducers/aircraftReducer/aircraftReducer'
 import engineReducer from './reducers/engineReducer/engineReducer'
 import legReducer from './reducers/legReducer/legReducer'
-// import engineReducer from './reducers/engineReducer'
+import apuReducer from './reducers/apuReducer/apuReducer'
 
 export const store = configureStore({
     reducer: {
         auth: authReducer,
         aircraft: aircraftReducer,
         engine: engineReducer,
-        // apu: apuReducer
+        apu: apuReducer,
         leg: legReducer
     }
 })
