@@ -52,7 +52,11 @@ const legSlice = createSlice({
         })
 
         builder.addCase(deleteLeg.fulfilled, (state: ILegState, action: PayloadAction<ILeg>) => {
-            // state.legs.push(action.payload); TO DO
+            const legId = action.payload._id;
+            const legIndex = state.legs.findIndex((leg: ILeg) => leg._id === legId);
+            const legs = state.legs;
+            legs.splice(legIndex, 1);
+            state.legs = legs;
             state.successMessage = "Leg successfully deleted";
         })
         builder.addCase(deleteLeg.rejected, (state: ILegState, action: PayloadAction<any>) => {

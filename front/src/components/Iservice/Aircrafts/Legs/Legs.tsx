@@ -5,7 +5,7 @@ import { AppDispatch, RootState } from '../../../../store/store';
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import Input from '../../../../common/inputs/Input';
 import Button from '../../../../common/buttons/Button';
-import { getLegs, getlastTenLegs } from '../../../../store/reducers/legReducer/legReducer';
+import { getLegs, getlastTenLegs, deleteLeg } from '../../../../store/reducers/legReducer/legReducer';
 import { ILeg, ILegEngine } from '../../../../types/types';
 import { useNavigate } from 'react-router-dom';
 import Pagenator from '../../../../common/Pagenator/Pagenator';
@@ -29,9 +29,20 @@ const Legs: React.FC = () => {
     const currentPage = useSelector((state: RootState) => state.leg.currentPage);
     const [searchParam, setSearchParam] = useState({ from: '', to: '' });
     const [isLoader, setIsLoader] = useState<boolean | undefined>(false);
+    const [choosedLeg, setChoosedLeg] = useState<string>('');
     const changePage = async (page: number) => {
         setIsLoader(true);
         await dispatch(getLegs({ aircraft: aircraft.msn, from: searchParam.from, to: searchParam.to, page: page }));
+        setIsLoader(false);
+    }
+
+    const setLegDate = (legId: string) => {
+        setChoosedLeg(legId);
+        setDelMess(true);
+    } 
+    const deleteLegHandler = async () => {
+        setIsLoader(true);
+        await dispatch(deleteLeg(choosedLeg));
         setIsLoader(false);
     }
 
@@ -79,8 +90,8 @@ const Legs: React.FC = () => {
 
                 {legsEditMode
                     && <div className={s.edit__btns} >
-                        <button className={s.edit__btns__edit} onClick={() => console.log("edit leg form")}></button>
-                        <button className={s.edit__btns__del} onClick={() => setDelMess(true)} ></button>
+                        <button className={s.edit__btns__edit} onClick={() => console.log('edit leg')}></button>
+                        <button className={s.edit__btns__del} onClick={() => setLegDate(leg._id)} ></button>
                     </div>}
             </div>
         )
@@ -97,7 +108,7 @@ const Legs: React.FC = () => {
     return (
         <div className={s.legs} >
             {delMess && <DeleteMessage handleBack={() => setDelMess(false)}
-                handleSubmit={() => console.log('delete message')}
+                handleSubmit={deleteLegHandler}
                 header='Would you like to delete this leg?'
                 text='The leg will be permanently deleted' />}
             <Transition in={isLoader} timeout={400} unmountOnExit mountOnEnter >

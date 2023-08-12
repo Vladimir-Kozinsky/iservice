@@ -27,7 +27,6 @@ const Pagenator = ({ totalPages, currentPage, changePage }: IPagenatorProps) => 
     }
 
     const pages = pagesArr.map((item) => {
-        console.log(item, currentPage)
         if (item === currentPage)
             return <div key={item} className={classNames(s.page, s.active)}>{` ${item} `}</div>
         if (item === 1)
