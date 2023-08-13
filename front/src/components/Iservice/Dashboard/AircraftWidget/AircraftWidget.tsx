@@ -1,5 +1,5 @@
 import s from './AircraftWidget.module.scss';
-import plane from './../../../../assets/img/png/plane.png'
+import plane from './../../../../assets/img/png/plane-icon.png'
 import engine from './../../../../assets/img/png/engine.png'
 import apu from './../../../../assets/img/png/apu.png'
 import React from 'react';

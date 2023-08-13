@@ -24,7 +24,7 @@ const ApuWidget: React.FC<ApuWidgetProps> = ({ apu }) => {
     return (
         <>
             <div className={s.widget} onClick={widgetOnClick} >
-                <img className={s.widget__engine} src={apuIcon} alt="apu-icon" />
+                <img className={s.widget__img} src={apuIcon} alt="apu-icon" />
                 <div className={s.widget__data}>
                     <h3 className={s.widget__data__value}>{`Type: ${apu.type}`}</h3>
                     <h3 className={s.widget__data__value}>{`MSN: ${apu.msn}`}</h3>

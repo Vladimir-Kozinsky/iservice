@@ -4,7 +4,7 @@
     position: relative;
     width: 180px;
     height: 130px;
-    background-color: rgb(28, 61, 91, 0.5);
+    background-color: rgb(28, 61, 91, 0.4);
     border-radius: 15px;
     display: flex;
     flex-direction: column;
@@ -12,18 +12,23 @@
 
     &:hover {
         cursor: pointer;
-        background-color: rgb(28, 61, 91, 0.4);
+        background-color: rgb(28, 61, 91, 0.3);
+
+        .widget__plane {
+            opacity: 0.6;
+        }
     }
 
 }
 
 .widget__plane {
     position: absolute;
-    left: calc(50% - 65px);
-    top: calc(50% - 60px);
-    width: 130px;
-    height: 120px;
-    opacity: 0.2;
+    left: calc(50% - 75px);
+    top: calc(50% - 65px);
+    width: 150px;
+    height: 130px;
+    opacity: 0.7;
+    transition: all 0.3s;
 
 }
 
@@ -83,6 +88,7 @@
     align-items: center;
 
     img {
+        position: relative;
         width: 25px;
         opacity: 1;
     }

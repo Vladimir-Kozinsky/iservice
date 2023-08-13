@@ -4,7 +4,7 @@
     position: relative;
     width: 180px;
     height: 130px;
-    background-color: rgb(28, 61, 91, 0.5);
+    background-color: rgb(28, 61, 91, 0.4);
     border-radius: 15px;
     display: flex;
     justify-content: center;
@@ -13,20 +13,25 @@
 
     &:hover {
         cursor: pointer;
-        background-color: rgb(28, 61, 91, 0.4);
+        background-color: rgb(28, 61, 91, 0.3);
+
+        .widget__img {
+            opacity: 0.6;
+        }
+    }
+
+    .widget__img {
+        position: absolute;
+        left: calc(50% - 75px);
+        top: calc(50% - 50px);
+        width: 150px;
+        height: 100px;
+        opacity: 0.7;
+        transition: all 0.3s;
     }
 
 }
 
-.widget__engine {
-    position: absolute;
-    left: calc(50% - 65px);
-    top: calc(50% - 54px);
-    width: 130px;
-    height: 108px;
-    opacity: 0.4;
-
-}
 
 .widget__btn {
     position: absolute;

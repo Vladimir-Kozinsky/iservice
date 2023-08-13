@@ -2,7 +2,7 @@
     position: relative;
     width: 180px;
     height: 130px;
-    background-color: rgb(28, 61, 91, 0.5);
+    background-color: rgb(28, 61, 91, 0.4);
     border-radius: 15px;
     display: flex;
     justify-content: center;
@@ -11,7 +11,7 @@
 
     &:hover {
         cursor: pointer;
-        background-color: rgb(28, 61, 91, 0.4);
+        background-color: rgb(28, 61, 91, 0.3);
     }
 
     .emptyWidget__cross__img {
