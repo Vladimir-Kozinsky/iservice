@@ -5,6 +5,7 @@ import { Model, Types } from 'mongoose';
 import { Leg } from 'src/schemas/leg.schema';
 import { CreateLegDto } from 'src/dto/leg/create-leg.dto';
 import { GetLegsDto } from 'src/dto/leg/get-legs.dto';
+import { GetPrintLegsDto } from 'src/dto/leg/get-print-legs.dto';
 
 @Injectable()
 export class LegService {
@@ -48,6 +49,20 @@ export class LegService {
         const sortedLegs = this.sortLegs(legs);
         return sortedLegs.splice(0, 10);
 
+    }
+
+    async getPrintLegs(getPrintLegsDto: GetPrintLegsDto) {
+        const legs = await this.legModel.find({ aircraft: getPrintLegsDto.aircraft });
+        if (!legs.length) throw new HttpException('Aircraft legs not found', HttpStatus.BAD_REQUEST);
+        const filteredLegs = legs.filter((leg: Leg) => {
+            const from = new Date(getPrintLegsDto.from);
+            const to = new Date(getPrintLegsDto.to);
+            const legDate = new Date(leg.depDate)
+            return (legDate > from || legDate.getTime() === from.getTime())
+                && (legDate < to || legDate.getTime() === to.getTime())
+        })
+        const sortedLegs = this.sortLegs(filteredLegs);
+        return sortedLegs;
     }
 
     async createLeg(createLegDto: CreateLegDto) {

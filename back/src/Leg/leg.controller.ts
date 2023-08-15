@@ -6,6 +6,7 @@ import { CreateLegDto } from 'src/dto/leg/create-leg.dto';
 import { Types } from 'mongoose';
 import { GetLegsDto } from 'src/dto/leg/get-legs.dto';
 import { ResponseLegsDto } from 'src/dto/leg/response-legs.dto';
+import { GetPrintLegsDto } from 'src/dto/leg/get-print-legs.dto';
 
 @ApiTags('Leg')
 @Controller('leg')
@@ -26,6 +27,14 @@ export class LegController {
     @HttpCode(201)
     async getLastTenLegs(@Query() getLastTenLegsDto: { aircraft: string }) {
         return await this.legService.getLastTenLegs(getLastTenLegsDto.aircraft);
+    }
+
+    @ApiOperation({ summary: 'Get legs for print' })
+    @ApiResponse({ status: 201, type: [Leg] })
+    @Get('/legs/print')
+    @HttpCode(201)
+    async getPrintLegs(@Query() getPrintLegsDto: GetPrintLegsDto) {
+        return await this.legService.getPrintLegs(getPrintLegsDto);
     }
 
     @ApiOperation({ summary: 'Create leg' })
