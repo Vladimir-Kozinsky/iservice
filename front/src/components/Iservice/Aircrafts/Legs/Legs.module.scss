@@ -103,25 +103,25 @@
     margin-top: 20px;
 }
 
-.leg__title,
-.leg {
-    position: relative;
+.leg__title {
     margin: 0 auto;
-    padding: 0 8px;
+    padding: 5px 8px 0;
     width: calc(100% - 40px);
     background: #d0e8ff;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
     border-radius: 5px;
+    height: 20px;
+    transition: all 0.3s;
+}
+
+.leg.active {
+    background: #0a2640;
 }
 
 
-
 .leg__title__value {
-   // border: #0a2640 1px solid;
-    width: 70px;
+    width: 68px;
     color: #0a2640;
     font-size: 12px;
     font-family: "Manrope";
@@ -130,56 +130,24 @@
     text-align: center;
 }
 
-.edit__btns {
-    position: absolute;
-    top: 30px;
-    right: -55px;
-    width: 40px;
+.leg__btn {
+    height: 20px;
+    width: 28px;
+    background: none;
+    border: none;
+    display: flex;
+    align-items: center;
 
-    button {
-        position: absolute;
-        width: 20px;
-        height: 20px;
-        background: none;
-        padding: 0;
-        border: 0;
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        transition: all 0.2s;
-    }
+    &:hover {
+        cursor: pointer;
 
-    .edit__btns__del {
-        background-image: url(../../../../assets/img/png/bin-icon.png);
-        width: 24px;
-        height: 20px;
-        top: -15px;
-        left: 20px;
-        background-position: center;
-        background-size: 20px;
-        background-repeat: no-repeat;
-
-        &:hover {
-            cursor: pointer;
-            background-size: 22px;
-            width: 26px;
-            height: 22px;
-            top: -16px;
-            left: 19px;
+        svg {
+            fill: rgb(10, 38, 64, 0.6);
         }
     }
 
-    .edit__btns__edit {
-        background-image: url(../../../../assets/img/png/edit-icon.png);
-        top: -15px;
-
-        &:hover {
-            cursor: pointer;
-            width: 22px;
-            height: 22px;
-            top: -16px;
-            left: -1px;
-        }
+    svg {
+        fill: rgb(10, 38, 64, 0.4);
     }
 }
 
@@ -209,4 +177,7 @@
     width: 300px;
     display: flex;
     justify-content: space-between;
+
+
 }
+

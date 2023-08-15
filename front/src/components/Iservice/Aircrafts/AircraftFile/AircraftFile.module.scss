@@ -22,7 +22,7 @@
     position: relative;
     display: flex;
     justify-content: space-around;
-    padding: 50px 20px 20px;
+    padding: 40px 20px 20px;
     margin-bottom: 20px;
     box-shadow: $box_shadow;
 }
@@ -53,6 +53,8 @@
 
     .label__block {
         width: 120px;
+        color: gray;
+        font-weight: 400;
     }
 
     .span__block {
@@ -70,7 +72,7 @@
     justify-content: space-around;
     margin-bottom: 20px;
     box-shadow: $box_shadow;
-    padding: 20px;
+    padding: 40px 20px 20px;
 
     .engine {
         width: 240px;
@@ -155,4 +157,14 @@
     padding: 0;
     border: none;
     background: none;
+}
+
+@media print {
+    @page {
+        size: A4 portrait;
+    }
+
+    .info__container {
+        padding: 20px;
+    }
 }

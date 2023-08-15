@@ -104,16 +104,6 @@ const AircraftFile = () => {
     const limits = () => aircraft.limits.map((limit: ILimit, pos: number) => {
 
         return (
-            // <div className={s.limit} >
-            //     <span>{`${pos + 1}.`}</span>
-            //     <div className={s.limit__title}>
-            //         <label>{limit.title}:</label>
-            //     </div>
-            //     <div className={s.limit__value} >
-            //         <span> {`Remain: ${limitSwitcher(limit, aircraft)}`}</span>
-            //         <span> {`Next: ${limit.threshold} ${limit.dependence.toUpperCase()}`}</span>
-            //     </div>
-            // </div>
             <div key={pos} className={s.limit}>
                 <div className={s.limit__header}>
                     <label>{limit.title}</label>
@@ -146,8 +136,8 @@ const AircraftFile = () => {
         <div className={s.aircraftFile} >
             <h1 className={s.aircraftFile__header} >Aircraft File of {aircraft.msn}</h1>
             <div className={s.aircraftFile__container} >
-                <div className={s.info__container}>
-                    <div ref={componentRef} className={s.info}>
+                <div ref={componentRef} className={s.info__container}>
+                    <div  className={s.info}>
                         <div className={s.info__section}>
                             <h3 className={s.section__header}>Aircraft Info</h3>
                             <div>
@@ -328,7 +318,7 @@ const AircraftFile = () => {
                     <AircraftFileWidget text="Legs" img={legsIcon} handler={() => navigate(`legs`)} />
                     <ReactToPrint
                         trigger={() => <button className={s.print__btn} >
-                            <AircraftFileWidget text="Print report" img={printIcon}  />
+                            <AircraftFileWidget text="Print report" img={printIcon} />
                         </button>}
                         content={() => componentRef.current}
                     />
