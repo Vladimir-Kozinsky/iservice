@@ -5,45 +5,9 @@
     position: relative;
 }
 
-.background__circle {
-    background-color: rgb(28, 61, 91, 0.05);
-    width: 1200px;
-    height: 1200px;
-    border-radius: 1000px;
-    position: absolute;
-    top: -600px;
-    right: -600px;
-    z-index: -1;
-}
-
-.print__btn {
-    width: 80px;
-    height: 80px;
-    position: absolute;
-    background: none;
-    border: none;
-    background-image: url(../../../../assets/img/png/print-icon.png);
-    background-position: center;
-    background-size: 100%;
-    background-repeat: no-repeat;
-    top: 90px;
-    right: 70px;
-    transition: all 0.3s;
-
-    &:hover {
-        cursor: pointer;
-        top: 89px;
-        right: 69px;
-        width: 82px;
-        height: 82px;
-    }
-
-    &:active {
-        width: 78px;
-        height: 78px;
-    }
-
-
+.legs__header {
+    @include blue_text(26px);
+    text-align: center;
 }
 
 .aircraftInfo {

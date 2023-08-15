@@ -94,11 +94,6 @@ const Leg: React.FC<LegProps> = ({ leg, setLegDate, state }) => {
                     </div>
                 ))}
             </div>
-
-
-
-
-
             {legsEditMode
                 && <div className={s.edit__btns} >
                     {/* <button className={s.edit__btns__edit} onClick={() => console.log('edit leg')}></button> */}

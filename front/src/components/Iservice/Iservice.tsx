@@ -20,6 +20,7 @@ import SignUp from "../SignUp/SignUp";
 import InstallEngine from "./Aircrafts/AircraftFile/InstallEngine/InstallEngine";
 import RemoveEngine from "./Aircrafts/AircraftFile/RemoveEngine/RemoveEngine";
 import NewLeg from "./Aircrafts/Legs/NewLeg/NewLeg";
+import PrintLegs from "./Aircrafts/Legs/PrintLegs/PrintLegs";
 
 
 const Iservice: React.FC = () => {
@@ -53,6 +54,7 @@ const Iservice: React.FC = () => {
                     <Route path="aircraft/:aircraftId/engine/install" element={<InstallEngine />} />
                     <Route path="aircraft/:aircraftId/engine/remove" element={<RemoveEngine />} />
                     <Route path="aircraft/:aircraftId/legs/create" element={<NewLeg />} />
+                    <Route path="aircraft/:aircraftId/legs/print" element={<PrintLegs />} />
 
                     <Route path="engines" element={<Engines />} />
                     

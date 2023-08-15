@@ -58,6 +58,7 @@ const Legs: React.FC = () => {
 
     return (
         <div className={s.legs} >
+             <h1 className={s.legs__header} >Legs</h1>
             {delMess && <DeleteMessage handleBack={() => setDelMess(false)}
                 handleSubmit={deleteLegHandler}
                 header='Would you like to delete this leg?'
@@ -82,11 +83,11 @@ const Legs: React.FC = () => {
                 </div>
                 <div className={s.aircraftInfo__wrap} >
                     <div className={s.aircraftInfo__block}>
-                        <span className={s.aircraftInfo__block__title}>FH:</span>
+                        <span className={s.aircraftInfo__block__title}>TSN:</span>
                         <span className={s.aircraftInfo__block__value}>{aircraft.fh}</span>
                     </div>
                     <div className={s.aircraftInfo__block}>
-                        <span className={s.aircraftInfo__block__title}>FC:</span>
+                        <span className={s.aircraftInfo__block__title}>CSN:</span>
                         <span className={s.aircraftInfo__block__value}>{aircraft.fc}</span>
                     </div>
                 </div>
@@ -154,8 +155,8 @@ const Legs: React.FC = () => {
                     <div className={s.leg__title__value}>Landing</div>
                     <div className={s.leg__title__value}>Flight Time</div>
                     <div className={s.leg__title__value}>Block Time</div>
-                    <div className={s.leg__title__value}>FH</div>
-                    <div className={s.leg__title__value}>FC</div>
+                    <div className={s.leg__title__value}>TSN</div>
+                    <div className={s.leg__title__value}>CSN</div>
                     <button className={s.leg__btn} onClick={() => legState === "open" ? setLegState('close') : setLegState('open')} >
                         <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="30px" viewBox="0 -4.5 20 20" version="1.1">
                             <g id="Page-1" stroke="none" stroke-width="1" fill-rule="evenodd">
@@ -179,6 +180,7 @@ const Legs: React.FC = () => {
             <div className={s.buttons} >
                 <Button text="Back" btnType="button" color="white" handler={() => navigate(`/i-service/aircraft/${aircraft.msn}`)} />
                 <Button text="Add" btnType="button" color="green" handler={() => navigate(`create`)} />
+                <Button text="Print" btnType="button" color="green" handler={() => navigate(`print`)} />
             </div>
         </div>
     )
