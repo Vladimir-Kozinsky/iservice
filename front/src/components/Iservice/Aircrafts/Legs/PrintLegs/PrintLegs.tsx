@@ -2,13 +2,15 @@ import s from "./PrintLegs.module.scss";
 
 import { Field, Form, Formik, FormikHelpers } from 'formik';
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useReactToPrint } from 'react-to-print';
-import { RootState } from "../../../../../store/store";
+import { AppDispatch, RootState } from "../../../../../store/store";
 import Button from "../../../../../common/buttons/Button";
 import Input from "../../../../../common/inputs/Input";
 import { IAircraft, ILeg } from "../../../../../types/types";
 import { useNavigate } from "react-router-dom";
+import { clearPrintLegs, getPrintLegs } from "../../../../../store/reducers/legReducer/legReducer";
+import { getCurrentDate } from "../../../../../utils/utils";
 
 
 interface IFilterValues {
@@ -19,30 +21,41 @@ interface IFilterValues {
 
 const PrintLegs = () => {
     const navigate = useNavigate();
+    const dispatch = useDispatch<AppDispatch>();
     const aircraft = useSelector((state: RootState) => state.aircraft.choosedAircraft);
+    const legs = useSelector((state: RootState) => state.leg.printLegs );
     const componentRef = useRef(null);
+    const backHandler = () => {
+        navigate(`/i-service/aircraft/${aircraft.msn}/legs`);
+        dispatch(clearPrintLegs())
+    }
     const handlePrint = useReactToPrint({
         content: () => componentRef.current,
     });
-    const [legs, setLegs] = useState([]);
     return (
         <div className={s.print} >
-            <h1 className={s.print__header} >Legs Print </h1>
+            <h1 className={s.print__header} >Report </h1>
             <Formik
                 initialValues={{
                     from: '',
                     to: ''
                 }}
+                validate={values => {
+                    interface IGetLegsErrorsDto {
+                        from?: string;
+                        to?: string;
+
+                    }
+                    const errors: IGetLegsErrorsDto = {};
+                    if (!values.from) errors.from = 'Date is required';
+                    if (!values.to) errors.to = 'Date is required';
+                    return errors;
+                }}
                 onSubmit={async (
                     values: IFilterValues,
                     { setSubmitting }: FormikHelpers<IFilterValues>
                 ) => {
-                    try {
-                        // const response = await aircraftAPI.getPrintLegs(aircraft.msn, values.from, values.to);
-                        //  setLegs(response.data);
-                    } catch (error) {
-                        console.log(error);
-                    }
+                    dispatch(getPrintLegs({ aircraft: aircraft.msn, from: values.from, to: values.to }));
                 }}
             >
                 {({
@@ -71,7 +84,7 @@ const PrintLegs = () => {
             </Formik>
             <ComponentToPrint legs={legs} aircraft={aircraft} ref={componentRef} />
             <div className={s.buttons} >
-                <Button text="Back" btnType="button" color="white" handler={() => navigate(`/i-service/aircraft/${aircraft.msn}/legs`)} />
+                <Button text="Back" btnType="button" color="white" handler={backHandler} />
                 <Button text="Print" btnType="button" color="green" handler={handlePrint} />
             </div>
         </div>
@@ -145,6 +158,10 @@ const ComponentToPrint = React.forwardRef(({ legs, aircraft }: ComponentToPrintP
                             </div>
                             <div className={s.aircraftInfo__wrap} >
                                 <div className={s.aircraftInfo__block}>
+                                    <span className={s.aircraftInfo__block__title}>Date:</span>
+                                    <span className={s.aircraftInfo__block__value}>{getCurrentDate()}</span>
+                                </div>
+                                <div className={s.aircraftInfo__block}>
                                     <span className={s.aircraftInfo__block__title}>MSN:</span>
                                     <span className={s.aircraftInfo__block__value}>{aircraft.msn}</span>
                                 </div>
@@ -162,8 +179,8 @@ const ComponentToPrint = React.forwardRef(({ legs, aircraft }: ComponentToPrintP
                                 <div className={s.leg__title__value}>Block On</div>
                                 <div className={s.leg__title__value}>Flight Time</div>
                                 <div className={s.leg__title__value}>Block Time</div>
-                                <div className={s.leg__title__value}>FH</div>
-                                <div className={s.leg__title__value}>FC</div>
+                                <div className={s.leg__title__value}>TSN</div>
+                                <div className={s.leg__title__value}>CSN</div>
                             </div>
                             {legsComp}
                         </div>
@@ -174,7 +191,7 @@ const ComponentToPrint = React.forwardRef(({ legs, aircraft }: ComponentToPrintP
                             <span>{pages.length}</span>
                         </div>
                     </div >
-                    <div className={s.break} />
+                    {index !== pages.length-1 && <div className={s.break} />}
                 </>
             )
         })

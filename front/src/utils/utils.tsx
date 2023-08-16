@@ -97,3 +97,10 @@ export const calcTime = (depDate: string, startTime: string, endTime: string) =>
     const mm = totalTimemm % 60;
     return `${hh}:${mm}`
 }
+
+export const getCurrentDate = (): string => {
+    const date = new Date();
+    const today = new Intl.DateTimeFormat('en-US', { day: 'numeric', month: 'long', year: 'numeric' })
+        .format(date);
+    return today;
+} 

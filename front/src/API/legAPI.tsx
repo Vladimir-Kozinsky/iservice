@@ -1,6 +1,6 @@
 import axios from "axios";
 import generalAPIData from "./generalData";
-import { ICreateLegDto, IGetLegsDto } from "../store/reducers/legReducer/legReducerTypes";
+import { ICreateLegDto, IGetLegsDto, IGetPrintLegsDto } from "../store/reducers/legReducer/legReducerTypes";
 
 const proxy = axios.create({
     baseURL: generalAPIData.baseURL,
@@ -18,6 +18,10 @@ const legAPI = {
     },
     async getLegs(getLegsDto: IGetLegsDto) {
         const response = await proxy.get('/leg/legs', {params: getLegsDto});
+        return response;
+    },
+    async getPrintLegs(getPrintLegsDto: IGetPrintLegsDto) {
+        const response = await proxy.get('/leg/legs/print', {params: getPrintLegsDto});
         return response;
     },
     async getLastTenLegs(aircraft: string) {

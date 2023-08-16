@@ -180,7 +180,7 @@ const Legs: React.FC = () => {
             <div className={s.buttons} >
                 <Button text="Back" btnType="button" color="white" handler={() => navigate(`/i-service/aircraft/${aircraft.msn}`)} />
                 <Button text="Add" btnType="button" color="green" handler={() => navigate(`create`)} />
-                <Button text="Print" btnType="button" color="green" handler={() => navigate(`print`)} />
+                <Button text="Report" btnType="button" color="green" handler={() => navigate(`print`)} />
             </div>
         </div>
     )

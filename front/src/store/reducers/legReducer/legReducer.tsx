@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ICreateLegDto, IGetLegsDto, IGetLegsResponseDto, ILegRejectResponse, ILegState } from './legReducerTypes';
+import { ICreateLegDto, IGetLegsDto, IGetLegsResponseDto, IGetPrintLegsDto, ILegRejectResponse, ILegState } from './legReducerTypes';
 import legAPI from '../../../API/legAPI';
 import { ILeg } from '../../../types/types';
 
@@ -23,6 +23,7 @@ const initialState: ILegState = {
         fc: null,
     },
     legs: [],
+    printLegs:[],
     totalPages: null,
     currentPage: null,
     errorMessage: null,
@@ -40,6 +41,10 @@ const legSlice = createSlice({
 
         clearLegErrorMessage(state: ILegState) {
             state.errorMessage = null;
+        },
+
+        clearPrintLegs(state: ILegState) {
+            state.printLegs = [];
         }
     },
     extraReducers: (builder) => {
@@ -69,6 +74,13 @@ const legSlice = createSlice({
             state.currentPage = action.payload.currentPage;
         })
         builder.addCase(getLegs.rejected, (state: ILegState, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
+        })
+
+        builder.addCase(getPrintLegs.fulfilled, (state: ILegState, action: PayloadAction<ILeg[]>) => {
+            state.printLegs = action.payload;
+        })
+        builder.addCase(getPrintLegs.rejected, (state: ILegState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
         })
 
@@ -118,6 +130,17 @@ export const getLegs = createAsyncThunk(
         }
     }
 )
+export const getPrintLegs = createAsyncThunk(
+    'leg/legs/print',
+    async (getPrintLegsDto: IGetPrintLegsDto, thunkAPI) => {
+        try {
+            const response = await legAPI.getPrintLegs(getPrintLegsDto);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as ILegRejectResponse);
+        }
+    }
+)
 
 export const getlastTenLegs = createAsyncThunk(
     'leg/legs/last',
@@ -134,6 +157,6 @@ export const getlastTenLegs = createAsyncThunk(
 
 
 
-export const { clearLegSuccessMessage, clearLegErrorMessage } = legSlice.actions
+export const { clearLegSuccessMessage, clearLegErrorMessage, clearPrintLegs } = legSlice.actions
 
 export default legSlice.reducer;
