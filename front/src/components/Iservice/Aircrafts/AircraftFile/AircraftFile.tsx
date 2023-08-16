@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
 import { sortEngines, subtractDatesFromNow, subtractFC, subtractFH } from "../../../../utils/utils";
 import { IAircraft, IEngine, ILimit } from "../../../../types/types";
-import AircraftFileWidget from "./AircraftFileWidget/AircraftFileWidget";
+import AircraftFileWidget from "../../../../common/FileWidget/FileWidget";
 import engineIcon from "../../../../assets/img/jpeg/engine-removal.jpg";
 import legsIcon from "../../../../assets/img/png/legs-icon.png";
 import printIcon from "../../../../assets/img/png/print-icon.png";
@@ -13,6 +13,7 @@ import timerDelIcon from "../../../../assets/img/jpeg/timerDel.jpg";
 import { useNavigate } from "react-router-dom";
 import ReactToPrint from "react-to-print";
 import { useRef } from "react";
+import FileWidget from "../../../../common/FileWidget/FileWidget";
 
 
 const AircraftFile = () => {
@@ -315,19 +316,19 @@ const AircraftFile = () => {
 
                 </div>
                 <div className={s.aircraftFile__container__buttons} >
-                    <AircraftFileWidget text="Legs" img={legsIcon} handler={() => navigate(`legs`)} />
+                    <FileWidget text="Legs" img={legsIcon} handler={() => navigate(`legs`)} />
                     <ReactToPrint
                         trigger={() => <button className={s.print__btn} >
-                            <AircraftFileWidget text="Print report" img={printIcon} />
+                            <FileWidget text="Print report" img={printIcon} />
                         </button>}
                         content={() => componentRef.current}
                     />
 
 
-                    <AircraftFileWidget text="Install Engine" img={engineIcon} handler={() => navigate('engine/install')} />
-                    <AircraftFileWidget text="Remove Engine" img={engineIcon} handler={() => navigate('engine/remove')} />
-                    <AircraftFileWidget text="new limit" img={timerIcon} handler={() => navigate('limit')} />
-                    <AircraftFileWidget text="del limit" img={timerDelIcon} handler={() => navigate('limit/del')} />
+                    <FileWidget text="Install Engine" img={engineIcon} handler={() => navigate('engine/install')} />
+                    <FileWidget text="Remove Engine" img={engineIcon} handler={() => navigate('engine/remove')} />
+                    <FileWidget text="new limit" img={timerIcon} handler={() => navigate('limit')} />
+                    <FileWidget text="del limit" img={timerDelIcon} handler={() => navigate('limit/del')} />
                 </div>
             </div>
             <div className={s.aircraftFile__buttons} >

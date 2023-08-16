@@ -51,7 +51,7 @@ interface ILimits {
     threshold: string;
 }
 
-interface IEngineHistory {
+export interface IEngineHistory {
     _id: string;
     date: string;
     action: string;

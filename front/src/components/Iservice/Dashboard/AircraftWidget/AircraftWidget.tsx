@@ -30,7 +30,6 @@ const AircraftWidget: React.FC<AircraftWidgetProps> = ({ aircraft }) => {
     const widgetOnClick = async () => {
         await dispatch(setChoosedAircraft(aircraft));
         navigate(`/i-service/aircraft/${aircraft.msn}`);
-
     }
 
     const cutData = (str: string | undefined | null) => {

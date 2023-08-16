@@ -1,12 +1,12 @@
-import s from "./AircraftFileWidget.module.scss"
+import s from "./FileWidget.module.scss"
 
-type IAircraftFileWidgetProps = {
+type IFileWidgetProps = {
     text: string;
     img: string;
     handler?: () => void;
 }
 
-const AircraftFileWidget = ({ text, img, handler }: IAircraftFileWidgetProps) => {
+const FileWidget = ({ text, img, handler }: IFileWidgetProps) => {
 
     return (
         <div className={s.widget} onClick={handler} >
@@ -16,4 +16,4 @@ const AircraftFileWidget = ({ text, img, handler }: IAircraftFileWidgetProps) =>
     )
 }
 
-export default AircraftFileWidget;
+export default FileWidget;

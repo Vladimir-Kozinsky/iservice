@@ -1,22 +1,21 @@
 @import "../../../../sass/main.scss";
 
-.aircraftFile {
+.engineFile {
     @include dashboard_page ();
 }
 
-.aircraftFile__header {
+.engineFile__header {
     @include blue_text(26px);
     text-align: center;
 
 }
 
-.aircraftFile__container {
+.engineFile__container {
     margin-top: 30px;
     display: grid;
     grid-template-columns: 1fr 150px;
     gap: 20px;
 }
-
 
 .info__section {
     position: relative;
@@ -63,35 +62,11 @@
     }
 }
 
-.engines__section {
-    min-height: 40px;
-    position: relative;
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin-bottom: 20px;
-    box-shadow: $box_shadow;
-    padding: 40px 20px 20px;
-
-    .engine {
-        width: 240px;
-    }
-
-    .engine__header {
-        @include blue_text();
-        text-align: center;
-        border-bottom: 2px #051d42 solid;
-        margin-bottom: 5px;
-    }
-}
-
-
 .limits__section {
     min-height: 40px;
     position: relative;
-    margin-bottom: 60px;
     box-shadow: $box_shadow;
+    margin-bottom: 20px;
     padding: 50px 20px 20px;
     display: flex;
     gap: 20px;
@@ -117,6 +92,14 @@
     }
 }
 
+.history__section {
+    min-height: 40px;
+    position: relative;
+    margin-bottom: 60px;
+    box-shadow: $box_shadow;
+    padding: 50px 20px 20px;
+}
+
 .widget__container {
     display: flex;
     flex-wrap: wrap;
@@ -126,7 +109,7 @@
     row-gap: 20px;
 }
 
-.aircraftFile__container__buttons {
+.engineFile__container__buttons {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -137,7 +120,7 @@
     }
 }
 
-.aircraftFile__buttons {
+.engineFile__buttons {
     position: absolute;
     margin-top: 20px;
     bottom: 20px;
@@ -150,12 +133,20 @@
     background: none;
 }
 
-@media print {
-    @page {
-        size: A4 portrait;
-    }
+.action {
+    background-color: rgb(5, 29, 66, 0.1);
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    height: 20px;
+    align-items: center;
+    
+    .action__value {
+        width: 65px;
+        @include blue_text(10px);
+        text-align: center;
 
-    .info__container {
-        padding: 20px;
     }
 }
