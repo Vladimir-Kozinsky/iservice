@@ -22,6 +22,7 @@ import RemoveEngine from "./Aircrafts/AircraftFile/RemoveEngine/RemoveEngine";
 import NewLeg from "./Aircrafts/Legs/NewLeg/NewLeg";
 import PrintLegs from "./Aircrafts/Legs/PrintLegs/PrintLegs";
 import EngineFile from "./Engines/EngineFile/EngineFile";
+import NewEngineLimit from "./Engines/EngineFile/NewEngineLimit/NewEngineLimit";
 
 
 const Iservice: React.FC = () => {
@@ -58,7 +59,7 @@ const Iservice: React.FC = () => {
                     <Route path="aircraft/:aircraftId/legs/print" element={<PrintLegs />} />
                     <Route path="engines" element={<Engines />} />
                     <Route path="engine/:engineId" element={<EngineFile />} />
-                    
+                    <Route path="engine/:engineId/limit" element={<NewEngineLimit />} /> 
                 </Routes>
             </main>
             <Footer theme="light" />

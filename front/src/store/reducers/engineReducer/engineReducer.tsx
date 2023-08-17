@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IEngineRejectResponse, IEngineState } from './engineReducerTypes';
-import { ICreateEngineDto, IEngine } from '../../../types/types';
+import { ICreateEngineDto, IEngine, ILimit } from '../../../types/types';
 import engineAPI from '../../../API/engineAPI';
+import { INewLimitDto } from '../../../components/Iservice/Engines/EngineFile/NewEngineLimit/NewEngineLimit';
 
 const initialState: IEngineState = {
     choosedEngine: {
@@ -20,7 +21,8 @@ const initialState: IEngineState = {
         limits: [],
     },
     engines: [],
-    errorMessage: null
+    errorMessage: null,
+    successMessage: null
 }
 
 const engineSlice = createSlice({
@@ -42,6 +44,16 @@ const engineSlice = createSlice({
             state.engines = action.payload;
         })
         builder.addCase(getEngines.rejected, (state: IEngineState, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
+        })
+
+        builder.addCase(addLimit.fulfilled, (state: IEngineState, action: PayloadAction<ILimit>) => {
+            state.choosedEngine.limits.push(action.payload);
+            const engine = state.engines.find((engine: IEngine) => engine.msn === state.choosedEngine.msn);
+            engine?.limits.push(action.payload);
+            state.successMessage = "New limit successfully added";
+        })
+        builder.addCase(addLimit.rejected, (state: any, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
         })
     },
@@ -68,6 +80,19 @@ export const getEngines = createAsyncThunk(
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response.data as IEngineRejectResponse);
         }
+    }
+)
+
+export const addLimit = createAsyncThunk(
+    'aircraft/limit/add',
+    async (limitDto: INewLimitDto, thunkAPI) => {
+        try {
+            const response = await engineAPI.addLimit(limitDto);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IEngineRejectResponse);
+        }
+
     }
 )
 

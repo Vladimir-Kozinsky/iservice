@@ -3,6 +3,7 @@ import axios from "axios";
 // import { RemEngFormDataType } from "../components/Aircrafts/RemovalEngine/RemovalEngine";
 import generalAPIData from "./generalData";
 import { ICreateEngineDto } from "../types/types";
+import { INewLimitDto } from "../components/Iservice/Engines/EngineFile/NewEngineLimit/NewEngineLimit";
 
 const proxy = axios.create({
     baseURL: generalAPIData.baseURL
@@ -28,6 +29,14 @@ const engineAPI = {
         return response;
     },
 
+    async addLimit(limitDto: INewLimitDto) {
+        const response = await proxy.post('/engine/limit/add', limitDto);
+        return response;
+    },
+    // async delLimit(limitDto: IDelLimitDto) {
+    //     const response = await proxy.post('/aircraft/limit/delete', limitDto);
+    //     return response;
+    // },
     // async updateEngine(engine: any) {
     //     const response = await proxy.post('/engine/update', engine);
     //     return response;
