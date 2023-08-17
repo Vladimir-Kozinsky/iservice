@@ -3,6 +3,7 @@ import { IEngineRejectResponse, IEngineState } from './engineReducerTypes';
 import { ICreateEngineDto, IEngine, ILimit } from '../../../types/types';
 import engineAPI from '../../../API/engineAPI';
 import { INewLimitDto } from '../../../components/Iservice/Engines/EngineFile/NewEngineLimit/NewEngineLimit';
+import { IDelEngineLimitDto } from '../../../components/Iservice/Engines/DelEngineLimit/DelEngineLimit';
 
 const initialState: IEngineState = {
     choosedEngine: {
@@ -53,7 +54,21 @@ const engineSlice = createSlice({
             engine?.limits.push(action.payload);
             state.successMessage = "New limit successfully added";
         })
-        builder.addCase(addLimit.rejected, (state: any, action: PayloadAction<any>) => {
+        builder.addCase(addLimit.rejected, (state: IEngineState, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
+        })
+
+        builder.addCase(delLimit.fulfilled, (state: IEngineState, action: PayloadAction<string>) => {
+            const limitId = action.payload;
+            const index = state.choosedEngine.limits.findIndex((limit: ILimit) => limit._id === limitId);
+            state.choosedEngine.limits.splice(index, 1);
+
+            const engine = state.engines.find((aircraft: IEngine) => aircraft.msn === state.choosedEngine.msn);
+            const indexEngineArr = engine?.limits.findIndex((limit: ILimit) => limit._id === limitId);
+            if (engine && (indexEngineArr || indexEngineArr === 0)) engine.limits.splice(indexEngineArr, 1);
+            state.successMessage = "Limit successfully removed";
+        })
+        builder.addCase(delLimit.rejected, (state: IEngineState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
         })
     },
@@ -84,10 +99,23 @@ export const getEngines = createAsyncThunk(
 )
 
 export const addLimit = createAsyncThunk(
-    'aircraft/limit/add',
+    'engine/limit/add',
     async (limitDto: INewLimitDto, thunkAPI) => {
         try {
             const response = await engineAPI.addLimit(limitDto);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IEngineRejectResponse);
+        }
+
+    }
+)
+
+export const delLimit = createAsyncThunk(
+    'engine/limit/delete',
+    async (limitDto: IDelEngineLimitDto, thunkAPI) => {
+        try {
+            const response = await engineAPI.delLimit(limitDto);
             return response.data;
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response.data as IEngineRejectResponse);

@@ -4,6 +4,7 @@ import axios from "axios";
 import generalAPIData from "./generalData";
 import { ICreateEngineDto } from "../types/types";
 import { INewLimitDto } from "../components/Iservice/Engines/EngineFile/NewEngineLimit/NewEngineLimit";
+import { IDelEngineLimitDto } from "../components/Iservice/Engines/DelEngineLimit/DelEngineLimit";
 
 const proxy = axios.create({
     baseURL: generalAPIData.baseURL
@@ -33,10 +34,10 @@ const engineAPI = {
         const response = await proxy.post('/engine/limit/add', limitDto);
         return response;
     },
-    // async delLimit(limitDto: IDelLimitDto) {
-    //     const response = await proxy.post('/aircraft/limit/delete', limitDto);
-    //     return response;
-    // },
+    async delLimit(limitDto: IDelEngineLimitDto) {
+        const response = await proxy.post('/engine/limit/delete', limitDto);
+        return response;
+    },
     // async updateEngine(engine: any) {
     //     const response = await proxy.post('/engine/update', engine);
     //     return response;

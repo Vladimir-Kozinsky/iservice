@@ -1,0 +1,39 @@
+@import "../../../../sass/main.scss";
+
+.limit {
+    @include dashboard_page();
+}
+
+.limit__header {
+    @include blue_text(26px);
+    text-align: center;
+}
+
+.inputs {
+    margin-top: 50px;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.inputs__block {
+    position: relative;
+
+    label {
+        margin-left: 20px;
+        font-family: Manrope;
+        color: #1c3d5b;
+
+        span {
+            color: red;
+        }
+    }
+}
+
+.btns {
+    margin: 40px auto;
+    width: 300px;
+    display: flex;
+    justify-content: space-between;
+}
