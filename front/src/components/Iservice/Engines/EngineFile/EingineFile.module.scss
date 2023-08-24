@@ -11,20 +11,12 @@
 }
 
 .engineFile__container {
-    margin-top: 30px;
+    margin: 30px 0 50px;
     display: grid;
     grid-template-columns: 1fr 150px;
     gap: 20px;
 }
 
-.info__section {
-    position: relative;
-    display: flex;
-    justify-content: space-around;
-    padding: 40px 20px 20px;
-    margin-bottom: 20px;
-    box-shadow: $box_shadow;
-}
 
 .section__header {
     margin: 0;
@@ -40,66 +32,6 @@
 
 .section__message {
     color: rgb(128, 128, 128, 0.7);
-}
-
-.info__section__block {
-    @include blue_text();
-    width: fit-content;
-    display: flex;
-    gap: 5px;
-    margin-bottom: 5px;
-    border-bottom: 1px dashed rgb(216, 216, 216);
-
-    .label__block {
-        width: 120px;
-        color: gray;
-        font-weight: 400;
-    }
-
-    .span__block {
-
-        width: fit-content;
-    }
-}
-
-.limits__section {
-    min-height: 40px;
-    position: relative;
-    box-shadow: $box_shadow;
-    margin-bottom: 20px;
-    padding: 50px 20px 20px;
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: space-around;
-
-    .limit {
-        width: 240px;
-
-        .limit__header {
-            @include blue_text();
-            text-align: center;
-            border-bottom: 2px #051d42 solid;
-            margin-bottom: 5px;
-
-        }
-
-        .limit__value {
-            width: fit-content;
-            display: flex;
-            flex-direction: column;
-        }
-    }
-}
-
-.history__section {
-    min-height: 40px;
-    position: relative;
-    margin-bottom: 60px;
-    box-shadow: $box_shadow;
-    padding: 50px 20px 20px;
-    max-height: 300px;
-    overflow: auto;
 }
 
 .widget__container {
@@ -133,22 +65,4 @@
     padding: 0;
     border: none;
     background: none;
-}
-
-.action {
-    background-color: rgb(5, 29, 66, 0.1);
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 10px;
-    border-radius: 5px;
-    height: 20px;
-    align-items: center;
-    
-    .action__value {
-        width: 65px;
-        @include blue_text(10px);
-        text-align: center;
-
-    }
 }
