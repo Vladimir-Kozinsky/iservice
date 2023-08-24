@@ -1,16 +1,16 @@
 import React from "react";
-import { IEngine, ILimit } from "../../types/types";
+import { IApu, IEngine, ILimit } from "../../types/types";
 import s from "./LimitSection.module.scss";
 import { subtractDatesFromNow, subtractFC, subtractFH } from "../../utils/utils";
 
 type LimitSectionProps = {
-    engine: IEngine;
+    engine: IEngine | IApu;
 }
 
 const LimitSection:React.FC<LimitSectionProps> = ({engine}) => {
 
 
-    const limitSwitcher = (limit: ILimit, engine: IEngine) => {
+    const limitSwitcher = (limit: ILimit, engine: IEngine | IApu) => {
         const dependence = limit.dependence as keyof typeof engine | string;
         switch (dependence) {
             case 'fh':
