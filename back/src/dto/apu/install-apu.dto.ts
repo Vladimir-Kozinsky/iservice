@@ -19,7 +19,6 @@ export class InstallApuDto {
     @IsNotEmpty()
     readonly apu: string;
 
-
     @ApiProperty({ example: '2891:00', description: "Aircraft Time Since New" })
     @IsNotEmpty()
     readonly aircraftTsn: string;

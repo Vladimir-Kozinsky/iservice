@@ -26,7 +26,7 @@ export class CreateApuDto {
   readonly csn: string;
 
   @ApiProperty({ example: 'none', description: "APU removal/instolation action" })
-  readonly  apuHistory: ApuHistory;
+  readonly  apuHistory: [ApuHistory];
 
   @ApiProperty({ example: '4', description: "The number of engine overhauls." })
   readonly overhaulNum: number;

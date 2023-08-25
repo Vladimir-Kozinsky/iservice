@@ -33,7 +33,7 @@ export class Apu {
 
     @ApiProperty({ example: '45697:00', description: "APU Time Since New" })
     @Prop({ ref: 'ApuHistory' })
-    apuHistory: ApuHistory
+    apuHistory: [ApuHistory]
 
     @ApiProperty({ example: '4', description: "The number of APU overhauls." })
     @Prop({ required: false })
