@@ -6,6 +6,7 @@ import { IDelLimitDto } from "../components/Iservice/Aircrafts/AircraftFile/DelL
 import { IInstallEngineDto } from "../components/Iservice/Aircrafts/AircraftFile/InstallEngine/InstallEngine";
 import { IRemoveEngineDto } from "../components/Iservice/Aircrafts/AircraftFile/RemoveEngine/RemoveEngine";
 import { IInstallApuDto } from "../components/Iservice/Aircrafts/AircraftFile/InstallApu/InstallApu";
+import { IRemoveApuDto } from "../components/Iservice/Aircrafts/AircraftFile/RemoveApu/RemoveApu";
 
 const proxy = axios.create({
     baseURL: generalAPIData.baseURL,
@@ -49,7 +50,7 @@ const aircraftAPI = {
         return response;
     },
 
-    async removeApu(removeApuDto: IRemoveEngineDto) {
+    async removeApu(removeApuDto: IRemoveApuDto) {
         const response = await proxy.post('/aircraft/apu/remove', removeApuDto);
         return response;
     }

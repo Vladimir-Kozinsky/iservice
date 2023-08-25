@@ -25,6 +25,9 @@ import EngineFile from "./Engines/EngineFile/EngineFile";
 import NewEngineLimit from "./Engines/EngineFile/NewEngineLimit/NewEngineLimit";
 import DelEngineLimit from "./Engines/DelEngineLimit/DelEngineLimit";
 import PrintEngineReport from "./Engines/EngineFile/PrintEngineReport/PrintEngineReport";
+import ApuFile from "./Apus/ApuFile/ApuFile";
+import InstallApu from "./Aircrafts/AircraftFile/InstallApu/InstallApu";
+import RemoveApu from "./Aircrafts/AircraftFile/RemoveApu/RemoveApu";
 
 
 const Iservice: React.FC = () => {
@@ -64,6 +67,9 @@ const Iservice: React.FC = () => {
                     <Route path="engine/:engineId/limit" element={<NewEngineLimit />} /> 
                     <Route path="engine/:engineId/limit/del" element={<DelEngineLimit />} />
                     <Route path="engine/:engineId/report" element={<PrintEngineReport />} />
+                    <Route path="apu/:apuId" element={<ApuFile />} />
+                    <Route path="aircraft/:aircraftId/apu/install" element={<InstallApu />} />
+                    <Route path="aircraft/:aircraftId/apu/remove" element={<RemoveApu />} />
                 </Routes>
             </main>
             <Footer theme="light" />
