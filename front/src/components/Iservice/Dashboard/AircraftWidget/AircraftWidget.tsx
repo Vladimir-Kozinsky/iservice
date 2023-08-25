@@ -51,31 +51,25 @@ const AircraftWidget: React.FC<AircraftWidgetProps> = ({ aircraft }) => {
                 <div className={s.widget__data__engines}>
                     <div className={s.engine}>
                         <img src={engine} alt="engine-icon" />
-                        {aircraft
-                            ? <span>{`1: ${cutData(setEngine(1, aircraft.engines))}`}</span>
-                            : <span>{`1: N/A`}</span>}
+                        <span>{`1: ${cutData(setEngine(1, aircraft.engines))}`}</span>
                     </div>
                     <div className={s.engine}>
                         <img src={engine} alt="engine-icon" />
-                        {aircraft
-                            ? <span>{`2: ${cutData(setEngine(2, aircraft.engines))}`}</span>
-                            : <span>{`2: N/A`}</span>}
+                        <span>{`2: ${cutData(setEngine(2, aircraft.engines))}`}</span>
                     </div>
                     <div className={s.engine}>
                         <img src={engine} alt="engine-icon" />
-                        {aircraft
-                            ? <span>{`3: ${cutData(setEngine(3, aircraft.engines))}`}</span>
-                            : <span>{`3: N/A`}</span>}
+                        <span>{`3: ${cutData(setEngine(3, aircraft.engines))}`}</span>
                     </div>
                     <div className={s.engine}>
                         <img src={engine} alt="engine-icon" />
-                        {aircraft
-                            ? <span>{`4: ${cutData(setEngine(4, aircraft.engines))}`}</span>
-                            : <span>{`4: N/A`}</span>}
+                        <span>{`4: ${cutData(setEngine(4, aircraft.engines))}`}</span>
                     </div>
                     <div className={s.engine}>
                         <img src={apu} alt="engine-icon" />
-                        <span>{`${cutData(aircraft.apu.msn)}`}</span>
+                        {aircraft.apu
+                            ? <span>{`${cutData(aircraft.apu.msn)}`}</span>
+                            : <span>None</span>}
                     </div>
                 </div >
 
