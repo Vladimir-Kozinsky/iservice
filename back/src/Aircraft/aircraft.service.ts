@@ -71,7 +71,7 @@ export class AircraftService {
         aircraft.apu = apu;
         await aircraft.save();
 
-        apu.apuHistory = installDataDto;
+        apu.apuHistory.push(installDataDto);
         await apu.save();
 
         return apu;
