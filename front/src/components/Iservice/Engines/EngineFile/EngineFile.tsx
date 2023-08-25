@@ -14,8 +14,6 @@ import EngineInfoSection from "./EngineInfoSection/EngineInfoSection";
 import EngineOverhaulSection from "./EngineOverhaulSection/EngineOverhaulSection";
 import LimitSection from "../../../../common/LImitSection/LimitSection";
 import EngineHistory from "./EngineHistory/EngineHistorySection";
-import ReactToPrint from "react-to-print";
-
 
 const EngineFile: React.FC = () => {
     const engine = useSelector((state: RootState) => state.engine.choosedEngine);
