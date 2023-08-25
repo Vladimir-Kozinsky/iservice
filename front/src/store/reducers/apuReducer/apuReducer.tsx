@@ -1,21 +1,20 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IApu, ICreateApuDto, ICreateEngineDto, IEngine } from '../../../types/types';
-import engineAPI from '../../../API/engineAPI';
 import { IApuRejectResponse, IApuState } from './apuReducerTypes';
 import apuAPI from '../../../API/apuAPI';
 
 const initialState: IApuState = {
     choosedApu: {
-        _id: null,
-        type: null,
-        msn: null,
-        manufDate: null,
-        tsn: null,
-        csn: null,
-        overhaulNum: null,
-        lastOverhaulDate: null,
-        tsnAtLastOverhaul: null,
-        csnAtLastOverhaul: null,
+        _id: '',
+        type: '',
+        msn: '',
+        manufDate: '',
+        tsn: '',
+        csn: '',
+        overhaulNum: 0,
+        lastOverhaulDate: '',
+        tsnAtLastOverhaul: '',
+        csnAtLastOverhaul: '',
         apuHistory: [],
         limits: [],
     },
