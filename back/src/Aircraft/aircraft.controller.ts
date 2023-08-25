@@ -9,6 +9,7 @@ import { Limit } from 'src/schemas/limit.schema';
 import { CreateLimitDto } from 'src/dto/create-limit.dto';
 import { DeleteLimitDto } from 'src/dto/delete-limit.dto';
 import { InstallApuDto } from 'src/dto/apu/install-apu.dto';
+import { Apu } from 'src/schemas/apu.schema';
 
 @ApiTags('Aircraft')
 @Controller('/aircraft')
@@ -48,12 +49,20 @@ export class AircraftController {
     }
 
 
-    @ApiOperation({ summary: 'Install apu' })
+    @ApiOperation({ summary: 'Install APU' })
     @ApiResponse({ status: 201, type: [Engine] })
     @Post('/apu/install')
     @HttpCode(201)
     async installApu(@Body() installDataDto: InstallApuDto) {
         return await this.aircraftService.installApu(installDataDto);
+    }
+
+    @ApiOperation({ summary: 'Remove APU' })
+    @ApiResponse({ status: 201, type: Apu })
+    @Post('/apu/remove')
+    @HttpCode(201)
+    async removeApu(@Body() removalDataDto: InstallApuDto) {
+        return await this.aircraftService.removeApu(removalDataDto);
     }
 
     @ApiOperation({ summary: 'Add new limit' })

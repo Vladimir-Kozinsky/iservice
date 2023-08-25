@@ -97,6 +97,24 @@ export class AircraftService {
         return engine;
     }
 
+    async removeApu(removalDataDto: InstallApuDto) {
+
+        const apu = await this.apuModel.findOne({ msn: removalDataDto.apu });
+        if (!apu) throw new HttpException('Engine not found', HttpStatus.BAD_REQUEST);
+
+        const aircraft = await this.aircraftModel.findOne({ msn: removalDataDto.aircraft });
+        if (!aircraft) throw new HttpException('Aircraft not found', HttpStatus.BAD_REQUEST);
+
+        apu.apuHistory.push(removalDataDto);
+        await apu.save();
+
+        
+        aircraft.apu = null;
+        await aircraft.save();
+
+        return apu;
+    }
+
     async addLimit(createLimitDto: CreateLimitDto) {
         const limit = await this.limitModel.create(createLimitDto);
         const aircraft = await this.aircraftModel.findOne({ msn: createLimitDto.msn });

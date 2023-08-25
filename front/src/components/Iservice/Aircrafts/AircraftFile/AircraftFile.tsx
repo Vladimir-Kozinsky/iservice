@@ -4,12 +4,12 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
 import { sortEngines, subtractDatesFromNow, subtractFC, subtractFH } from "../../../../utils/utils";
 import { IAircraft, IEngine, ILimit } from "../../../../types/types";
-import AircraftFileWidget from "../../../../common/FileWidget/FileWidget";
 import engineIcon from "../../../../assets/img/jpeg/engine-removal.jpg";
 import legsIcon from "../../../../assets/img/png/legs-icon.png";
 import printIcon from "../../../../assets/img/png/print-icon.png";
 import timerIcon from "../../../../assets/img/jpeg/timer.jpg";
 import timerDelIcon from "../../../../assets/img/jpeg/timerDel.jpg";
+import apuIcon from "../../../../assets/img/png/apu.png";
 import { useNavigate } from "react-router-dom";
 import ReactToPrint from "react-to-print";
 import { useRef } from "react";
@@ -239,10 +239,10 @@ const AircraftFile = () => {
                         </div>}
 
                         <div className={s.engines__section}>
-                            <h3 className={s.section__header}>Engines</h3>
+                            <h3 className={s.section__header}>Engines & APU</h3>
                             {!aircraft.engines.length && <span className={s.section__message} >No engines installed</span>}
                             {engines()}
-                            <div key={apu.msn} className={s.engine}>
+                            {apu && <div key={apu.msn} className={s.engine}>
                                 <div className={s.engine__header}>
                                     <label>{`APU`}</label>
                                 </div>
@@ -302,7 +302,7 @@ const AircraftFile = () => {
                                         <span>{subtractFC(apu.csn, apu.csnAtLastOverhaul)}</span>
                                     </div>
                                 </div>
-                            </div>
+                            </div>}
                         </div>
 
                         <div className={s.limits__section}>
@@ -329,6 +329,8 @@ const AircraftFile = () => {
                     <FileWidget text="Remove Engine" img={engineIcon} handler={() => navigate('engine/remove')} />
                     <FileWidget text="new limit" img={timerIcon} handler={() => navigate('limit')} />
                     <FileWidget text="del limit" img={timerDelIcon} handler={() => navigate('limit/del')} />
+                    <FileWidget text="Install APU" img={apuIcon} handler={() => navigate('apu/install')} />
+                    <FileWidget text="remove APU" img={apuIcon} handler={() => navigate('apu/remove')} />
                 </div>
             </div>
             <div className={s.aircraftFile__buttons} >
