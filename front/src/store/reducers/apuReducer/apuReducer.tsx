@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IApu, ICreateApuDto, ICreateEngineDto, IEngine } from '../../../types/types';
+import { IApu, ICreateApuDto, ICreateEngineDto, IEngine, ILimit } from '../../../types/types';
 import { IApuRejectResponse, IApuState } from './apuReducerTypes';
 import apuAPI from '../../../API/apuAPI';
+import { INewLimitDto } from '../../../components/Iservice/Apus/ApuFile/NewApuLimit/NewApuLimit';
 
 const initialState: IApuState = {
     choosedApu: {
@@ -44,6 +45,16 @@ const apuSlice = createSlice({
         builder.addCase(getApus.rejected, (state: IApuState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
         })
+
+        builder.addCase(addLimit.fulfilled, (state: IApuState, action: PayloadAction<ILimit>) => {
+            state.choosedApu.limits.push(action.payload);
+            const apu = state.apus.find((apu: IApu) => apu.msn === state.choosedApu.msn);
+            apu?.limits.push(action.payload);
+            state.successMessage = "New limit successfully added";
+        })
+        builder.addCase(addLimit.rejected, (state: IApuState, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
+        })
     },
 })
 
@@ -68,6 +79,19 @@ export const getApus = createAsyncThunk(
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response.data as IApuRejectResponse);
         }
+    }
+)
+
+export const addLimit = createAsyncThunk(
+    'apu/limit/add',
+    async (limitDto: INewLimitDto, thunkAPI) => {
+        try {
+            const response = await apuAPI.addLimit(limitDto);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IApuRejectResponse);
+        }
+
     }
 )
 
