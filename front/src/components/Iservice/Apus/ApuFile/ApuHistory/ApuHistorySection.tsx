@@ -10,19 +10,23 @@ const ApuHistorySection: React.FC<ApuHistorySectionProps> = ({ apu }) => {
     return (
         <div className={s.section}>
             <h3 className={s.section__header}>Inst/Rem History</h3>
-            {!apu.apuHistory.length && <span className={s.section__message} >No removal / instolation actions</span>}
+            {!apu.apuHistory.length
+                ? <div className={s.section__message}>
+                    <span >No removal / instolation actions</span>
+                </div>
 
-            <div className={s.action__title}>
-                <div className={s.action__value} >Date</div>
-                <div className={s.action__value} >Action</div>
-                <div className={s.action__value} >Engine</div>
-                <div className={s.action__value} >Engine TSN</div>
-                <div className={s.action__value} >Engine CSN</div>
-                <div className={s.action__value} >Aircraft</div>
-                <div className={s.action__value} >Aircraft TSN</div>
-                <div className={s.action__value} >Aircraft CSN</div>
-                <div className={s.action__value} >Reason</div>
-            </div>
+                : <div className={s.action__title}>
+                    <div className={s.action__value} >Date</div>
+                    <div className={s.action__value} >Action</div>
+                    <div className={s.action__value} >Engine</div>
+                    <div className={s.action__value} >Engine TSN</div>
+                    <div className={s.action__value} >Engine CSN</div>
+                    <div className={s.action__value} >Aircraft</div>
+                    <div className={s.action__value} >Aircraft TSN</div>
+                    <div className={s.action__value} >Aircraft CSN</div>
+                    <div className={s.action__value} >Reason</div>
+                </div>
+            }
             {apu.apuHistory.map((action: IApuHistory) => {
                 return (
                     <div className={s.action}>
