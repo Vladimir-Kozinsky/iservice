@@ -4,7 +4,7 @@ import axios from "axios";
 import generalAPIData from "./generalData";
 import { ICreateEngineDto } from "../types/types";
 import { INewLimitDto } from "../components/Iservice/Engines/EngineFile/NewEngineLimit/NewEngineLimit";
-import { IDelEngineLimitDto } from "../components/Iservice/Engines/DelEngineLimit/DelEngineLimit";
+import { IDelEngineLimitDto } from "../components/Iservice/Engines/EngineFile/DelEngineLimit/DelEngineLimit";
 
 const proxy = axios.create({
     baseURL: generalAPIData.baseURL

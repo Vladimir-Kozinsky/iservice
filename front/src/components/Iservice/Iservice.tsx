@@ -23,7 +23,7 @@ import NewLeg from "./Aircrafts/Legs/NewLeg/NewLeg";
 import PrintLegs from "./Aircrafts/Legs/PrintLegs/PrintLegs";
 import EngineFile from "./Engines/EngineFile/EngineFile";
 import NewEngineLimit from "./Engines/EngineFile/NewEngineLimit/NewEngineLimit";
-import DelEngineLimit from "./Engines/DelEngineLimit/DelEngineLimit";
+import DelEngineLimit from "./Engines/EngineFile/DelEngineLimit/DelEngineLimit";
 import PrintEngineReport from "./Engines/EngineFile/PrintEngineReport/PrintEngineReport";
 import ApuFile from "./Apus/ApuFile/ApuFile";
 import InstallApu from "./Aircrafts/AircraftFile/InstallApu/InstallApu";

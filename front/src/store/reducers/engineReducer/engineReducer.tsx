@@ -3,7 +3,7 @@ import { IEngineRejectResponse, IEngineState } from './engineReducerTypes';
 import { ICreateEngineDto, IEngine, ILimit } from '../../../types/types';
 import engineAPI from '../../../API/engineAPI';
 import { INewLimitDto } from '../../../components/Iservice/Engines/EngineFile/NewEngineLimit/NewEngineLimit';
-import { IDelEngineLimitDto } from '../../../components/Iservice/Engines/DelEngineLimit/DelEngineLimit';
+import { IDelEngineLimitDto } from '../../../components/Iservice/Engines/EngineFile/DelEngineLimit/DelEngineLimit';
 
 const initialState: IEngineState = {
     choosedEngine: {
