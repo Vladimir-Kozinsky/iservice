@@ -43,3 +43,6 @@
 .section__header {
     @include section__header()
 }
+.section__message {
+    color: rgb(128, 128, 128, 0.7);
+}
