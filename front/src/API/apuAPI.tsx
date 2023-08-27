@@ -3,6 +3,8 @@ import axios from "axios";
 // import { IApu } from "../types/types";
 import generalAPIData from "./generalData";
 import { ICreateApuDto } from "../types/types";
+import { INewLimitDto } from "../components/Iservice/Apus/ApuFile/NewApuLimit/NewApuLimit";
+import { IDelEngineLimitDto } from "../components/Iservice/Engines/EngineFile/DelEngineLimit/DelEngineLimit";
 
 const proxy = axios.create({
     baseURL: generalAPIData.baseURL
@@ -28,14 +30,14 @@ const apuAPI = {
         return response;
     },
 
-    // async addLimit(limitDto: INewLimitDto) {
-    //     const response = await proxy.post('/apu/limit/add', limitDto);
-    //     return response;
-    // },
-    // async delLimit(limitDto: IDelEngineLimitDto) {
-    //     const response = await proxy.post('/apu/limit/delete', limitDto);
-    //     return response;
-    // },
+    async addLimit(limitDto: INewLimitDto) {
+        const response = await proxy.post('/apu/limit/add', limitDto);
+        return response;
+    },
+    async delLimit(limitDto: IDelEngineLimitDto) {
+        const response = await proxy.post('/apu/limit/delete', limitDto);
+        return response;
+    },
 
     // async updateEngine(apu: IApu) {
     //     const response = await proxy.post('/apu/update', apu);
