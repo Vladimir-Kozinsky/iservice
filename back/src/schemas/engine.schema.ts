@@ -56,7 +56,7 @@ export class Engine {
     csnAtLastOverhaul: string;
 
     @ApiProperty({ example: 'none', description: "Limit" })
-    @Prop({ ref: 'Limit' })
+    @Prop({type: [mongoose.SchemaTypes.ObjectId], ref: 'Limit' })
     limits: [Limit];
 
 }
