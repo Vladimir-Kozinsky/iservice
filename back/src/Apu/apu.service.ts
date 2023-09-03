@@ -44,7 +44,7 @@ export class ApuService {
         const apu = await this.apuModel.findOne({ msn: deleteLimitDto.msn });
         if (!apu) throw new HttpException('APU not found', HttpStatus.BAD_REQUEST);
 
-        const index = apu.limits.findIndex((limit: Limit) => limit._id.toString() == deleteLimitDto.limitId)
+        const index = apu.limits.findIndex((limit: Limit) => limit._id.toString() == deleteLimitDto.limitId);
         if (index < 0) throw new HttpException('Limit has already deleted', HttpStatus.BAD_REQUEST);
 
         apu.limits.splice(index, 1);
@@ -52,5 +52,4 @@ export class ApuService {
 
         return deleteLimitDto.limitId;
     }
-
 }

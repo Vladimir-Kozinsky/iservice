@@ -28,6 +28,9 @@ import PrintEngineReport from "./Engines/EngineFile/PrintEngineReport/PrintEngin
 import ApuFile from "./Apus/ApuFile/ApuFile";
 import InstallApu from "./Aircrafts/AircraftFile/InstallApu/InstallApu";
 import RemoveApu from "./Aircrafts/AircraftFile/RemoveApu/RemoveApu";
+import NewApuForm from "./Apus/NewApuForm/NewApuForm";
+import NewApuLimit from "./Apus/ApuFile/NewApuLimit/NewApuLimit";
+import DelApuLimit from "./Apus/ApuFile/DelApuLimit/DelApuLimit";
 
 
 const Iservice: React.FC = () => {
@@ -50,26 +53,32 @@ const Iservice: React.FC = () => {
                     <Route path="profile" element={<Profile />} />
                     <Route path="signup" element={<SignUp />} />
                     <Route path="/" element={<Dashboard />} />
+
                     <Route path="aircrafts" element={<Aircrafts />} />
-                    <Route path="apus" element={<Apus />} />
                     <Route path="aircrafts/new-aircraft" element={<NewAircraftForm />} />
-                    <Route path="engines/new-engine" element={<NewEngineForm />} />
                     <Route path="aircraft/:aircraftId" element={<AircraftFile />} />
                     <Route path="aircraft/:aircraftId/legs" element={<Legs />} />
                     <Route path="aircraft/:aircraftId/limit" element={<NewLimit />} />
                     <Route path="aircraft/:aircraftId/limit/del" element={<DelLimit />} />
                     <Route path="aircraft/:aircraftId/engine/install" element={<InstallEngine />} />
                     <Route path="aircraft/:aircraftId/engine/remove" element={<RemoveEngine />} />
-                    <Route path="aircraft/:aircraftId/legs/create" element={<NewLeg />} />
-                    <Route path="aircraft/:aircraftId/legs/print" element={<PrintLegs />} />
-                    <Route path="engines" element={<Engines />} />
-                    <Route path="engine/:engineId" element={<EngineFile />} />
-                    <Route path="engine/:engineId/limit" element={<NewEngineLimit />} /> 
-                    <Route path="engine/:engineId/limit/del" element={<DelEngineLimit />} />
-                    <Route path="engine/:engineId/report" element={<PrintEngineReport />} />
-                    <Route path="apu/:apuId" element={<ApuFile />} />
                     <Route path="aircraft/:aircraftId/apu/install" element={<InstallApu />} />
                     <Route path="aircraft/:aircraftId/apu/remove" element={<RemoveApu />} />
+                    <Route path="aircraft/:aircraftId/legs/create" element={<NewLeg />} />
+                    <Route path="aircraft/:aircraftId/legs/print" element={<PrintLegs />} />
+
+                    <Route path="engines" element={<Engines />} />
+                    <Route path="engines/new-engine" element={<NewEngineForm />} />
+                    <Route path="engine/:engineId" element={<EngineFile />} />
+                    <Route path="engine/:engineId/limit" element={<NewEngineLimit />} />
+                    <Route path="engine/:engineId/limit/del" element={<DelEngineLimit />} />
+                    <Route path="engine/:engineId/report" element={<PrintEngineReport />} />
+
+                    <Route path="apus" element={<Apus />} />   
+                    <Route path="apus/new-apu" element={<NewApuForm />} />                
+                    <Route path="apu/:apuId" element={<ApuFile />} />
+                    <Route path="apu/:apuId/limit" element={<NewApuLimit />} />
+                    <Route path="apu/:apuId/limit/del" element={<DelApuLimit />} />
                 </Routes>
             </main>
             <Footer theme="light" />
