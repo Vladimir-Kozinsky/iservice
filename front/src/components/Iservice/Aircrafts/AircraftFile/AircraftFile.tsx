@@ -138,7 +138,7 @@ const AircraftFile = () => {
             <h1 className={s.aircraftFile__header} >Aircraft File of {aircraft.msn}</h1>
             <div className={s.aircraftFile__container} >
                 <div ref={componentRef} className={s.info__container}>
-                    <div  className={s.info}>
+                    <div className={s.info}>
                         <div className={s.info__section}>
                             <h3 className={s.section__header}>Aircraft Info</h3>
                             <div>
@@ -240,9 +240,9 @@ const AircraftFile = () => {
 
                         <div className={s.engines__section}>
                             <h3 className={s.section__header}>Engines & APU</h3>
-                            {!aircraft.engines.length && <span className={s.section__message} >No engines installed</span>}
+                            {!aircraft.engines.length && !apu.msn && <span className={s.section__message} >No engines and APU installed</span>}
                             {engines()}
-                            {apu && <div key={apu.msn} className={s.engine}>
+                            {apu?.msn && <div key={apu.msn} className={s.engine}>
                                 <div className={s.engine__header}>
                                     <label>{`APU`}</label>
                                 </div>
@@ -326,11 +326,11 @@ const AircraftFile = () => {
 
 
                     <FileWidget text="Install Engine" img={engineIcon} handler={() => navigate('engine/install')} />
-                    <FileWidget text="Remove Engine" img={engineIcon} handler={() => navigate('engine/remove')} />
+                    <FileWidget text="Remove Engine" img={engineIcon} isMute={aircraft.engines.length ? false : true} handler={() => navigate('engine/remove')} />
                     <FileWidget text="new limit" img={timerIcon} handler={() => navigate('limit')} />
                     <FileWidget text="del limit" img={timerDelIcon} handler={() => navigate('limit/del')} />
-                    <FileWidget text="Install APU" img={apuIcon} handler={() => navigate('apu/install')} />
-                    <FileWidget text="remove APU" img={apuIcon} handler={() => navigate('apu/remove')} />
+                    <FileWidget text="Install APU" img={apuIcon} isMute={aircraft.apu?.msn ? true : false} handler={() => navigate('apu/install')} />
+                    <FileWidget text="remove APU" img={apuIcon} isMute={aircraft.apu?.msn ? false : true} handler={() => navigate('apu/remove')} />
                 </div>
             </div>
             <div className={s.aircraftFile__buttons} >
