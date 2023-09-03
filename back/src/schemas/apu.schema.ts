@@ -1,7 +1,7 @@
 
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
-import { HydratedDocument, Types } from 'mongoose';
+import mongoose, { HydratedDocument, Types } from 'mongoose';
 import { Limit } from './limit.schema';
 import { ApuHistory } from './apuHistory.schema';
 
@@ -52,7 +52,7 @@ export class Apu {
     csnAtLastOverhaul: string;
 
     @ApiProperty({ example: 'none', description: "Limit" })
-    @Prop({ ref: 'Limit' })
+    @Prop({ type: [mongoose.SchemaTypes.ObjectId], ref: 'Limit' })
     limits: [Limit];
 
 }
