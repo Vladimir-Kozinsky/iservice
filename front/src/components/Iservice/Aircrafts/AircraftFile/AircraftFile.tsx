@@ -198,7 +198,7 @@ const AircraftFile = () => {
 
                         </div>
 
-                        {aircraft.overhaulNum && <div className={s.info__section}>
+                        {aircraft.overhaulNum ? <div className={s.info__section}>
                             <h3 className={s.section__header}>Overhaul Info</h3>
                             <div>
                                 <div className={s.info__section__block} >
@@ -236,11 +236,11 @@ const AircraftFile = () => {
                                     </div>
                                 </div>
                             </div>
-                        </div>}
+                        </div> : null}
 
                         <div className={s.engines__section}>
                             <h3 className={s.section__header}>Engines & APU</h3>
-                            {!aircraft.engines.length && !apu.msn && <span className={s.section__message} >No engines and APU installed</span>}
+                            {!aircraft.engines.length && !apu?.msn && <span className={s.section__message} >No engines and APU installed</span>}
                             {engines()}
                             {apu?.msn && <div key={apu.msn} className={s.engine}>
                                 <div className={s.engine__header}>

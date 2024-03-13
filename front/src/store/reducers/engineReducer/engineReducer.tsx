@@ -33,6 +33,13 @@ const engineSlice = createSlice({
         setChoosedEngine(state: IEngineState, action: PayloadAction<IEngine>) {
             state.choosedEngine = action.payload;
         },
+        clearEngineSuccessMessage(state: IEngineState) {
+            state.successMessage = null;
+        },
+
+        clearEngineErrorMessage(state: IEngineState) {
+            state.errorMessage = null;
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(addEngine.fulfilled, (state: IEngineState, action: PayloadAction<IEngine>) => {
@@ -124,6 +131,6 @@ export const delLimit = createAsyncThunk(
     }
 )
 
-export const { setChoosedEngine } = engineSlice.actions
+export const { setChoosedEngine, clearEngineSuccessMessage, clearEngineErrorMessage } = engineSlice.actions
 
 export default engineSlice.reducer;

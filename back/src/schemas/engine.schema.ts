@@ -24,7 +24,7 @@ export class Engine {
     manufDate: string;
 
     @ApiProperty({ example: '1', description: "Engine position" })
-    @Prop({ required: true })
+    @Prop({ required: false })
     position: number;
 
     @ApiProperty({ example: '45697:00', description: "Engine Time Since New" })

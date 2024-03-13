@@ -11,6 +11,9 @@ import Loader from "../../../../common/Loader/Loader";
 import { useNavigate } from "react-router-dom";
 import { ICreateEngineDto } from "../../../../types/types";
 import { addEngine } from "../../../../store/reducers/engineReducer/engineReducer";
+import withSuccessMessage from "../../../../HOC/wirhSuccessMessage";
+import withErrorMessage from "../../../../HOC/wirhErrorMessage";
+import { compose } from "@reduxjs/toolkit";
 
 
 const NewEngineForm: React.FC = () => {
@@ -148,5 +151,6 @@ const NewEngineForm: React.FC = () => {
     )
 }
 
+const EnhancedComponent = withSuccessMessage(NewEngineForm);
 
-export default NewEngineForm;
+export default compose(withErrorMessage)(EnhancedComponent);

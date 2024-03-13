@@ -1,6 +1,6 @@
 import s from './AircraftWidget.module.scss';
 import plane from './../../../../assets/img/png/plane-icon.png'
-import engine from './../../../../assets/img/png/engine.png'
+import engineIcon from './../../../../assets/img/png/engine.png'
 import apu from './../../../../assets/img/png/apu.png'
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -49,31 +49,21 @@ const AircraftWidget: React.FC<AircraftWidgetProps> = ({ aircraft }) => {
                 </div>
 
                 <div className={s.widget__data__engines}>
-                    <div className={s.engine}>
-                        <img src={engine} alt="engine-icon" />
-                        <span>{`1: ${cutData(setEngine(1, aircraft.engines))}`}</span>
-                    </div>
-                    <div className={s.engine}>
-                        <img src={engine} alt="engine-icon" />
-                        <span>{`2: ${cutData(setEngine(2, aircraft.engines))}`}</span>
-                    </div>
-                    <div className={s.engine}>
-                        <img src={engine} alt="engine-icon" />
-                        <span>{`3: ${cutData(setEngine(3, aircraft.engines))}`}</span>
-                    </div>
-                    <div className={s.engine}>
-                        <img src={engine} alt="engine-icon" />
-                        <span>{`4: ${cutData(setEngine(4, aircraft.engines))}`}</span>
-                    </div>
-                    <div className={s.engine}>
-                        <img src={apu} alt="engine-icon" />
-                        {aircraft.apu
-                            ? <span>{`${cutData(aircraft.apu.msn)}`}</span>
-                            : <span>None</span>}
-                    </div>
+                    {aircraft.engines.map((engine: IEngine, pos: number) => (
+                        < div className={s.engine}>
+                            <img src={engineIcon} alt="engine-icon" />
+                            <span>{`${pos + 1}: ${cutData(setEngine(pos + 1, aircraft.engines))}`}</span>
+                        </div>
+                    ))}
                 </div >
+                <div className={s.engine}>
+                    <img src={apu} alt="engine-icon" />
+                    {aircraft.apu
+                        ? <span>{`${cutData(aircraft.apu.msn)}`}</span>
+                        : <span>None</span>}
+                </div>
 
-            </div>
+            </div >
         </>
 
     )
