@@ -48,8 +48,8 @@ const App: React.FC = () => {
           <Routes location={location}>
             <Route path="/" element={<Main />} />
             <Route path="auth" element={<Auth />} />
-            <Route path="i-service/*" element={<Iservice />} />
-            <Route path="signup" element={<SignUp />} />
+            {/* <Route path="i-service/*" element={<Iservice />} /> */}
+            {/* <Route path="signup" element={<SignUp />} /> */}
           </Routes>
         </CSSTransition>
       </TransitionGroup>
