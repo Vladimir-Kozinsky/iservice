@@ -50,12 +50,18 @@ const HeaderMain: React.FC = () => {
                     </div>
                     <div className={s.headerMain__switch}>
                         <Switch
+                            //className={s.headerMain__switch__label}
                             onChange={handleChange}
                             checked={checked}
-                            height={20}
-                            width={42}
-                            handleDiameter={23}
-                            offHandleColor={'#008800'}
+                            height={8}
+                            width={26}
+                            handleDiameter={15}
+                            uncheckedIcon={false}
+                            checkedIcon={false}
+                            offHandleColor={'#305b9b'}
+                            onHandleColor={'#fff'}
+                            offColor={'#638dca'}
+                            onColor={'#888'}
                         />
                     </div>
                 </div>
