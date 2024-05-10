@@ -1,4 +1,5 @@
 import s from './Slider.module.scss'
+import slider1 from '../../../assets/img/jpeg/slider-img1.jpeg'
 import slider5 from '../../../assets/img/jpeg/slider-img5.jpeg'
 import slider2 from '../../../assets/img/jpeg/slider-img2.jpeg'
 import slider4 from '../../../assets/img/jpeg/slider-img4.jpeg'
@@ -7,6 +8,7 @@ import { useEffect, useState } from 'react'
 import classNames from 'classnames'
 
 const slides = [
+    slider1,
     slider5,
     slider2,
     slider4,
@@ -15,9 +17,9 @@ const slides = [
 
 
 const Slider = () => {
-    const SLIDE_SIZE = window.screen.width > 1200 ? 770 
-    :  window.screen.width > 768 ? 700 
-    : window.screen.width > 480 ? 460 : 300
+    const SLIDE_SIZE = window.screen.width > 1200 ? 770
+        : window.screen.width > 768 ? 700
+            : window.screen.width > 480 ? 460 : 300
     const [currentSlide, setCurrentSlide] = useState(0);
     const nextSlide = () => {
         if (currentSlide !== slides.length - 1) setCurrentSlide(currentSlide + 1)

@@ -12,6 +12,7 @@ import { refreshToken } from './store/reducers/authReducer/authReducer';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import Iservice from './components/Iservice/Iservice';
 import SignUp from './components/SignUp/SignUp';
+import Fleet from './components/Main/Fleet/Fleet';
 
 const App: React.FC = () => {
   let location = useLocation();
@@ -46,8 +47,9 @@ const App: React.FC = () => {
           timeout={500}
         >
           <Routes location={location}>
-            <Route path="/" element={<Main />} />
+            <Route path="*" element={<Main />} />
             <Route path="auth" element={<Auth />} />
+            {/* <Route path="fleet" element={<Fleet />} /> */}
             {/* <Route path="i-service/*" element={<Iservice />} /> */}
             {/* <Route path="signup" element={<SignUp />} /> */}
           </Routes>

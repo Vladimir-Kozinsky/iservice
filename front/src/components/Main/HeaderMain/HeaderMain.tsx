@@ -33,9 +33,9 @@ const HeaderMain: React.FC = () => {
                 <div className={s.nav__wrapper} >
                     <nav className={classNames(s.headerMain__nav, isMenu && s.active)}>
                         <ul>
-                            <li><a className={s.headerMain__nav__link} href="#about">{t('about_link')}</a></li>
-                            <li><a className={s.headerMain__nav__link} href="#fleet">{t('fleet_link')}</a></li>
-                            <li><a className={s.headerMain__nav__link} href="#contacts">{t('contacts_link')}</a></li>
+                            <li><NavLink className={s.headerMain__nav__link} to="/">{t('about_link')}</NavLink></li>
+                            <li><NavLink className={s.headerMain__nav__link} to="fleet">{t('fleet_link')}</NavLink></li>
+                            <li><NavLink className={s.headerMain__nav__link} to="contacts">{t('contacts_link')}</NavLink></li>
                             <li><NavLink className={s.headerMain__nav__link} to="/auth">{t('login_link')}</NavLink></li>
                         </ul>
                     </nav>
