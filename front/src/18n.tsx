@@ -8,7 +8,7 @@ i18n.use(Backend).use(LanguageDetector).use(initReactI18next).init({
     debug: false,
     backend: {
         /* translation file path */
-        loadPath: '/locales/{{lng}}/{{ns}}.json'
+        loadPath: '/iservice/locales/{{lng}}/{{ns}}.json'
     },
     interpolation: {
         escapeValue: false, // not needed for react as it escapes by default

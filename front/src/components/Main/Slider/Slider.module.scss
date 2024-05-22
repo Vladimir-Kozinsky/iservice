@@ -19,6 +19,7 @@
 
 .carousel__container__item {
     transition: transform 300ms ease-in-out;
+
     img {
         width: 770px;
         height: 420px;
@@ -42,8 +43,11 @@
     height: 64px;
     border: 1px rgb(255, 255, 255, 0.5) solid;
     background: none;
-    background-repeat: no-repeat;
-    background-position: 50%;
+    //background-repeat: no-repeat;
+    //background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     transform: rotate(45deg);
     border-radius: 8px;
     transition: all 0.3s;
@@ -52,10 +56,16 @@
         cursor: pointer;
         border: 1px rgb(255, 255, 255, 0.9) solid;
     }
+
+    svg {
+        height: 24px;
+        width: 24px;
+    }
 }
 
 .carousel__btn__left {
     left: 0px;
+
     svg {
         transform: rotate(-45deg);
     }
@@ -63,13 +73,16 @@
 
 .carousel__btn__left.disable {
     opacity: 0.7;
+
     &:hover {
         cursor: auto;
         border: 1px rgb(255, 255, 255, 0.4) solid;
     }
 }
+
 .carousel__btn__right.disable {
     opacity: 0.7;
+
     &:hover {
         cursor: auto;
         border: 1px rgb(255, 255, 255, 0.4) solid;
@@ -78,6 +91,7 @@
 
 .carousel__btn__right {
     right: 0px;
+
     svg {
         transform: rotate(135deg);
     }
@@ -89,21 +103,26 @@
     bottom: 55px;
     z-index: 2;
     width: 150px;
+    height: 8px;
     display: flex;
     justify-content: space-between;
 }
 
 .carousel__dotes__item {
-    width: 8px;
-    height: 8px;
+    padding: 0;
+    margin: 0;
+    width: 10px;
+    height: 10px;
     border-radius: 50px;
     border: none;
     transition: all 0.3s;
     background-color: rgba(255, 255, 255, 0.5);
+
     &:hover {
         cursor: pointer;
     }
 }
+
 .carousel__dotes__item.active {
     background-color: rgb(5, 29, 66, 0.6);
 }
@@ -156,12 +175,11 @@
         bottom: 50px;
         width: 110px;
     }
-    
+
     .carousel__dotes__item {
-        width: 5px;
-        height: 7px;
-        border-radius: 50%;
-        
+        width: 8px;
+        height: 8px;
+
     }
 
 }
@@ -185,27 +203,25 @@
     }
 
     .carousel__btns {
-        bottom: 20px; 
+        bottom: 20px;
     }
-   
+
 
 
     .carousel__btn__left,
     .carousel__btn__right {
-        width: 44px;
-        height: 44px;
+        width: 40px;
+        height: 40px;
     }
 
     .carousel__dotes {
         left: 20px;
-        bottom: 40px;
-        width: 100px;
+        bottom: 35px;
+        width: 80px;
     }
-    
+
     .carousel__dotes__item {
-        width: 5px;
-        height: 7px;
-        border-radius: 50%;
-        
+        width: 6px;
+        height: 6px;
     }
 }

@@ -1,11 +1,12 @@
 .footer__container {
     height: 120px;
-    width: 1200px;
+    max-width: 1200px;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 0 10px;
 
     span {
         font-size: 16px;
@@ -41,6 +42,7 @@
 
     .footer__container {
         border-top: 1px solid rgba(5, 29, 66, 0.15);
+
         span {
             color: #051d42;
         }
@@ -60,5 +62,37 @@
                 fill: rgb(5, 29, 66, 0.8);
             }
         }
+    }
+}
+
+@media (max-width: 1200px) {}
+
+
+@media (max-width: 768px) {
+    .footer__container {
+        flex-direction: column;
+        justify-content: space-around;
+
+        span {
+            font-size: 14px;
+        }
+    }
+}
+
+@media (max-width: 480px) {
+    .footer__container {
+
+        span {
+            font-size: 12px;
+        }
+    }
+
+    .links {
+        gap: 10px;
+    }
+
+    .links__item {
+        width: 30px;
+        height: 30px;
     }
 }

@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import reportWebVitals from './reportWebVitals';
 import { Provider, useDispatch } from 'react-redux';
 import { AppDispatch, store } from './store/store';
-import { BrowserRouter, Route, Routes, useLocation } from "react-router-dom";
+import { BrowserRouter, HashRouter, Route, Routes, useLocation } from "react-router-dom";
 import s from './index.module.scss';
 import Main from './components/Main/Main';
 import './18n';
@@ -50,8 +50,8 @@ const App: React.FC = () => {
             <Route path="*" element={<Main />} />
             <Route path="auth" element={<Auth />} />
             {/* <Route path="fleet" element={<Fleet />} /> */}
-            {/* <Route path="i-service/*" element={<Iservice />} /> */}
-            {/* <Route path="signup" element={<SignUp />} /> */}
+            <Route path="i-service/*" element={<Iservice />} />
+            <Route path="signup" element={<SignUp />} />
           </Routes>
         </CSSTransition>
       </TransitionGroup>
@@ -65,9 +65,9 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <Provider store={store}>
-    <BrowserRouter>
+    <HashRouter>
       <App />
-    </BrowserRouter>
+    </HashRouter>
   </Provider >
 
 );

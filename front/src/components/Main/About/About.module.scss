@@ -12,7 +12,6 @@
     position: relative;
     display: flex;
     justify-content: space-between;
-    top: 60px;
 }
 
 .moove__block.active {
@@ -22,17 +21,16 @@
 @keyframes slider-animate {
     0% {
         opacity: 0;
-        top: 65px;
+        top: 10px;
     }
 
     100% {
         opacity: 1;
-        top: 50px;
+        top: 0px;
     }
 }
 
 .about__wrap {
-   
     transition: all 0.5s ease-in-out;
     overflow: hidden;
     height: 550px;
@@ -58,7 +56,7 @@
 }
 
 .about__title.active {
-    margin-top: -40px;
+    margin-top: -0px;
 }
 
 .about__par {
@@ -155,10 +153,8 @@
     }
 }
 
-
-
 #light__about__wrap {
-    
+
     .about__title {
         color: #051d42;
     }
@@ -226,6 +222,7 @@
         flex-direction: column;
         align-items: center;
         gap: 70px;
+        padding-top: 0px;
     }
 
     .about {
@@ -270,7 +267,6 @@
 
     .moove__block {
         gap: 60px;
-        top: 120px;
     }
 
     .about__par__last {
@@ -286,10 +282,6 @@
 
     .about__wrap {
         height: 560px;
-
-        &.active {
-            height: 940px;
-        }
     }
 
     .about__title {
@@ -300,7 +292,7 @@
         margin-top: 20px;
         width: 140px;
         height: 48px;
-        gap: 12px;
+        gap: 10px;
 
         .about__btn__link {
             color: white;
@@ -315,6 +307,6 @@
     }
 
     .about__par__last {
-        height: 220px;
+        height: 190px;
     }
 }
