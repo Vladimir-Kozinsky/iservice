@@ -31,7 +31,7 @@ const Fleet: React.FC<FleetProps> = ({ theme }) => {
                             <div className={s.params__value} >
                                 <span>61 234</span>
                                 <span>17 000</span>
-                                <span>180</span>
+                                <span>132</span>
                             </div>
                         </div>
                     </div>
