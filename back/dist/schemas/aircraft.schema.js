@@ -17,25 +17,70 @@ const apu_schema_1 = require("./apu.schema");
 let Aircraft = class Aircraft {
 };
 __decorate([
+    (0, swagger_1.ApiProperty)({ example: 'EX-76009', description: "Aircraft registration number" }),
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", String)
+], Aircraft.prototype, "regNum", void 0);
+__decorate([
     (0, swagger_1.ApiProperty)({ example: 'Boeing 737-300', description: "Aircraft type" }),
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], Aircraft.prototype, "type", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 'A16WE', description: "Aircraft type certificate Number" }),
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", String)
+], Aircraft.prototype, "typeCert", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: '1989-01-30', description: "Aircraft manufacture date" }),
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", String)
+], Aircraft.prototype, "manufDate", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ example: '25891', description: "Aircraft manufacturer's Serial Number" }),
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
 ], Aircraft.prototype, "msn", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: 'EX-76009', description: "Aircraft registration number" }),
+    (0, swagger_1.ApiProperty)({ example: '016', description: "Effectivity code" }),
     (0, mongoose_1.Prop)({ required: true }),
     __metadata("design:type", String)
-], Aircraft.prototype, "regNum", void 0);
+], Aircraft.prototype, "code", void 0);
 __decorate([
-    (0, swagger_1.ApiProperty)({ example: '1989-01-30', description: "Aircraft manufacture date" }),
+    (0, swagger_1.ApiProperty)({ example: '61234', description: "Max Take-Off Cross Weight" }),
     (0, mongoose_1.Prop)({ required: true }),
-    __metadata("design:type", String)
-], Aircraft.prototype, "manufDate", void 0);
+    __metadata("design:type", Number)
+], Aircraft.prototype, "mtow", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: '48307', description: "Max Zero Fuel Weight" }),
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", Number)
+], Aircraft.prototype, "mzfw", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: '51709', description: "Max Landing Weight" }),
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", Number)
+], Aircraft.prototype, "mlw", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: '61461', description: "Max Taxi Weight" }),
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", Number)
+], Aircraft.prototype, "mtw", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: '20104', description: "Fuel Capacity" }),
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", Number)
+], Aircraft.prototype, "fuelCap", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: '31138', description: "Basic Empty Weight" }),
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", Number)
+], Aircraft.prototype, "bew", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: '1.04', description: "Center of gravity" }),
+    (0, mongoose_1.Prop)({ required: true }),
+    __metadata("design:type", Number)
+], Aircraft.prototype, "cg", void 0);
 __decorate([
     (0, swagger_1.ApiProperty)({ example: '45231:00', description: "Aircraft FH at the time of adding to the system" }),
     (0, mongoose_1.Prop)({ required: true }),
@@ -91,6 +136,11 @@ __decorate([
     (0, mongoose_1.Prop)({ type: [mongoose_2.default.SchemaTypes.ObjectId], ref: 'Limit' }),
     __metadata("design:type", Array)
 ], Aircraft.prototype, "limits", void 0);
+__decorate([
+    (0, swagger_1.ApiProperty)({ example: 'none', description: "Landing gears" }),
+    (0, mongoose_1.Prop)({ type: [mongoose_2.default.SchemaTypes.ObjectId], ref: 'landingGear' }),
+    __metadata("design:type", Array)
+], Aircraft.prototype, "landingGears", void 0);
 Aircraft = __decorate([
     (0, mongoose_1.Schema)()
 ], Aircraft);
