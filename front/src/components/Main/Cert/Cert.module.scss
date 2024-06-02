@@ -19,6 +19,14 @@
     justify-content: center;
 }
 
+#light__cert__wrap {
+    color: #051d42;
+
+    .section__title {
+        color: #051d42;
+    }
+}
+
 @media (max-width: 1200px) {
     .section__title {
         font-size: 32px;
@@ -33,10 +41,3 @@
     }
 }
 
-#light__cert__wrap {
-    color: #051d42;
-
-    .section__title {
-        color: #051d42;
-    }
-}

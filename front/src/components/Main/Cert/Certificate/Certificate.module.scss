@@ -120,3 +120,18 @@
         }
     }
 }
+
+@media (max-width: 480px) {
+    .cert__item {
+        width: 320px;
+    }
+
+    .cert__item__wrap {
+        width: 320px;
+        height: 457px;
+
+        .cert__item__img.second__page {
+            top: -460px;
+        }
+    }
+}
