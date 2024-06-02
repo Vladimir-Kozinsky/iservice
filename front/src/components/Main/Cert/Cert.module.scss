@@ -8,6 +8,7 @@
 }
 
 .cert__wrap {
+    color: rgba(255, 255, 255, 0.8);
     padding-bottom: 30px;
 }
 
@@ -18,3 +19,24 @@
     justify-content: center;
 }
 
+@media (max-width: 1200px) {
+    .section__title {
+        font-size: 32px;
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .section__title {
+       margin: 0;
+       font-size: 24px;
+    }
+}
+
+#light__cert__wrap {
+    color: #051d42;
+
+    .section__title {
+        color: #051d42;
+    }
+}

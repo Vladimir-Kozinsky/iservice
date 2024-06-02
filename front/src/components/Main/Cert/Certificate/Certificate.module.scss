@@ -5,7 +5,7 @@
     width: 500px;
 
     .cert__title {
-        color: white;
+
         margin: 0 0 10px;
         height: 50px;
         display: flex;
@@ -83,20 +83,7 @@
     }
 }
 
-#light__cert__wrap {
-    color: #051d42;
-    // border-bottom: 1px solid rgba(5, 29, 66, 0.15);
 
-    .section__title {
-        color: #051d42;
-    }
-
-    .cert__title {
-        color: #051d42;
-    }
-
-
-}
 
 .cert__item__img.first {
     z-index: 2;
@@ -106,4 +93,30 @@
 .cert__item__img.second {
     z-index: 0;
     transition-delay: 0.5s;
+}
+
+@media (max-width: 768px) {
+    .cert__item {
+        width: 400px;
+    }
+
+    .cert__item__wrap {
+        width: 400px;
+        height: 570px;
+
+        .cert__item__img.second__page {
+
+            top: -575px;
+
+        }
+
+        .cert__item__btn {
+            height: 50px;
+            width: 40px;
+
+            img {
+                width: 35px;
+            }
+        }
+    }
 }
