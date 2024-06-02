@@ -1,8 +1,0 @@
-@import "../../../sass/main.scss";
-
-.dashboard {
-    @include dashboard_page();
-    display: flex;
-    gap: 20px;
-}
-
