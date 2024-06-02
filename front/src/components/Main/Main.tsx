@@ -1,11 +1,6 @@
 import React, { createContext, Suspense, useEffect, useState } from 'react'
 import HeaderMain from './HeaderMain/HeaderMain';
 import s from './Main.module.scss'
-import Slider from './Slider/Slider';
-import plane_sheme4 from '../../assets/img/png/plane_il.png'
-import Feedback from './Feedback/Feedback';
-import plane_demen from './../../assets/img/jpeg/plane_demensions.jpg'
-import classNames from 'classnames';
 import { useTranslation } from 'react-i18next';
 import Footer from '../Footer/Footer';
 import { Route, Routes } from 'react-router-dom';
@@ -26,11 +21,22 @@ const Main: React.FC = () => {
     const [active, setActive] = useState('');
     const { t, i18n } = useTranslation();
     const [theme, setTheme] = useState("light");
-    const toggleTheme = () => {
-        setTheme((curr) => (curr === "light" ? "dark" : "light"));
-    };
+    const toggleTheme = async () => {
+        setTheme((curr) => {
+            if (curr === "light") {
+                localStorage.setItem('currentTheme', "dark");
+                return "dark";
+            } else {
+                localStorage.setItem('currentTheme', "light");
+                return "light";
+            }
+        })
+    }
+
     useEffect(() => {
-        setActive('active')
+        setActive('active');
+        const savedTheme = localStorage.getItem('currentTheme');
+        savedTheme && setTheme(savedTheme);
     }, [])
     return (
         <Suspense fallback="loading">
@@ -47,8 +53,6 @@ const Main: React.FC = () => {
                                 <Route path="cert" element={<Cert theme={theme} />} />
                                 <Route path="contacts" element={<Contacts theme={theme} />} />
                             </Routes>
-
-
                         </div>
                     </main >
                     <Footer theme={theme} />
