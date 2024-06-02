@@ -12,6 +12,7 @@ import { Route, Routes } from 'react-router-dom';
 import Fleet from './Fleet/Fleet';
 import Contacts from './Contacts/Contacts';
 import About from './About/About';
+import Cert from './Cert/Cert';
 
 interface IThemeContext {
     theme: string;
@@ -43,6 +44,7 @@ const Main: React.FC = () => {
                             <Routes>
                                 <Route path="/" element={<About theme={theme} />} />
                                 <Route path="fleet" element={<Fleet theme={theme} />} />
+                                <Route path="cert" element={<Cert theme={theme} />} />
                                 <Route path="contacts" element={<Contacts theme={theme} />} />
                             </Routes>
 

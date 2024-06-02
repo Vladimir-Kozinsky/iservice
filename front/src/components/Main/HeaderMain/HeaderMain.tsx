@@ -35,6 +35,7 @@ const HeaderMain: React.FC = () => {
                         <ul>
                             <li><NavLink className={s.headerMain__nav__link} to="/">{t('about_link')}</NavLink></li>
                             <li><NavLink className={s.headerMain__nav__link} to="fleet">{t('fleet_link')}</NavLink></li>
+                            <li><NavLink className={s.headerMain__nav__link} to="cert">{t('cert_link')}</NavLink></li>
                             <li><NavLink className={s.headerMain__nav__link} to="contacts">{t('contacts_link')}</NavLink></li>
                             <li><NavLink className={s.headerMain__nav__link} to="/auth">{t('login_link')}</NavLink></li>
                         </ul>
