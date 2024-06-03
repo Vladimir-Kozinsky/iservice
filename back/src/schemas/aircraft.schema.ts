@@ -6,6 +6,7 @@ import { Limit, LimitSchema } from './limit.schema';
 import { Leg } from './leg.schema';
 import { Engine } from './engine.schema';
 import { Apu } from './apu.schema';
+import { Lg } from './lg.schema';
 
 export type AircraftDocument = HydratedDocument<Aircraft>;
 
@@ -110,8 +111,8 @@ export class Aircraft {
     limits: Limit[];
 
     @ApiProperty({ example: 'none', description: "Landing gears" })
-    @Prop({ type: [mongoose.SchemaTypes.ObjectId], ref: 'landingGear' })
-    landingGears: Limit[];
+    @Prop({ type: [mongoose.SchemaTypes.ObjectId], ref: 'Lg' })
+    lgs: Lg[];
 }
 
 export const AircraftSchema = SchemaFactory.createForClass(Aircraft);
