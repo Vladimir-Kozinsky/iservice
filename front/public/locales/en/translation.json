@@ -30,5 +30,10 @@
     "phone": "Phone",
     "company": "Company",
     "message": "Message",
-    "send": "Send"
+    "send": "Send",
+    "news_title": "News",
+    "news_first": "We are pleased to announce the start of a new phase for our airline with the introduction of the Boeing 737-300F aircraft. This significant milestone reflects our commitment to continuous improvement and enhancement of our services to our customers.",
+    "news_second": "We are proud to announce that we have reached a significant milestone in our airline's development: receiving the maintenance certificate for our new Boeing 737CL aircraft type. This significant achievement confirms our commitment to providing the highest level of safety and quality in our aviation services.",
+    "news_forth": "We are pleased to announce the launch of another IL-76 in our fleet! Today we celebrate the start of flights of EX-76019, which joins our fleet to offer our customers even more options.",
+    "news_third": "The registration and airworthiness process for the IL-76 EX-76020 aircraft was completed after all the necessary formalities and checks were completed to ensure that the aircraft complies with all international safety and quality standards. Our team of maintenance specialists thoroughly checked the aircraft to ensure that it was ready for safe operation."
 }
