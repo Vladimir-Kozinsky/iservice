@@ -188,6 +188,7 @@
 
 .headerMain__switch {
     display: flex;
+    position: relative;
     height: 53px;
     align-items: center;
 }
@@ -238,7 +239,7 @@
         transition: all 0.3s ease-in-out;
 
         &.active {
-            height: 150px;
+            height: 180px;
         }
     }
 

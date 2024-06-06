@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import s from "./News.module.scss";
-import post1 from "../../../assets/img/jpeg/slider-img1.jpeg";
+import post1 from "../../../assets/img/jpeg/slider-img2.jpeg";
 import post2 from "../../../assets/img/jpeg/cfm56.jpg";
 import post4 from "../../../assets/img/jpeg/ex76010.jpg";
 import post3 from "../../../assets/img/jpeg/ex76015.jpg";
