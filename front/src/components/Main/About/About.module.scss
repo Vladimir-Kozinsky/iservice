@@ -33,7 +33,6 @@
 .about__wrap {
     transition: all 0.5s ease-in-out;
     overflow: hidden;
-    height: 550px;
 }
 
 .about__wrap__full {
@@ -231,10 +230,10 @@
     }
 
     .about__wrap {
-        height: 830px;
+        // height: 830px;
 
         &.active {
-            height: 970px;
+            //height: 900px;
         }
     }
 
@@ -252,26 +251,24 @@
 }
 
 @media (max-width: 768px) {
+    .about__title {
+        
+        font-size: 32px;
+       
+    }
+
     .about {
         width: 460px;
         height: fit-content;
     }
+}
 
-    .about__wrap {
-        height: 660px;
+.moove__block {
+    gap: 60px;
+}
 
-        &.active {
-            height: 870px;
-        }
-    }
-
-    .moove__block {
-        gap: 60px;
-    }
-
-    .about__par__last {
-        height: 150px;
-    }
+.about__par__last {
+    height: 150px;
 }
 
 @media (max-width: 480px) {
@@ -280,12 +277,8 @@
         height: fit-content;
     }
 
-    .about__wrap {
-        height: 560px;
-    }
-
     .about__title {
-        font-size: 32px;
+        font-size: 24px;
     }
 
     .about__btn {
