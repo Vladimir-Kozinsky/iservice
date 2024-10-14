@@ -4,6 +4,7 @@ import aircraftReducer from './reducers/aircraftReducer/aircraftReducer'
 import engineReducer from './reducers/engineReducer/engineReducer'
 import legReducer from './reducers/legReducer/legReducer'
 import apuReducer from './reducers/apuReducer/apuReducer'
+import gearReducer from './reducers/gearReducer/gearReducer'
 
 export const store = configureStore({
     reducer: {
@@ -11,7 +12,8 @@ export const store = configureStore({
         aircraft: aircraftReducer,
         engine: engineReducer,
         apu: apuReducer,
-        leg: legReducer
+        leg: legReducer,
+        gear: gearReducer,
     }
 })
 

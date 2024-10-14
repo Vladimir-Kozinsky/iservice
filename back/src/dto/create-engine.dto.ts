@@ -1,6 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty } from "class-validator";
 import { EngineHistory } from "src/schemas/engineHistory.schema";
+import { Leg } from "src/schemas/leg.schema";
 import { Limit } from "src/schemas/limit.schema";
 
 export class CreateEngineDto {
@@ -17,6 +18,18 @@ export class CreateEngineDto {
   @IsNotEmpty()
   readonly manufDate: string;
 
+  @ApiProperty({ example: 'CFM', description: "Engine manufacturer" })
+  @IsNotEmpty()
+  readonly manuf: string;
+
+  @ApiProperty({ example: '45231:00', description: "Engine tsn at the time of adding to the system" })
+  @IsNotEmpty()
+  initFh: string;
+
+  @ApiProperty({ example: '5231', description: "Engine csn at the time of adding to the system" })
+  @IsNotEmpty()
+  initFc: string;
+
   @ApiProperty({ example: '45697:00', description: "Engine Time Since New" })
   @IsNotEmpty()
   readonly tsn: string;
@@ -26,7 +39,7 @@ export class CreateEngineDto {
   readonly csn: string;
 
   @ApiProperty({ example: 'none', description: "Engine removal/instolation action" })
-  readonly  engineHistory: EngineHistory;
+  readonly engineHistory: EngineHistory;
 
   @ApiProperty({ example: '4', description: "The number of engine overhauls." })
   readonly overhaulNum: number;
@@ -42,5 +55,8 @@ export class CreateEngineDto {
 
   @ApiProperty({ example: 'none', description: "Limit" })
   readonly limits: [Limit];
+
+  @ApiProperty({ example: 'none', description: "Legs" })
+    readonly legs: [Leg];
 
 }

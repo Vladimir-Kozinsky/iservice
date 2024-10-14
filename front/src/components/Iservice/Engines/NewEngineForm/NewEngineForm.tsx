@@ -32,7 +32,10 @@ const NewEngineForm: React.FC = () => {
                 initialValues={{
                     type: 'CFM56-3B1',
                     msn: '21745',
+                    manuf: 'CFM',
                     manufDate: '1989-01-30',
+                    initFh: '64353:00',
+                    initFc: '41705',
                     tsn: '45600:00',
                     csn: '21456',
                     overhaulNum: 1,
@@ -44,6 +47,7 @@ const NewEngineForm: React.FC = () => {
                     interface ICreateAircraftErrorsDto {
                         type?: string;
                         msn?: string;
+                        manuf?: string;
                         manufDate?: string;
                         tsn?: string;
                         csn?: string;
@@ -55,6 +59,7 @@ const NewEngineForm: React.FC = () => {
                     const errors: ICreateAircraftErrorsDto = {};
                     if (!values.type) errors.type = 'Engine type is required';
                     if (!values.msn) errors.msn = 'Engine MSN is required';
+                    if (!values.manuf) errors.manuf = 'Engine manufactur is required';
                     if (!values.manufDate) errors.manufDate = 'Engine manufacture date is required';
                     if (!values.tsn) errors.tsn = 'Engine Time Since New is required';
                     if (!values.csn) errors.csn = 'Engine Cycles Since New is required';
@@ -63,6 +68,8 @@ const NewEngineForm: React.FC = () => {
                 onSubmit={(values: ICreateEngineDto) => {
                     (async () => {
                         setIsLoader(true);
+                        values.initFh = values.tsn;
+                        values.initFc = values.csn;
                         await dispatch(addEngine(values));
                         setIsLoader(false);
                     })()
@@ -102,6 +109,11 @@ const NewEngineForm: React.FC = () => {
                                 placeholder="22983" error={errors.msn} as={Input} />
                         </div>
 
+                        <div className={s.inputs__block}>
+                            <label>Manufacturer<span>*</span></label>
+                            <Field type="manuf" id="manuf" name="manuf"
+                                placeholder="CFM" error={errors.manuf} as={Input} />
+                        </div>
                         <div className={s.inputs__block}>
                             <label>Manufacture Date<span>*</span></label>
                             <Field type="manufDate" id="manufDate" name="manufDate"

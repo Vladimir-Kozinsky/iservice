@@ -31,6 +31,8 @@ import RemoveApu from "./Aircrafts/AircraftFile/RemoveApu/RemoveApu";
 import NewApuForm from "./Apus/NewApuForm/NewApuForm";
 import NewApuLimit from "./Apus/ApuFile/NewApuLimit/NewApuLimit";
 import DelApuLimit from "./Apus/ApuFile/DelApuLimit/DelApuLimit";
+import NewLg from "./Aircrafts/AircraftFile/NewLg/NewLg";
+import Gears from "./Gears/Gears";
 
 
 const Iservice: React.FC = () => {
@@ -47,6 +49,7 @@ const Iservice: React.FC = () => {
                         <NavLink className={s.nav_container_link} to="aircrafts">Aircrafts</NavLink>
                         <NavLink className={s.nav_container_link} to="engines">Engines</NavLink>
                         <NavLink className={s.nav_container_link} to="apus">APUs</NavLink>
+                        <NavLink className={s.nav_container_link} to="gears">Landing Gears</NavLink>
                     </div>
                 </nav>
                 <Routes>
@@ -64,6 +67,8 @@ const Iservice: React.FC = () => {
                     <Route path="aircraft/:aircraftId/engine/remove" element={<RemoveEngine />} />
                     <Route path="aircraft/:aircraftId/apu/install" element={<InstallApu />} />
                     <Route path="aircraft/:aircraftId/apu/remove" element={<RemoveApu />} />
+                    <Route path="aircraft/:aircraftId/lg/install" element={<NewLg />} />
+                    <Route path="aircraft/:aircraftId/lg/remove" element={<RemoveApu />} />
                     <Route path="aircraft/:aircraftId/legs/create" element={<NewLeg />} />
                     <Route path="aircraft/:aircraftId/legs/print" element={<PrintLegs />} />
 
@@ -79,6 +84,8 @@ const Iservice: React.FC = () => {
                     <Route path="apu/:apuId" element={<ApuFile />} />
                     <Route path="apu/:apuId/limit" element={<NewApuLimit />} />
                     <Route path="apu/:apuId/limit/del" element={<DelApuLimit />} />
+
+                    <Route path="gears" element={<Gears />} />  
                 </Routes>
             </main>
             <Footer theme="light" />

@@ -29,7 +29,7 @@ const Legs: React.FC = () => {
     const currentPage = useSelector((state: RootState) => state.leg.currentPage);
     const [searchParam, setSearchParam] = useState({ from: '', to: '' });
     const [isLoader, setIsLoader] = useState<boolean | undefined>(false);
-    const [choosedLeg, setChoosedLeg] = useState<string>('');
+    const [choosedLeg, setChoosedLeg] = useState<ILeg>();
     const [legState, setLegState] = useState<string>('');
 
     const changePage = async (page: number) => {
@@ -38,13 +38,15 @@ const Legs: React.FC = () => {
         setIsLoader(false);
     }
 
-    const setLegDate = (legId: string) => {
-        setChoosedLeg(legId);
+    const setLegDate = (leg: ILeg) => {
+        setChoosedLeg(leg);
         setDelMess(true);
     }
     const deleteLegHandler = async () => {
         setIsLoader(true);
-        await dispatch(deleteLeg(choosedLeg));
+        if (choosedLeg) {
+            await dispatch(deleteLeg(choosedLeg));
+        }
         setIsLoader(false);
     }
 
@@ -58,7 +60,7 @@ const Legs: React.FC = () => {
 
     return (
         <div className={s.legs} >
-             <h1 className={s.legs__header} >Legs</h1>
+            <h1 className={s.legs__header} >Legs</h1>
             {delMess && <DeleteMessage handleBack={() => setDelMess(false)}
                 handleSubmit={deleteLegHandler}
                 header='Would you like to delete this leg?'

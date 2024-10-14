@@ -6,12 +6,13 @@ import { Limit, LimitSchema } from './limit.schema';
 import { Leg } from './leg.schema';
 import { Engine } from './engine.schema';
 import { Apu } from './apu.schema';
-import { Lg } from './lg.schema';
+import { Lg } from './gear.schema';
 
 export type AircraftDocument = HydratedDocument<Aircraft>;
 
 @Schema()
 export class Aircraft {
+
     _id: Types.ObjectId
 
     @ApiProperty({ example: 'EX-76009', description: "Aircraft registration number" })
@@ -22,7 +23,7 @@ export class Aircraft {
     @Prop({ required: true })
     type: string;
 
-    @ApiProperty({ example: 'A16WE', description: "Aircraft type certificate Number" })
+    @ApiProperty({ example: 'A16WE', description: "Aircraft type certificate number" })
     @Prop({ required: true })
     typeCert: string;
 
@@ -99,7 +100,7 @@ export class Aircraft {
     csnAtLastOverhaul: string;
 
     @ApiProperty({ example: '1, 25981', description: "Installed engines" })
-    @Prop({ ref: 'Engine' })
+    @Prop({ type: [mongoose.SchemaTypes.ObjectId], ref: 'Engine' })
     engines: Engine[];
 
     @ApiProperty({ example: 'none', description: "APU" })
@@ -113,6 +114,34 @@ export class Aircraft {
     @ApiProperty({ example: 'none', description: "Landing gears" })
     @Prop({ type: [mongoose.SchemaTypes.ObjectId], ref: 'Lg' })
     lgs: Lg[];
+
+    @ApiProperty({ example: 'none', description: "Legs" })
+    @Prop({ref: 'Leg'})
+    legs: Leg[];
 }
 
 export const AircraftSchema = SchemaFactory.createForClass(Aircraft);
+
+AircraftSchema.methods.reculcFhFc = function () {
+    const toMins = (str) => {
+        const hh = +str.split(':')[0] * 60;
+        const mm = +str.split(':')[1];
+        return hh + mm
+    }
+
+    const minsToStr = (mins) => {
+        const hh = Math.floor(mins / 60);
+        const mm = mins % 60;
+        return `${hh}:${mm}`;
+    }
+
+    const fh = this.legs.reduce((prevValue, item, index) => {
+        prevValue += toMins(item.flightTime);
+        item.fh = minsToStr(prevValue);
+        item.fc = +this.initFc + (+index + 1);
+        return prevValue
+    }, toMins(this.initFh))
+
+    this.fh = minsToStr(fh);
+    this.fc = +this.initFc + this.legs.length;
+}

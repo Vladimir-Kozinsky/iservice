@@ -18,11 +18,10 @@ const NewLeg = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch<AppDispatch>();
     const aircraft = useSelector((state: RootState) => state.aircraft.choosedAircraft);
-    const engines = aircraft.engines.map((engine: IEngine) => {
+    const installedEngines = useSelector((state: RootState) => state.aircraft.installedEngines);
+    const engines = installedEngines.map((engine: IEngine) => {
         return {
             msn: engine.msn,
-            engineTsn: engine.tsn,
-            engineCsn: engine.csn
         }
     })
 

@@ -17,6 +17,10 @@ export class CreateApuDto {
   @IsNotEmpty()
   readonly manufDate: string;
 
+  @ApiProperty({ example: 'CFM', description: "Engine manufacturer" })
+  @IsNotEmpty()
+  manuf: string;
+
   @ApiProperty({ example: '45697:00', description: "APU Time Since New" })
   @IsNotEmpty()
   readonly tsn: string;
@@ -26,7 +30,7 @@ export class CreateApuDto {
   readonly csn: string;
 
   @ApiProperty({ example: 'none', description: "APU removal/instolation action" })
-  readonly  apuHistory: [ApuHistory];
+  readonly apuHistory: [ApuHistory];
 
   @ApiProperty({ example: '4', description: "The number of engine overhauls." })
   readonly overhaulNum: number;

@@ -40,12 +40,8 @@ export declare class LegController {
         aircraft: string;
     }): Promise<Leg[]>;
     getPrintLegs(getPrintLegsDto: GetPrintLegsDto): Promise<Leg[]>;
-    createLeg(createLegDto: CreateLegDto): Promise<import("mongoose").Document<unknown, {}, Leg> & Omit<Leg & Required<{
+    createLeg(createLegDto: CreateLegDto): Promise<import("mongoose").Document<unknown, {}, import("../schemas/aircraft.schema").Aircraft> & Omit<import("../schemas/aircraft.schema").Aircraft & Required<{
         _id: Types.ObjectId;
     }>, never>>;
-    deleteLeg(legId: {
-        legId: Types.ObjectId;
-    }): Promise<import("mongoose").Document<unknown, {}, Leg> & Omit<Leg & Required<{
-        _id: Types.ObjectId;
-    }>, never>>;
+    deleteLeg(deleteLegDto: Leg): Promise<Types.ObjectId>;
 }

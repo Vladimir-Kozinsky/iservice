@@ -23,6 +23,10 @@ export class Apu {
     @Prop({ required: true })
     manufDate: string;
 
+    @ApiProperty({ example: 'CFM', description: "Engine manufacturer" })
+    @Prop({ required: true })
+    manuf: string;
+
     @ApiProperty({ example: '45697:00', description: "APU Time Since New" })
     @Prop({ required: true })
     tsn: string;

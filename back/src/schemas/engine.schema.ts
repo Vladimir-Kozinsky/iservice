@@ -4,6 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import mongoose, { HydratedDocument, Types } from 'mongoose';
 import { Limit } from './limit.schema';
 import { EngineHistory } from './engineHistory.schema';
+import { Leg } from './leg.schema';
 
 export type EngineDocument = HydratedDocument<Engine>;
 
@@ -23,9 +24,21 @@ export class Engine {
     @Prop({ required: true })
     manufDate: string;
 
+    @ApiProperty({ example: 'CFM', description: "Engine manufacturer" })
+    @Prop({ required: true })
+    manuf: string;
+
     @ApiProperty({ example: '1', description: "Engine position" })
     @Prop({ required: false })
     position: number;
+
+    @ApiProperty({ example: '45231:00', description: "Engine tsn at the time of adding to the system" })
+    @Prop({ required: true })
+    initFh: string;
+
+    @ApiProperty({ example: '5231', description: "Engine csn at the time of adding to the system" })
+    @Prop({ required: true })
+    initFc: string;
 
     @ApiProperty({ example: '45697:00', description: "Engine Time Since New" })
     @Prop({ required: true })
@@ -58,6 +71,10 @@ export class Engine {
     @ApiProperty({ example: 'none', description: "Limit" })
     @Prop({type: [mongoose.SchemaTypes.ObjectId], ref: 'Limit' })
     limits: [Limit];
+
+    @ApiProperty({ example: 'none', description: "Legs" })
+    @Prop({ref: 'Leg'})
+    legs: Leg[];
 
 }
 

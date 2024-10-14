@@ -20,10 +20,10 @@ const engineAPI = {
     //     return response;
     // },
 
-    // async getEngine(msn: string) {
-    //     const response = await proxy.get(`/engine?msn=${msn}`);
-    //     return response;
-    // },
+    async getEngine(engineId: string) {
+        const response = await proxy.get(`/engine/id?id=${engineId}`);
+        return response;
+    },
 
     async addEngine(engine: ICreateEngineDto) {
         const response = await proxy.post('/engine/add', engine);

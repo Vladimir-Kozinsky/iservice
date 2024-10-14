@@ -10,6 +10,8 @@ import { Aircraft } from 'src/schemas/aircraft.schema';
 import { Apu } from 'src/schemas/apu.schema';
 import { Engine } from 'src/schemas/engine.schema';
 import { Limit } from 'src/schemas/limit.schema';
+import { CreateLgDto } from 'src/dto/create-lg.dto';
+import { Lg } from 'src/schemas/gear.schema';
 
 @Injectable()
 export class AircraftService {
@@ -22,6 +24,8 @@ export class AircraftService {
         private readonly apuModel: Model<Apu>,
         @InjectModel(Limit.name)
         private readonly limitModel: Model<Limit>,
+        @InjectModel(Lg.name)
+        private readonly lgModel: Model<Lg>,
     ) { }
 
     async add(createAircraftDto: CreateAircraftDto) {
@@ -32,7 +36,7 @@ export class AircraftService {
 
     async getAircrafts() {
         const aircrafts = await this.aircraftModel.find()
-            .populate('apu').populate('limits');
+            .populate('apu').populate('limits').populate('lgs');
         if (!aircrafts.length) throw new HttpException('Aircrafts not found', HttpStatus.BAD_REQUEST);
         return aircrafts;
     }
@@ -88,7 +92,7 @@ export class AircraftService {
         engine.engineHistory.push(removalDataDto);
         engine.position = 0;
         await engine.save();
-
+        
         const index = aircraft.engines.findIndex((engine: Engine) => engine.msn === removalDataDto.engine)
         if (index < 0) throw new HttpException('Engine has already removed', HttpStatus.BAD_REQUEST);
         aircraft.engines.splice(index, 1);
@@ -108,7 +112,7 @@ export class AircraftService {
         apu.apuHistory.push(removalDataDto);
         await apu.save();
 
-        
+
         aircraft.apu = null;
         await aircraft.save();
 
@@ -149,4 +153,29 @@ export class AircraftService {
         return limit
     }
 
+    async addLg(createLgDto: CreateLgDto) {
+        const lg = await this.lgModel.create(createLgDto);
+        const aircraft = await this.aircraftModel.findOne({ msn: createLgDto.msn });
+        if (!aircraft) throw new HttpException('Aircraft not found', HttpStatus.BAD_REQUEST);
+        aircraft.lgs.push(lg);
+        await aircraft.save();
+
+        const istalledLg = await this.lgModel.findOne({ sn: createLgDto.sn });
+        if (!istalledLg) throw new HttpException('LG not found', HttpStatus.BAD_REQUEST);
+       
+        const historyData= {
+            date: createLgDto.date,
+            action: 'Intallation',
+            aircraft: createLgDto.msn,
+            aircraftFh: createLgDto.aircraftFh,
+            aircraftFc: createLgDto.aircraftFc,
+            tsn: createLgDto.tsn,
+            csn: createLgDto.csn,
+            reason: ''
+        }
+
+        istalledLg.gearHistory.push(historyData)
+        await istalledLg.save();
+        return lg;
+    }
 }

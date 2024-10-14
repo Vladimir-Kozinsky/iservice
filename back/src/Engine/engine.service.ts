@@ -1,6 +1,6 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { CreateEngineDto } from 'src/dto/create-engine.dto';
 import { CreateLimitDto } from 'src/dto/create-limit.dto';
 import { DeleteLimitDto } from 'src/dto/delete-limit.dto';
@@ -19,6 +19,8 @@ export class EngineService {
     async add(createEngineDto: CreateEngineDto) {
         const engine = await this.engineModel.findOne({ msn: createEngineDto.msn });
         if (engine) throw new HttpException('Engine with this msn already exists', HttpStatus.BAD_REQUEST);
+        createEngineDto.initFh = createEngineDto.tsn;
+        createEngineDto.initFc = createEngineDto.csn;
         return await this.engineModel.create(createEngineDto);
     }
 
@@ -26,6 +28,19 @@ export class EngineService {
         const engines = await this.engineModel.find();
         if (!engines.length) throw new HttpException('Engines not found', HttpStatus.BAD_REQUEST);
         return engines;
+    }
+
+    async getEngine(getEngineDto: { id: Types.ObjectId }) {
+        console.log(getEngineDto)
+        const engine = await this.engineModel.findById(getEngineDto.id);
+        if (!engine) throw new HttpException('Engine not found', HttpStatus.BAD_REQUEST);
+        return engine;
+    }
+
+    async getEngineByMsn(getEngineByMsnDto: { msn: string }) {
+        const engine = await this.engineModel.findOne({ msn: getEngineByMsnDto.msn });
+        if (!engine) throw new HttpException('Engine not found', HttpStatus.BAD_REQUEST);
+        return engine;
     }
 
     async addLimit(createLimitDto: CreateLimitDto) {

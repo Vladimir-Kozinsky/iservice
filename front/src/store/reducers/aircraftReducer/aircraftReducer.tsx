@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import aircraftAPI from '../../../API/aircraftAPI';
 import { IAircraftRejectResponse, IAircraftState } from './aircraftReducerTypes';
-import { IAircraft, IApu, IEngine, ILimit } from '../../../types/types';
+import { IAircraft, IApu, IEngine, ILg, ILimit } from '../../../types/types';
 import { ICreateAircraftDto } from '../../../components/Iservice/Aircrafts/NewAircraftForm/NewAircraftForm';
 import { INewLimitDto } from '../../../components/Iservice/Aircrafts/AircraftFile/NewLimit/NewLimit';
 import { IDelLimitDto } from '../../../components/Iservice/Aircrafts/AircraftFile/DelLimit/DelLimit';
@@ -9,7 +9,14 @@ import { IInstallEngineDto } from '../../../components/Iservice/Aircrafts/Aircra
 import { IRemoveEngineDto } from '../../../components/Iservice/Aircrafts/AircraftFile/RemoveEngine/RemoveEngine';
 import { IInstallApuDto } from '../../../components/Iservice/Aircrafts/AircraftFile/InstallApu/InstallApu';
 import { IRemoveApuDto } from '../../../components/Iservice/Aircrafts/AircraftFile/RemoveApu/RemoveApu';
+import { INewLgDto } from '../../../components/Iservice/Aircrafts/AircraftFile/NewLg/NewLg';
+import engineAPI from '../../../API/engineAPI';
 
+
+interface IUpdateFhFcDto {
+    fh: string;
+    fc: string;
+}
 
 const initialState: IAircraftState = {
     choosedAircraft: {
@@ -18,6 +25,15 @@ const initialState: IAircraftState = {
         msn: '',
         regNum: '',
         manufDate: '',
+        typeCert: '',
+        code: '',
+        mtow: '',
+        mzfw: '',
+        mlw: '',
+        mtw: '',
+        fuelCap: '',
+        bew: '',
+        cg: '',
         initFh: '',
         initFc: '',
         fh: '',
@@ -29,8 +45,10 @@ const initialState: IAircraftState = {
         engines: [],
         apu: {},
         legs: [],
-        limits: []
+        limits: [],
+        lgs: []
     },
+    installedEngines: [],
     aircafts: [],
     errorMessage: null,
     successMessage: null,
@@ -49,6 +67,11 @@ const aircraftSlice = createSlice({
 
         clearErrorMessage(state: IAircraftState) {
             state.errorMessage = null;
+        },
+
+        updateFhFc(state: IAircraftState, action: PayloadAction<IUpdateFhFcDto>) {
+            state.choosedAircraft.fh = action.payload.fh
+            state.choosedAircraft.fc = action.payload.fc
         }
     },
     extraReducers: (builder) => {
@@ -65,6 +88,18 @@ const aircraftSlice = createSlice({
         builder.addCase(getAircrafts.rejected, (state: IAircraftState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
         })
+        builder.addCase(getEngine.fulfilled, (state: IAircraftState, action: PayloadAction<IEngine>) => {
+            const engine = action.payload;
+            const engineIndex = state.installedEngines.findIndex((eng: IEngine) => eng.msn === engine.msn);
+            if (engineIndex === 0 || engineIndex > 0) {
+                state.installedEngines[engineIndex] = engine;
+            } else {
+                state.installedEngines.push(engine);
+            }
+        })
+        builder.addCase(getEngine.rejected, (state: IAircraftState, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
+        })
         builder.addCase(addLimit.fulfilled, (state: IAircraftState, action: PayloadAction<ILimit>) => {
             state.choosedAircraft.limits.push(action.payload);
             const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
@@ -74,6 +109,18 @@ const aircraftSlice = createSlice({
         builder.addCase(addLimit.rejected, (state: IAircraftState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
         })
+
+        builder.addCase(addLg.fulfilled, (state: IAircraftState, action: PayloadAction<ILg>) => {
+            state.choosedAircraft.lgs.push(action.payload);
+            const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
+            aircraft?.lgs.push(action.payload);
+            state.successMessage = "New LG successfully added";
+        })
+        builder.addCase(addLg.rejected, (state: IAircraftState, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
+        })
+
+
         builder.addCase(delLimit.fulfilled, (state: IAircraftState, action: PayloadAction<string>) => {
             const limitId = action.payload;
             const index = state.choosedAircraft.limits.findIndex((limit: ILimit) => limit._id === limitId);
@@ -89,10 +136,14 @@ const aircraftSlice = createSlice({
         })
 
         builder.addCase(installEngine.fulfilled, (state: IAircraftState, action: PayloadAction<IEngine>) => {
-            state.choosedAircraft.engines.push(action.payload);
+            if (action.payload._id) {
+                state.choosedAircraft.engines.push(action.payload._id);
+            }
             const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
-            aircraft?.engines.push(action.payload);
-            state.successMessage = "Engine successfully installed";
+            if (action.payload._id) {
+                aircraft?.engines.push(action.payload._id);
+                state.successMessage = "Engine successfully installed";
+            }
         })
         builder.addCase(installEngine.rejected, (state: IAircraftState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
@@ -100,10 +151,10 @@ const aircraftSlice = createSlice({
 
         builder.addCase(removeEngine.fulfilled, (state: IAircraftState, action: PayloadAction<IEngine>) => {
             const removedEngine = action.payload;
-            const choosedAircarftEngineIndex = state.choosedAircraft.engines.findIndex((engine: IEngine) => engine.msn === removedEngine.msn);
+            const choosedAircarftEngineIndex = state.choosedAircraft.engines.findIndex((engineId: string) => engineId === removedEngine._id);
             state.choosedAircraft.engines.splice(choosedAircarftEngineIndex, 1);
             const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
-            const engineIndexAircraftArr = aircraft?.engines.findIndex((engine: IEngine) => engine.msn === removedEngine.msn);
+            const engineIndexAircraftArr = aircraft?.engines.findIndex((engineId: string) => engineId === removedEngine._id);
             if (aircraft && (engineIndexAircraftArr || engineIndexAircraftArr === 0)) aircraft.engines.splice(engineIndexAircraftArr, 1);
             state.successMessage = "Engine successfully removed";
         })
@@ -147,6 +198,7 @@ export const addAircraft = createAsyncThunk(
 
     }
 )
+
 export const getAircrafts = createAsyncThunk(
     'aircraft/aircrafts',
     async (none, thunkAPI) => {
@@ -159,6 +211,21 @@ export const getAircrafts = createAsyncThunk(
 
     }
 )
+
+export const getEngine = createAsyncThunk(
+    'aircraft/engine',
+    async (msn: string, thunkAPI) => {
+        try {
+            const response = await engineAPI.getEngine(msn);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IAircraftRejectResponse);
+        }
+
+    }
+)
+
+
 
 export const addLimit = createAsyncThunk(
     'aircraft/limit/add',
@@ -185,6 +252,32 @@ export const delLimit = createAsyncThunk(
 
     }
 )
+
+export const addLg = createAsyncThunk(
+    'aircraft/lg/add',
+    async (lgDto: INewLgDto, thunkAPI) => {
+        try {
+            const response = await aircraftAPI.addLg(lgDto);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IAircraftRejectResponse);
+        }
+
+    }
+)
+
+// export const delLg = createAsyncThunk(
+//     'aircraft/lg/delete',
+//     async (lgDto: IDelLimitDto, thunkAPI) => {
+//         try {
+//             const response = await aircraftAPI.delLimit(limitDto);
+//             return response.data;
+//         } catch (error: any) {
+//             return thunkAPI.rejectWithValue(error.response.data as IAircraftRejectResponse);
+//         }
+
+//     }
+// )
 
 export const installEngine = createAsyncThunk(
     'aircraft/engine/install',
@@ -238,6 +331,6 @@ export const removeApu = createAsyncThunk(
     }
 )
 
-export const { setChoosedAircraft, clearSuccessMessage, clearErrorMessage } = aircraftSlice.actions
+export const { setChoosedAircraft, clearSuccessMessage, clearErrorMessage, updateFhFc } = aircraftSlice.actions
 
 export default aircraftSlice.reducer;

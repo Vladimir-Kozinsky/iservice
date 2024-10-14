@@ -4,6 +4,7 @@ import { LegService } from './leg.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Aircraft, AircraftSchema } from 'src/schemas/aircraft.schema';
 import { Leg, LegSchema } from 'src/schemas/leg.schema';
+import { Engine, EngineSchema } from 'src/schemas/engine.schema';
 
 @Module({
   imports: [
@@ -14,6 +15,10 @@ import { Leg, LegSchema } from 'src/schemas/leg.schema';
     MongooseModule.forFeature([{
       name: Aircraft.name,
       schema: AircraftSchema
+    }]),
+    MongooseModule.forFeature([{
+      name: Engine.name,
+      schema: EngineSchema
     }])
   ],
   controllers: [LegController],

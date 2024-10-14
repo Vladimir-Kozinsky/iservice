@@ -17,30 +17,70 @@
     gap: 20px;
 }
 
-
-.info__section {
+.gears__section,
+.limits__section,
+.engines__section,
+.info__section,
+.data__section {
     position: relative;
     display: flex;
     justify-content: space-around;
-    padding: 40px 20px 20px;
-    margin-bottom: 20px;
+    padding: 40px 20px 15px;
+    margin-bottom: 10px;
     box-shadow: $box_shadow;
 }
 
+
+
+.section__block__header {
+    font-size: 16px;
+    text-align: center;
+    margin-top: 0;
+    padding: 0;
+    font-weight: 600;
+}
+
 .section__header {
+    font-size: 16px;
+    font-weight: 600;
     margin: 0;
     padding: 0;
     position: absolute;
     left: 20px;
     top: 10px;
-    color: rgb(128, 128, 128, 0.7);
     width: calc(100% - 40px);
-    font-size: 14px;
-    font-weight: 400;
+}
+
+.section__header.second {
+    position: absolute;
+    left: auto;
+    right: -5px;
+    width: 100px;
 }
 
 .section__message {
     color: rgb(128, 128, 128, 0.7);
+}
+
+.data__section__block {
+    @include blue_text();
+    width: fit-content;
+    display: flex;
+    gap: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px dashed rgb(216, 216, 216);
+
+    .label__block {
+        font-size: 14px;
+        width: 90px;
+        color: gray;
+        font-weight: 400;
+    }
+
+    .span__block {
+        font-size: 14px;
+        width: fit-content;
+    }
 }
 
 .info__section__block {
@@ -52,30 +92,77 @@
     border-bottom: 1px dashed rgb(216, 216, 216);
 
     .label__block {
-        width: 120px;
+        font-size: 14px;
+        width: 190px;
         color: gray;
         font-weight: 400;
     }
 
     .span__block {
-
+        font-size: 14px;
         width: fit-content;
     }
 }
 
-.engines__section {
-    min-height: 40px;
-    position: relative;
+.apu {
+    @include blue_text();
     display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    margin-bottom: 20px;
-    box-shadow: $box_shadow;
-    padding: 40px 20px 20px;
+    flex-direction: column;
+    gap: 5px;
+    width: 110px;
 
-    .engine {
-        width: 240px;
+    .span__block {
+        display: flex;
+        justify-content: center;
+        font-size: 14px;
+        width: 100%;
+        border-bottom: 1px dashed rgb(216, 216, 216);
+    }
+}
+
+.engine {
+    @include blue_text();
+    width: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin-bottom: 5px;
+
+    .label__block {
+        font-size: 14px;
+        width: 120px;
+        color: gray;
+        font-weight: 400;
+        border-bottom: 1px dashed rgb(216, 216, 216);
+    }
+
+    .span__block {
+        display: flex;
+        justify-content: center;
+        font-size: 14px;
+        width: 100%;
+        border-bottom: 1px dashed rgb(216, 216, 216);
+    }
+}
+
+.engines__section {
+    // min-height: 40px;
+    // position: relative;
+    // display: flex;
+    // justify-content: space-between;
+    // margin-bottom: 10px;
+    // box-shadow: $box_shadow;
+    // padding: 40px 20px 15px;
+
+    .engines__section__wrap {
+        display: flex;
+        width: 65%;
+        justify-content: space-around;
+
+        .engine {
+            flex-grow: 1;
+        }
+
     }
 
     .engine__header {
@@ -84,22 +171,38 @@
         border-bottom: 2px #051d42 solid;
         margin-bottom: 5px;
     }
+
+    .engine.title {
+        text-align: left;
+        width: 130px;
+    }
 }
 
 
+
 .limits__section {
-    min-height: 40px;
-    position: relative;
-    margin-bottom: 60px;
-    box-shadow: $box_shadow;
-    padding: 50px 20px 20px;
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    justify-content: space-around;
+    // min-height: 40px;
+    // position: relative;
+    // margin-bottom: 10px;
+    // box-shadow: $box_shadow;
+    // padding: 40px 20px 20px;
+    // display: flex;
+    // gap: 20px;
+    // flex-wrap: wrap;
+
+    .limits__section__wrap {
+        display: flex;
+        justify-content: space-around;
+        flex-grow: 1;
+    }
 
     .limit {
-        width: 240px;
+        @include blue_text();
+        width: fit-content;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-bottom: 5px;
 
         .limit__header {
             @include blue_text();
@@ -114,8 +217,105 @@
             display: flex;
             flex-direction: column;
         }
+
+        .label__block {
+            font-size: 14px;
+            width: 120px;
+            color: gray;
+            font-weight: 400;
+            border-bottom: 1px dashed rgb(216, 216, 216);
+        }
+
+        .span__block {
+            display: flex;
+            justify-content: center;
+            font-size: 14px;
+            border-bottom: 1px dashed rgb(216, 216, 216);
+        }
+    }
+
+    .engine.title {
+        text-align: left;
+        width: 130px;
+    }
+
+}
+
+.limit__section__block {
+    @include blue_text();
+    width: fit-content;
+    display: flex;
+    gap: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px dashed rgb(216, 216, 216);
+
+    .label__block {
+        font-size: 14px;
+        width: 110px;
+        color: gray;
+        font-weight: 400;
+    }
+
+    .span__block {
+        font-size: 14px;
+        width: fit-content;
     }
 }
+
+.gears__section {
+    .gears__section__wrap {
+        display: flex;
+        justify-content: space-around;
+        flex-grow: 1;
+    }
+
+    .gear {
+        @include blue_text();
+        width: fit-content;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        margin-bottom: 5px;
+
+        .gear__header {
+            @include blue_text();
+            text-align: center;
+            border-bottom: 2px #051d42 solid;
+            margin-bottom: 5px;
+
+        }
+
+        .gear__value {
+            width: fit-content;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .label__block {
+            font-size: 14px;
+            width: 120px;
+            color: gray;
+            font-weight: 400;
+            border-bottom: 1px dashed rgb(216, 216, 216);
+        }
+
+        .span__block {
+            display: flex;
+            justify-content: center;
+            font-size: 14px;
+            border-bottom: 1px dashed rgb(216, 216, 216);
+        }
+    }
+
+    .gear.title {
+        text-align: left;
+        width: 130px;
+    }
+}
+
+
+
+
 
 .widget__container {
     display: flex;
@@ -138,9 +338,7 @@
 }
 
 .aircraftFile__buttons {
-    position: absolute;
     margin-top: 20px;
-    bottom: 20px;
 }
 
 .print__btn {
@@ -157,5 +355,10 @@
 
     .info__container {
         padding: 20px;
+    }
+
+    .info__section,
+    .data__section {
+        margin-bottom: 0px;
     }
 }

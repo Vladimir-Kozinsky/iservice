@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../store/store';
 import { IAircraft, IEngine } from '../../../../types/types';
 import { type } from 'os';
-import { setChoosedAircraft } from '../../../../store/reducers/aircraftReducer/aircraftReducer';
+import { getEngine, setChoosedAircraft } from '../../../../store/reducers/aircraftReducer/aircraftReducer';
 import { useNavigate } from 'react-router-dom';
 
 type AircraftWidgetProps = {
@@ -29,6 +29,9 @@ const AircraftWidget: React.FC<AircraftWidgetProps> = ({ aircraft }) => {
 
     const widgetOnClick = async () => {
         await dispatch(setChoosedAircraft(aircraft));
+        aircraft.engines.forEach(async (engId: string) => {
+            await dispatch(getEngine(engId))
+        })
         navigate(`/i-service/aircraft/${aircraft.msn}`);
     }
 
@@ -39,6 +42,7 @@ const AircraftWidget: React.FC<AircraftWidgetProps> = ({ aircraft }) => {
         return `...${cutStr}`;
     }
 
+
     return (
         <>
             <div className={s.widget} onClick={widgetOnClick} >
@@ -48,14 +52,14 @@ const AircraftWidget: React.FC<AircraftWidgetProps> = ({ aircraft }) => {
                     <h3 className={s.widget__data__value}>{`MSN: ${aircraft?.msn}`}</h3>
                 </div>
 
-                <div className={s.widget__data__engines}>
+                {/* <div className={s.widget__data__engines}>
                     {aircraft.engines.map((engine: IEngine, pos: number) => (
                         < div className={s.engine}>
                             <img src={engineIcon} alt="engine-icon" />
                             <span>{`${pos + 1}: ${cutData(setEngine(pos + 1, aircraft.engines))}`}</span>
                         </div>
                     ))}
-                </div >
+                </div > */}
                 <div className={s.engine}>
                     <img src={apu} alt="engine-icon" />
                     {aircraft.apu

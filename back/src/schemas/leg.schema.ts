@@ -18,8 +18,6 @@ export class Leg {
     engines: [
         {
             msn: string,
-            engineTsn: string,
-            engineCsn: string
         }
 
     ];
@@ -77,4 +75,11 @@ export class Leg {
     fc: string;
 }
 
+
+
 export const LegSchema = SchemaFactory.createForClass(Leg);
+
+
+LegSchema.method('reculcFhFc', function (){
+    console.log(this.legs)
+})

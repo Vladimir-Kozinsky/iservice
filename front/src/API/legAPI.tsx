@@ -1,6 +1,7 @@
 import axios from "axios";
 import generalAPIData from "./generalData";
 import { ICreateLegDto, IGetLegsDto, IGetPrintLegsDto } from "../store/reducers/legReducer/legReducerTypes";
+import { ILeg } from "../types/types";
 
 const proxy = axios.create({
     baseURL: generalAPIData.baseURL,
@@ -12,8 +13,8 @@ const legAPI = {
         const response = await proxy.post('/leg/create', createLegDto);
         return response;
     },
-    async deleteLeg(legId: string) {
-        const response = await proxy.post('/leg/delete', { legId });
+    async deleteLeg(deleteLegDto: ILeg) {
+        const response = await proxy.post('/leg/delete', deleteLegDto );
         return response;
     },
     async getLegs(getLegsDto: IGetLegsDto) {

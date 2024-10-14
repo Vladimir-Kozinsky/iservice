@@ -10,6 +10,8 @@ import { CreateLimitDto } from 'src/dto/create-limit.dto';
 import { DeleteLimitDto } from 'src/dto/delete-limit.dto';
 import { InstallApuDto } from 'src/dto/apu/install-apu.dto';
 import { Apu } from 'src/schemas/apu.schema';
+import { Lg } from 'src/schemas/gear.schema';
+import { CreateLgDto } from 'src/dto/create-lg.dto';
 
 @ApiTags('Aircraft')
 @Controller('/aircraft')
@@ -79,6 +81,14 @@ export class AircraftController {
     @HttpCode(201)
     async delLimit(@Body() deleteLimitDto: DeleteLimitDto ) {
         return await this.aircraftService.delLimit(deleteLimitDto);
+    }
+
+    @ApiOperation({ summary: 'Add new LG' })
+    @ApiResponse({ status: 201, type: Lg })
+    @Post('/lg/add')
+    @HttpCode(201)
+    async addLg(@Body() createLgDto: CreateLgDto ) {
+        return await this.aircraftService.addLg(createLgDto);
     }
 
     @ApiOperation({ summary: 'Update limit' })

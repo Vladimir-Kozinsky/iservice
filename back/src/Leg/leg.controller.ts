@@ -7,6 +7,7 @@ import { Types } from 'mongoose';
 import { GetLegsDto } from 'src/dto/leg/get-legs.dto';
 import { ResponseLegsDto } from 'src/dto/leg/response-legs.dto';
 import { GetPrintLegsDto } from 'src/dto/leg/get-print-legs.dto';
+import { DeleteLegDto } from 'src/dto/leg/delete-leg.dto';
 
 @ApiTags('Leg')
 @Controller('leg')
@@ -45,11 +46,12 @@ export class LegController {
         return await this.legService.createLeg(createLegDto);
     }
 
+    
     @ApiOperation({ summary: 'Delete leg' })
-    @ApiResponse({ status: 201, type: Leg })
+    @ApiResponse({ status: 201, type: Types.ObjectId })
     @Post('/delete')
     @HttpCode(201)
-    async deleteLeg(@Body() legId: { legId: Types.ObjectId }) {
-        return await this.legService.deleteLeg(legId.legId);
+    async deleteLeg(@Body() deleteLegDto: Leg) {
+        return await this.legService.deleteLeg(deleteLegDto);
     }
 }

@@ -52,12 +52,12 @@ const DelEngineLimit = () => {
         }
     }
 
-    const options: IOption[] = engine.limits.map((limit: ILimit) => {
-        return {
-            value: limit._id,
-            label: limit.title,
-        }
-    })
+    // const options: IOption[] = engine.limits.map((limit: ILimit) => {
+    //     return {
+    //         value: limit._id,
+    //         label: limit.title,
+    //     }
+    // })
 
     return (
         <div className={s.limit}>
@@ -108,7 +108,7 @@ const DelEngineLimit = () => {
                     <div className={s.inputs}>
                         <div className={s.inputs__block}>
                             <label>Dependence<span>*</span></label>
-                            <Select options={options} onChange={onChangeOption} styles={customStyles} />
+                            {/* <Select options={options} onChange={onChangeOption} styles={customStyles} /> */}
                         </div>
                     </div>
                     <div className={s.btns}>

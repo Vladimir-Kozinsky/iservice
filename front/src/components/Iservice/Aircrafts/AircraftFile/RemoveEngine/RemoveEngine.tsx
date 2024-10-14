@@ -53,9 +53,10 @@ const RemoveEngine: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const aircraft = useSelector((state: RootState) => state.aircraft.choosedAircraft);
+    const installedEngines = useSelector((state: RootState) => state.aircraft.installedEngines);
     const [selectedOption, setSelectedOption] = useState<string>('');
 
-    const options: IOption[] = aircraft.engines.map((engine: IEngine) => {
+    const options: IOption[] = installedEngines.map((engine: IEngine) => {
         return {
             value: engine.msn,
             label: `${engine.type} ${engine.msn}`
@@ -69,7 +70,7 @@ const RemoveEngine: React.FC = () => {
     }
 
     const findEngine = (msn: string): IEngine | null => {
-        const engine = aircraft.engines.find((eng: IEngine) => eng.msn === msn);
+        const engine = installedEngines.find((eng: IEngine) => eng.msn === msn);
         if (!engine) return null;
         return engine;
     }

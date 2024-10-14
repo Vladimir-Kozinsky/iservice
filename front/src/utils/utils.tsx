@@ -104,3 +104,14 @@ export const getCurrentDate = (): string => {
         .format(date);
     return today;
 } 
+
+export const kgToLbs = (value: string) => {
+return Math.ceil(+value/0.45359237)  
+}
+export const lbTokg = (value: string) => {
+return Math.floor(+value*0.45359237)  
+}
+export const ltTogal = (value: string) => {
+return Math.round(+value*0.26417)  
+}
+

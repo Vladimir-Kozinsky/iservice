@@ -14,6 +14,15 @@ export interface IAircraft {
     msn: string;
     regNum: string;
     manufDate: string;
+    typeCert: string;
+    code: string;
+    mtow: string;
+    mzfw: string;
+    mlw: string;
+    mtw: string;
+    fuelCap: string;
+    bew: string;
+    cg: string;
     initFh: string;
     initFc: string;
     fh: string;
@@ -22,16 +31,18 @@ export interface IAircraft {
     lastOverhaulDate?: string;
     tsnAtLastOverhaul?: string;
     csnAtLastOverhaul?: string;
-    engines: IEngine[];
+    engines: string[];
     apu: any;
     legs: ILeg[];
     limits: ILimit[];
+    lgs: ILg[];
 }
 
 export interface IEngine {
     _id: string | null;
     type: string | null;
     msn: string | null;
+    manuf: string | null;
     manufDate: string | null;
     position: number | null;
     tsn: string | null;
@@ -46,9 +57,29 @@ export interface IEngine {
 
 interface ILimits {
     _id: string;
+    msn: string,
     title: string;
-    dependence: string;
-    threshold: string;
+    lastInspDate: string;
+    tsnAtLastInsp: string;
+    csnAtLastInsp: string;
+    nextInspDate: string;
+    tsnAtNextInsp: string;
+    csnAtNextInsp: string;
+}
+
+export interface ILg {
+    _id: string;
+    pos: string;
+    pn: string;
+    sn: string;
+    tsn: string;
+    csn: string;
+    lastInspDate: string;
+    tsnAtLastInsp: string;
+    csnAtLastInsp: string;
+    nextInspDate: string;
+    tsnAtNextInsp: string;
+    csnAtNextInsp: string;
 }
 
 export interface IEngineHistory {
@@ -68,7 +99,10 @@ export interface IEngineHistory {
 export interface ICreateEngineDto {
     type: string;
     msn: string;
+    manuf: string;
     manufDate: string;
+    initFh?: string;
+    initFc?: string;
     tsn: string;
     csn: string;
     overhaulNum?: number;
@@ -80,8 +114,15 @@ export interface ICreateEngineDto {
 export interface ILimit {
     _id: string;
     title: string;
-    dependence: string;
-    threshold: string;
+    lastInspDate: string;
+    tsnAtLastInsp: string;
+    csnAtLastInsp: string;
+    nextInspDate: string;
+    tsnAtNextInsp: string;
+    csnAtNextInsp: string;
+
+    // dependence: string;
+    // threshold: string;
 }
 
 export interface ILeg {
@@ -105,8 +146,6 @@ export interface ILeg {
 
 export interface ILegEngine {
     msn: string | null;
-    engineTsn: string | null;
-    engineCsn: string | null;
 }
 
 export interface IApuHistory {
@@ -147,4 +186,31 @@ export interface ICreateApuDto {
     lastOverhaulDate?: string;
     tsnAtLastOverhaul?: string;
     csnAtLastOverhaul?: string;
+}
+
+export interface IGear {
+    _id: string;
+    pos: string;
+    pn: string;
+    sn: string;
+    tsn: string;
+    csn: string;
+    lastInspDate: string;
+    tsnAtLastInsp: string;
+    csnAtLastInsp: string;
+    nextInspDate: string;
+    tsnAtNextInsp: string;
+    csnAtNextInsp: string;
+    gearHistory: GearHistory []
+}
+
+export interface GearHistory {
+    date: string;
+    action: string;
+    aircraft: string;
+    aircraftFh: string;
+    aircraftFc: string;
+    tsn: string;
+    csn: string;
+    reason: string
 }

@@ -1,0 +1,11 @@
+@import "../../../sass/main.scss";
+
+.apus {
+    @include dashboard_page();
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    align-content: flex-start;
+}
+

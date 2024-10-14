@@ -5,7 +5,7 @@ import classNames from "classnames";
 
 type LegProps = {
     leg: ILeg;
-    setLegDate: (id: string) => void;
+    setLegDate: (leg: ILeg) => void;
     state: string;
 }
 
@@ -73,31 +73,13 @@ const Leg: React.FC<LegProps> = ({ leg, setLegDate, state }) => {
                                 <span >{engine.msn}</span>
                             </div>
                         </div>
-
-                        <div className={s.block__item}>
-                            <div className={s.block__item__title} >
-                                <span >TSN:</span>
-                            </div>
-                            <div className={s.block__item__value}>
-                                <span >{engine.engineTsn}</span>
-                            </div>
-                        </div>
-
-                        <div className={s.block__item}>
-                            <div className={s.block__item__title} >
-                                <span >CSN:</span>
-                            </div>
-                            <div className={s.block__item__value}>
-                                <span >{engine.engineCsn}</span>
-                            </div>
-                        </div>
                     </div>
                 ))}
             </div>
             {legsEditMode
                 && <div className={s.edit__btns} >
                     {/* <button className={s.edit__btns__edit} onClick={() => console.log('edit leg')}></button> */}
-                    <button className={s.edit__btns__del} onClick={() => setLegDate(leg._id)} ></button>
+                    <button className={s.edit__btns__del} onClick={() => setLegDate(leg)} ></button>
                 </div>}
         </div>
 

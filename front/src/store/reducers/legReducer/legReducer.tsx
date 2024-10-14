@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { ICreateLegDto, IGetLegsDto, IGetLegsResponseDto, IGetPrintLegsDto, ILegRejectResponse, ILegState } from './legReducerTypes';
 import legAPI from '../../../API/legAPI';
 import { ILeg } from '../../../types/types';
+import { updateFhFc } from '../aircraftReducer/aircraftReducer';
 
 const initialState: ILegState = {
     choosedLeg: {
@@ -50,6 +51,11 @@ const legSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(createLeg.fulfilled, (state: ILegState, action: PayloadAction<ILeg>) => {
             state.legs.push(action.payload);
+            const payload = {
+                fh: action.payload.fh,
+                fc: action.payload.fc,
+            }
+            updateFhFc(payload);
             state.successMessage = "Leg successfully added";
         })
         builder.addCase(createLeg.rejected, (state: ILegState, action: PayloadAction<any>) => {
@@ -109,9 +115,9 @@ export const createLeg = createAsyncThunk(
 
 export const deleteLeg = createAsyncThunk(
     'leg/delete',
-    async (legId: string, thunkAPI) => {
+    async (deleteLegDto: ILeg, thunkAPI) => {
         try {
-            const response = await legAPI.deleteLeg(legId);
+            const response = await legAPI.deleteLeg(deleteLegDto);
             return response.data;
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response.data as ILegRejectResponse);

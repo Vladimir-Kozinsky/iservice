@@ -9,6 +9,8 @@ import React, { useRef, useState } from "react"
 import { addAircraft } from "../../../../store/reducers/aircraftReducer/aircraftReducer";
 import Loader from "../../../../common/Loader/Loader";
 import { useNavigate } from "react-router-dom";
+import { compose } from "@reduxjs/toolkit";
+import withSuccessMessage from "../../../../HOC/wirhSuccessMessage";
 
 export interface ICreateAircraftDto {
     typeCert: string;
@@ -273,4 +275,4 @@ const NewAircraftForm: React.FC = () => {
 }
 
 
-export default NewAircraftForm;
+export default compose(withSuccessMessage)(NewAircraftForm) ;

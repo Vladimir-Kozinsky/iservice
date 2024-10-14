@@ -18,6 +18,7 @@ const swagger_1 = require("@nestjs/swagger");
 const leg_service_1 = require("./leg.service");
 const leg_schema_1 = require("../schemas/leg.schema");
 const create_leg_dto_1 = require("../dto/leg/create-leg.dto");
+const mongoose_1 = require("mongoose");
 const get_legs_dto_1 = require("../dto/leg/get-legs.dto");
 const response_legs_dto_1 = require("../dto/leg/response-legs.dto");
 const get_print_legs_dto_1 = require("../dto/leg/get-print-legs.dto");
@@ -37,8 +38,8 @@ let LegController = class LegController {
     async createLeg(createLegDto) {
         return await this.legService.createLeg(createLegDto);
     }
-    async deleteLeg(legId) {
-        return await this.legService.deleteLeg(legId.legId);
+    async deleteLeg(deleteLegDto) {
+        return await this.legService.deleteLeg(deleteLegDto);
     }
 };
 __decorate([
@@ -83,12 +84,12 @@ __decorate([
 ], LegController.prototype, "createLeg", null);
 __decorate([
     (0, swagger_1.ApiOperation)({ summary: 'Delete leg' }),
-    (0, swagger_1.ApiResponse)({ status: 201, type: leg_schema_1.Leg }),
+    (0, swagger_1.ApiResponse)({ status: 201, type: mongoose_1.Types.ObjectId }),
     (0, common_1.Post)('/delete'),
     (0, common_1.HttpCode)(201),
     __param(0, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
+    __metadata("design:paramtypes", [leg_schema_1.Leg]),
     __metadata("design:returntype", Promise)
 ], LegController.prototype, "deleteLeg", null);
 LegController = __decorate([

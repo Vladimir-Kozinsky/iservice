@@ -11,8 +11,6 @@ export class CreateLegDto {
     readonly engines: [
         {
             msn: string,
-            engineTsn: string,
-            engineCsn: string
         }
 
     ];

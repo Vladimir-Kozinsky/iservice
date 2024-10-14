@@ -48,23 +48,23 @@ const apuSlice = createSlice({
         })
 
         builder.addCase(addLimit.fulfilled, (state: IApuState, action: PayloadAction<ILimit>) => {
-            state.choosedApu.limits.push(action.payload);
-            const apu = state.apus.find((apu: IApu) => apu.msn === state.choosedApu.msn);
-            apu?.limits.push(action.payload);
-            state.successMessage = "New limit successfully added";
+            // state.choosedApu.limits.push(action.payload);
+            // const apu = state.apus.find((apu: IApu) => apu.msn === state.choosedApu.msn);
+            // apu?.limits.push(action.payload);
+            // state.successMessage = "New limit successfully added";
         })
         builder.addCase(addLimit.rejected, (state: IApuState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
         })
 
         builder.addCase(delLimit.fulfilled, (state: IApuState, action: PayloadAction<string>) => {
-            const limitId = action.payload;
-            const index = state.choosedApu.limits.findIndex((limit: ILimit) => limit._id === limitId);
-            state.choosedApu.limits.splice(index, 1);
-            const apu = state.apus.find((apu: IApu) => apu.msn === state.choosedApu.msn);
-            const indexApuArr = apu?.limits.findIndex((limit: ILimit) => limit._id === limitId);
-            if (apu && (indexApuArr || indexApuArr === 0)) apu.limits.splice(indexApuArr, 1);
-            state.successMessage = "Limit successfully removed";
+            // const limitId = action.payload;
+            // const index = state.choosedApu.limits.findIndex((limit: ILimit) => limit._id === limitId);
+            // state.choosedApu.limits.splice(index, 1);
+            // const apu = state.apus.find((apu: IApu) => apu.msn === state.choosedApu.msn);
+            // const indexApuArr = apu?.limits.findIndex((limit: ILimit) => limit._id === limitId);
+            // if (apu && (indexApuArr || indexApuArr === 0)) apu.limits.splice(indexApuArr, 1);
+            // state.successMessage = "Limit successfully removed";
         })
         builder.addCase(delLimit.rejected, (state: IApuState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
