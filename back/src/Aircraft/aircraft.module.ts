@@ -7,7 +7,7 @@ import { AircraftController } from './aircraft.controller';
 import { Engine, EngineSchema } from 'src/schemas/engine.schema';
 import { Limit, LimitSchema } from 'src/schemas/limit.schema';
 import { Apu, ApuSchema } from 'src/schemas/apu.schema';
-import { Lg, LgSchema } from 'src/schemas/gear.schema';
+import { Gear, GearSchema } from 'src/schemas/gear.schema';
 
 @Module({
   imports: [
@@ -28,8 +28,8 @@ import { Lg, LgSchema } from 'src/schemas/gear.schema';
       schema: LimitSchema
     }]),
     MongooseModule.forFeature([{
-      name: Lg.name,
-      schema: LgSchema
+      name: Gear.name,
+      schema: GearSchema
     }]),
   ],
   controllers: [AircraftController],

@@ -6,7 +6,7 @@ import { Limit, LimitSchema } from './limit.schema';
 import { Leg } from './leg.schema';
 import { Engine } from './engine.schema';
 import { Apu } from './apu.schema';
-import { Lg } from './gear.schema';
+import { Gear } from './gear.schema';
 
 export type AircraftDocument = HydratedDocument<Aircraft>;
 
@@ -113,7 +113,7 @@ export class Aircraft {
 
     @ApiProperty({ example: 'none', description: "Landing gears" })
     @Prop({ type: [mongoose.SchemaTypes.ObjectId], ref: 'Lg' })
-    lgs: Lg[];
+    lgs: Gear[];
 
     @ApiProperty({ example: 'none', description: "Legs" })
     @Prop({ref: 'Leg'})

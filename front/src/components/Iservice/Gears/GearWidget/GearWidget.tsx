@@ -1,9 +1,9 @@
 import s from './GearWidget.module.scss';
-import apuIcon from './../../../../assets/img/png/lg.png';
+import gearIcon from './../../../../assets/img/png/gear.png';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../../../../store/store';
-import { IApu, IGear } from '../../../../types/types';
+import { IGear } from '../../../../types/types';
 import { useNavigate } from 'react-router-dom';
 import { setChoosedGear } from '../../../../store/reducers/gearReducer/gearReducer';
 
@@ -24,7 +24,7 @@ const GearWidget: React.FC<GearWidgetProps> = ({ gear }) => {
     return (
         <>
             <div className={s.widget} onClick={widgetOnClick} >
-                <img className={s.widget__img} src={apuIcon} alt="gear-icon" />
+                <img className={s.widget__img} src={gearIcon} alt="gear-icon" />
                 <div className={s.widget__data}>
                     <h3 className={s.widget__data__value}>{`Type: ${gear.pos}`}</h3>
                     <h3 className={s.widget__data__value}>{`MSN: ${gear.sn}`}</h3>

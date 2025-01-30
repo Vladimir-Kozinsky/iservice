@@ -8,7 +8,7 @@ import { GetLegsDto } from 'src/dto/leg/get-legs.dto';
 import { GetPrintLegsDto } from 'src/dto/leg/get-print-legs.dto';
 import { DeleteLegDto } from 'src/dto/leg/delete-leg.dto';
 import { Engine } from 'src/schemas/engine.schema';
-import { CreateLgDto } from 'src/dto/create-lg.dto';
+import { InstallGearDto } from 'src/dto/install-gear.dto';
 
 @Injectable()
 export class LegService {

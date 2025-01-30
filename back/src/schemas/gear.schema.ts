@@ -4,10 +4,10 @@ import { ApiProperty } from '@nestjs/swagger';
 import mongoose, { HydratedDocument, Types } from 'mongoose';
 import { GearHistory } from './gearHistory.schema';
 
-export type LgDocument = HydratedDocument<Lg>;
+export type GearDocument = HydratedDocument<Gear>;
 
 @Schema()
-export class Lg {
+export class Gear {
     @ApiProperty({ example: 'NLG', description: "LG position" })
     @Prop({ required: true })
     pos: string;
@@ -55,7 +55,6 @@ export class Lg {
     @ApiProperty({ example: 'none', description: "LG removal/instolation action" })
     @Prop({ ref: 'GearHistory' })
     gearHistory: [GearHistory]
-
 }
 
-export const LgSchema = SchemaFactory.createForClass(Lg);
+export const GearSchema = SchemaFactory.createForClass(Gear);

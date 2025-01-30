@@ -10,8 +10,7 @@ import { Aircraft } from 'src/schemas/aircraft.schema';
 import { Apu } from 'src/schemas/apu.schema';
 import { Engine } from 'src/schemas/engine.schema';
 import { Limit } from 'src/schemas/limit.schema';
-import { CreateLgDto } from 'src/dto/create-lg.dto';
-import { Lg } from 'src/schemas/gear.schema';
+import { Gear } from 'src/schemas/gear.schema';
 
 @Injectable()
 export class AircraftService {
@@ -24,8 +23,8 @@ export class AircraftService {
         private readonly apuModel: Model<Apu>,
         @InjectModel(Limit.name)
         private readonly limitModel: Model<Limit>,
-        @InjectModel(Lg.name)
-        private readonly lgModel: Model<Lg>,
+        @InjectModel(Gear.name)
+        private readonly lgModel: Model<Gear>,
     ) { }
 
     async add(createAircraftDto: CreateAircraftDto) {
@@ -153,29 +152,29 @@ export class AircraftService {
         return limit
     }
 
-    async addLg(createLgDto: CreateLgDto) {
-        const lg = await this.lgModel.create(createLgDto);
-        const aircraft = await this.aircraftModel.findOne({ msn: createLgDto.msn });
-        if (!aircraft) throw new HttpException('Aircraft not found', HttpStatus.BAD_REQUEST);
-        aircraft.lgs.push(lg);
-        await aircraft.save();
+    // async addLg(createLgDto: CreateLgDto) {
+    //     const lg = await this.lgModel.create(createLgDto);
+    //     const aircraft = await this.aircraftModel.findOne({ msn: createLgDto.msn });
+    //     if (!aircraft) throw new HttpException('Aircraft not found', HttpStatus.BAD_REQUEST);
+    //     aircraft.lgs.push(lg);
+    //     await aircraft.save();
 
-        const istalledLg = await this.lgModel.findOne({ sn: createLgDto.sn });
-        if (!istalledLg) throw new HttpException('LG not found', HttpStatus.BAD_REQUEST);
+    //     const istalledLg = await this.lgModel.findOne({ sn: createLgDto.sn });
+    //     if (!istalledLg) throw new HttpException('LG not found', HttpStatus.BAD_REQUEST);
        
-        const historyData= {
-            date: createLgDto.date,
-            action: 'Intallation',
-            aircraft: createLgDto.msn,
-            aircraftFh: createLgDto.aircraftFh,
-            aircraftFc: createLgDto.aircraftFc,
-            tsn: createLgDto.tsn,
-            csn: createLgDto.csn,
-            reason: ''
-        }
+    //     const historyData= {
+    //         date: createLgDto.date,
+    //         action: 'Intallation',
+    //         aircraft: createLgDto.msn,
+    //         aircraftFh: createLgDto.aircraftFh,
+    //         aircraftFc: createLgDto.aircraftFc,
+    //         tsn: createLgDto.tsn,
+    //         csn: createLgDto.csn,
+    //         reason: ''
+    //     }
 
-        istalledLg.gearHistory.push(historyData)
-        await istalledLg.save();
-        return lg;
-    }
+    //     istalledLg.gearHistory.push(historyData)
+    //     await istalledLg.save();
+    //     return lg;
+    // }
 }

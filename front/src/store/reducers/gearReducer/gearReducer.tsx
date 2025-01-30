@@ -1,9 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IApu, ICreateApuDto, ICreateEngineDto, IEngine, IGear, ILimit } from '../../../types/types';
-import { IGearState } from './gearReducerTypes';
+import { IgearRejectResponse, IGearState } from './gearReducerTypes';
 import apuAPI from '../../../API/apuAPI';
 import { INewLimitDto } from '../../../components/Iservice/Apus/ApuFile/NewApuLimit/NewApuLimit';
 import { IDelApuLimitDto } from '../../../components/Iservice/Apus/ApuFile/DelApuLimit/DelApuLimit';
+import gearAPI from '../../../API/gearAPI';
 
 const initialState: IGearState = {
     choosedGear: {
@@ -41,12 +42,12 @@ const gearSlice = createSlice({
         // builder.addCase(addApu.rejected, (state: IApuState, action: PayloadAction<any>) => {
         //     state.errorMessage = action.payload.message;
         // })
-        // builder.addCase(getApus.fulfilled, (state: IApuState, action: PayloadAction<IApu[]>) => {
-        //     state.apus = action.payload;
-        // })
-        // builder.addCase(getApus.rejected, (state: IApuState, action: PayloadAction<any>) => {
-        //     state.errorMessage = action.payload.message;
-        // })
+        builder.addCase(getGears.fulfilled, (state: IGearState, action: PayloadAction<IGear[]>) => {
+            state.gears = action.payload;
+        })
+        builder.addCase(getGears.rejected, (state: IGearState, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
+        })
 
         // builder.addCase(addLimit.fulfilled, (state: IApuState, action: PayloadAction<ILimit>) => {
             // state.choosedApu.limits.push(action.payload);
@@ -85,17 +86,17 @@ const gearSlice = createSlice({
 //     }
 // )
 
-// export const getGears = createAsyncThunk(
-//     'apu/gears',
-//     async (none, thunkAPI) => {
-//         try {
-//             const response = await apuAPI.getApus();
-//             return response.data;
-//         } catch (error: any) {
-//             return thunkAPI.rejectWithValue(error.response.data as IApuRejectResponse);
-//         }
-//     }
-// )
+export const getGears = createAsyncThunk(
+    'gear/gears',
+    async (none, thunkAPI) => {
+        try {
+            const response = await gearAPI.getGears();
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IgearRejectResponse);
+        }
+    }
+)
 
 // export const addLimit = createAsyncThunk(
 //     'apu/limit/add',

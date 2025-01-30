@@ -6,6 +6,7 @@ import { IGear } from "../../../types/types";
 import React, { useEffect } from "react";
 import { getApus } from "../../../store/reducers/apuReducer/apuReducer";
 import GearWidget from "./GearWidget/GearWidget";
+import { getGears } from "../../../store/reducers/gearReducer/gearReducer";
 
 const Gears: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
@@ -16,7 +17,7 @@ const Gears: React.FC = () => {
 ))
 
 useEffect(() => {
-    dispatch(getApus());
+    dispatch(getGears());
 }, [])
 
     return (

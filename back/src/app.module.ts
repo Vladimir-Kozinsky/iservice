@@ -6,10 +6,11 @@ import { AircraftModule } from './Aircraft/aircraft.module';
 import { EngineModule } from './Engine/engine.module';
 import { LegModule } from './leg/leg.module';
 import { ApuModule } from './apu/apu.module';
+import { GearModule } from './Gear/gear.module';
 
 @Module({
   imports: [MongooseModule.forRoot('mongodb+srv://user1:user1@cluster0.lswt8ul.mongodb.net/new-way?retryWrites=true&w=majority'), 
-  AuthModule, AircraftModule, EngineModule, LegModule, ApuModule],
+  AuthModule, AircraftModule, EngineModule, LegModule, ApuModule, GearModule],
   controllers: [],
   providers: [AppService],
 })

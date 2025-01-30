@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty } from "class-validator";
 
-export class CreateLgDto {
+export class InstallGearDto {
 
   @ApiProperty({ example: '25.05.2024', description: 'Action date' })
   @IsNotEmpty()
