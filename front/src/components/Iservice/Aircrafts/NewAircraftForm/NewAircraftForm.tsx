@@ -117,7 +117,6 @@ const NewAircraftForm: React.FC = () => {
                     (async () => {
                         values.fh = values.initFh;
                         values.fc = values.initFc;
-                        console.log(values)
                         setIsLoader(true);
                         await dispatch(addAircraft(values));
                         setIsLoader(false);

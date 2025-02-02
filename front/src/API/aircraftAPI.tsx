@@ -7,7 +7,8 @@ import { IInstallEngineDto } from "../components/Iservice/Aircrafts/AircraftFile
 import { IRemoveEngineDto } from "../components/Iservice/Aircrafts/AircraftFile/RemoveEngine/RemoveEngine";
 import { IInstallApuDto } from "../components/Iservice/Aircrafts/AircraftFile/InstallApu/InstallApu";
 import { IRemoveApuDto } from "../components/Iservice/Aircrafts/AircraftFile/RemoveApu/RemoveApu";
-import { INewLgDto } from "../components/Iservice/Aircrafts/AircraftFile/NewLg/NewLg";
+import { IInstallGearDto } from "../components/Iservice/Aircrafts/AircraftFile/InstallGear/InstallGear";
+import { IRemoveGearDto } from "../components/Iservice/Aircrafts/AircraftFile/RemoveGear/RemoveGear";
 
 const proxy = axios.create({
     baseURL: generalAPIData.baseURL,
@@ -36,10 +37,10 @@ const aircraftAPI = {
         return response;
     },
 
-    async addLg(lgDto: INewLgDto) {
-        const response = await proxy.post('/aircraft/lg/add', lgDto);
-        return response;
-    },
+    // async addLg(lgDto: INewLgDto) {
+    //     const response = await proxy.post('/aircraft/lg/add', lgDto);
+    //     return response;
+    // },
     // async delLg(lgDto: IDelLgDto) {
     //     const response = await proxy.post('/aircraft/lg/delete', lgDto);
     //     return response;
@@ -57,6 +58,15 @@ const aircraftAPI = {
 
     async installApu(installApuDto: IInstallApuDto) {
         const response = await proxy.post('/aircraft/apu/install', installApuDto);
+        return response;
+    },
+    async installGear(installGearDto: IInstallGearDto) {
+        const response = await proxy.post('/aircraft/gear/install', installGearDto);
+        return response;
+    },
+
+    async removeGear(removeGearDto: IRemoveGearDto) {
+        const response = await proxy.post('/aircraft/gear/remove', removeGearDto);
         return response;
     },
 

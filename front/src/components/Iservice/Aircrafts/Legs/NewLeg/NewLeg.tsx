@@ -3,7 +3,7 @@ import s from "./NewLeg.module.scss";
 import { ICreateLegDto } from "../../../../../store/reducers/legReducer/legReducerTypes";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../store/store";
-import { IEngine } from "../../../../../types/types";
+import { IEngine, IGear } from "../../../../../types/types";
 import Input from "../../../../../common/inputs/Input";
 import Button from "../../../../../common/buttons/Button";
 import { useNavigate } from "react-router-dom";
@@ -19,9 +19,15 @@ const NewLeg = () => {
     const dispatch = useDispatch<AppDispatch>();
     const aircraft = useSelector((state: RootState) => state.aircraft.choosedAircraft);
     const installedEngines = useSelector((state: RootState) => state.aircraft.installedEngines);
+    const installedGears = useSelector((state: RootState) => state.aircraft.installedGears);
     const engines = installedEngines.map((engine: IEngine) => {
         return {
             msn: engine.msn,
+        }
+    })
+    const gears = installedGears.map((gear: IGear) => {
+        return {
+            sn: gear.sn,
         }
     })
 
@@ -61,6 +67,7 @@ const NewLeg = () => {
                 initialValues={{
                     aircraft: '',
                     engines: engines,
+                    gears: gears,
                     apu: '',
                     depDate: '',
                     flightNumber: '',
@@ -88,7 +95,7 @@ const NewLeg = () => {
                         values.aircraft = aircraft.msn;
                         values.apu = aircraft.apu.msn;
                         values.engines = engines;
-                        console.log(values);
+                        values.gears = gears;
                         await dispatch(createLeg(values));
                     })()
 

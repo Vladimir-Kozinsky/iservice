@@ -7,7 +7,6 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../../../common/buttons/Button";
 import Input from "../../../../../common/inputs/Input";
-import { addLg, addLimit } from "../../../../../store/reducers/aircraftReducer/aircraftReducer";
 import { compose } from "@reduxjs/toolkit";
 import withSuccessMessage from "../../../../../HOC/wirhSuccessMessage";
 
@@ -78,7 +77,7 @@ const NewLg = () => {
                 onSubmit={(values: INewLgDto) => {
                     (async () => {
                         if (aircraft.msn) values.msn = aircraft.msn;
-                        await dispatch(addLg(values));
+                        //await dispatch(addLg(values));
                     })()
 
                 }}

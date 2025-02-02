@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import aircraftAPI from '../../../API/aircraftAPI';
 import { IAircraftRejectResponse, IAircraftState } from './aircraftReducerTypes';
-import { IAircraft, IApu, IEngine, ILg, ILimit } from '../../../types/types';
+import { IAircraft, IApu, IEngine, IGear, ILg, ILimit } from '../../../types/types';
 import { ICreateAircraftDto } from '../../../components/Iservice/Aircrafts/NewAircraftForm/NewAircraftForm';
 import { INewLimitDto } from '../../../components/Iservice/Aircrafts/AircraftFile/NewLimit/NewLimit';
 import { IDelLimitDto } from '../../../components/Iservice/Aircrafts/AircraftFile/DelLimit/DelLimit';
@@ -9,8 +9,10 @@ import { IInstallEngineDto } from '../../../components/Iservice/Aircrafts/Aircra
 import { IRemoveEngineDto } from '../../../components/Iservice/Aircrafts/AircraftFile/RemoveEngine/RemoveEngine';
 import { IInstallApuDto } from '../../../components/Iservice/Aircrafts/AircraftFile/InstallApu/InstallApu';
 import { IRemoveApuDto } from '../../../components/Iservice/Aircrafts/AircraftFile/RemoveApu/RemoveApu';
-import { INewLgDto } from '../../../components/Iservice/Aircrafts/AircraftFile/NewLg/NewLg';
 import engineAPI from '../../../API/engineAPI';
+import { IInstallGearDto } from '../../../components/Iservice/Aircrafts/AircraftFile/InstallGear/InstallGear';
+import { IRemoveGearDto } from '../../../components/Iservice/Aircrafts/AircraftFile/RemoveGear/RemoveGear';
+import gearAPI from '../../../API/gearAPI';
 
 
 interface IUpdateFhFcDto {
@@ -49,6 +51,7 @@ const initialState: IAircraftState = {
         lgs: []
     },
     installedEngines: [],
+    installedGears: [],
     aircafts: [],
     errorMessage: null,
     successMessage: null,
@@ -100,6 +103,20 @@ const aircraftSlice = createSlice({
         builder.addCase(getEngine.rejected, (state: IAircraftState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
         })
+
+        builder.addCase(getGear.fulfilled, (state: IAircraftState, action: PayloadAction<IGear>) => {
+            const gear = action.payload;
+            const gearIndex = state.installedGears.findIndex((g: IGear) => g.sn === gear.sn);
+            if (gearIndex === 0 || gearIndex > 0) {
+                state.installedGears[gearIndex] = gear;
+            } else {
+                state.installedGears.push(gear);
+            }
+        })
+        builder.addCase(getGear.rejected, (state: IAircraftState, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
+        })
+
         builder.addCase(addLimit.fulfilled, (state: IAircraftState, action: PayloadAction<ILimit>) => {
             state.choosedAircraft.limits.push(action.payload);
             const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
@@ -110,15 +127,29 @@ const aircraftSlice = createSlice({
             state.errorMessage = action.payload.message;
         })
 
-        builder.addCase(addLg.fulfilled, (state: IAircraftState, action: PayloadAction<ILg>) => {
-            state.choosedAircraft.lgs.push(action.payload);
+        builder.addCase(installGear.fulfilled, (state: IAircraftState, action: PayloadAction<IGear>) => {
+            if (action.payload._id) {
+                state.choosedAircraft.lgs.push(action.payload._id);
+            }
             const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
-            aircraft?.lgs.push(action.payload);
+            aircraft?.lgs.push(action.payload._id);
             state.successMessage = "New LG successfully added";
         })
-        builder.addCase(addLg.rejected, (state: IAircraftState, action: PayloadAction<any>) => {
+        builder.addCase(installGear.rejected, (state: IAircraftState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
         })
+
+        builder.addCase(removeGear.fulfilled, (state: IAircraftState, action: PayloadAction<IGear>) => {
+            const removedGear = action.payload;
+            const choosedAircarftGearIndex = state.choosedAircraft.lgs.findIndex((gearId: string) => gearId === removedGear._id);
+            state.choosedAircraft.lgs.splice(choosedAircarftGearIndex, 1);
+            
+            const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
+            const gearIndexAircraftArr = aircraft?.lgs.findIndex((gearId: string) => gearId === removedGear._id);
+            if (aircraft && (gearIndexAircraftArr  === 0)) aircraft.lgs.splice(gearIndexAircraftArr, 1);
+            state.successMessage = "Gear successfully removed";
+        })
+
 
 
         builder.addCase(delLimit.fulfilled, (state: IAircraftState, action: PayloadAction<string>) => {
@@ -214,9 +245,9 @@ export const getAircrafts = createAsyncThunk(
 
 export const getEngine = createAsyncThunk(
     'aircraft/engine',
-    async (msn: string, thunkAPI) => {
+    async (engineId: string, thunkAPI) => {
         try {
-            const response = await engineAPI.getEngine(msn);
+            const response = await engineAPI.getEngine(engineId);
             return response.data;
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response.data as IAircraftRejectResponse);
@@ -226,6 +257,18 @@ export const getEngine = createAsyncThunk(
 )
 
 
+export const getGear = createAsyncThunk(
+    'aircraft/gear',
+    async (gearId: string, thunkAPI) => {
+        try {
+            const response = await gearAPI.getGear(gearId);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IAircraftRejectResponse);
+        }
+
+    }
+)
 
 export const addLimit = createAsyncThunk(
     'aircraft/limit/add',
@@ -252,32 +295,6 @@ export const delLimit = createAsyncThunk(
 
     }
 )
-
-export const addLg = createAsyncThunk(
-    'aircraft/lg/add',
-    async (lgDto: INewLgDto, thunkAPI) => {
-        try {
-            const response = await aircraftAPI.addLg(lgDto);
-            return response.data;
-        } catch (error: any) {
-            return thunkAPI.rejectWithValue(error.response.data as IAircraftRejectResponse);
-        }
-
-    }
-)
-
-// export const delLg = createAsyncThunk(
-//     'aircraft/lg/delete',
-//     async (lgDto: IDelLimitDto, thunkAPI) => {
-//         try {
-//             const response = await aircraftAPI.delLimit(limitDto);
-//             return response.data;
-//         } catch (error: any) {
-//             return thunkAPI.rejectWithValue(error.response.data as IAircraftRejectResponse);
-//         }
-
-//     }
-// )
 
 export const installEngine = createAsyncThunk(
     'aircraft/engine/install',
@@ -323,6 +340,31 @@ export const removeApu = createAsyncThunk(
     async (removeApuDto: IRemoveApuDto, thunkAPI) => {
         try {
             const response = await aircraftAPI.removeApu(removeApuDto);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IAircraftRejectResponse);
+        }
+
+    }
+)
+
+export const installGear = createAsyncThunk(
+    'aircraft/gear/install',
+    async (installGearDto: IInstallGearDto, thunkAPI) => {
+        try {
+            const response = await aircraftAPI.installGear(installGearDto);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IAircraftRejectResponse);
+        }
+    }
+)
+
+export const removeGear = createAsyncThunk(
+    'aircraft/gear/remove',
+    async (removeGearDto: IRemoveGearDto, thunkAPI) => {
+        try {
+            const response = await aircraftAPI.removeGear(removeGearDto);
             return response.data;
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response.data as IAircraftRejectResponse);

@@ -1,10 +1,10 @@
 @import "../../../../sass/main.scss";
 
-.newApuForm {
+.newGearForm {
     @include dashboard_page();
 }
 
-.newApuForm__header {
+.newGearForm__header {
     @include blue_text(26px);
     text-align: center;
 }
@@ -33,7 +33,7 @@
 
 
 
-.newApuForm__message {
+.newGearForm__message {
     position: absolute;
     width: 234px;
     height: 25px;

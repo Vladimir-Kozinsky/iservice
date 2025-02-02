@@ -35,7 +35,7 @@ export interface IAircraft {
     apu: any;
     legs: ILeg[];
     limits: ILimit[];
-    lgs: ILg[];
+    lgs: string[];
 }
 
 export interface IEngine {
@@ -147,6 +147,9 @@ export interface ILeg {
 export interface ILegEngine {
     msn: string | null;
 }
+export interface ILegGear {
+    sn: string | null;
+}
 
 export interface IApuHistory {
     _id: string;
@@ -201,7 +204,23 @@ export interface IGear {
     nextInspDate: string;
     tsnAtNextInsp: string;
     csnAtNextInsp: string;
-    gearHistory: GearHistory []
+    gearHistory: GearHistory[]
+}
+
+export interface ICreateGearDto {
+    pos: string,
+    pn: string,
+    sn: string,
+    initFh: string,
+    initFc: string,
+    tsn: string,
+    csn: string,
+    lastInspDate: string,
+    tsnAtLastInsp: string,
+    csnAtLastInsp: string,
+    nextInspDate: string,
+    tsnAtNextInsp: string,
+    csnAtNextInsp: string,
 }
 
 export interface GearHistory {

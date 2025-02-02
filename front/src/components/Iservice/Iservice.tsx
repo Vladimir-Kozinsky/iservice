@@ -31,8 +31,9 @@ import RemoveApu from "./Aircrafts/AircraftFile/RemoveApu/RemoveApu";
 import NewApuForm from "./Apus/NewApuForm/NewApuForm";
 import NewApuLimit from "./Apus/ApuFile/NewApuLimit/NewApuLimit";
 import DelApuLimit from "./Apus/ApuFile/DelApuLimit/DelApuLimit";
-import NewLg from "./Aircrafts/AircraftFile/NewLg/NewLg";
 import Gears from "./Gears/Gears";
+import NewGearForm from "./Gears/NewGearForm/NewGearForm";
+import InstallGear from "./Aircrafts/AircraftFile/InstallGear/InstallGear";
 
 
 const Iservice: React.FC = () => {
@@ -67,7 +68,7 @@ const Iservice: React.FC = () => {
                     <Route path="aircraft/:aircraftId/engine/remove" element={<RemoveEngine />} />
                     <Route path="aircraft/:aircraftId/apu/install" element={<InstallApu />} />
                     <Route path="aircraft/:aircraftId/apu/remove" element={<RemoveApu />} />
-                    <Route path="aircraft/:aircraftId/lg/install" element={<NewLg />} />
+                    <Route path="aircraft/:aircraftId/lg/install" element={<InstallGear />} />
                     <Route path="aircraft/:aircraftId/lg/remove" element={<RemoveApu />} />
                     <Route path="aircraft/:aircraftId/legs/create" element={<NewLeg />} />
                     <Route path="aircraft/:aircraftId/legs/print" element={<PrintLegs />} />
@@ -79,13 +80,14 @@ const Iservice: React.FC = () => {
                     <Route path="engine/:engineId/limit/del" element={<DelEngineLimit />} />
                     <Route path="engine/:engineId/report" element={<PrintEngineReport />} />
 
-                    <Route path="apus" element={<Apus />} />   
-                    <Route path="apus/new-apu" element={<NewApuForm />} />                
+                    <Route path="apus" element={<Apus />} />
+                    <Route path="apus/new-apu" element={<NewApuForm />} />
                     <Route path="apu/:apuId" element={<ApuFile />} />
                     <Route path="apu/:apuId/limit" element={<NewApuLimit />} />
                     <Route path="apu/:apuId/limit/del" element={<DelApuLimit />} />
 
-                    <Route path="gears" element={<Gears />} />  
+                    <Route path="gears" element={<Gears />} />
+                    <Route path="gears/new-gear" element={<NewGearForm />} />
                 </Routes>
             </main>
             <Footer theme="light" />

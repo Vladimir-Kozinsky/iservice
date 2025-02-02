@@ -3,7 +3,7 @@ import Button from "../../../../common/buttons/Button";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../../store/store";
 import { kgToLbs, lbTokg, ltTogal, sortEngines, subtractDatesFromNow, subtractFC, subtractFH } from "../../../../utils/utils";
-import { IAircraft, IEngine, ILg, ILimit } from "../../../../types/types";
+import { IAircraft, IEngine, IGear, ILg, ILimit } from "../../../../types/types";
 import engineIcon from "../../../../assets/img/jpeg/engine-removal.jpg";
 import legsIcon from "../../../../assets/img/png/legs-icon.png";
 import printIcon from "../../../../assets/img/png/print-icon.png";
@@ -21,6 +21,7 @@ import classNames from "classnames";
 const AircraftFile = () => {
     const aircraft = useSelector((state: RootState) => state.aircraft.choosedAircraft);
     const installedEngines = useSelector((state: RootState) => state.aircraft.installedEngines);
+    const installedGears = useSelector((state: RootState) => state.aircraft.installedGears);
     const apu = aircraft.apu;
     const navigate = useNavigate();
     const componentRef = useRef<HTMLDivElement>(null);
@@ -79,8 +80,7 @@ const AircraftFile = () => {
     }
     )
 
-    const gears = () => aircraft.lgs.map((gear: ILg) => {
-        console.log(gear)
+    const gears = () => installedGears.map((gear: IGear) => {
         return (
             <div key={gear.sn} className={s.gear}>
                 <div className={s.span__block} >

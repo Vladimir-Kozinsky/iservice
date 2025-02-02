@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../../../store/store';
 import { IAircraft, IEngine } from '../../../../types/types';
 import { type } from 'os';
-import { getEngine, setChoosedAircraft } from '../../../../store/reducers/aircraftReducer/aircraftReducer';
+import { getEngine, getGear, setChoosedAircraft } from '../../../../store/reducers/aircraftReducer/aircraftReducer';
 import { useNavigate } from 'react-router-dom';
 
 type AircraftWidgetProps = {
@@ -31,6 +31,9 @@ const AircraftWidget: React.FC<AircraftWidgetProps> = ({ aircraft }) => {
         await dispatch(setChoosedAircraft(aircraft));
         aircraft.engines.forEach(async (engId: string) => {
             await dispatch(getEngine(engId))
+        })
+        aircraft.lgs.forEach(async (gearId: string) => {
+            await dispatch(getGear(gearId))
         })
         navigate(`/i-service/aircraft/${aircraft.msn}`);
     }

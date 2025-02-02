@@ -1,31 +1,31 @@
 import { Field, Form, Formik } from "formik";
-import s from "./InstallApu.module.scss";
-import {  useDispatch, useSelector } from "react-redux";
+import s from "./InstallGear.module.scss";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../store/store";
 import { CSSTransition } from "react-transition-group";
 import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../../../common/buttons/Button";
 import Select, { ActionMeta, SingleValue } from "react-select";
-import { IApu } from "../../../../../types/types";
-import { getEngines } from "../../../../../store/reducers/engineReducer/engineReducer";
+import { IGear } from "../../../../../types/types";
 import Input from "../../../../../common/inputs/Input";
 import { checkFCFormat, checkFHFormat } from "../../../../../utils/utils";
 import { compose } from "@reduxjs/toolkit";
 import withSuccessMessage from "../../../../../HOC/wirhSuccessMessage";
 import withErrorMessage from "../../../../../HOC/wirhErrorMessage";
-import { getApus } from "../../../../../store/reducers/apuReducer/apuReducer";
-import { installApu } from "../../../../../store/reducers/aircraftReducer/aircraftReducer";
+import { getGears } from "../../../../../store/reducers/gearReducer/gearReducer";
+import { installGear } from "../../../../../store/reducers/aircraftReducer/aircraftReducer";
 
-export interface IInstallApuDto {
+export interface IInstallGearDto {
     date: string;
     action: string;
     aircraft: string | null;
-    apu: string;
+    gear: string;
+    position: string;
     aircraftTsn: string | null;
     aircraftCsn: string | null;
-    apuTsn: string;
-    apuCsn: string;
+    gearTsn: string;
+    gearCsn: string;
     reason: string;
 }
 
@@ -56,19 +56,19 @@ const actionOptions: IOption[] = [
 
 
 
-const InstallApu: React.FC = () => {
+const InstallGear: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const nodeRef = useRef(null);
     const navigate = useNavigate();
     const aircraft = useSelector((state: RootState) => state.aircraft.choosedAircraft);
     const aircraftErrorMessage = useSelector((state: RootState) => state.aircraft.errorMessage);
-    const apus = useSelector((state: RootState) => state.apu.apus);
+    const gears = useSelector((state: RootState) => state.gear.gears);
     const [selectedOption, setSelectedOption] = useState<string>('');
 
-    const options: IOption[] = apus.map((apu: IApu) => {
+    const options: IOption[] = gears.map((gear: IGear) => {
         return {
-            value: apu.msn,
-            label: `${apu.type} ${apu.msn}`
+            value: gear.sn,
+            label: `${gear.pos} ${gear.sn}`
         }
     })
 
@@ -78,66 +78,67 @@ const InstallApu: React.FC = () => {
         }
     }
 
-    const findApu = (msn: string): IApu | null => {
-        const apu = apus.find((apu: IApu) => apu.msn === msn);
-        if (!apu) return null;
-        return apu;
+    const findGear = (sn: string): IGear | null => {
+        const gear = gears.find((gear: IGear) => gear.sn === sn);
+        if (!gear) return null;
+        return gear;
     }
 
-
-
     useEffect(() => {
-        dispatch(getApus());
+        dispatch(getGears());
     }, [])
 
     return (
-        <div className={s.installEngine}>
-            <h1 className={s.installEngine__header} >Install APU</h1>
+        <div className={s.installGear}>
+            <h1 className={s.installGear__header} >Install APU</h1>
             <Formik
                 initialValues={{
                     date: '',
                     action: 'Installation',
                     aircraft: aircraft.msn,
-                    apu: selectedOption,
+                    gear: selectedOption,
+                    position: findGear(selectedOption)?.pos,
                     aircraftTsn: aircraft.fh,
                     aircraftCsn: aircraft.fc,
-                    apuTsn: findApu(selectedOption)?.tsn,
-                    apuCsn: findApu(selectedOption)?.csn,
+                    gearTsn: findGear(selectedOption)?.tsn,
+                    gearCsn: findGear(selectedOption)?.csn,
                     reason: 'none'
-                } as IInstallApuDto}
+                } as IInstallGearDto}
                 validate={values => {
                     interface IInstallErrorsDto {
                         date?: string;
                         action?: string;
                         aircraft?: string;
-                        apu?: string;
+                        gear?: string;
+                        position?: string;
                         aircraftTsn?: string;
                         aircraftCsn?: string;
-                        apuTsn?: string;
-                        apuCsn?: string;
+                        gearTsn?: string;
+                        gearCsn?: string;
                         reason?: string;
                     }
                     const errors: IInstallErrorsDto = {};
                     if (!values.date) errors.date = 'Installation date is required';
                     if (!values.action) errors.action = 'Action is required';
                     if (!values.aircraft) errors.aircraft = 'Aircaft is required';
-                    if (!selectedOption) errors.apu = 'Engine is required';
+                    if (!selectedOption) errors.gear = 'Gear is required';
+                    if (!values.position) errors.position = 'Aircaft is required';
                     if (!values.aircraftTsn) errors.aircraftTsn = 'Aircraft FH is required';
                     if (values.aircraftTsn && !checkFHFormat(values.aircraftTsn)) errors.aircraftTsn = 'Invalid format, the format should be like "123456:22"';
                     if (!values.aircraftCsn) errors.aircraftCsn = 'Aircraft FC is required';
                     if (values.aircraftCsn && !checkFCFormat(values.aircraftCsn)) errors.aircraftCsn = 'Invalid format, the format should be like "123456"';
 
 
-                    if (!values.apuTsn) errors.apuTsn = 'Engine TSN is required';
-                    if (!checkFHFormat(values.apuTsn)) errors.apuTsn = 'Invalid format, the format should be like "123456:22"';
-                    if (!values.apuCsn) errors.apuCsn = 'Engine CSN is required';
-                    if (!checkFCFormat(values.apuCsn)) errors.apuCsn = 'Invalid format, the format should be like "123456"';
+                    if (!values.gearTsn) errors.gearTsn = 'Gear TSN is required';
+                    if (!checkFHFormat(values.gearTsn)) errors.gearTsn = 'Invalid format, the format should be like "123456:22"';
+                    if (!values.gearCsn) errors.gearCsn = 'Gear CSN is required';
+                    if (!checkFCFormat(values.gearCsn)) errors.gearCsn = 'Invalid format, the format should be like "123456"';
                     return errors;
                 }}
-                onSubmit={(values: IInstallApuDto) => {
+                onSubmit={(values: IInstallGearDto) => {
                     (async () => {
-                        values.apu = selectedOption;
-                       await dispatch(installApu(values));
+                        values.gear = selectedOption;
+                        await dispatch(installGear(values));
                     })()
 
                 }}
@@ -201,20 +202,25 @@ const InstallApu: React.FC = () => {
                             </div>
                         </div>
                         <div className={s.inputs__section} >
-                            <h3 className={s.inputs__section__header}>Engine Data</h3>
+                            <h3 className={s.inputs__section__header}>Gear Data</h3>
                             <div className={s.inputs__block}>
-                                <label>APU<span>*</span></label>
+                                <label>Gear<span>*</span></label>
                                 <Select options={options} onChange={onChangeOption} styles={customStyles} />
                             </div>
                             <div className={s.inputs__block}>
-                                <label>APU TSN<span>*</span></label>
-                                <Field type="text" id="apuTsn" name="apuTsn"
-                                    placeholder={findApu(selectedOption)?.tsn} error={errors.apuTsn} as={Input} />
+                                <label>Gear Position<span>*</span></label>
+                                <Field type="text" id="position" name="position"
+                                    placeholder={findGear(selectedOption)?.pos} error={errors.position} as={Input} />
                             </div>
                             <div className={s.inputs__block}>
-                                <label>APU CSN<span>*</span></label>
-                                <Field type="text" id="apuCsn" name="apuCsn"
-                                    placeholder={findApu(selectedOption)?.csn} error={errors.apuCsn} as={Input} />
+                                <label>Gear TSN<span>*</span></label>
+                                <Field type="text" id="gearTsn" name="gearTsn"
+                                    placeholder={findGear(selectedOption)?.tsn} error={errors.gearTsn} as={Input} />
+                            </div>
+                            <div className={s.inputs__block}>
+                                <label>Gear CSN<span>*</span></label>
+                                <Field type="text" id="gearCsn" name="gearCsn"
+                                    placeholder={findGear(selectedOption)?.csn} error={errors.gearCsn} as={Input} />
                             </div>
                         </div>
                     </div>
@@ -230,6 +236,6 @@ const InstallApu: React.FC = () => {
     )
 }
 
-const EnhancedComponent = withSuccessMessage(InstallApu);
+const EnhancedComponent = withSuccessMessage(InstallGear);
 
 export default compose(withErrorMessage)(EnhancedComponent);

@@ -7,7 +7,7 @@ export interface IGearState {
     successMessage: string | null;
 }
 
-export interface IgearRejectResponse {
+export interface IGearRejectResponse {
     statusCode: number;
     message: string;
 }

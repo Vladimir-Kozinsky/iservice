@@ -1,4 +1,4 @@
-import { IAircraft, ILeg, ILegEngine } from "../../../types/types";
+import { IAircraft, ILeg, ILegEngine, ILegGear } from "../../../types/types";
 
 export interface ILegState {
     choosedLeg: {
@@ -36,6 +36,7 @@ export interface ILegRejectResponse {
 export interface ICreateLegDto {
     aircraft: string;
     engines: ILegEngine[];
+    gears: ILegGear[];
     apu: string;
     depDate: string;
     flightNumber: string;

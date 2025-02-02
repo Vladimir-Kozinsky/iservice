@@ -82,7 +82,6 @@ const SignUp: React.FC = () => {
                         values: ISignUpValues,
                         { setSubmitting }: FormikHelpers<ISignUpValues>
                     ) => {
-                        console.log(values)
                         dispatch(signUp(values));
                     }}
                 >

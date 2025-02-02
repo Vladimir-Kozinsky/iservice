@@ -47,7 +47,6 @@ const DelApuLimit = () => {
 
 
     const onChangeOption = (newValue: SingleValue<IOption>, actionMeta: ActionMeta<IOption>) => {
-        console.log(apu)
         if (newValue?.value) {
             setSelectedOption(newValue.value);
         }

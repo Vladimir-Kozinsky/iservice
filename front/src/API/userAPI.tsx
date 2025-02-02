@@ -23,7 +23,6 @@ const userAPI = {
     //     return response;
     // },
     async signOut() {
-        console.log('jnghfdrf FGB')
         const response = await proxy.post(`/auth/signout`);
         return response;
     },
