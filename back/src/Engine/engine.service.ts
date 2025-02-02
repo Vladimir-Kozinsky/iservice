@@ -31,7 +31,6 @@ export class EngineService {
     }
 
     async getEngine(getEngineDto: { id: Types.ObjectId }) {
-        console.log(getEngineDto)
         const engine = await this.engineModel.findById(getEngineDto.id);
         if (!engine) throw new HttpException('Engine not found', HttpStatus.BAD_REQUEST);
         return engine;

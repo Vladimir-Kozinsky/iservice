@@ -5,6 +5,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { Aircraft, AircraftSchema } from 'src/schemas/aircraft.schema';
 import { Leg, LegSchema } from 'src/schemas/leg.schema';
 import { Engine, EngineSchema } from 'src/schemas/engine.schema';
+import { Gear, GearSchema } from 'src/schemas/gear.schema';
 
 @Module({
   imports: [
@@ -19,6 +20,10 @@ import { Engine, EngineSchema } from 'src/schemas/engine.schema';
     MongooseModule.forFeature([{
       name: Engine.name,
       schema: EngineSchema
+    }]),
+    MongooseModule.forFeature([{
+      name: Gear.name,
+      schema: GearSchema
     }])
   ],
   controllers: [LegController],

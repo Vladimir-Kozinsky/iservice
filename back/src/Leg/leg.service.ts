@@ -9,6 +9,7 @@ import { GetPrintLegsDto } from 'src/dto/leg/get-print-legs.dto';
 import { DeleteLegDto } from 'src/dto/leg/delete-leg.dto';
 import { Engine } from 'src/schemas/engine.schema';
 import { InstallGearDto } from 'src/dto/install-gear.dto';
+import { Gear } from 'src/schemas/gear.schema';
 
 @Injectable()
 export class LegService {
@@ -19,6 +20,8 @@ export class LegService {
         private readonly aircraftModel: Model<Aircraft>,
         @InjectModel(Engine.name)
         private readonly engineModel: Model<Engine>,
+        @InjectModel(Gear.name)
+        private readonly gearModel: Model<Gear>,
     ) { }
 
     async getLegs(getLegsDto: GetLegsDto) {
@@ -88,7 +91,6 @@ export class LegService {
         aircraft.legs.push(newLeg);
         await aircraft.save();
 
-
         const updatedAircraft = await this.aircraftModel.findOne({ msn: createLegDto.aircraft });
         if (!updatedAircraft) throw new HttpException('Aircraft not found', HttpStatus.BAD_REQUEST);
 
@@ -99,7 +101,6 @@ export class LegService {
 
         updatedAircraft.fh = updatedFfFc.fh;
         updatedAircraft.fc = updatedFfFc.fc;
-
 
         await updatedAircraft.save();
 
@@ -112,7 +113,7 @@ export class LegService {
             await engine.save();
 
             const updatedEngine = await this.engineModel.findOne({ msn: eng.msn });
-            if (!engine) throw new HttpException('Engine not found', HttpStatus.BAD_REQUEST);
+            if (!updatedEngine) throw new HttpException('Engine not found', HttpStatus.BAD_REQUEST);
 
             const sortedLegs = this.sortLegs(updatedEngine.legs);
             updatedEngine.legs = this.reculcLegsFhFc(sortedLegs, updatedEngine.initFh, updatedEngine.initFc);
@@ -120,6 +121,25 @@ export class LegService {
             updatedEngine.tsn = updatedFfFc.fh;
             updatedEngine.csn = updatedFfFc.fc;
             await updatedEngine.save();
+        })
+
+
+        // ADD LEG FOR LGs
+        createLegDto.gears.forEach(async (g: { sn: string }) => {
+            const gear = await this.gearModel.findOne({ sn: g.sn });
+            if (!gear) throw new HttpException('Gear not found', HttpStatus.BAD_REQUEST);
+            gear.legs.push(newLeg);
+            await gear.save();
+
+            const updatedGear = await this.gearModel.findOne({ sn: g.sn });
+            if (!updatedGear) throw new HttpException('Gear not found', HttpStatus.BAD_REQUEST);
+
+            const sortedLegs = this.sortLegs(updatedGear.legs);
+            updatedGear.legs = this.reculcLegsFhFc(sortedLegs, updatedGear.initFh, updatedGear.initFc);
+            const updatedFfFc = this.reculcFhFc(updatedGear);
+            updatedGear.tsn = updatedFfFc.fh;
+            updatedGear.csn = updatedFfFc.fc;
+            await updatedGear.save();
         })
 
 
@@ -170,7 +190,7 @@ export class LegService {
     }
 
 
-    private reculcFhFc(aircraft: Aircraft | Engine) {
+    private reculcFhFc(aircraft: Aircraft | Engine | Gear) {
 
         const toMins = (str) => {
             const hh = +str.split(':')[0] * 60;

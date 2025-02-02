@@ -1,6 +1,6 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { CreateGearDto } from 'src/dto/create-gear.dto';
 import { Gear } from 'src/schemas/gear.schema';
 
@@ -22,6 +22,13 @@ export class GearService {
         if (!gears.length) throw new HttpException('Gears not found', HttpStatus.BAD_REQUEST);
         return gears;
     }
+
+    async getGear(getGearDto: { id: Types.ObjectId }) {
+            console.log(getGearDto)
+            const gear = await this.gearModel.findById(getGearDto.id);
+            if (!gear) throw new HttpException('Gear not found', HttpStatus.BAD_REQUEST);
+            return gear;
+        }
 
     // async addLimit(createLimitDto: CreateLimitDto) {
     //     const limit = await this.limitModel.create(createLimitDto);

@@ -22,6 +22,16 @@ export class Leg {
 
     ];
 
+    @ApiProperty({ example: '[25891]', description: 'Gear SN' })
+    @Prop({ required: true })
+    gears: [
+        {
+            sn: string,
+        }
+
+    ];
+
+
     @ApiProperty({ example: '25891', description: 'APU MSN' })
     @Prop({ required: true })
     apu: string;

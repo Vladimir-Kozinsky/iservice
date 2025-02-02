@@ -16,6 +16,14 @@ export class CreateGearDto {
   @IsNotEmpty()
   readonly sn: string;
 
+  @ApiProperty({ example: '45231:00', description: "Gear tsn at the time of adding to the system" })
+  @IsNotEmpty()
+  initFh: string;
+
+  @ApiProperty({ example: '5231', description: "Gear csn at the time of adding to the system" })
+  @IsNotEmpty()
+  initFc: string;
+
   @ApiProperty({ example: '4523:00', description: "LG total FH" })
   @IsNotEmpty()
   readonly tsn: string;

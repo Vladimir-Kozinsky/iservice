@@ -112,7 +112,7 @@ export class Aircraft {
     limits: Limit[];
 
     @ApiProperty({ example: 'none', description: "Landing gears" })
-    @Prop({ type: [mongoose.SchemaTypes.ObjectId], ref: 'Lg' })
+    @Prop({ type: [mongoose.SchemaTypes.ObjectId], ref: 'Gear' })
     lgs: Gear[];
 
     @ApiProperty({ example: 'none', description: "Legs" })

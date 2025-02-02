@@ -83,13 +83,21 @@ export class AircraftController {
         return await this.aircraftService.delLimit(deleteLimitDto);
     }
 
-    // @ApiOperation({ summary: 'Add new LG' })
-    // @ApiResponse({ status: 201, type: Gear })
-    // @Post('/lg/add')
-    // @HttpCode(201)
-    // async addLg(@Body() createLgDto: InstallGearDto ) {
-    //     return await this.aircraftService.addLg(createLgDto);
-    // }
+    @ApiOperation({ summary: 'Install Gear' })
+    @ApiResponse({ status: 201, type: [Engine] })
+    @Post('/gear/install')
+    @HttpCode(201)
+    async installGear(@Body() installDataDto: InstallGearDto) {
+        return await this.aircraftService.installGear(installDataDto);
+    }
+
+    @ApiOperation({ summary: 'Remove gear' })
+    @ApiResponse({ status: 201, type: Gear })
+    @Post('/gear/remove')
+    @HttpCode(201)
+    async removeGear(@Body() removalDataDto: InstallGearDto) {
+        return await this.aircraftService.removeGear(removalDataDto);
+    }
 
     @ApiOperation({ summary: 'Update limit' })
     @ApiResponse({ status: 201, type: Limit })

@@ -11,6 +11,7 @@ import { Apu } from 'src/schemas/apu.schema';
 import { Engine } from 'src/schemas/engine.schema';
 import { Limit } from 'src/schemas/limit.schema';
 import { Gear } from 'src/schemas/gear.schema';
+import { InstallGearDto } from 'src/dto/install-gear.dto';
 
 @Injectable()
 export class AircraftService {
@@ -24,7 +25,7 @@ export class AircraftService {
         @InjectModel(Limit.name)
         private readonly limitModel: Model<Limit>,
         @InjectModel(Gear.name)
-        private readonly lgModel: Model<Gear>,
+        private readonly gearModel: Model<Gear>,
     ) { }
 
     async add(createAircraftDto: CreateAircraftDto) {
@@ -35,7 +36,7 @@ export class AircraftService {
 
     async getAircrafts() {
         const aircrafts = await this.aircraftModel.find()
-            .populate('apu').populate('limits').populate('lgs');
+            .populate('apu').populate('limits');//.populate('lgs');
         if (!aircrafts.length) throw new HttpException('Aircrafts not found', HttpStatus.BAD_REQUEST);
         return aircrafts;
     }
@@ -152,29 +153,46 @@ export class AircraftService {
         return limit
     }
 
-    // async addLg(createLgDto: CreateLgDto) {
-    //     const lg = await this.lgModel.create(createLgDto);
-    //     const aircraft = await this.aircraftModel.findOne({ msn: createLgDto.msn });
-    //     if (!aircraft) throw new HttpException('Aircraft not found', HttpStatus.BAD_REQUEST);
-    //     aircraft.lgs.push(lg);
-    //     await aircraft.save();
+    async installGear(installDataDto: InstallGearDto) {
+        const gear = await this.gearModel.findOne({ sn: installDataDto.gear });
+        if (!gear) throw new HttpException('Gear is not found', HttpStatus.BAD_REQUEST);
+        const aircraft = await this.aircraftModel.findOne({ msn: installDataDto.aircraft });
+        if (!aircraft) throw new HttpException('Aircraft not found', HttpStatus.BAD_REQUEST);
 
-    //     const istalledLg = await this.lgModel.findOne({ sn: createLgDto.sn });
-    //     if (!istalledLg) throw new HttpException('LG not found', HttpStatus.BAD_REQUEST);
-       
-    //     const historyData= {
-    //         date: createLgDto.date,
-    //         action: 'Intallation',
-    //         aircraft: createLgDto.msn,
-    //         aircraftFh: createLgDto.aircraftFh,
-    //         aircraftFc: createLgDto.aircraftFc,
-    //         tsn: createLgDto.tsn,
-    //         csn: createLgDto.csn,
-    //         reason: ''
-    //     }
 
-    //     istalledLg.gearHistory.push(historyData)
-    //     await istalledLg.save();
-    //     return lg;
-    // }
+        const installedGear = aircraft.lgs.find((gear: Gear) => gear.sn === installDataDto.gear);
+        if (installedGear) throw new HttpException('Gear has already installed', HttpStatus.BAD_REQUEST);
+
+        const isEmptyGearPos = aircraft.lgs.find((gear: Gear) => gear.pos === installDataDto.position);
+        if (isEmptyGearPos) throw new HttpException(`Gear has already installed on ${installDataDto.position} position`, HttpStatus.BAD_REQUEST);
+
+        gear.gearHistory.push(installDataDto);
+        gear.pos = installDataDto.position;
+        await gear.save();
+
+        aircraft.lgs.push(gear);
+        await aircraft.save();
+
+        return gear;
+    }
+
+    async removeGear(removalDataDto: InstallGearDto) {
+
+        const gear = await this.gearModel.findOne({ sn: removalDataDto.gear });
+        if (!gear) throw new HttpException('Gear not found', HttpStatus.BAD_REQUEST);
+
+        const aircraft = await this.aircraftModel.findOne({ msn: removalDataDto.aircraft });
+        if (!aircraft) throw new HttpException('Aircraft not found', HttpStatus.BAD_REQUEST);
+
+        gear.gearHistory.push(removalDataDto);
+        await gear.save();
+        
+        const index = aircraft.lgs.findIndex((gear: Gear) => gear.sn === removalDataDto.gear)
+        if (index < 0) throw new HttpException('Gear has already removed', HttpStatus.BAD_REQUEST);
+        aircraft.lgs.splice(index, 1);
+        await aircraft.save();
+
+        return gear;
+    }
+
 }

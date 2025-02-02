@@ -3,6 +3,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import mongoose, { HydratedDocument, Types } from 'mongoose';
 import { GearHistory } from './gearHistory.schema';
+import { Leg } from './leg.schema';
 
 export type GearDocument = HydratedDocument<Gear>;
 
@@ -19,6 +20,14 @@ export class Gear {
     @ApiProperty({ example: 'BN0876', description: "LG serial number" })
     @Prop({ required: true })
     sn: string;
+
+    @ApiProperty({ example: '45231:00', description: "Engine tsn at the time of adding to the system" })
+    @Prop({ required: true })
+    initFh: string;
+
+    @ApiProperty({ example: '5231', description: "Engine csn at the time of adding to the system" })
+    @Prop({ required: true })
+    initFc: string;
 
     @ApiProperty({ example: '4523:00', description: "LG total FH" })
     @Prop({ required: false })
@@ -51,10 +60,14 @@ export class Gear {
     @ApiProperty({ example: '10526', description: 'FC at the time of last Inspection' })
     @Prop({ required: false })
     csnAtNextInsp: string;
-    
+
     @ApiProperty({ example: 'none', description: "LG removal/instolation action" })
     @Prop({ ref: 'GearHistory' })
-    gearHistory: [GearHistory]
+    gearHistory: [GearHistory];
+
+    @ApiProperty({ example: 'none', description: "Legs" })
+    @Prop({ ref: 'Leg' })
+    legs: Leg[];
 }
 
 export const GearSchema = SchemaFactory.createForClass(Gear);

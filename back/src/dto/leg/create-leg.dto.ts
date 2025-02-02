@@ -14,6 +14,14 @@ export class CreateLegDto {
         }
 
     ];
+    @ApiProperty({ example: '[25891]', description: "Gear SN" })
+    @IsNotEmpty()
+    readonly gears: [
+        {
+            sn: string,
+        }
+
+    ];
 
     @ApiProperty({ example: '25891', description: "APU MSN" })
     @IsNotEmpty()

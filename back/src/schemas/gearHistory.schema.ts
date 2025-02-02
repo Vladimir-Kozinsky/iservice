@@ -19,21 +19,29 @@ export class GearHistory {
     @Prop({ required: true })
     aircraft: string;
 
+    @ApiProperty({ example: '29891', description: 'Gear SN' })
+    @Prop({ required: true })
+    gear: string;
+
+    @ApiProperty({ example: 'NLG', description: 'Gear position' })
+    @Prop({ required: true })
+    position: string;
+
     @ApiProperty({ example: '2891:00', description: 'Aircraft Time Since New' })
     @Prop({ required: true })
-    aircraftFh: string;
+    aircraftTsn: string;
 
     @ApiProperty({ example: '2891:00', description: 'Aircraft Cycles Since New' })
     @Prop({ required: true })
-    aircraftFc: string;
+    aircraftCsn: string;
 
     @ApiProperty({ example: '5891:00', description: 'Engine Time Since New' })
     @Prop({ required: true })
-    tsn: string;
+    gearTsn: string;
 
     @ApiProperty({ example: '5891:00', description: 'Engine Cycles Since New' })
     @Prop({ required: true })
-    csn: string;
+    gearCsn: string;
 
     @ApiProperty({ example: 'Overhaul', description: 'Engine removal reason' })
     @Prop({ required: false })
