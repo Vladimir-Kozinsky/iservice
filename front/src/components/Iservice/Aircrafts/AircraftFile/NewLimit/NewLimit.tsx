@@ -22,8 +22,7 @@ export interface INewLimitDto {
     nextInspDate: string;
     tsnAtNextInsp: string;
     csnAtNextInsp: string;
-    // dependence: string;
-    // threshold: string;
+ 
 }
 
 interface IOption {
@@ -52,24 +51,10 @@ const NewLimit = () => {
     const navigate = useNavigate();
     const aircraft = useSelector((state: RootState) => state.aircraft.choosedAircraft);
     const aircraftErrorMessage = useSelector((state: RootState) => state.aircraft.errorMessage);
-   // const [selectedOption, setSelectedOption] = useState<string>('');
     const [date, setDate] = useState(false);
     const [fh, setFh] = useState(false);
     const [fc, setFc] = useState(false);
-
-
-    // const onChangeOption = (newValue: SingleValue<IOption>, actionMeta: ActionMeta<IOption>) => {
-    //     if (newValue?.value) {
-    //         setSelectedOption(newValue.value);
-    //     }
-    // }
-
-    // const options: IOption[] = [
-    //     { value: 'fh', label: 'Flight Hours' },
-    //     { value: 'fc', label: 'Flight Cycles' },
-    //     { value: 'date', label: 'Date' },
-    // ]
-
+    
     return (
         <div className={s.limit}>
             <h1 className={s.limit__header} >New Inspection</h1>
@@ -83,8 +68,6 @@ const NewLimit = () => {
                     nextInspDate: date ? '25.05.2025' : '',
                     tsnAtNextInsp: fh ? '10526:00' : '',
                     csnAtNextInsp: fc ? '10526' : '',
-                    // dependence: 'fc',
-                    // threshold: '45000'
                 }}
                 validate={values => {
                     interface INewLimitErrorsDto {
@@ -95,33 +78,22 @@ const NewLimit = () => {
                         nextInspDate?: string;
                         tsnAtNextInsp?: string;
                         csnAtNextInsp?: string;
-                        // dependence?: string;
-                        // threshold?: string;
                     }
                     const errors: INewLimitErrorsDto = {};
                     if (!values.title) errors.title = 'Limit Title is required';
                     if (values.title.length > 15) errors.title = 'Title lenfgth should be less then 15 characters';
-                    if (!values.title) errors.title = 'Limit Title is required';
-                    if (!values.lastInspDate && date) errors.lastInspDate = 'Next inspection date is required';
+                    if (!values.lastInspDate) errors.lastInspDate = 'Last inspection date is required';
+                    if (!values.tsnAtLastInsp && fh) errors.tsnAtLastInsp = 'Last inspection FH is required';
+                    if (values.tsnAtLastInsp && !checkFHFormat(values.tsnAtLastInsp)) errors.tsnAtLastInsp = 'Invalid format, the format should be like "123456:22"';
+                    if (!values.csnAtLastInsp && fc) errors.csnAtLastInsp = 'Last inspection FC is required';
+                    if (!values.nextInspDate && date) errors.nextInspDate = 'Next inspection date is required';
                     if (!values.tsnAtNextInsp && fh) errors.tsnAtNextInsp = 'Next inspection FH is required';
+                    if (values.tsnAtNextInsp && !checkFHFormat(values.tsnAtNextInsp)) errors.tsnAtNextInsp = 'Invalid format, the format should be like "123456:22"';
                     if (!values.csnAtNextInsp && fc) errors.csnAtNextInsp = 'Next inspection FC is required';
-                    // if (!values.dependence) errors.dependence = 'Dependence is required';
-
-                    // switch (selectedOption) {
-                    //     case "fh":
-                    //         if (!checkFHFormat(values.threshold)) errors.threshold = 'Invalid format, the format should be like "123456:22"';
-                    //         break;
-                    //     case "fc":
-                    //         if (!checkFCFormat(values.threshold)) errors.threshold = 'Invalid format, the format should be like "23456"';
-                    //         break;
-                    //     default:
-                    //         break;
-                    // }
                     return errors;
                 }}
                 onSubmit={(values: INewLimitDto) => {
                     (async () => {
-                        // values.dependence = selectedOption;
                         if (aircraft.msn) values.msn = aircraft.msn;
                         await dispatch(addLimit(values));
                     })()

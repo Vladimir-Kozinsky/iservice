@@ -5,7 +5,7 @@ export interface IAircraftState {
     choosedAircraft: IAircraft;
     installedEngines: IEngine[];
     installedGears: IGear[];
-    aircafts: IAircraft[];
+    aircrafts: IAircraft[];
     errorMessage: string | null;
     successMessage: string | null;
 }

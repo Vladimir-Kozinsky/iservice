@@ -9,6 +9,8 @@ export type GearDocument = HydratedDocument<Gear>;
 
 @Schema()
 export class Gear {
+    _id: Types.ObjectId;
+
     @ApiProperty({ example: 'NLG', description: "LG position" })
     @Prop({ required: true })
     pos: string;

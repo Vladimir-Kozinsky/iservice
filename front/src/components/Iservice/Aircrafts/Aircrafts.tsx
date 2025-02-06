@@ -9,7 +9,7 @@ import AircraftWidget from "../Dashboard/AircraftWidget/AircraftWidget";
 
 const Aircrafts: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const aircraftsArr = useSelector((state: RootState) => state.aircraft.aircafts);
+    const aircraftsArr = useSelector((state: RootState) => state.aircraft.aircrafts);
 
     useEffect(() => {
        dispatch(getAircrafts())

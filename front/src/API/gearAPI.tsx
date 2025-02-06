@@ -11,15 +11,6 @@ const gearAPI = {
         const response = await proxy.get(`gear/gears`);
         return response;
     },
-    // async getAvailApus() {
-    //     const response = await proxy.get(`/apus/available`);
-    //     return response;
-    // },
-
-    // async getApu(msn: string) {
-    //     const response = await proxy.get(`/apus?msn=${msn}`);
-    //     return response;
-    // },
 
     async addGear(gearDto: ICreateGearDto) {
         const response = await proxy.post('/gear/add', gearDto);

@@ -1,15 +1,15 @@
 import { Field, Form, Formik } from "formik";
-import s from "./RemoveEngine.module.scss";
+import s from "./RemoveGear.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../store/store";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../../../common/buttons/Button";
 import Select, { ActionMeta, SingleValue } from "react-select";
-import { IEngine, IGear } from "../../../../../types/types";
+import { IGear } from "../../../../../types/types";
 import Input from "../../../../../common/inputs/Input";
 import { checkFCFormat, checkFHFormat } from "../../../../../utils/utils";
-import { removeEngine, removeGear } from "../../../../../store/reducers/aircraftReducer/aircraftReducer";
+import { removeGear } from "../../../../../store/reducers/aircraftReducer/aircraftReducer";
 import { compose } from "@reduxjs/toolkit";
 import withSuccessMessage from "../../../../../HOC/wirhSuccessMessage";
 import withErrorMessage from "../../../../../HOC/wirhErrorMessage";
@@ -151,7 +151,7 @@ const RemoveGear: React.FC = () => {
                                     placeholder="installation" disabled error={errors.action} as={Input} />
                             </div>
                             <div className={s.inputs__block}>
-                                <label>Engine removal reason<span>*</span></label>
+                                <label>Gear removal reason<span>*</span></label>
                                 <Field type="text" id="reason" name="reason"
                                     placeholder="none" error={errors.reason}
                                     as={Input} />
@@ -178,7 +178,7 @@ const RemoveGear: React.FC = () => {
                         <div className={s.inputs__section} >
                             <h3 className={s.inputs__section__header}>Engine Data</h3>
                             <div className={s.inputs__block}>
-                                <label>Engine<span>*</span></label>
+                                <label>Gear<span>*</span></label>
                                 <Select options={options} onChange={onChangeOption} styles={customStyles} />
                             </div>
                             <div className={s.inputs__block}>
@@ -187,12 +187,12 @@ const RemoveGear: React.FC = () => {
                                     placeholder={findGear(selectedOption)?.pos} disabled error={errors.position} as={Input} />
                             </div>
                             <div className={s.inputs__block}>
-                                <label>Engine TSN<span>*</span></label>
+                                <label>Gear TSN<span>*</span></label>
                                 <Field type="text" id="gearTsn" name="gearTsn"
                                     placeholder={findGear(selectedOption)?.tsn} error={errors.gearTsn} as={Input} />
                             </div>
                             <div className={s.inputs__block}>
-                                <label>Engine CSN<span>*</span></label>
+                                <label>Gear CSN<span>*</span></label>
                                 <Field type="text" id="gearCsn" name="gearCsn"
                                     placeholder={findGear(selectedOption)?.csn} error={errors.gearCsn} as={Input} />
                             </div>

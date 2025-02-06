@@ -45,7 +45,6 @@ const AircraftWidget: React.FC<AircraftWidgetProps> = ({ aircraft }) => {
         return `...${cutStr}`;
     }
 
-
     return (
         <>
             <div className={s.widget} onClick={widgetOnClick} >

@@ -68,7 +68,7 @@ export class AircraftController {
     }
 
     @ApiOperation({ summary: 'Add new limit' })
-    @ApiResponse({ status: 201, type: Limit })
+    @ApiResponse({ status: 201, type: Aircraft })
     @Post('/limit/add')
     @HttpCode(201)
     async addLimit(@Body() createLimitDto: CreateLimitDto ) {

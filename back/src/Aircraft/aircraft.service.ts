@@ -36,7 +36,7 @@ export class AircraftService {
 
     async getAircrafts() {
         const aircrafts = await this.aircraftModel.find()
-            .populate('apu').populate('limits');//.populate('lgs');
+            .populate('apu');//.populate('limits');//.populate('lgs');
         if (!aircrafts.length) throw new HttpException('Aircrafts not found', HttpStatus.BAD_REQUEST);
         return aircrafts;
     }
@@ -92,7 +92,7 @@ export class AircraftService {
         engine.engineHistory.push(removalDataDto);
         engine.position = 0;
         await engine.save();
-        
+
         const index = aircraft.engines.findIndex((engine: Engine) => engine.msn === removalDataDto.engine)
         if (index < 0) throw new HttpException('Engine has already removed', HttpStatus.BAD_REQUEST);
         aircraft.engines.splice(index, 1);
@@ -121,17 +121,17 @@ export class AircraftService {
 
     async addLimit(createLimitDto: CreateLimitDto) {
         const limit = await this.limitModel.create(createLimitDto);
-        const aircraft = await this.aircraftModel.findOne({ msn: createLimitDto.msn });
+        const aircraft = await this.aircraftModel.findOne({ msn: createLimitDto.msn })
+            .populate('apu');
         if (!aircraft) throw new HttpException('Aircraft not found', HttpStatus.BAD_REQUEST);
         aircraft.limits.push(limit);
         await aircraft.save();
-        return limit;
+
+        await this.limitModel.findByIdAndRemove(limit._id);
+        return aircraft;
     }
 
     async delLimit(deleteLimitDto: DeleteLimitDto) {
-        const limit = await this.limitModel.deleteOne({ _id: deleteLimitDto.limitId });
-        if (!limit.deletedCount) throw new HttpException('Limit not found', HttpStatus.BAD_REQUEST);
-
         const aircraft = await this.aircraftModel.findOne({ msn: deleteLimitDto.msn });
         if (!aircraft) throw new HttpException('Aircraft not found', HttpStatus.BAD_REQUEST);
 
@@ -186,8 +186,9 @@ export class AircraftService {
 
         gear.gearHistory.push(removalDataDto);
         await gear.save();
-        
-        const index = aircraft.lgs.findIndex((gear: Gear) => gear.sn === removalDataDto.gear)
+       
+        const index = aircraft.lgs.findIndex((g: Gear) => g._id.toString() === gear._id.toString())
+      
         if (index < 0) throw new HttpException('Gear has already removed', HttpStatus.BAD_REQUEST);
         aircraft.lgs.splice(index, 1);
         await aircraft.save();

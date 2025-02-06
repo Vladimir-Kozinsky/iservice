@@ -52,7 +52,7 @@ const initialState: IAircraftState = {
     },
     installedEngines: [],
     installedGears: [],
-    aircafts: [],
+    aircrafts: [],
     errorMessage: null,
     successMessage: null,
 }
@@ -86,7 +86,7 @@ const aircraftSlice = createSlice({
             state.errorMessage = action.payload.message;
         })
         builder.addCase(getAircrafts.fulfilled, (state: IAircraftState, action: PayloadAction<IAircraft[]>) => {
-            state.aircafts = action.payload;
+            state.aircrafts = action.payload;
         })
         builder.addCase(getAircrafts.rejected, (state: IAircraftState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
@@ -117,10 +117,10 @@ const aircraftSlice = createSlice({
             state.errorMessage = action.payload.message;
         })
 
-        builder.addCase(addLimit.fulfilled, (state: IAircraftState, action: PayloadAction<ILimit>) => {
-            state.choosedAircraft.limits.push(action.payload);
-            const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
-            aircraft?.limits.push(action.payload);
+        builder.addCase(addLimit.fulfilled, (state: IAircraftState, action: PayloadAction<IAircraft>) => {
+            state.choosedAircraft = action.payload;
+            const aircraftIndex = state.aircrafts.findIndex((aircraft: IAircraft) => aircraft._id === action.payload._id);
+            state.aircrafts.splice(aircraftIndex, 1);
             state.successMessage = "New limit successfully added";
         })
         builder.addCase(addLimit.rejected, (state: IAircraftState, action: PayloadAction<any>) => {
@@ -130,8 +130,10 @@ const aircraftSlice = createSlice({
         builder.addCase(installGear.fulfilled, (state: IAircraftState, action: PayloadAction<IGear>) => {
             if (action.payload._id) {
                 state.choosedAircraft.lgs.push(action.payload._id);
+                state.installedGears.push(action.payload);
             }
-            const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
+
+            const aircraft = state.aircrafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
             aircraft?.lgs.push(action.payload._id);
             state.successMessage = "New LG successfully added";
         })
@@ -143,10 +145,13 @@ const aircraftSlice = createSlice({
             const removedGear = action.payload;
             const choosedAircarftGearIndex = state.choosedAircraft.lgs.findIndex((gearId: string) => gearId === removedGear._id);
             state.choosedAircraft.lgs.splice(choosedAircarftGearIndex, 1);
-            
-            const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
+
+            const installedGearsIndex = state.installedGears.findIndex((gear: IGear) => gear._id === removedGear._id);
+            state.installedGears.splice(installedGearsIndex, 1);
+
+            const aircraft = state.aircrafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
             const gearIndexAircraftArr = aircraft?.lgs.findIndex((gearId: string) => gearId === removedGear._id);
-            if (aircraft && (gearIndexAircraftArr  === 0)) aircraft.lgs.splice(gearIndexAircraftArr, 1);
+            if (aircraft && (gearIndexAircraftArr === 0)) aircraft.lgs.splice(gearIndexAircraftArr, 1);
             state.successMessage = "Gear successfully removed";
         })
 
@@ -157,7 +162,7 @@ const aircraftSlice = createSlice({
             const index = state.choosedAircraft.limits.findIndex((limit: ILimit) => limit._id === limitId);
             state.choosedAircraft.limits.splice(index, 1);
 
-            const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
+            const aircraft = state.aircrafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
             const indexAircraftArr = aircraft?.limits.findIndex((limit: ILimit) => limit._id === limitId);
             if (aircraft && (indexAircraftArr || indexAircraftArr === 0)) aircraft.limits.splice(indexAircraftArr, 1);
             state.successMessage = "Limit successfully removed";
@@ -170,7 +175,7 @@ const aircraftSlice = createSlice({
             if (action.payload._id) {
                 state.choosedAircraft.engines.push(action.payload._id);
             }
-            const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
+            const aircraft = state.aircrafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
             if (action.payload._id) {
                 aircraft?.engines.push(action.payload._id);
                 state.successMessage = "Engine successfully installed";
@@ -184,7 +189,7 @@ const aircraftSlice = createSlice({
             const removedEngine = action.payload;
             const choosedAircarftEngineIndex = state.choosedAircraft.engines.findIndex((engineId: string) => engineId === removedEngine._id);
             state.choosedAircraft.engines.splice(choosedAircarftEngineIndex, 1);
-            const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
+            const aircraft = state.aircrafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
             const engineIndexAircraftArr = aircraft?.engines.findIndex((engineId: string) => engineId === removedEngine._id);
             if (aircraft && (engineIndexAircraftArr || engineIndexAircraftArr === 0)) aircraft.engines.splice(engineIndexAircraftArr, 1);
             state.successMessage = "Engine successfully removed";
@@ -196,7 +201,7 @@ const aircraftSlice = createSlice({
 
         builder.addCase(installApu.fulfilled, (state: IAircraftState, action: PayloadAction<IApu>) => {
             state.choosedAircraft.apu = action.payload;
-            const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
+            const aircraft = state.aircrafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
             if (aircraft) aircraft.apu = action.payload;
             state.successMessage = "APU successfully installed";
         })
@@ -206,7 +211,7 @@ const aircraftSlice = createSlice({
 
         builder.addCase(removeApu.fulfilled, (state: IAircraftState, action: PayloadAction<IApu>) => {
             state.choosedAircraft.apu = {};
-            const aircraft = state.aircafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
+            const aircraft = state.aircrafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
             if (aircraft) aircraft.apu = {};
             state.successMessage = "APU successfully removed";
         })

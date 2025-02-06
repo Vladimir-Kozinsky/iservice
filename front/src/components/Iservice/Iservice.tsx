@@ -34,6 +34,7 @@ import DelApuLimit from "./Apus/ApuFile/DelApuLimit/DelApuLimit";
 import Gears from "./Gears/Gears";
 import NewGearForm from "./Gears/NewGearForm/NewGearForm";
 import InstallGear from "./Aircrafts/AircraftFile/InstallGear/InstallGear";
+import RemoveGear from "./Aircrafts/AircraftFile/RemoveGear/RemoveGear";
 
 
 const Iservice: React.FC = () => {
@@ -69,7 +70,7 @@ const Iservice: React.FC = () => {
                     <Route path="aircraft/:aircraftId/apu/install" element={<InstallApu />} />
                     <Route path="aircraft/:aircraftId/apu/remove" element={<RemoveApu />} />
                     <Route path="aircraft/:aircraftId/lg/install" element={<InstallGear />} />
-                    <Route path="aircraft/:aircraftId/lg/remove" element={<RemoveApu />} />
+                    <Route path="aircraft/:aircraftId/lg/remove" element={<RemoveGear />} />
                     <Route path="aircraft/:aircraftId/legs/create" element={<NewLeg />} />
                     <Route path="aircraft/:aircraftId/legs/print" element={<PrintLegs />} />
 
