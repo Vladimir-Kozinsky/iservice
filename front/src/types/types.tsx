@@ -204,7 +204,7 @@ export interface IGear {
     nextInspDate: string;
     tsnAtNextInsp: string;
     csnAtNextInsp: string;
-    gearHistory: GearHistory[]
+    gearHistory: IGearHistory[]
 }
 
 export interface ICreateGearDto {
@@ -223,13 +223,15 @@ export interface ICreateGearDto {
     csnAtNextInsp: string,
 }
 
-export interface GearHistory {
+export interface IGearHistory {
     date: string;
     action: string;
     aircraft: string;
-    aircraftFh: string;
-    aircraftFc: string;
-    tsn: string;
-    csn: string;
+    gear: string;
+    position: string;
+    aircraftTsn: string;
+    aircraftCsn: string;
+    gearTsn: string;
+    gearCsn: string;
     reason: string
 }

@@ -1,5 +1,5 @@
 import { Field, Form, Formik } from "formik";
-import s from "./NewApuLimit.module.scss";
+import s from "./NewLimit.module.scss";
 import { CSSTransition } from "react-transition-group";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../store/store";
@@ -8,10 +8,10 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../../../../common/buttons/Button";
 import Input from "../../../../../common/inputs/Input";
 import Select, { ActionMeta, SingleValue } from "react-select";
+import { addLimit } from "../../../../../store/reducers/engineReducer/engineReducer";
 import { checkFCFormat, checkFHFormat } from "../../../../../utils/utils";
 import { compose } from "@reduxjs/toolkit";
 import withSuccessMessage from "../../../../../HOC/wirhSuccessMessage";
-import { addLimit } from "../../../../../store/reducers/apuReducer/apuReducer";
 
 export interface INewLimitDto {
     msn: string,
@@ -40,12 +40,12 @@ const customStyles = {
     }),
 }
 
-const NewApuLimit = () => {
+const NewEngineLimit = () => {
     const dispatch = useDispatch<AppDispatch>();
     const nodeRef = useRef(null);
     const navigate = useNavigate();
-    const apu = useSelector((state: RootState) => state.apu.choosedApu);
-    const apuErrorMessage = useSelector((state: RootState) => state.apu.errorMessage);
+    const engine = useSelector((state: RootState) => state.engine.choosedEngine);
+    const engineErrorMessage = useSelector((state: RootState) => state.engine.errorMessage);
     const [selectedOption, setSelectedOption] = useState<string>('');
 
 
@@ -98,7 +98,7 @@ const NewApuLimit = () => {
                 onSubmit={(values: INewLimitDto) => {
                     (async () => {
                         values.dependence = selectedOption;
-                        if (apu.msn) values.msn = apu.msn;
+                        if (engine.msn) values.msn = engine.msn;
                         await dispatch(addLimit(values));
                     })()
 
@@ -113,7 +113,7 @@ const NewApuLimit = () => {
             }) => (
                 <Form className={s.newAircraftForm__container}>
                     <CSSTransition
-                        in={apuErrorMessage ? true : false}
+                        in={engineErrorMessage ? true : false}
                         nodeRef={nodeRef}
                         timeout={500}
                         classNames={{
@@ -122,7 +122,7 @@ const NewApuLimit = () => {
                         }}
                         unmountOnExit
                     >
-                        <div ref={nodeRef} className={s.newAircraftForm__message}>{apuErrorMessage}</div>
+                        <div ref={nodeRef} className={s.newAircraftForm__message}>{engineErrorMessage}</div>
                     </CSSTransition>
 
                     <div className={s.inputs}>
@@ -150,7 +150,7 @@ const NewApuLimit = () => {
                     </div>
                     <div className={s.btns}>
                         <Button text="Back" color="white"
-                            handler={() => navigate(`/i-service/apu/${apu.msn}`)} btnType={"button"} />
+                            handler={() => navigate(`/i-service/engine/${engine.msn}`)} btnType={"button"} />
                         <Button text="Add" color="green" btnType="submit" />
                     </div>
                 </Form>
@@ -160,4 +160,4 @@ const NewApuLimit = () => {
     )
 }
 
-export default compose(withSuccessMessage)(NewApuLimit);
+export default compose(withSuccessMessage)(NewEngineLimit);

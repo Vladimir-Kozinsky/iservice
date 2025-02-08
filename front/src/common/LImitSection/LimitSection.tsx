@@ -1,5 +1,5 @@
 import React from "react";
-import { IApu, IEngine, ILimit } from "../../types/types";
+import { IApu, IEngine, IGear, ILimit } from "../../types/types";
 import s from "./LimitSection.module.scss";
 import { subtractDatesFromNow, subtractFC, subtractFH } from "../../utils/utils";
 

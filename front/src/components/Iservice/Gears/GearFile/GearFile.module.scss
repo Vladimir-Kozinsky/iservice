@@ -1,16 +1,16 @@
 @import "../../../../sass/main.scss";
 
-.apuFile {
+.gearFile {
     @include dashboard_page ();
 }
 
-.apuFile__header {
+.gearFile__header {
     @include blue_text(26px);
     text-align: center;
 
 }
 
-.apuFile__container {
+.gearFile__container {
     margin: 30px 0 50px;
     display: grid;
     grid-template-columns: 1fr 150px;
@@ -43,7 +43,7 @@
     row-gap: 20px;
 }
 
-.apuFile__container__buttons {
+.gearFile__container__buttons {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -54,7 +54,7 @@
     }
 }
 
-.apuFile__buttons {
+.gearFile__buttons {
     position: absolute;
     margin-top: 20px;
     bottom: 20px;

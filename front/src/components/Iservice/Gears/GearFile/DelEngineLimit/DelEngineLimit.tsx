@@ -1,5 +1,5 @@
 import { Field, Form, Formik } from "formik";
-import s from "./DelApuLimit.module.scss";
+import s from "./DelEngineLimit.module.scss";
 import { CSSTransition } from "react-transition-group";
 import { useDispatch, useSelector } from "react-redux";
 import { useRef, useState } from "react";
@@ -10,9 +10,9 @@ import { AppDispatch, RootState } from "../../../../../store/store";
 import { ILimit } from "../../../../../types/types";
 import Button from "../../../../../common/buttons/Button";
 import withSuccessMessage from "../../../../../HOC/wirhSuccessMessage";
-import { delLimit } from "../../../../../store/reducers/apuReducer/apuReducer";
+import { delLimit } from "../../../../../store/reducers/engineReducer/engineReducer";
 
-export interface IDelApuLimitDto {
+export interface IDelEngineLimitDto {
     msn: string;
     limitId: string;
 }
@@ -37,12 +37,12 @@ const customStyles = {
     }),
 }
 
-const DelApuLimit = () => {
+const DelEngineLimit = () => {
     const dispatch = useDispatch<AppDispatch>();
     const nodeRef = useRef(null);
     const navigate = useNavigate();
-    const apu = useSelector((state: RootState) => state.apu.choosedApu);
-    const apuErrorMessage = useSelector((state: RootState) => state.apu.errorMessage);
+    const engine = useSelector((state: RootState) => state.engine.choosedEngine);
+    const engineErrorMessage = useSelector((state: RootState) => state.engine.errorMessage);
     const [selectedOption, setSelectedOption] = useState<string>('');
 
 
@@ -52,7 +52,7 @@ const DelApuLimit = () => {
         }
     }
 
-    // const options: IOption[] = apu.limits.map((limit: ILimit) => {
+    // const options: IOption[] = engine.limits.map((limit: ILimit) => {
     //     return {
     //         value: limit._id,
     //         label: limit.title,
@@ -75,9 +75,9 @@ const DelApuLimit = () => {
                     if (!selectedOption) errors.limitId = "Limit id should not be empty"
                     return errors;
                 }}
-                onSubmit={(values: IDelApuLimitDto) => {
+                onSubmit={(values: IDelEngineLimitDto) => {
                     (async () => {
-                        if (apu.msn) values.msn = apu.msn;
+                        if (engine.msn) values.msn = engine.msn;
                         values.limitId = selectedOption;
                         dispatch(delLimit(values));
                         setSelectedOption('');
@@ -93,7 +93,7 @@ const DelApuLimit = () => {
             }) => (
                 <Form className={s.newAircraftForm__container}>
                     <CSSTransition
-                        in={apuErrorMessage ? true : false}
+                        in={engineErrorMessage ? true : false}
                         nodeRef={nodeRef}
                         timeout={500}
                         classNames={{
@@ -102,7 +102,7 @@ const DelApuLimit = () => {
                         }}
                         unmountOnExit
                     >
-                        <div ref={nodeRef} className={s.newAircraftForm__message}>{apuErrorMessage}</div>
+                        <div ref={nodeRef} className={s.newAircraftForm__message}>{engineErrorMessage}</div>
                     </CSSTransition>
 
                     <div className={s.inputs}>
@@ -113,7 +113,7 @@ const DelApuLimit = () => {
                     </div>
                     <div className={s.btns}>
                         <Button text="Back" color="white"
-                            handler={() => navigate(`/i-service/apu/${apu.msn}`)} btnType={"button"} />
+                            handler={() => navigate(`/i-service/engine/${engine.msn}`)} btnType={"button"} />
                         <Button text="Delete" color="red" btnType="submit" />
                     </div>
                 </Form>
@@ -123,4 +123,4 @@ const DelApuLimit = () => {
     )
 }
 
-export default compose(withSuccessMessage)(DelApuLimit);
+export default compose(withSuccessMessage)(DelEngineLimit);
