@@ -4,7 +4,6 @@ import s from "./Gears.module.scss";
 import { AppDispatch, RootState } from "../../../store/store";
 import { IGear } from "../../../types/types";
 import React, { useEffect } from "react";
-import { getApus } from "../../../store/reducers/apuReducer/apuReducer";
 import GearWidget from "./GearWidget/GearWidget";
 import { getGears } from "../../../store/reducers/gearReducer/gearReducer";
 

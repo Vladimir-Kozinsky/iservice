@@ -71,7 +71,11 @@ const NewEngineForm: React.FC = () => {
                         values.initFh = values.tsn;
                         values.initFc = values.csn;
                         await dispatch(addEngine(values));
+<<<<<<< HEAD
                         await setIsLoader(false);
+=======
+                        setIsLoader(false);
+>>>>>>> 1b448546fcdb04ab1734f115bf3a19af2f97e576
                         await navigate('/i-service/engines')
                     })()
 
@@ -85,7 +89,7 @@ const NewEngineForm: React.FC = () => {
                 handleSubmit,
             }) => (
                 <Form className={s.newEngineForm__container}>
-                    <CSSTransition
+                    {/* <CSSTransition
                         in={engineErrorMessage ? true : false}
                         nodeRef={nodeRef}
                         timeout={500}
@@ -96,7 +100,7 @@ const NewEngineForm: React.FC = () => {
                         unmountOnExit
                     >
                         <div ref={nodeRef} className={s.newEngineForm__message}>{engineErrorMessage}</div>
-                    </CSSTransition>
+                    </CSSTransition> */}
 
                     <div className={s.inputs}>
                         <div className={s.inputs__block}>
@@ -117,7 +121,7 @@ const NewEngineForm: React.FC = () => {
                         </div>
                         <div className={s.inputs__block}>
                             <label>Manufacture Date<span>*</span></label>
-                            <Field type="manufDate" id="manufDate" name="manufDate"
+                            <Field type="date" id="manufDate" name="manufDate"
                                 placeholder="1996-01-30" error={errors.manufDate} as={Input} />
                         </div>
                         <div className={s.inputs__block}>
@@ -137,7 +141,7 @@ const NewEngineForm: React.FC = () => {
                         </div>
                         <div className={s.inputs__block}>
                             <label>Last overhaul date</label>
-                            <Field type="lastOverhaulDate" id="lastOverhaulDate" name="lastOverhaulDate"
+                            <Field type="date" id="lastOverhaulDate" name="lastOverhaulDate"
                                 placeholder="2022-01-30" error={errors.lastOverhaulDate} as={Input} />
                         </div>
                         <div className={s.inputs__block}>

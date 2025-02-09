@@ -1,40 +1,48 @@
 import React from "react";
-import s from "./ApuInfoSection.module.scss";
-import { IApu, IEngine } from "../../../../../types/types";
+import s from "./GearInfoSection.module.scss";
+import { IEngine, IGear } from "../../../../../types/types";
 
-type ApuInfoSectionProps = {
-    apu: IApu;
+type GearInfoSectionProps = {
+    gear: IGear;
 }
 
-const ApuInfoSection: React.FC<ApuInfoSectionProps> = ({ apu }) => {
+const GearInfoSection: React.FC<GearInfoSectionProps> = ({ gear }) => {
     return (
         <div className={s.section} >
-            <h3 className={s.section__header}>APU Info</h3>
+            <h3 className={s.section__header}>Gear Info</h3>
             <div>
                 <div className={s.section__block} >
                     <div className={s.label__block}>
-                        <label>APU Type:</label>
+                        <label>PN:</label>
                     </div>
                     <div className={s.span__block} >
-                        <span>{apu.type}</span>
+                        <span>{gear.pn}</span>
                     </div>
                 </div>
                 <div className={s.section__block} >
                     <div className={s.label__block}>
-                        <label>MSN:</label>
+                        <label>SN:</label>
                     </div>
                     <div className={s.span__block} >
-                        <span>{apu.msn}</span>
+                        <span>{gear.sn}</span>
                     </div>
                 </div>
             </div>
             <div>
                 <div className={s.section__block} >
                     <div className={s.label__block}>
+                        <label>Position:</label>
+                    </div>
+                    <div className={s.span__block} >
+                        <span>{gear.pos}</span>
+                    </div>
+                </div>
+                <div className={s.section__block} >
+                    <div className={s.label__block}>
                         <label>Manuf. date:</label>
                     </div>
                     <div className={s.span__block} >
-                        <span>{apu.manufDate}</span>
+                        <span>None</span>
                     </div>
                 </div>
             </div>
@@ -44,7 +52,7 @@ const ApuInfoSection: React.FC<ApuInfoSectionProps> = ({ apu }) => {
                         <label>TSN:</label>
                     </div>
                     <div className={s.span__block} >
-                        <span>{apu.tsn}</span>
+                        <span>{gear.tsn}</span>
                     </div>
                 </div>
                 <div className={s.section__block} >
@@ -52,12 +60,14 @@ const ApuInfoSection: React.FC<ApuInfoSectionProps> = ({ apu }) => {
                         <label>CSN:</label>
                     </div>
                     <div className={s.span__block} >
-                        <span>{apu.csn}</span>
+                        <span>{gear.csn}</span>
                     </div>
                 </div>
             </div>
+
+
         </div>
     )
 }
 
-export default ApuInfoSection;
+export default GearInfoSection;

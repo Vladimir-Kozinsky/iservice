@@ -35,6 +35,7 @@ import Gears from "./Gears/Gears";
 import NewGearForm from "./Gears/NewGearForm/NewGearForm";
 import InstallGear from "./Aircrafts/AircraftFile/InstallGear/InstallGear";
 import RemoveGear from "./Aircrafts/AircraftFile/RemoveGear/RemoveGear";
+import GearFile from "./Gears/GearFile/GearFile";
 
 
 const Iservice: React.FC = () => {
@@ -89,6 +90,7 @@ const Iservice: React.FC = () => {
 
                     <Route path="gears" element={<Gears />} />
                     <Route path="gears/new-gear" element={<NewGearForm />} />
+                    <Route path="gear/:gearId" element={<GearFile />} />
                 </Routes>
             </main>
             <Footer theme="light" />

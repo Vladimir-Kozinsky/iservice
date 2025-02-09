@@ -1,31 +1,31 @@
 import React from "react";
-import s from "./ApuOverhaulSection.module.scss";
-import { IApu } from "../../../../../types/types";
+import s from "./GearOverhaulSection.module.scss";
+import { IEngine, IGear } from "../../../../../types/types";
 
-type ApuOverhaulSectionProps = {
-    apu: IApu;
+type GearOverhaulSectionProps = {
+    gear: IGear;
 }
 
-const ApuOverhaulSection: React.FC<ApuOverhaulSectionProps> = ({ apu }) => {
+const GearOverhaulSection: React.FC<GearOverhaulSectionProps> = ({ gear }) => {
     return (
         <>
-            {apu.overhaulNum && <div className={s.section} >
+            {gear.lastInspDate && <div className={s.section} >
                 <h3 className={s.section__header}>Overhaul Info</h3>
                 <div>
-                    <div className={s.section__block} >
+                    {/* <div className={s.section__block} >
                         <div className={s.label__block}>
                             <label>Overhauls:</label>
                         </div>
                         <div className={s.span__block} >
-                            <span>{apu.overhaulNum}</span>
+                            <span>{gear.overhaulNum}</span>
                         </div>
-                    </div>
+                    </div> */}
                     <div className={s.section__block} >
                         <div className={s.label__block}>
                             <label>Overhaul Date:</label>
                         </div>
                         <div className={s.span__block} >
-                            <span>{apu.lastOverhaulDate}</span>
+                            <span>{gear.lastInspDate}</span>
                         </div>
                     </div>
                 </div>
@@ -35,7 +35,7 @@ const ApuOverhaulSection: React.FC<ApuOverhaulSectionProps> = ({ apu }) => {
                             <label>TSN Overhaul:</label>
                         </div>
                         <div className={s.span__block} >
-                            <span>{apu.tsnAtLastOverhaul}</span>
+                            <span>{gear.tsnAtLastInsp}</span>
                         </div>
                     </div>
                     <div className={s.section__block} >
@@ -43,7 +43,7 @@ const ApuOverhaulSection: React.FC<ApuOverhaulSectionProps> = ({ apu }) => {
                             <label>CSN Overhaul:</label>
                         </div>
                         <div className={s.span__block} >
-                            <span>{apu.csnAtLastOverhaul}</span>
+                            <span>{gear.csnAtLastInsp}</span>
                         </div>
                     </div>
                 </div>
@@ -52,4 +52,4 @@ const ApuOverhaulSection: React.FC<ApuOverhaulSectionProps> = ({ apu }) => {
     )
 }
 
-export default ApuOverhaulSection;
+export default GearOverhaulSection;
