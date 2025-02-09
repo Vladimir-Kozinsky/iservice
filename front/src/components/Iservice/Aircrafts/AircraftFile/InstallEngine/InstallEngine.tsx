@@ -2,7 +2,7 @@ import { Field, Form, Formik } from "formik";
 import s from "./InstallEngine.module.scss";
 import { connect, useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../store/store";
-import { CSSTransition } from "react-transition-group";
+import { CSSTransition, Transition } from "react-transition-group";
 import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../../../common/buttons/Button";
@@ -15,6 +15,7 @@ import { installEngine } from "../../../../../store/reducers/aircraftReducer/air
 import { compose } from "@reduxjs/toolkit";
 import withSuccessMessage from "../../../../../HOC/wirhSuccessMessage";
 import withErrorMessage from "../../../../../HOC/wirhErrorMessage";
+import Loader from "../../../../../common/Loader/Loader";
 
 export interface IInstallEngineDto {
     date: string;
@@ -64,6 +65,7 @@ const InstallEngine: React.FC = () => {
     const aircraftErrorMessage = useSelector((state: RootState) => state.aircraft.errorMessage);
     const engines = useSelector((state: RootState) => state.engine.engines);
     const [selectedOption, setSelectedOption] = useState<string>('');
+    const [isLoader, setIsLoader] = useState<boolean | undefined>(false);
 
     const options: IOption[] = engines.map((engine: IEngine) => {
         return {
@@ -92,6 +94,9 @@ const InstallEngine: React.FC = () => {
 
     return (
         <div className={s.installEngine}>
+            <Transition in={isLoader} timeout={400} unmountOnExit mountOnEnter >
+                {(state) => <Loader state={state} />}
+            </Transition>
             <h1 className={s.installEngine__header} >Install Engine</h1>
             <Formik
                 initialValues={{
@@ -138,8 +143,11 @@ const InstallEngine: React.FC = () => {
                 }}
                 onSubmit={(values: IInstallEngineDto) => {
                     (async () => {
+                        setIsLoader(true);
                         values.engine = selectedOption;
                         await dispatch(installEngine(values));
+                        await setIsLoader(false);
+                        await navigate(`/i-service/aircraft/${aircraft.msn}`);
                     })()
 
                 }}

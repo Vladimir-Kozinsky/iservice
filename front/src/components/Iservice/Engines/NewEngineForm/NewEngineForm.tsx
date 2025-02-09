@@ -71,7 +71,8 @@ const NewEngineForm: React.FC = () => {
                         values.initFh = values.tsn;
                         values.initFc = values.csn;
                         await dispatch(addEngine(values));
-                        setIsLoader(false);
+                        await setIsLoader(false);
+                        await navigate('/i-service/engines')
                     })()
 
                 }}
