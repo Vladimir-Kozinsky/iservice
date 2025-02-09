@@ -10,12 +10,13 @@ import Loader from "../../../../common/Loader/Loader";
 import { useNavigate } from "react-router-dom";
 import { ICreateGearDto } from "../../../../types/types";
 import { addGear } from "../../../../store/reducers/gearReducer/gearReducer";
+import withSuccessMessage from "../../../../HOC/wirhSuccessMessage";
+import { compose } from "@reduxjs/toolkit";
+import withErrorMessage from "../../../../HOC/wirhErrorMessage";
 
 
 const NewGearForm: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const gearErrorMessage = useSelector((state: RootState) => state.gear.errorMessage);
-    const nodeRef = useRef(null);
     const [isLoader, setIsLoader] = useState<boolean | undefined>(false);
     const navigate = useNavigate();
     return (
@@ -90,19 +91,6 @@ const NewGearForm: React.FC = () => {
                 handleSubmit,
             }) => (
                 <Form className={s.newGearForm__container}>
-                    <CSSTransition
-                        in={gearErrorMessage ? true : false}
-                        nodeRef={nodeRef}
-                        timeout={500}
-                        classNames={{
-                            ...s,
-                            enterActive: s['enter-active'],
-                        }}
-                        unmountOnExit
-                    >
-                        <div ref={nodeRef} className={s.newGearForm__message}>{gearErrorMessage}</div>
-                    </CSSTransition>
-
                     <div className={s.inputs}>
                         <div className={s.inputs__block}>
                             <label>Position<span>*</span></label>
@@ -177,5 +165,5 @@ const NewGearForm: React.FC = () => {
     )
 }
 
-
-export default NewGearForm;
+const EnhancedComponent = withSuccessMessage(NewGearForm);
+export default compose(withErrorMessage)(EnhancedComponent);

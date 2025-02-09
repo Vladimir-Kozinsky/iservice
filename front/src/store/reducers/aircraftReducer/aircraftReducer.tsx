@@ -174,6 +174,7 @@ const aircraftSlice = createSlice({
         builder.addCase(installEngine.fulfilled, (state: IAircraftState, action: PayloadAction<IEngine>) => {
             if (action.payload._id) {
                 state.choosedAircraft.engines.push(action.payload._id);
+                state.installedEngines.push(action.payload);
             }
             const aircraft = state.aircrafts.find((aircraft: IAircraft) => aircraft.msn === state.choosedAircraft.msn);
             if (action.payload._id) {

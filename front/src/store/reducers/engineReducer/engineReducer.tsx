@@ -45,6 +45,7 @@ const engineSlice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(addEngine.fulfilled, (state: IEngineState, action: PayloadAction<IEngine>) => {
             state.choosedEngine = action.payload;
+            state.successMessage = "Engine successfully added";
         })
         builder.addCase(addEngine.rejected, (state: IEngineState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;

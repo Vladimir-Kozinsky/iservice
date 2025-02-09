@@ -32,10 +32,18 @@ const apuSlice = createSlice({
         setChoosedApu(state: IApuState, action: PayloadAction<IApu>) {
             state.choosedApu = action.payload;
         },
+        clearApuSuccessMessage(state: IApuState) {
+            state.successMessage = null;
+        },
+
+        clearApuErrorMessage(state: IApuState) {
+            state.errorMessage = null;
+        }
     },
     extraReducers: (builder) => {
         builder.addCase(addApu.fulfilled, (state: IApuState, action: PayloadAction<IApu>) => {
             state.choosedApu = action.payload;
+            state.successMessage = "APU successfully added";
         })
         builder.addCase(addApu.rejected, (state: IApuState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
@@ -121,6 +129,6 @@ export const delLimit = createAsyncThunk(
     }
 )
 
-export const { setChoosedApu } = apuSlice.actions
+export const { setChoosedApu, clearApuSuccessMessage, clearApuErrorMessage } = apuSlice.actions
 
 export default apuSlice.reducer;

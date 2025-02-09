@@ -77,19 +77,6 @@ const NewApuForm: React.FC = () => {
                 handleSubmit,
             }) => (
                 <Form className={s.newApuForm__container}>
-                    <CSSTransition
-                        in={apuErrorMessage ? true : false}
-                        nodeRef={nodeRef}
-                        timeout={500}
-                        classNames={{
-                            ...s,
-                            enterActive: s['enter-active'],
-                        }}
-                        unmountOnExit
-                    >
-                        <div ref={nodeRef} className={s.newApuForm__message}>{apuErrorMessage}</div>
-                    </CSSTransition>
-
                     <div className={s.inputs}>
                         <div className={s.inputs__block}>
                             <label>Type<span>*</span></label>
@@ -109,7 +96,7 @@ const NewApuForm: React.FC = () => {
                         </div>
                         <div className={s.inputs__block}>
                             <label>Manufacture Date<span>*</span></label>
-                            <Field type="manufDate" id="manufDate" name="manufDate"
+                            <Field type="date" id="manufDate" name="manufDate"
                                 placeholder="1996-01-30" error={errors.manufDate} as={Input} />
                         </div>
                         <div className={s.inputs__block}>
@@ -129,7 +116,7 @@ const NewApuForm: React.FC = () => {
                         </div>
                         <div className={s.inputs__block}>
                             <label>Last overhaul date</label>
-                            <Field type="lastOverhaulDate" id="lastOverhaulDate" name="lastOverhaulDate"
+                            <Field type="date" id="lastOverhaulDate" name="lastOverhaulDate"
                                 placeholder="2022-01-30" error={errors.lastOverhaulDate} as={Input} />
                         </div>
                         <div className={s.inputs__block}>

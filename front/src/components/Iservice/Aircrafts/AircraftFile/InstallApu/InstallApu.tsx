@@ -1,8 +1,8 @@
 import { Field, Form, Formik } from "formik";
 import s from "./InstallApu.module.scss";
-import {  useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../store/store";
-import { CSSTransition } from "react-transition-group";
+import { CSSTransition, Transition } from "react-transition-group";
 import { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../../../common/buttons/Button";
@@ -16,6 +16,7 @@ import withSuccessMessage from "../../../../../HOC/wirhSuccessMessage";
 import withErrorMessage from "../../../../../HOC/wirhErrorMessage";
 import { getApus } from "../../../../../store/reducers/apuReducer/apuReducer";
 import { installApu } from "../../../../../store/reducers/aircraftReducer/aircraftReducer";
+import Loader from "../../../../../common/Loader/Loader";
 
 export interface IInstallApuDto {
     date: string;
@@ -64,6 +65,7 @@ const InstallApu: React.FC = () => {
     const aircraftErrorMessage = useSelector((state: RootState) => state.aircraft.errorMessage);
     const apus = useSelector((state: RootState) => state.apu.apus);
     const [selectedOption, setSelectedOption] = useState<string>('');
+    const [isLoader, setIsLoader] = useState<boolean | undefined>(false);
 
     const options: IOption[] = apus.map((apu: IApu) => {
         return {
@@ -92,6 +94,9 @@ const InstallApu: React.FC = () => {
 
     return (
         <div className={s.installEngine}>
+            <Transition in={isLoader} timeout={400} unmountOnExit mountOnEnter >
+                {(state) => <Loader state={state} />}
+            </Transition>
             <h1 className={s.installEngine__header} >Install APU</h1>
             <Formik
                 initialValues={{
@@ -136,8 +141,10 @@ const InstallApu: React.FC = () => {
                 }}
                 onSubmit={(values: IInstallApuDto) => {
                     (async () => {
+                        setIsLoader(true);
                         values.apu = selectedOption;
-                       await dispatch(installApu(values));
+                        await dispatch(installApu(values));
+                        setIsLoader(false);
                     })()
 
                 }}
