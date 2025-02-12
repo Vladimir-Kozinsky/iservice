@@ -7,7 +7,6 @@ import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../../../../common/buttons/Button";
 import Input from "../../../../../common/inputs/Input";
-import Select, { ActionMeta, SingleValue } from "react-select";
 import { addLimit } from "../../../../../store/reducers/aircraftReducer/aircraftReducer";
 import { checkFCFormat, checkFHFormat } from "../../../../../utils/utils";
 import { compose } from "@reduxjs/toolkit";
