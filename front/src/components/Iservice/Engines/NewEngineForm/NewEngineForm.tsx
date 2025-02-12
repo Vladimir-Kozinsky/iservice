@@ -1,12 +1,11 @@
 import { Field, Form, Formik, FormikHelpers } from "formik";
 import Input from "../../../../common/inputs/Input";
 import s from "./NewEngineForm.module.scss";
-import { CSSTransition, Transition } from "react-transition-group";
+import { Transition } from "react-transition-group";
 import Button from "../../../../common/buttons/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../store/store";
 import React, { useRef, useState } from "react"
-import { addAircraft } from "../../../../store/reducers/aircraftReducer/aircraftReducer";
 import Loader from "../../../../common/Loader/Loader";
 import { useNavigate } from "react-router-dom";
 import { ICreateEngineDto } from "../../../../types/types";
@@ -84,19 +83,6 @@ const NewEngineForm: React.FC = () => {
                 handleSubmit,
             }) => (
                 <Form className={s.newEngineForm__container}>
-                    {/* <CSSTransition
-                        in={engineErrorMessage ? true : false}
-                        nodeRef={nodeRef}
-                        timeout={500}
-                        classNames={{
-                            ...s,
-                            enterActive: s['enter-active'],
-                        }}
-                        unmountOnExit
-                    >
-                        <div ref={nodeRef} className={s.newEngineForm__message}>{engineErrorMessage}</div>
-                    </CSSTransition> */}
-
                     <div className={s.inputs}>
                         <div className={s.inputs__block}>
                             <label>Type<span>*</span></label>

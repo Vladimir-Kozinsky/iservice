@@ -5,7 +5,7 @@ import { CSSTransition, Transition } from "react-transition-group";
 import Button from "../../../../common/buttons/Button";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../store/store";
-import React, { useRef, useState } from "react"
+import React, { ChangeEvent, useRef, useState } from "react"
 import Loader from "../../../../common/Loader/Loader";
 import { useNavigate } from "react-router-dom";
 import { ICreateGearDto } from "../../../../types/types";
@@ -19,6 +19,9 @@ const NewGearForm: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const [isLoader, setIsLoader] = useState<boolean | undefined>(false);
     const navigate = useNavigate();
+    const [date, setDate] = useState(false);
+    const [fh, setFh] = useState(false);
+    const [fc, setFc] = useState(false);
     return (
         <div className={s.newGearForm}>
             <Transition in={isLoader} timeout={400} unmountOnExit mountOnEnter >
@@ -37,9 +40,9 @@ const NewGearForm: React.FC = () => {
                     lastInspDate: '2024-01-30',
                     tsnAtLastInsp: '4523:00',
                     csnAtLastInsp: '4523',
-                    nextInspDate: '25.05.2028',
-                    tsnAtNextInsp: '4523:00',
-                    csnAtNextInsp: '2323',
+                    nextInspDate: date ? '25.05.2025' : '',
+                    tsnAtNextInsp: fh ? '10526:00' : '',
+                    csnAtNextInsp: fc ? '10526' : '',
                 }}
                 validate={values => {
                     interface ICreateGearErrorsDto {
@@ -67,9 +70,9 @@ const NewGearForm: React.FC = () => {
                     if (!values.tsnAtLastInsp) errors.tsnAtLastInsp = 'FH at the time of last Inspection is required';
                     if (!values.csnAtLastInsp) errors.csnAtLastInsp = 'FC at the time of last Inspection is required';
 
-                    if (!values.nextInspDate) errors.nextInspDate = 'LG Cycles Since New is required';
-                    if (!values.tsnAtNextInsp) errors.tsnAtNextInsp = 'FH at the time of next Inspection is required';
-                    if (!values.csnAtNextInsp) errors.csnAtNextInsp = 'FC at the time of next Inspection is required';
+                    if (!values.nextInspDate && date) errors.nextInspDate = 'LG Cycles Since New is required';
+                    if (!values.tsnAtNextInsp && fh) errors.tsnAtNextInsp = 'FH at the time of next Inspection is required';
+                    if (!values.csnAtNextInsp && fc) errors.csnAtNextInsp = 'FC at the time of next Inspection is required';
                     return errors;
                 }}
                 onSubmit={(values: ICreateGearDto) => {
@@ -136,7 +139,7 @@ const NewGearForm: React.FC = () => {
                                 placeholder="45231:00" error={errors.csnAtLastInsp} as={Input} />
                         </div>
 
-                        <div className={s.inputs__block}>
+                        {/* <div className={s.inputs__block}>
                             <label>Nest Inspection Date</label>
                             <Field type="date" id="nextInspDate" name="nextInspDate"
                                 placeholder="2024-01-30" error={errors.nextInspDate} as={Input} />
@@ -150,6 +153,47 @@ const NewGearForm: React.FC = () => {
                             <label>CSN at Next Inspection</label>
                             <Field type="csnAtNextInsp" id="csnAtNextInsp" name="csnAtNextInsp"
                                 placeholder="45231:00" error={errors.csnAtNextInsp} as={Input} />
+                        </div> */}
+                    </div>
+                    <div className={s.checkboxes}>
+                        <h3 className={s.checkboxes__title}>Inspection thereshould</h3>
+                        <div className={s.checkboxes__block}>
+                            <div className={s.checkboxes__wrap}>
+                                <label>Date</label>
+                                <Input className={s.checkboxes__block__item} onChange={(e: ChangeEvent<HTMLInputElement>) => setDate(e.target.checked)}
+                                    type="checkbox" id="dateCheckbox" name="dateCheckbox" />
+                            </div>
+                            <div className={s.inputs__block}>
+                                <label>Next inspection date<span>*</span></label>
+                                <Field type="date" id="nextInspDate" name="nextInspDate" disabled={date ? false : true}
+                                    placeholder="25.05.2025" error={errors.nextInspDate} as={Input} />
+                            </div>
+                        </div>
+
+                        <div className={s.checkboxes__block}>
+                            <div className={s.checkboxes__wrap}>
+                                <label>FH</label>
+                                <Input className={s.checkboxes__block__item} onChange={(e: ChangeEvent<HTMLInputElement>) => setFh(e.target.checked)}
+                                    type="checkbox" id="tsnCheckbox" name="tsnCheckbox" />
+                            </div>
+                            <div className={s.inputs__block}>
+                                <label>Next inspection FH<span>*</span></label>
+                                <Field type="tsnAtNextInsp" id="tsnAtNextInsp" name="tsnAtNextInsp" disabled={fh ? false : true}
+                                    placeholder="10526:00" error={errors.tsnAtNextInsp} as={Input} />
+                            </div>
+                        </div>
+
+                        <div className={s.checkboxes__block}>
+                            <div className={s.checkboxes__wrap}>
+                                <label>FC</label>
+                                <Input className={s.checkboxes__block__item} onChange={(e: ChangeEvent<HTMLInputElement>) => setFc(e.target.checked)}
+                                    type="checkbox" id="csnCheckbox" name="csnCheckbox" />
+                            </div>
+                            <div className={s.inputs__block}>
+                                <label>Next inspection FC<span>*</span></label>
+                                <Field type="csnAtNextInsp" id="csnAtNextInsp" name="csnAtNextInsp" disabled={fc ? false : true}
+                                    placeholder="10526" error={errors.csnAtNextInsp} as={Input} />
+                            </div>
                         </div>
                     </div>
                     <div className={s.btns}>
