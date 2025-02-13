@@ -8,6 +8,7 @@ import Input from "../../../../../common/inputs/Input";
 import { compose } from "@reduxjs/toolkit";
 import withSuccessMessage from "../../../../../HOC/wirhSuccessMessage";
 import { ChangeEvent, useState } from "react";
+import { checkFHFormat } from "../../../../../utils/utils";
 
 export interface INewLimitDto {
     msn: string;
@@ -27,38 +28,18 @@ export interface INewLimitDto {
     tsnLim3?: string;
 }
 
-interface IOption {
-    value: string | null | undefined;
-    label: string | null;
-}
-
-const customStyles = {
-    option: (provided: any) => ({
-        ...provided,
-        borderBottom: '1px dotted pink',
-    }),
-    control: (provided: any) => ({
-        ...provided,
-        width: '232px',
-        height: '38px',
-        border: '#0A2640 2px solid',
-        borderRadius: '24px',
-        textAlign: 'center'
-    }),
-}
-
 const NewEngineLimit = () => {
     const dispatch = useDispatch<AppDispatch>();
     const navigate = useNavigate();
     const engine = useSelector((state: RootState) => state.engine.choosedEngine);
     const engineErrorMessage = useSelector((state: RootState) => state.engine.errorMessage);
-    const [tsnLim1, setTsnLim1] = useState(false);
-    const [tsnLim2, setTsnLim2] = useState(false);
-    const [tsnLim3, setTsnLim3] = useState(false);
+    const [isTsnLim1, setTsnLim1] = useState(false);
+    const [isTsnLim2, setTsnLim2] = useState(false);
+    const [isTsnLim3, setTsnLim3] = useState(false);
 
-    const [csnLim1, setCsnLim1] = useState(false);
-    const [csnLim2, setCsnLim2] = useState(false);
-    const [csnLim3, setCsnLim3] = useState(false);
+    const [isCsnLim1, setCsnLim1] = useState(false);
+    const [isCsnLim2, setCsnLim2] = useState(false);
+    const [isCsnLim3, setCsnLim3] = useState(false);
 
 
     return (
@@ -73,12 +54,12 @@ const NewEngineLimit = () => {
                     sn: 'DA432292',
                     tsn: '25050:00',
                     csn: '25050',
-                    csnLim1: '24900',
-                    csnLim2: '20100',
-                    csnLim3: '20100',
-                    tsnLim1: '24900:00',
-                    tsnLim2: '20100:00',
-                    tsnLim3: '20100:00',
+                    csnLim1: '',
+                    csnLim2: '',
+                    csnLim3: '',
+                    tsnLim1: '',
+                    tsnLim2: '',
+                    tsnLim3: '',
                 }}
                 validate={values => {
                     interface INewLimitErrorsDto {
@@ -92,7 +73,6 @@ const NewEngineLimit = () => {
                         csnLim1?: string;
                         csnLim2?: string;
                         csnLim3?: string;
-                        tsnLim?: string;
                         tsnLim1?: string;
                         tsnLim2?: string;
                         tsnLim3?: string;
@@ -102,6 +82,22 @@ const NewEngineLimit = () => {
                     if (!values.part) errors.part = 'Part description is required';
                     if (!values.pn) errors.pn = 'Part Number is required';
                     if (!values.sn) errors.sn = 'Serial Number is required';
+
+                    if (!values.tsnLim1 && isTsnLim1) errors.tsnLim1 = 'Life limit is required';
+                    if (values.tsnLim1 && !checkFHFormat(values.tsnLim1)) errors.tsnLim1 = 'Invalid format, the format should be like "123456:22"';
+                    if (!values.tsnLim2 && isTsnLim2) errors.tsnLim2 = 'Life limit is required';
+                    if (values.tsnLim2 && !checkFHFormat(values.tsnLim2)) errors.tsnLim2 = 'Invalid format, the format should be like "123456:22"';
+                    if (!values.tsnLim3 && isTsnLim3) errors.tsnLim3 = 'Life limit is required';
+                    if (values.tsnLim3 && !checkFHFormat(values.tsnLim3)) errors.tsnLim3 = 'Invalid format, the format should be like "123456:22"';
+
+                    if (!values.csnLim1 && isCsnLim1) errors.csnLim1 = 'Life limit is required';
+                    if (values.csnLim1 && !checkFHFormat(values.csnLim1)) errors.csnLim1 = 'Invalid format, the format should be like "123456:22"';
+                    if (!values.csnLim2 && isCsnLim2) errors.csnLim2 = 'Life limit is required';
+                    if (values.csnLim2 && !checkFHFormat(values.csnLim2)) errors.csnLim2 = 'Invalid format, the format should be like "123456:22"';
+                    if (!values.csnLim3 && isCsnLim3) errors.csnLim3 = 'Life limit is required';
+                    if (values.csnLim3 && !checkFHFormat(values.csnLim3)) errors.csnLim3 = 'Invalid format, the format should be like "123456:22"';
+                   
+                    return errors;
                 }}
                 onSubmit={(values: INewLimitDto) => {
                     (async () => {
@@ -161,11 +157,10 @@ const NewEngineLimit = () => {
                                     type="checkbox" id="tsnLim1Checkbox" name="tsnLim1Checkbox" />
                             </div>
                             <div className={s.inputs__block}>
-                                <label>TSN Live Limit 1<span>*</span></label>
-                                <Field type="text" id="tsnLim1" name="tsnLim1" disabled={tsnLim1 ? false : true}
+                                <label>TSN Live Limit 1</label>
+                                <Field type="text" id="tsnLim1" name="tsnLim1" disabled={isTsnLim1 ? false : true}
                                     placeholder="10526:00" error={errors.tsnLim1} as={Input} />
                             </div>
-
                         </div>
 
                         <div className={s.checkboxes__block}>
@@ -175,8 +170,8 @@ const NewEngineLimit = () => {
                                     type="checkbox" id="tsnLim2Checkbox" name="tsnLim2Checkbox" />
                             </div>
                             <div className={s.inputs__block}>
-                                <label>TSN Live Limit 2<span>*</span></label>
-                                <Field type="text" id="tsnLim2" name="tsnLim2" disabled={tsnLim2 ? false : true}
+                                <label>TSN Live Limit 2</label>
+                                <Field type="text" id="tsnLim2" name="tsnLim2" disabled={isTsnLim2 ? false : true}
                                     placeholder="10526:00" error={errors.tsnLim2} as={Input} />
                             </div>
                         </div>
@@ -188,8 +183,8 @@ const NewEngineLimit = () => {
                                     type="checkbox" id="tsnLim3Checkbox" name="tsnLim3Checkbox" />
                             </div>
                             <div className={s.inputs__block}>
-                                <label>TSN Live Limit 3<span>*</span></label>
-                                <Field type="text" id="tsnLim3" name="tsnLim3" disabled={tsnLim3 ? false : true}
+                                <label>TSN Live Limit 3</label>
+                                <Field type="text" id="tsnLim3" name="tsnLim3" disabled={isTsnLim3 ? false : true}
                                     placeholder="10526" error={errors.tsnLim3} as={Input} />
                             </div>
                         </div>
@@ -203,8 +198,8 @@ const NewEngineLimit = () => {
                                     type="checkbox" id="csnLim1Checkbox" name="csnLim1Checkbox" />
                             </div>
                             <div className={s.inputs__block}>
-                                <label>CSN Live Limit 1<span>*</span></label>
-                                <Field type="text" id="csnLim1" name="csnLim1" disabled={tsnLim1 ? false : true}
+                                <label>CSN Live Limit 1</label>
+                                <Field type="text" id="csnLim1" name="csnLim1" disabled={isCsnLim1 ? false : true}
                                     placeholder="10526:00" error={errors.csnLim1} as={Input} />
                             </div>
 
@@ -213,12 +208,12 @@ const NewEngineLimit = () => {
                         <div className={s.checkboxes__block}>
                             <div className={s.checkboxes__wrap}>
                                 <label>CSN Live Limit 2</label>
-                                <Input className={s.checkboxes__block__item} onChange={(e: ChangeEvent<HTMLInputElement>) => setTsnLim2(e.target.checked)}
+                                <Input className={s.checkboxes__block__item} onChange={(e: ChangeEvent<HTMLInputElement>) => setCsnLim2(e.target.checked)}
                                     type="checkbox" id="csnLim2Checkbox" name="csnLim2Checkbox" />
                             </div>
                             <div className={s.inputs__block}>
-                                <label>CSN Live Limit 2<span>*</span></label>
-                                <Field type="text" id="csnLim2" name="csnLim2" disabled={tsnLim2 ? false : true}
+                                <label>CSN Live Limit 2</label>
+                                <Field type="text" id="csnLim2" name="csnLim2" disabled={isCsnLim2 ? false : true}
                                     placeholder="10526:00" error={errors.csnLim2} as={Input} />
                             </div>
                         </div>
@@ -230,9 +225,9 @@ const NewEngineLimit = () => {
                                     type="checkbox" id="csnLim3Checkbox" name="csnLim3Checkbox" />
                             </div>
                             <div className={s.inputs__block}>
-                                <label>CSN Live Limit 3<span>*</span></label>
-                                <Field type="text" id="tsnLim3" name="tsnLim3" disabled={tsnLim3 ? false : true}
-                                    placeholder="10526" error={errors.tsnLim3} as={Input} />
+                                <label>CSN Live Limit 3</label>
+                                <Field type="text" id="csnLim3" name="csnLim3" disabled={isCsnLim3 ? false : true}
+                                    placeholder="10526" error={errors.csnLim3} as={Input} />
                             </div>
                         </div>
                     </div>
