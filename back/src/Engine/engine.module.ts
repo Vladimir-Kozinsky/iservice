@@ -3,7 +3,7 @@ import { EngineController } from './engine.controller';
 import { EngineService } from './engine.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Engine, EngineSchema } from 'src/schemas/engine.schema';
-import { Limit, LimitSchema } from 'src/schemas/limit.schema';
+import { Cfm56Limit, Cfm56LimitSchema } from 'src/schemas/cfm56Limit.schema';
 
 @Module({
   imports: [
@@ -12,8 +12,8 @@ import { Limit, LimitSchema } from 'src/schemas/limit.schema';
       schema: EngineSchema
     }]),
     MongooseModule.forFeature([{
-      name: Limit.name,
-      schema: LimitSchema
+      name: Cfm56Limit.name,
+      schema: Cfm56LimitSchema
     }]),
   ],
   controllers: [EngineController],

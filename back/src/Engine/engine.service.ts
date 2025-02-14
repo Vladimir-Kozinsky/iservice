@@ -2,18 +2,18 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { CreateEngineDto } from 'src/dto/create-engine.dto';
-import { CreateLimitDto } from 'src/dto/create-limit.dto';
 import { DeleteLimitDto } from 'src/dto/delete-limit.dto';
 import { Engine } from 'src/schemas/engine.schema';
-import { Limit } from 'src/schemas/limit.schema';
+import { Cfm56Limit } from 'src/schemas/cfm56Limit.schema';
+import { CreateCfm56LimitDto } from 'src/dto/create-engineLimit.dto';
 
 @Injectable()
 export class EngineService {
     constructor(
         @InjectModel(Engine.name)
         private readonly engineModel: Model<Engine>,
-        @InjectModel(Limit.name)
-        private readonly limitModel: Model<Limit>,
+        @InjectModel(Cfm56Limit.name)
+        private readonly engineLimitModel: Model<Cfm56Limit>,
     ) { }
 
     async add(createEngineDto: CreateEngineDto) {
@@ -42,23 +42,25 @@ export class EngineService {
         return engine;
     }
 
-    async addLimit(createLimitDto: CreateLimitDto) {
-        const limit = await this.limitModel.create(createLimitDto);
-        const engine = await this.engineModel.findOne({ msn: createLimitDto.msn });
+    async addLimit(createEngineLimitDto: CreateCfm56LimitDto) {
+        const limit = await this.engineLimitModel.create(createEngineLimitDto);
+        const engine = await this.engineModel.findOne({ msn: createEngineLimitDto.esn });
         if (!engine) throw new HttpException('Engine not found', HttpStatus.BAD_REQUEST);
+
         engine.limits.push(limit);
         await engine.save();
+        await this.engineLimitModel.findByIdAndRemove(limit._id);
         return limit;
     }
 
     async delLimit(deleteLimitDto: DeleteLimitDto) {
-        const limit = await this.limitModel.deleteOne({ _id: deleteLimitDto.limitId });
+        const limit = await this.engineLimitModel.deleteOne({ _id: deleteLimitDto.limitId });
         if (!limit.deletedCount) throw new HttpException('Limit not found', HttpStatus.BAD_REQUEST);
 
         const engine = await this.engineModel.findOne({ msn: deleteLimitDto.msn });
         if (!engine) throw new HttpException('Engine not found', HttpStatus.BAD_REQUEST);
 
-        const index = engine.limits.findIndex((limit: Limit) => limit._id.toString() == deleteLimitDto.limitId)
+        const index = engine.limits.findIndex((limit: Cfm56Limit) => limit._id.toString() == deleteLimitDto.limitId)
         if (index < 0) throw new HttpException('Limit has already deleted', HttpStatus.BAD_REQUEST);
 
         engine.limits.splice(index, 1);

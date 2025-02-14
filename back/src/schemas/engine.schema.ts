@@ -2,9 +2,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { ApiProperty } from '@nestjs/swagger';
 import mongoose, { HydratedDocument, Types } from 'mongoose';
-import { Limit } from './limit.schema';
 import { EngineHistory } from './engineHistory.schema';
 import { Leg } from './leg.schema';
+import { Cfm56Limit } from './cfm56Limit.schema';
 
 export type EngineDocument = HydratedDocument<Engine>;
 
@@ -69,11 +69,11 @@ export class Engine {
     csnAtLastOverhaul: string;
 
     @ApiProperty({ example: 'none', description: "Limit" })
-    @Prop({type: [mongoose.SchemaTypes.ObjectId], ref: 'Limit' })
-    limits: [Limit];
+    @Prop({ type: [mongoose.SchemaTypes.ObjectId], ref: 'Limit' })
+    limits: [Cfm56Limit];
 
     @ApiProperty({ example: 'none', description: "Legs" })
-    @Prop({ref: 'Leg'})
+    @Prop({ ref: 'Leg' })
     legs: Leg[];
 
 }

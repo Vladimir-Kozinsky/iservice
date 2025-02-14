@@ -3,10 +3,11 @@ import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { EngineService } from './engine.service';
 import { CreateEngineDto } from 'src/dto/create-engine.dto';
 import { Limit } from 'src/schemas/limit.schema';
-import { CreateLimitDto } from 'src/dto/create-limit.dto';
 import { DeleteLimitDto } from 'src/dto/delete-limit.dto';
 import { Types } from 'mongoose';
 import { Engine } from 'src/schemas/engine.schema';
+import { CreateCfm56LimitDto } from 'src/dto/create-engineLimit.dto';
+import { Cfm56Limit } from 'src/schemas/cfm56Limit.schema';
 
 @ApiTags('Engine')
 @Controller('engine')
@@ -46,12 +47,12 @@ export class EngineController {
         return await this.engineService.getEngineByMsn(getEngineByMsnDto);
     }
 
-    @ApiOperation({ summary: 'Add new limit' })
-    @ApiResponse({ status: 201, type: Limit })
+    @ApiOperation({ summary: 'Add new Life limit' })
+    @ApiResponse({ status: 201, type: Cfm56Limit })
     @Post('/limit/add')
     @HttpCode(201)
-    async addLimit(@Body() createLimitDto: CreateLimitDto) {
-        return await this.engineService.addLimit(createLimitDto);
+    async addLimit(@Body() createEngineLimitDto: CreateCfm56LimitDto) {
+        return await this.engineService.addLimit(createEngineLimitDto);
     }
 
     @ApiOperation({ summary: 'Delete limit' })
