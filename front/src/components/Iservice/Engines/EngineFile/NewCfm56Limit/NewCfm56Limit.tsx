@@ -1,5 +1,5 @@
 import { Field, Form, Formik } from "formik";
-import s from "./NewLimit.module.scss";
+import s from "./NewCfm56Limit.module.scss";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../../store/store";
 import { useNavigate } from "react-router-dom";
@@ -8,10 +8,11 @@ import Input from "../../../../../common/inputs/Input";
 import { compose } from "@reduxjs/toolkit";
 import withSuccessMessage from "../../../../../HOC/wirhSuccessMessage";
 import { ChangeEvent, useState } from "react";
-import { checkFHFormat } from "../../../../../utils/utils";
+import { checkFCFormat, checkFHFormat } from "../../../../../utils/utils";
+import { addLimit } from "../../../../../store/reducers/engineReducer/engineReducer";
 
 export interface INewLimitDto {
-    msn: string;
+    esn: string;
     section: string;
     part: string;
     pn: string;
@@ -20,9 +21,8 @@ export interface INewLimitDto {
     csn?: string;
     csnLim?: string;
     csnLim1?: string;
-    csnLim2: string;
+    csnLim2?: string;
     csnLim3?: string;
-    tsnLim?: string;
     tsnLim1?: string;
     tsnLim2?: string;
     tsnLim3?: string;
@@ -47,7 +47,7 @@ const NewEngineLimit = () => {
             <h1 className={s.limit__header} >New Limit</h1>
             <Formik
                 initialValues={{
-                    msn: '',
+                    esn: '',
                     section: '211',
                     part: 'SPOOL-BOOSTER',
                     pn: '335-009-306-0',
@@ -91,18 +91,18 @@ const NewEngineLimit = () => {
                     if (values.tsnLim3 && !checkFHFormat(values.tsnLim3)) errors.tsnLim3 = 'Invalid format, the format should be like "123456:22"';
 
                     if (!values.csnLim1 && isCsnLim1) errors.csnLim1 = 'Life limit is required';
-                    if (values.csnLim1 && !checkFHFormat(values.csnLim1)) errors.csnLim1 = 'Invalid format, the format should be like "123456:22"';
+                    if (values.csnLim1 && !checkFCFormat(values.csnLim1)) errors.csnLim1 = 'Invalid format, the format should be like "123456:22"';
                     if (!values.csnLim2 && isCsnLim2) errors.csnLim2 = 'Life limit is required';
-                    if (values.csnLim2 && !checkFHFormat(values.csnLim2)) errors.csnLim2 = 'Invalid format, the format should be like "123456:22"';
+                    if (values.csnLim2 && !checkFCFormat(values.csnLim2)) errors.csnLim2 = 'Invalid format, the format should be like "123456:22"';
                     if (!values.csnLim3 && isCsnLim3) errors.csnLim3 = 'Life limit is required';
-                    if (values.csnLim3 && !checkFHFormat(values.csnLim3)) errors.csnLim3 = 'Invalid format, the format should be like "123456:22"';
-                   
+                    if (values.csnLim3 && !checkFCFormat(values.csnLim3)) errors.csnLim3 = 'Invalid format, the format should be like "123456:22"';
+
                     return errors;
                 }}
                 onSubmit={(values: INewLimitDto) => {
                     (async () => {
-                        if (engine.msn) values.msn = engine.msn;
-                        console.log(values);
+                        if (engine.msn) values.esn = engine.msn;
+                        dispatch(addLimit(values));
                     })()
 
                 }}

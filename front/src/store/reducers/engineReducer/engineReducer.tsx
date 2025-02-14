@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IEngineRejectResponse, IEngineState } from './engineReducerTypes';
-import { ICreateEngineDto, IEngine, ILimit } from '../../../types/types';
+import { ICreateEngineDto, IEngine, IEngineLimit } from '../../../types/types';
 import engineAPI from '../../../API/engineAPI';
-import { INewLimitDto } from '../../../components/Iservice/Engines/EngineFile/NewEngineLimit/NewEngineLimit';
+import { INewLimitDto } from '../../../components/Iservice/Engines/EngineFile/NewCfm56Limit/NewCfm56Limit';
 import { IDelEngineLimitDto } from '../../../components/Iservice/Engines/EngineFile/DelEngineLimit/DelEngineLimit';
 
 const initialState: IEngineState = {
@@ -12,7 +12,7 @@ const initialState: IEngineState = {
         msn: null,
         manuf: null,
         manufDate: null,
-        position:null,
+        position: null,
         tsn: null,
         csn: null,
         overhaulNum: null,
@@ -57,11 +57,11 @@ const engineSlice = createSlice({
             state.errorMessage = action.payload.message;
         })
 
-        builder.addCase(addLimit.fulfilled, (state: IEngineState, action: PayloadAction<ILimit>) => {
-            // state.choosedEngine.limits.push(action.payload);
-            // const engine = state.engines.find((engine: IEngine) => engine.msn === state.choosedEngine.msn);
-            // engine?.limits.push(action.payload);
-            // state.successMessage = "New limit successfully added";
+        builder.addCase(addLimit.fulfilled, (state: IEngineState, action: PayloadAction<IEngineLimit>) => {
+            state.choosedEngine.limits.push(action.payload);
+            const engine = state.engines.find((engine: IEngine) => engine.msn === state.choosedEngine.msn);
+            engine?.limits.push(action.payload);
+            state.successMessage = "New Life Limit successfully added";
         })
         builder.addCase(addLimit.rejected, (state: IEngineState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
@@ -129,7 +129,6 @@ export const delLimit = createAsyncThunk(
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response.data as IEngineRejectResponse);
         }
-
     }
 )
 

@@ -3,7 +3,7 @@ import axios from "axios";
 // import { RemEngFormDataType } from "../components/Aircrafts/RemovalEngine/RemovalEngine";
 import generalAPIData from "./generalData";
 import { ICreateEngineDto } from "../types/types";
-import { INewLimitDto } from "../components/Iservice/Engines/EngineFile/NewEngineLimit/NewEngineLimit";
+import { INewLimitDto } from "../components/Iservice/Engines/EngineFile/NewCfm56Limit/NewCfm56Limit";
 import { IDelEngineLimitDto } from "../components/Iservice/Engines/EngineFile/DelEngineLimit/DelEngineLimit";
 
 const proxy = axios.create({

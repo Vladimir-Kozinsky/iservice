@@ -24,7 +24,7 @@ const ApuFile: React.FC = () => {
                     <div className={s.info}>
                         <ApuInfoSection apu={apu} />
                         <ApuOverhaulSection apu={apu} />
-                        <LimitSection engine={apu} />
+                        {/* <LimitSection engine={apu} /> */}
                         <ApuHistorySection apu={apu} />
                     </div>
                 </div>

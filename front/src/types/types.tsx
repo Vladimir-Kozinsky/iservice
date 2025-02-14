@@ -52,7 +52,7 @@ export interface IEngine {
     tsnAtLastOverhaul: string | null;
     csnAtLastOverhaul: string | null;
     engineHistory: IEngineHistory[];
-    limits: ILimits[];
+    limits: IEngineLimit[];
 }
 
 interface ILimits {
@@ -124,6 +124,23 @@ export interface ILimit {
     // dependence: string;
     // threshold: string;
 }
+
+export interface IEngineLimit {
+    section: string;
+    part: string;
+    pn: string;
+    sn: string;
+    tsn?: string;
+    csn?: string;
+    csnLim?: string;
+    csnLim1?: string;
+    csnLim2?: string;
+    csnLim3?: string;
+    tsnLim1?: string;
+    tsnLim2?: string;
+    tsnLim3?: string;
+}
+
 
 export interface ILeg {
     _id: string;

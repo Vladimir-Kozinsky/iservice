@@ -35,7 +35,7 @@ import NewGearForm from "./Gears/NewGearForm/NewGearForm";
 import InstallGear from "./Aircrafts/AircraftFile/InstallGear/InstallGear";
 import RemoveGear from "./Aircrafts/AircraftFile/RemoveGear/RemoveGear";
 import GearFile from "./Gears/GearFile/GearFile";
-import NewEngineLimit from "./Engines/EngineFile/NewEngineLimit/NewEngineLimit";
+import NewEngineLimit from "./Engines/EngineFile/NewCfm56Limit/NewCfm56Limit";
 
 
 const Iservice: React.FC = () => {
