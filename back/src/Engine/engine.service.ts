@@ -46,7 +46,6 @@ export class EngineService {
         const limit = await this.engineLimitModel.create(createEngineLimitDto);
         const engine = await this.engineModel.findOne({ msn: createEngineLimitDto.esn });
         if (!engine) throw new HttpException('Engine not found', HttpStatus.BAD_REQUEST);
-
         engine.limits.push(limit);
         await engine.save();
         await this.engineLimitModel.findByIdAndRemove(limit._id);
@@ -67,5 +66,31 @@ export class EngineService {
         await engine.save()
 
         return deleteLimitDto.limitId;
+    }
+
+    async updateEngineLLP(eng: { esn: string }) {
+        const engine = await this.engineModel.findOne({ msn: eng.esn });
+        if (!engine) throw new HttpException('Engine not found', HttpStatus.BAD_REQUEST);
+
+        const updateLimits = this.reculcEngineLLP(engine);
+
+        const updatedEngine = await this.engineModel.updateOne({ msn: eng.esn }, { $set: { limits: updateLimits } })
+
+
+
+        const engines = await this.engineModel.find();
+        if (!engines.length) throw new HttpException('Engines not found', HttpStatus.BAD_REQUEST);
+
+        console.log(updatedEngine);
+        return engines;
+    }
+
+    private reculcEngineLLP(engine: Engine): [Cfm56Limit] {
+        const updatedLimits = engine.limits.map((limit: Cfm56Limit) => {
+            const updatedLimit = (+engine.csn - (+limit.engCsn)) + (+limit.csnA)
+            limit.csnA = updatedLimit.toString();
+            return limit
+        }) as [Cfm56Limit]
+        return updatedLimits;
     }
 }

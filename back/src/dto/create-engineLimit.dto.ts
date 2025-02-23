@@ -7,6 +7,10 @@ export class CreateCfm56LimitDto {
   @IsNotEmpty()
   readonly esn: string;
 
+  @ApiProperty({ example: '25200', description: 'Engine CSN at adding limit' })
+  @IsNotEmpty()
+  readonly engCsn: string;
+
   @ApiProperty({ example: '211', description: 'Engine section module' })
   @IsNotEmpty()
   readonly section: string;
@@ -25,6 +29,18 @@ export class CreateCfm56LimitDto {
 
   @ApiProperty({ example: '25050', description: 'Part Cycles Since New' })
   @IsNotEmpty()
+  readonly initCsnA: string;
+
+  @ApiProperty({ example: '25050', description: 'Part Cycles Since New' })
+  @IsNotEmpty()
+  readonly initCsnB: string;
+
+  @ApiProperty({ example: '25050', description: 'Part Cycles Since New' })
+  @IsNotEmpty()
+  readonly initCsnC: string;
+
+  @ApiProperty({ example: '25050', description: 'Part Cycles Since New' })
+  @IsNotEmpty()
   readonly csnA: string;
 
   @ApiProperty({ example: '25050', description: 'Part Cycles Since New' })
@@ -34,10 +50,6 @@ export class CreateCfm56LimitDto {
   @ApiProperty({ example: '25050', description: 'Part Cycles Since New' })
   @IsNotEmpty()
   readonly csnC: string;
-
-  @ApiProperty({ example: '25050', description: 'Part Cycles Since New' })
-  @IsNotEmpty()
-  readonly csn2C: string;
 
   @ApiProperty({ example: '25050', description: 'Cycles life limit' })
   @IsNotEmpty()
@@ -51,8 +63,5 @@ export class CreateCfm56LimitDto {
   @IsNotEmpty()
   readonly csnLimC: string;
 
-  @ApiProperty({ example: '25050', description: 'Times life limit' })
-  @IsNotEmpty()
-  readonly csnLimC2: string;
 
 }

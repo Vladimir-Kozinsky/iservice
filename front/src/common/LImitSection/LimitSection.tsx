@@ -1,5 +1,5 @@
 import React from "react";
-import { IApu, IEngine, IEngineLimit, IGear, ILimit } from "../../types/types";
+import { IApu, IEngine, IGear, ILimit } from "../../types/types";
 import s from "./LimitSection.module.scss";
 import { subtractDatesFromNow, subtractFC, subtractFH } from "../../utils/utils";
 
@@ -9,11 +9,6 @@ type LimitSectionProps = {
 
 const LimitSection: React.FC<LimitSectionProps> = ({ engine }) => {
 
-    const limits = engine.limits.map((limit: IEngineLimit) => {
-        return (
-            <div>{limit.section}</div>
-        )
-    })
 
     return (
         <div className={s.section}>
@@ -30,7 +25,6 @@ const LimitSection: React.FC<LimitSectionProps> = ({ engine }) => {
                 <div className={s.action__value} >Aircraft CSN</div>
                 <div className={s.action__value} >Reason</div>
             </div>
-            {limits}
         </div>
     )
 }

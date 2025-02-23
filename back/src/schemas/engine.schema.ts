@@ -16,6 +16,10 @@ export class Engine {
     @Prop({ required: true })
     type: string;
 
+    @ApiProperty({ example: '20000', description: "Engine Thrust Rating" })
+    @Prop({ required: true })
+    thrust: string;
+
     @ApiProperty({ example: '25891', description: "Engine manufacturer's Serial Number" })
     @Prop({ required: true })
     msn: string;
@@ -52,10 +56,6 @@ export class Engine {
     @Prop({ ref: 'EngineHistory' })
     engineHistory: [EngineHistory]
 
-    @ApiProperty({ example: '4', description: "The number of engine overhauls." })
-    @Prop({ required: false })
-    overhaulNum: number;
-
     @ApiProperty({ example: '2024-01-30', description: "Last overhaul date" })
     @Prop({ required: false })
     lastOverhaulDate: string;
@@ -69,13 +69,14 @@ export class Engine {
     csnAtLastOverhaul: string;
 
     @ApiProperty({ example: 'none', description: "Limit" })
-    @Prop({ type: [mongoose.SchemaTypes.ObjectId], ref: 'Limit' })
+    @Prop({ ref: 'Cfm56Limit' })
     limits: [Cfm56Limit];
 
     @ApiProperty({ example: 'none', description: "Legs" })
     @Prop({ ref: 'Leg' })
     legs: Leg[];
-
 }
 
 export const EngineSchema = SchemaFactory.createForClass(Engine);
+
+

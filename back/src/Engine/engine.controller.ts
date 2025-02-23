@@ -30,7 +30,7 @@ export class EngineController {
         return await this.engineService.getEngines();
     }
 
-    
+
     @ApiOperation({ summary: 'Get  engine' })
     @ApiResponse({ status: 201, type: Engine })
     @Get('/id')
@@ -62,5 +62,13 @@ export class EngineController {
     async delLimit(@Body() deleteLimitDto: DeleteLimitDto) {
         return await this.engineService.delLimit(deleteLimitDto);
 
+    }
+
+    @ApiOperation({ summary: 'Update Engine LLP' })
+    @ApiResponse({ status: 201, type: [Engine] })
+    @Post('/limits/update')
+    @HttpCode(201)
+    async reculcEngineLLP(@Body() updateLimitsDto: {esn: string}) {
+        return await this.engineService.updateEngineLLP(updateLimitsDto);
     }
 }

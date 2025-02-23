@@ -9,6 +9,10 @@ export class CreateEngineDto {
   @ApiProperty({ example: 'CFM56-3C1', description: "Engine type" })
   @IsNotEmpty()
   readonly type: string;
+  
+  @ApiProperty({ example: '20000', description: "Engine Thrust Rating" })
+  @IsNotEmpty()
+  readonly thrust: string;
 
   @ApiProperty({ example: '25891', description: "Engine manufacturer's Serial Number" })
   @IsNotEmpty()
@@ -40,9 +44,6 @@ export class CreateEngineDto {
 
   @ApiProperty({ example: 'none', description: "Engine removal/instolation action" })
   readonly engineHistory: EngineHistory;
-
-  @ApiProperty({ example: '4', description: "The number of engine overhauls." })
-  readonly overhaulNum: number;
 
   @ApiProperty({ example: '2024-01-30', description: "Last overhaul date" })
   readonly lastOverhaulDate: string;

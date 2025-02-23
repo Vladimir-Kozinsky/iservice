@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IEngineRejectResponse, IEngineState } from './engineReducerTypes';
-import { ICreateEngineDto, IEngine, IEngineLimit } from '../../../types/types';
+import { ICreateEngineDto, IEngine, ICfm56EngineLimit } from '../../../types/types';
 import engineAPI from '../../../API/engineAPI';
 import { INewLimitDto } from '../../../components/Iservice/Engines/EngineFile/NewCfm56Limit/NewCfm56Limit';
 import { IDelEngineLimitDto } from '../../../components/Iservice/Engines/EngineFile/DelEngineLimit/DelEngineLimit';
@@ -9,13 +9,13 @@ const initialState: IEngineState = {
     choosedEngine: {
         _id: null,
         type: null,
+        thrust: null,
         msn: null,
         manuf: null,
         manufDate: null,
         position: null,
         tsn: null,
         csn: null,
-        overhaulNum: null,
         lastOverhaulDate: null,
         tsnAtLastOverhaul: null,
         csnAtLastOverhaul: null,
@@ -57,7 +57,7 @@ const engineSlice = createSlice({
             state.errorMessage = action.payload.message;
         })
 
-        builder.addCase(addLimit.fulfilled, (state: IEngineState, action: PayloadAction<IEngineLimit>) => {
+        builder.addCase(addLimit.fulfilled, (state: IEngineState, action: PayloadAction<ICfm56EngineLimit>) => {
             state.choosedEngine.limits.push(action.payload);
             const engine = state.engines.find((engine: IEngine) => engine.msn === state.choosedEngine.msn);
             engine?.limits.push(action.payload);

@@ -13,6 +13,10 @@ export class Cfm56Limit {
     @Prop({ required: true })
     section: string;
 
+    @ApiProperty({ example: '25005', description: 'Engine CSN' })
+    @Prop({ required: true })
+    engCsn: string;
+
     @ApiProperty({ example: 'SPOOL-BOOSTER', description: 'Part description' })
     @Prop({ required: true })
     part: string;
@@ -27,6 +31,22 @@ export class Cfm56Limit {
 
     @ApiProperty({ example: '25050', description: 'Part Cycles Since New' })
     @Prop({ required: false })
+    initCsnA: string;
+
+    @ApiProperty({ example: '25050', description: 'Part Cycles Since New' })
+    @Prop({ required: false })
+    initCsnB: string;
+
+    @ApiProperty({ example: '25050', description: 'Part Cycles Since New' })
+    @Prop({ required: false })
+    initCsnC: string;
+
+    @ApiProperty({ example: '25050', description: 'Part Cycles Since New' })
+    @Prop({ required: false })
+    initCsn2C: string;
+
+    @ApiProperty({ example: '25050', description: 'Part Cycles Since New' })
+    @Prop({ required: false })
     csnA: string;
 
     @ApiProperty({ example: '25050', description: 'Part Cycles Since New' })
@@ -36,10 +56,6 @@ export class Cfm56Limit {
     @ApiProperty({ example: '25050', description: 'Part Cycles Since New' })
     @Prop({ required: false })
     csnC: string;
-
-    @ApiProperty({ example: '25050', description: 'Part Cycles Since New' })
-    @Prop({ required: false })
-    csn2C: string;
 
     @ApiProperty({ example: '25050', description: 'Cycles life limit' })
     @Prop({ required: false })
@@ -52,10 +68,6 @@ export class Cfm56Limit {
     @ApiProperty({ example: '25050', description: 'Cycles life limit' })
     @Prop({ required: false })
     csnLimC: string;
-
-    @ApiProperty({ example: '25050', description: 'Cycles life limit' })
-    @Prop({ required: false })
-    csnLimC2: string;
 
 }
 

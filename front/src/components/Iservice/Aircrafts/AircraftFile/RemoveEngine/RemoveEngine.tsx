@@ -30,8 +30,13 @@ export interface IRemoveEngineDto {
 }
 
 interface IOption {
-    value: string | null;
+    value: IOptionValue;
     label: string | null;
+}
+
+interface IOptionValue {
+    msn: string | null,
+    _id: string | null
 }
 
 const customStyles = {
@@ -54,22 +59,28 @@ const RemoveEngine: React.FC = () => {
     const navigate = useNavigate();
     const aircraft = useSelector((state: RootState) => state.aircraft.choosedAircraft);
     const installedEngines = useSelector((state: RootState) => state.aircraft.installedEngines);
-    const [selectedOption, setSelectedOption] = useState<string>('');
+    const [selectedOption, setSelectedOption] = useState<IOptionValue>({
+        msn: null,
+        _id: null
+    });
 
     const options: IOption[] = installedEngines.map((engine: IEngine) => {
         return {
-            value: engine.msn,
+            value: {
+                msn: engine.msn,
+                _id: engine._id
+            },
             label: `${engine.type} ${engine.msn}`
         }
     })
 
     const onChangeOption = (newValue: SingleValue<IOption>, actionMeta: ActionMeta<IOption>) => {
-        if (newValue?.value) {
+        if (newValue?.value.msn) {
             setSelectedOption(newValue.value);
         }
     }
 
-    const findEngine = (msn: string): IEngine | null => {
+    const findEngine = (msn: string | null): IEngine | null => {
         const engine = installedEngines.find((eng: IEngine) => eng.msn === msn);
         if (!engine) return null;
         return engine;
@@ -83,12 +94,12 @@ const RemoveEngine: React.FC = () => {
                     date: '',
                     action: 'Removal',
                     aircraft: aircraft.msn,
-                    engine: selectedOption,
-                    position: findEngine(selectedOption)?.position,
+                    engine: selectedOption.msn,
+                    position: findEngine(selectedOption.msn)?.position,
                     aircraftTsn: aircraft.fh,
                     aircraftCsn: aircraft.fc,
-                    engineTsn: findEngine(selectedOption)?.tsn,
-                    engineCsn: findEngine(selectedOption)?.csn,
+                    engineTsn: findEngine(selectedOption.msn)?.tsn,
+                    engineCsn: findEngine(selectedOption.msn)?.csn,
                     reason: ''
                 } as IRemoveEngineDto}
                 validate={values => {
@@ -123,8 +134,8 @@ const RemoveEngine: React.FC = () => {
                 }}
                 onSubmit={(values: IRemoveEngineDto) => {
                     (async () => {
-                        values.engine = selectedOption;
-                        values.position = findEngine(selectedOption)?.position;
+                        if (selectedOption._id) values.engine = selectedOption._id;
+                        values.position = findEngine(selectedOption.msn)?.position;
                         await dispatch(removeEngine(values));
                     })()
 
@@ -185,17 +196,17 @@ const RemoveEngine: React.FC = () => {
                             <div className={s.inputs__block}>
                                 <label>Position<span>*</span></label>
                                 <Field type="text" id="position" name="position"
-                                    placeholder={findEngine(selectedOption)?.position} disabled error={errors.position} as={Input} />
+                                    placeholder={findEngine(selectedOption.msn)?.position} disabled error={errors.position} as={Input} />
                             </div>
                             <div className={s.inputs__block}>
                                 <label>Engine TSN<span>*</span></label>
                                 <Field type="text" id="engineTsn" name="engineTsn"
-                                    placeholder={findEngine(selectedOption)?.tsn} error={errors.engineTsn} as={Input} />
+                                    placeholder={findEngine(selectedOption.msn)?.tsn} error={errors.engineTsn} as={Input} />
                             </div>
                             <div className={s.inputs__block}>
                                 <label>Engine CSN<span>*</span></label>
                                 <Field type="text" id="engineCsn" name="engineCsn"
-                                    placeholder={findEngine(selectedOption)?.csn} error={errors.engineCsn} as={Input} />
+                                    placeholder={findEngine(selectedOption.msn)?.csn} error={errors.engineCsn} as={Input} />
                             </div>
                         </div>
                     </div>

@@ -1,0 +1,70 @@
+@import "../../../../../sass/main.scss";
+
+.section {
+    width: 733px;
+    @include section();
+    flex-direction: column;
+    row-gap: 20px;
+    overflow-x: auto;
+}
+
+.section__header {
+    @include section__header()
+}
+
+.section__message {
+    color: rgb(128, 128, 128, 0.7);
+}
+
+.action {
+    display: flex;
+    //justify-content: space-between;
+    // margin-bottom: 10px;
+    // height: 40px;
+    // align-items: center;
+    //display: block;
+    //border: #387add 1px solid;
+}
+
+.action__value {
+    width: 44px;
+    @include blue_text(9px);
+    //border: #fcba06 1px solid;
+    //background-color: #2975e7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.action_block {
+    display: flex;
+    flex-direction: column;
+    row-gap: 0;
+    height: 30px;
+}
+
+.action__block__title {
+    display: flex;
+    justify-content: center;
+    @include blue_text(9px);
+    text-align: center;
+   // border: #2975e7 1px solid;
+}
+
+.action__block__value {
+    display: flex;
+}
+
+.action__value.discr {
+    width: 100px;
+    font-size: 8px;
+    justify-content: left;
+}
+
+.action__value.pn {
+    width: 75px;
+}
+
+.action__value.sn {
+    width: 70px;
+}

@@ -10,6 +10,7 @@ import { DeleteLegDto } from 'src/dto/leg/delete-leg.dto';
 import { Engine } from 'src/schemas/engine.schema';
 import { InstallGearDto } from 'src/dto/install-gear.dto';
 import { Gear } from 'src/schemas/gear.schema';
+import { Cfm56Limit } from 'src/schemas/cfm56Limit.schema';
 
 @Injectable()
 export class LegService {
@@ -26,7 +27,6 @@ export class LegService {
 
     async getLegs(getLegsDto: GetLegsDto) {
         const pageLegs = 10;
-
         const aircraft = await this.aircraftModel.findOne({ msn: getLegsDto.aircraft });
         if (!aircraft) throw new HttpException('Aircraft not found', HttpStatus.BAD_REQUEST);
 
@@ -65,11 +65,11 @@ export class LegService {
     }
 
     async getPrintLegs(getPrintLegsDto: GetPrintLegsDto) {
-       // const legs = await this.legModel.find({ aircraft: getPrintLegsDto.aircraft });
+        // const legs = await this.legModel.find({ aircraft: getPrintLegsDto.aircraft });
         const aircraft = await this.aircraftModel.findOne({ msn: getPrintLegsDto.aircraft });
         if (!aircraft) throw new HttpException('Aircraft not found', HttpStatus.BAD_REQUEST);
         if (!aircraft.legs.length) throw new HttpException('Aircraft legs not found', HttpStatus.BAD_REQUEST);
-        
+
         const filteredLegs = aircraft.legs.filter((leg: Leg) => {
             const from = new Date(getPrintLegsDto.from);
             const to = new Date(getPrintLegsDto.to);
@@ -121,7 +121,16 @@ export class LegService {
             updatedEngine.tsn = updatedFfFc.fh;
             updatedEngine.csn = updatedFfFc.fc;
             await updatedEngine.save();
+
+            // UPDATE ENGINE LLP
+            const updateLimits = this.reculcEngineLLP(updatedEngine);
+            await this.engineModel.updateOne({ msn: eng.msn }, { $set: { limits: updateLimits } })
         })
+
+
+
+
+
 
 
         // ADD LEG FOR LGs
@@ -174,6 +183,10 @@ export class LegService {
             updatedEngine.tsn = updatedFfFc.fh;
             updatedEngine.csn = updatedFfFc.fc;
             await updatedEngine.save();
+
+            // UPDATE ENGINE LLP
+            const updateLimits = this.reculcEngineLLP(updatedEngine);
+            await this.engineModel.updateOne({ msn: eng.msn }, { $set: { limits: updateLimits } })
         })
 
         return deleteLegDto._id;
@@ -249,4 +262,28 @@ export class LegService {
         return updatedFhFcLegs;
     }
 
+    private reculcEngineLLP(engine: Engine): [Cfm56Limit] {
+        const updatedLimits = engine.limits.map((limit: Cfm56Limit) => {
+            switch (engine.thrust) {
+                case '20000':
+                    const updatedLimitA = (+engine.csn - (+limit.engCsn)) + (+limit.initCsnA)
+                    limit.csnA = updatedLimitA.toString();
+                    return limit;
+                case '22000':
+                    const updatedLimitB = (+engine.csn - (+limit.engCsn)) + (+limit.initCsnB)
+                    limit.csnB = updatedLimitB.toString();
+                    return limit;
+                case '23500':
+                    const updatedLimitC = (+engine.csn - (+limit.engCsn)) + (+limit.initCsnC)
+                    limit.csnC = updatedLimitC.toString();
+                    return limit;
+                default:
+                    return limit;
+            }
+
+
+
+        }) as [Cfm56Limit]
+        return updatedLimits;
+    }
 }

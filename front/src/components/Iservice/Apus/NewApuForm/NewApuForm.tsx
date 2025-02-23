@@ -8,7 +8,7 @@ import { AppDispatch, RootState } from "../../../../store/store";
 import React, { useRef, useState } from "react"
 import Loader from "../../../../common/Loader/Loader";
 import { useNavigate } from "react-router-dom";
-import { ICreateEngineDto } from "../../../../types/types";
+import { ICreateApuDto, ICreateEngineDto } from "../../../../types/types";
 import { addEngine } from "../../../../store/reducers/engineReducer/engineReducer";
 import { addApu } from "../../../../store/reducers/apuReducer/apuReducer";
 
@@ -60,7 +60,7 @@ const NewApuForm: React.FC = () => {
                     if (!values.csn) errors.csn = 'APU Cycles Since New is required';
                     return errors;
                 }}
-                onSubmit={(values: ICreateEngineDto) => {
+                onSubmit={(values: ICreateApuDto) => {
                     (async () => {
                         setIsLoader(true);
                         await dispatch(addApu(values));

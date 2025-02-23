@@ -41,6 +41,7 @@ export interface IAircraft {
 export interface IEngine {
     _id: string | null;
     type: string | null;
+    thrust: string | null;
     msn: string | null;
     manuf: string | null;
     manufDate: string | null;
@@ -52,7 +53,7 @@ export interface IEngine {
     tsnAtLastOverhaul: string | null;
     csnAtLastOverhaul: string | null;
     engineHistory: IEngineHistory[];
-    limits: IEngineLimit[];
+    limits: ICfm56EngineLimit[];
 }
 
 interface ILimits {
@@ -98,6 +99,20 @@ export interface IEngineHistory {
 
 export interface ICreateEngineDto {
     type: string;
+    thrust: string;
+    msn: string;
+    manuf: string;
+    manufDate: string;
+    initFh?: string;
+    initFc?: string;
+    tsn: string;
+    csn: string;
+    lastOverhaulDate?: string;
+    tsnAtLastOverhaul?: string;
+    csnAtLastOverhaul?: string;
+}
+export interface ICreateApuDto {
+    type: string;
     msn: string;
     manuf: string;
     manufDate: string;
@@ -125,20 +140,20 @@ export interface ILimit {
     // threshold: string;
 }
 
-export interface IEngineLimit {
+export interface ICfm56EngineLimit {
+    engCsn: string;
     section: string;
     part: string;
     pn: string;
     sn: string;
-    tsn?: string;
-    csn?: string;
-    csnLim?: string;
-    csnLim1?: string;
-    csnLim2?: string;
-    csnLim3?: string;
-    tsnLim1?: string;
-    tsnLim2?: string;
-    tsnLim3?: string;
+    csnA: string;
+    csnB: string;
+    csnC: string;
+    csn2C: string;
+    csnLimA: string;
+    csnLimB: string;
+    csnLimC: string;
+    csnLim2C: string;
 }
 
 
