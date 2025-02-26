@@ -83,22 +83,6 @@ export class Aircraft {
     @Prop({ required: true })
     fc: string;
 
-    @ApiProperty({ example: '4', description: "The number of aircraft overhauls." })
-    @Prop({ required: false })
-    overhaulNum: number;
-
-    @ApiProperty({ example: '2024-01-30', description: "Last overhaul date" })
-    @Prop({ required: false })
-    lastOverhaulDate: string;
-
-    @ApiProperty({ example: '45231:00', description: "FH at the time of last overhaul" })
-    @Prop({ required: false })
-    tsnAtLastOverhaul: string;
-
-    @ApiProperty({ example: '4523', description: "FC at the time of last overhaul" })
-    @Prop({ required: false })
-    csnAtLastOverhaul: string;
-
     @ApiProperty({ example: '1, 25981', description: "Installed engines" })
     @Prop({ type: [mongoose.SchemaTypes.ObjectId], ref: 'Engine' })
     engines: Engine[];

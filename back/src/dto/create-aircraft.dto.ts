@@ -70,17 +70,4 @@ export class CreateAircraftDto {
   @ApiProperty({ example: '4523', description: "Current FC" })
   @IsNotEmpty()
   readonly fc: string;
-
-  @ApiProperty({ example: '4', description: "The number of aircraft overhauls." })
-  readonly overhaulNum: number;
-
-  @ApiProperty({ example: '2024-01-30', description: "Last overhaul date" })
-  readonly lastOverhaulDate: string;
-
-  @ApiProperty({ example: '45231:00', description: "FH at the time of last overhaul" })
-  readonly tsnAtLastOverhaul: string;
-
-  @ApiProperty({ example: '4523', description: "FC at the time of last overhaul" })
-  readonly csnAtLastOverhaul: string;
-
 }

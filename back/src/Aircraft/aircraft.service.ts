@@ -89,15 +89,15 @@ export class AircraftService {
         const aircraft = await this.aircraftModel.findOne({ msn: removalDataDto.aircraft });
         if (!aircraft) throw new HttpException('Aircraft not found', HttpStatus.BAD_REQUEST);
 
-        engine.engineHistory.push(removalDataDto);
-        engine.position = 0;
-        await engine.save();
-
-        console.log(removalDataDto)
         const index = aircraft.engines.findIndex((engine: Engine) => engine._id.toString() === removalDataDto.engine)
         if (index < 0) throw new HttpException('Engine has already removed', HttpStatus.BAD_REQUEST);
         aircraft.engines.splice(index, 1);
         await aircraft.save();
+
+        const removalData = Object.assign(removalDataDto, { engine: engine.msn });
+        engine.engineHistory.push(removalData);
+        engine.position = 0;
+        await engine.save();     
 
         return engine;
     }
@@ -187,9 +187,9 @@ export class AircraftService {
 
         gear.gearHistory.push(removalDataDto);
         await gear.save();
-       
+
         const index = aircraft.lgs.findIndex((g: Gear) => g._id.toString() === gear._id.toString())
-      
+
         if (index < 0) throw new HttpException('Gear has already removed', HttpStatus.BAD_REQUEST);
         aircraft.lgs.splice(index, 1);
         await aircraft.save();
