@@ -14,7 +14,6 @@ const withErrorMessage = (Component: React.FC) => ({ ...props }) => {
                 {legErrorMessage && <ErrorMess handler={clearLegErrorMessage} message={legErrorMessage} />}
                 <Component {...props} />
             </>)
-
     }
     return <NewComponent />;
 }

@@ -41,7 +41,6 @@ const ErrorMess = ({ route, handler, message }: ErrorMessageProps) => {
                     <Button btnType='button' text='Continue' handler={setSignUpMessage} color="green" />
                 </div >
             </div >
-
         </CSSTransition >
     )
 }

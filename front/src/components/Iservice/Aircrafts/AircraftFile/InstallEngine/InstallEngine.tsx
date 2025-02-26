@@ -56,7 +56,6 @@ const actionOptions: IOption[] = [
 ]
 
 
-
 const InstallEngine: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const nodeRef = useRef(null);
@@ -67,7 +66,16 @@ const InstallEngine: React.FC = () => {
     const [selectedOption, setSelectedOption] = useState<string>('');
     const [isLoader, setIsLoader] = useState<boolean | undefined>(false);
 
-    const options: IOption[] = engines.map((engine: IEngine) => {
+
+
+    const filteredEngines = engines.filter((engine: IEngine) => {
+        if (!engine.position) {
+            return true
+        }
+        return false;
+    })
+
+    const options: IOption[] = filteredEngines.map((engine: IEngine) => {
         return {
             value: engine.msn,
             label: `${engine.type} ${engine.msn}`
@@ -82,7 +90,9 @@ const InstallEngine: React.FC = () => {
 
     const findEngine = (msn: string): IEngine | null => {
         const engine = engines.find((eng: IEngine) => eng.msn === msn);
-        if (!engine) return null;
+        if (!engine) {
+            return null;
+        }
         return engine;
     }
 

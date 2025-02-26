@@ -1,7 +1,7 @@
 import s from "./AircraftFile.module.scss";
 import Button from "../../../../common/buttons/Button";
-import { useSelector } from "react-redux";
-import { RootState } from "../../../../store/store";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "../../../../store/store";
 import { kgToLbs, lbTokg, ltTogal, sortEngines, subtractDatesFromNow, subtractFC, subtractFH } from "../../../../utils/utils";
 import { IAircraft, IEngine, IGear, ILg, ILimit } from "../../../../types/types";
 import engineIcon from "../../../../assets/img/jpeg/engine-removal.jpg";
@@ -13,9 +13,10 @@ import apuIcon from "../../../../assets/img/png/apu.png";
 import lgIcon from "../../../../assets/img/jpeg/lg.png";
 import { useNavigate } from "react-router-dom";
 import ReactToPrint from "react-to-print";
-import { createRef, useRef, useState } from "react";
+import { createRef, useEffect, useRef, useState } from "react";
 import FileWidget from "../../../../common/FileWidget/FileWidget";
 import classNames from "classnames";
+import { clearInstalledEngines, clearInstalledGears } from "../../../../store/reducers/aircraftReducer/aircraftReducer";
 
 
 const AircraftFile = () => {
@@ -26,7 +27,13 @@ const AircraftFile = () => {
     const navigate = useNavigate();
     const componentRef = useRef<HTMLDivElement>(null);
     const date = new Date().toISOString().slice(0, 10);
+    const dispatch = useDispatch<AppDispatch>();
 
+    const backButtonHandler = () => {
+        navigate('/i-service/aircrafts');
+        dispatch(clearInstalledEngines());
+        dispatch(clearInstalledGears());
+    }
 
     const engines = () => sortEngines(installedEngines).map((engine: IEngine) => (
         <div key={engine.msn} className={s.engine}>
@@ -123,6 +130,12 @@ const AircraftFile = () => {
         )
     })
 
+    useEffect(()=> {
+        return () => {
+            dispatch(clearInstalledEngines());
+            dispatch(clearInstalledGears());
+        }
+    }, [])
     return (
         <div className={s.aircraftFile} >
             <h1 className={s.aircraftFile__header} >AIRCRAFT DATA SHEET {aircraft.msn}</h1>
@@ -263,45 +276,6 @@ const AircraftFile = () => {
 
 
                         </div>
-                        {aircraft.overhaulNum ? <div className={s.info__section}>
-                            <h3 className={s.section__header}>Overhaul Info</h3>
-                            <div>
-                                <div className={s.info__section__block} >
-                                    <div className={s.label__block}>
-                                        <label>Overhauls:</label>
-                                    </div>
-                                    <div className={s.span__block} >
-                                        <span>{aircraft.overhaulNum}</span>
-                                    </div>
-                                </div>
-                                <div className={s.info__section__block} >
-                                    <div className={s.label__block}>
-                                        <label>Overhaul Date:</label>
-                                    </div>
-                                    <div className={s.span__block} >
-                                        <span>{aircraft.lastOverhaulDate}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div>
-                                <div className={s.info__section__block} >
-                                    <div className={s.label__block}>
-                                        <label>TSN Overhaul:</label>
-                                    </div>
-                                    <div className={s.span__block} >
-                                        <span>{aircraft.tsnAtLastOverhaul}</span>
-                                    </div>
-                                </div>
-                                <div className={s.info__section__block} >
-                                    <div className={s.label__block}>
-                                        <label>CSN Overhaul:</label>
-                                    </div>
-                                    <div className={s.span__block} >
-                                        <span>{aircraft.csnAtLastOverhaul}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div> : null}
                         <div className={s.engines__section}>
                             <h3 className={s.section__header}>C. POWERPLANT</h3>
                             <h3 className={classNames(s.section__header, s.second)}>D. APU</h3>
@@ -472,7 +446,7 @@ const AircraftFile = () => {
                 </div>
             </div>
             <div className={s.aircraftFile__buttons} >
-                <Button text="Back" btnType="button" color="white" handler={() => navigate('/i-service/aircrafts')} />
+                <Button text="Back" btnType="button" color="white" handler={backButtonHandler} />
             </div>
         </div >
     )

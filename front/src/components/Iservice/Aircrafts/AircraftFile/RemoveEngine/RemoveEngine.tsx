@@ -138,7 +138,6 @@ const RemoveEngine: React.FC = () => {
                         values.position = findEngine(selectedOption.msn)?.position;
                         await dispatch(removeEngine(values));
                     })()
-
                 }}
             >{({
                 values,

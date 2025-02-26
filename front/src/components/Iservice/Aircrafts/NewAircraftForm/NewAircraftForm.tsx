@@ -11,6 +11,7 @@ import Loader from "../../../../common/Loader/Loader";
 import { useNavigate } from "react-router-dom";
 import { compose } from "@reduxjs/toolkit";
 import withSuccessMessage from "../../../../HOC/wirhSuccessMessage";
+import withErrorMessage from "../../../../HOC/wirhErrorMessage";
 
 export interface ICreateAircraftDto {
     typeCert: string;
@@ -30,10 +31,6 @@ export interface ICreateAircraftDto {
     initFc: string;
     fh: string;
     fc: string;
-    overhaulNum?: number;
-    lastOverhaulDate?: string;
-    tsnAtLastOverhaul?: string;
-    csnAtLastOverhaul?: string;
 }
 
 const NewAircraftForm: React.FC = () => {
@@ -47,7 +44,7 @@ const NewAircraftForm: React.FC = () => {
             <Transition in={isLoader} timeout={400} unmountOnExit mountOnEnter >
                 {(state) => <Loader state={state} />}
             </Transition>
-            <h1 className={s.newAircraftForm__header} >Add new Aircraft</h1>
+            <h1 className={s.newAircraftForm__header} >ADD NEW AIRCRAFT</h1>
             <Formik
                 initialValues={{
                     type: '737-31B',
@@ -67,10 +64,6 @@ const NewAircraftForm: React.FC = () => {
                     initFc: '41705',
                     fh: '64353:00',
                     fc: '41705',
-                    overhaulNum: 0,
-                    lastOverhaulDate: '',
-                    tsnAtLastOverhaul: '',
-                    csnAtLastOverhaul: ''
                 }}
                 validate={values => {
                     interface ICreateAircraftErrorsDto {
@@ -91,10 +84,6 @@ const NewAircraftForm: React.FC = () => {
                         initFc?: string;
                         fh?: string;
                         fc?: string;
-                        overhaulNum?: number;
-                        lastOverhaulDate?: string;
-                        tsnAtLastOverhaul?: string;
-                        csnAtLastOverhaul?: string;
                     }
                     const errors: ICreateAircraftErrorsDto = {};
                     if (!values.type) errors.type = 'Aircraft type is required';
@@ -237,33 +226,13 @@ const NewAircraftForm: React.FC = () => {
                                 <Field type="initFc" id="initFc" name="initFc"
                                     placeholder="45236" error={errors.initFc} as={Input} />
                             </div>
-                            <div className={s.inputs__block}>
-                                <label>Number of aircraft overhauls</label>
-                                <Field type="overhaulNum" id="overhaulNum" name="overhaulNum"
-                                    placeholder="2" error={errors.overhaulNum} as={Input} />
-                            </div>
-                            <div className={s.inputs__block}>
-                                <label>Last overhaul date</label>
-                                <Field type="lastOverhaulDate" id="lastOverhaulDate" name="lastOverhaulDate"
-                                    placeholder="2022-01-30" error={errors.lastOverhaulDate} as={Input} />
-                            </div>
-                            <div className={s.inputs__block}>
-                                <label>FH at last overhaul</label>
-                                <Field type="tsnAtLastOverhaul" id="tsnAtLastOverhaul" name="tsnAtLastOverhaul"
-                                    placeholder="45231:00" error={errors.tsnAtLastOverhaul} as={Input} />
-                            </div>
-                            <div className={s.inputs__block}>
-                                <label>FC at last overhaul</label>
-                                <Field type="csnAtLastOverhaul" id="csnAtLastOverhaul" name="csnAtLastOverhaul"
-                                    placeholder="4523" error={errors.csnAtLastOverhaul} as={Input} />
-                            </div>
                         </div>
 
                     </div>
                     <div className={s.btns}>
-                        <Button text="Add" color="green" btnType="submit" />
                         <Button text="Back" color="white"
                             handler={() => navigate('/i-service/aircrafts')} btnType={"button"} />
+                        <Button text="Add" color="green" btnType="submit" />
                     </div>
                 </Form>
             )}
@@ -274,4 +243,6 @@ const NewAircraftForm: React.FC = () => {
 }
 
 
-export default compose(withSuccessMessage)(NewAircraftForm) ;
+const EnhancedComponent = withSuccessMessage(NewAircraftForm);
+
+export default compose(withErrorMessage)(EnhancedComponent);

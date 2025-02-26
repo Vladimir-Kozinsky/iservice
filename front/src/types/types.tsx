@@ -27,10 +27,6 @@ export interface IAircraft {
     initFc: string;
     fh: string;
     fc: string;
-    overhaulNum?: number;
-    lastOverhaulDate?: string;
-    tsnAtLastOverhaul?: string;
-    csnAtLastOverhaul?: string;
     engines: string[];
     apu: any;
     legs: ILeg[];

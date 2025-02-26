@@ -13,6 +13,8 @@ import { Transition } from 'react-transition-group';
 import Loader from '../../../../common/Loader/Loader';
 import DeleteMessage from '../../../../common/messages/DeleteMessage/DeleteMessage';
 import Leg from './Leg/Leg';
+import withErrorMessage from '../../../../HOC/wirhErrorMessage';
+import { compose } from '@reduxjs/toolkit';
 
 interface IFilterValues {
     from: string;

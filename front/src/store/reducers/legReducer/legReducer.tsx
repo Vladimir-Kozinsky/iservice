@@ -96,7 +96,7 @@ const legSlice = createSlice({
             state.currentPage = 1;
         })
         builder.addCase(getlastTenLegs.rejected, (state: ILegState, action: PayloadAction<any>) => {
-            state.errorMessage = action.payload.message;
+           // state.errorMessage = action.payload.message;
         })
     },
 })

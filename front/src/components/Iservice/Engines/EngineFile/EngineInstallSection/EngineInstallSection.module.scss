@@ -1,0 +1,31 @@
+@import "../../../../../sass/main.scss";
+
+.section {
+    @include section();
+    display: flex;
+    justify-content: space-around;
+}
+
+.section__header {
+    @include section__header()
+}
+
+.section__block {
+    @include blue_text();
+    width: fit-content;
+    display: flex;
+    gap: 5px;
+    margin-bottom: 5px;
+    border-bottom: 1px dashed rgb(216, 216, 216);
+
+    .label__block {
+        width: 120px;
+        color: gray;
+        font-weight: 400;
+    }
+
+    .span__block {
+
+        width: fit-content;
+    }
+}

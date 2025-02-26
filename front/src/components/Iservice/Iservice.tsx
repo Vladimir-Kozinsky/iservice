@@ -47,7 +47,7 @@ const Iservice: React.FC = () => {
             <main className={s.main}>
                 <nav className={s.nav} >
                     <div className={s.nav_container}>
-                        <NavLink className={s.nav_container_link} to="profile">Profile</NavLink>
+                        {/* <NavLink className={s.nav_container_link} to="profile">Profile</NavLink> */}
                         <NavLink className={s.nav_container_link} to="/i-service">Dashboard</NavLink>
                         <NavLink className={s.nav_container_link} to="aircrafts">Aircrafts</NavLink>
                         <NavLink className={s.nav_container_link} to="engines">Engines</NavLink>

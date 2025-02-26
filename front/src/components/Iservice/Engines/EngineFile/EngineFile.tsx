@@ -12,6 +12,7 @@ import EngineInfoSection from "./EngineInfoSection/EngineInfoSection";
 import EngineOverhaulSection from "./EngineOverhaulSection/EngineOverhaulSection";
 import EngineHistory from "./EngineHistory/EngineHistorySection";
 import Cfm56LimitSection from "./LImitSection/Cfm56LimitSection";
+import EngineInstallSection from "./EngineInstallSection/EngineInstallSection";
 
 const EngineFile: React.FC = () => {
     const engine = useSelector((state: RootState) => state.engine.choosedEngine);
@@ -24,6 +25,7 @@ const EngineFile: React.FC = () => {
                 <div className={s.info__container}>
                     <div className={s.info}>
                         <EngineInfoSection engine={engine} />
+                        {engine.position ?  <EngineInstallSection engine={engine} /> : null}
                         <EngineOverhaulSection engine={engine} />
                         <Cfm56LimitSection engine={engine} />
                         <EngineHistory engine={engine} />

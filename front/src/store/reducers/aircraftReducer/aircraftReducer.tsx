@@ -40,10 +40,6 @@ const initialState: IAircraftState = {
         initFc: '',
         fh: '',
         fc: '',
-        overhaulNum: 0,
-        lastOverhaulDate: '',
-        tsnAtLastOverhaul: '',
-        csnAtLastOverhaul: '',
         engines: [],
         apu: {},
         legs: [],
@@ -75,6 +71,14 @@ const aircraftSlice = createSlice({
         updateFhFc(state: IAircraftState, action: PayloadAction<IUpdateFhFcDto>) {
             state.choosedAircraft.fh = action.payload.fh
             state.choosedAircraft.fc = action.payload.fc
+        },
+
+        clearInstalledEngines(state: IAircraftState) {
+            state.installedEngines = [];
+        },
+
+        clearInstalledGears(state: IAircraftState) {
+            state.installedGears = [];
         }
     },
     extraReducers: (builder) => {
@@ -379,6 +383,6 @@ export const removeGear = createAsyncThunk(
     }
 )
 
-export const { setChoosedAircraft, clearSuccessMessage, clearErrorMessage, updateFhFc } = aircraftSlice.actions
+export const { setChoosedAircraft, clearSuccessMessage, clearErrorMessage, updateFhFc, clearInstalledEngines, clearInstalledGears } = aircraftSlice.actions
 
 export default aircraftSlice.reducer;
