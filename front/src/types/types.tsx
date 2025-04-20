@@ -232,7 +232,25 @@ export interface IGear {
     nextInspDate: string;
     tsnAtNextInsp: string;
     csnAtNextInsp: string;
-    gearHistory: IGearHistory[]
+    gearHistory: IGearHistory[];
+    limits: IGearLimit[];
+}
+
+export interface IGearLimit {
+    gearTsn: string;
+    gearCsn: string;
+    item: string;
+    part: string;
+    pn: string;
+    sn: string;
+    instDate: string;
+    initTsn: string;
+    initCsn: string;
+    tsn: string;
+    csn: string;
+    instCsn: string;
+    tsnLim: string;
+    csnLim: string;
 }
 
 export interface ICreateGearDto {
@@ -262,4 +280,19 @@ export interface IGearHistory {
     gearTsn: string;
     gearCsn: string;
     reason: string
+}
+
+export interface IUnit {
+    _id: string;
+    ata: string;
+    pn: string;
+    type: string;
+    disc: string;
+    quantity: number;
+    eapack: string;
+    location: string;
+    condition: string;
+    lifelimit: string;
+    shelflife: string;
+    remarks: string;
 }

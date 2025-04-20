@@ -1,0 +1,42 @@
+.title {
+    position: relative;
+    background-color: #5e5373;
+    border: 1px dashed #ece89d;
+    padding: 2px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    min-width: 85px;
+
+    &:first-child {
+        min-width: 50px;
+    }
+
+    span {
+        cursor: pointer;
+    }
+}
+
+.title__wide {
+    min-width: 200px;
+}
+
+.title__btn {
+    position: absolute;
+    border: none;
+    border-radius: 2px;
+    background-color: #d7d0e4;
+    width: 18px;
+    height: 18px;
+    right: 1px;
+    bottom: 1px;
+    cursor: pointer;
+
+    img {
+        position: relative;
+        left: -4px;
+        width: 15px;
+    }
+
+
+}

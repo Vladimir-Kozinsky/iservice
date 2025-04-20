@@ -33,7 +33,7 @@ const Cfm56LimitSection: React.FC<LimitSectionProps> = ({ engine }) => {
         <div className={s.section}>
             <h3 className={s.section__header}>Live Limits Parts</h3>
             {!engine.limits.length && <span className={s.section__message} >No limits set</span>}
-            <div className={s.action}>
+            {engine.limits.length ? <div className={s.action}>
                 <div className={s.action__value} >IIN</div>
                 <div className={discr__value} >DESCRIPTION</div>
                 <div className={pn__value} >PART NUMBER</div>
@@ -71,7 +71,7 @@ const Cfm56LimitSection: React.FC<LimitSectionProps> = ({ engine }) => {
                         <div className={s.action__value} >C</div>
                     </div>
                 </div>
-            </div>
+            </div> : null}
             {engine.limits.map((limit: ICfm56EngineLimit) => {
                 return (
                     <div className={s.action}>

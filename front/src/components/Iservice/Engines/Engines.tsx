@@ -11,7 +11,7 @@ const Engines: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
     const enginessArr = useSelector((state: RootState) => state.engine.engines);
 
-    const engines = () => enginessArr.map((engine: IEngine)=> (
+    const engines = () => enginessArr.map((engine: IEngine) => (
         <EngineWidget key={engine._id} engine={engine} />
     ))
 
@@ -22,7 +22,7 @@ const Engines: React.FC = () => {
     return (
         <div className={s.engines} >
             {engines()}
-            <EmptyWidget route={"new-engine"}  />
+            <EmptyWidget route={"new-engine"} />
         </div>
     )
 }

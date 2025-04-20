@@ -1,6 +1,7 @@
 import axios from "axios";
 import generalAPIData from "./generalData";
 import { ICreateApuDto, ICreateGearDto } from "../types/types";
+import { INewGearLimitDto } from "../components/Iservice/Gears/GearFile/NewGearLimit/NewGearLimit";
 
 const proxy = axios.create({
     baseURL: generalAPIData.baseURL
@@ -22,12 +23,12 @@ const gearAPI = {
         return response;
     },
 
-    // async addLimit(limitDto: INewLimitDto) {
-    //     const response = await proxy.post('/apu/limit/add', limitDto);
-    //     return response;
-    // },
+    async addLimit(limitDto: INewGearLimitDto) {
+        const response = await proxy.post('/gear/limit/add', limitDto);
+        return response;
+    },
     // async delLimit(limitDto: IDelEngineLimitDto) {
-    //     const response = await proxy.post('/apu/limit/delete', limitDto);
+    //     const response = await proxy.post('/engine/limit/delete', limitDto);
     //     return response;
     // },
 

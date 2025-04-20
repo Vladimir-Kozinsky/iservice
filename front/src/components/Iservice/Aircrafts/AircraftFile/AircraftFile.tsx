@@ -31,8 +31,8 @@ const AircraftFile = () => {
 
     const backButtonHandler = () => {
         navigate('/i-service/aircrafts');
-        dispatch(clearInstalledEngines());
-        dispatch(clearInstalledGears());
+        // dispatch(clearInstalledEngines());
+        // dispatch(clearInstalledGears());
     }
 
     const engines = () => sortEngines(installedEngines).map((engine: IEngine) => (
@@ -130,10 +130,10 @@ const AircraftFile = () => {
         )
     })
 
-    useEffect(()=> {
+    useEffect(() => {
         return () => {
-            dispatch(clearInstalledEngines());
-            dispatch(clearInstalledGears());
+            //  dispatch(clearInstalledEngines());
+            //dispatch(clearInstalledGears());
         }
     }, [])
     return (
@@ -312,7 +312,7 @@ const AircraftFile = () => {
                                 {engines()}
                             </div>
 
-                            { aircraft.apu && <div className={classNames(s.apu)}>
+                            {aircraft.apu && <div className={classNames(s.apu)}>
                                 <div className={s.span__block} >
                                     <span>{apu.type ? apu.type : 'N/A'}</span>
                                 </div>

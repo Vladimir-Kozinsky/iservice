@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import s from "./FileWidget.module.scss"
+import { IEngine } from "../../types/types";
 
 type IFileWidgetProps = {
     text: string;
@@ -14,7 +15,7 @@ const FileWidget = ({ text, img, handler, isMute }: IFileWidgetProps) => {
         if (!isMute && handler) handler()
     }
 
-    const widgetStyle = classNames(s.widget, isMute&& s["mute"])
+    const widgetStyle = classNames(s.widget, isMute && s["mute"])
 
     return (
         <div className={widgetStyle} onClick={onClickHandler} >

@@ -10,7 +10,6 @@ import { AppDispatch, RootState } from "../../../../../store/store";
 import { ILimit } from "../../../../../types/types";
 import Button from "../../../../../common/buttons/Button";
 import withSuccessMessage from "../../../../../HOC/wirhSuccessMessage";
-import { delLimit } from "../../../../../store/reducers/apuReducer/apuReducer";
 
 export interface IDelApuLimitDto {
     msn: string;
@@ -79,7 +78,7 @@ const DelApuLimit = () => {
                     (async () => {
                         if (apu.msn) values.msn = apu.msn;
                         values.limitId = selectedOption;
-                        dispatch(delLimit(values));
+                       // dispatch(delLimit(values));
                         setSelectedOption('');
                     })()
                 }}

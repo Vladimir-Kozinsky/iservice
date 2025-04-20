@@ -68,14 +68,14 @@ const engineSlice = createSlice({
         })
 
         builder.addCase(delLimit.fulfilled, (state: IEngineState, action: PayloadAction<string>) => {
-            // const limitId = action.payload;
-            // const index = state.choosedEngine.limits.findIndex((limit: ILimit) => limit._id === limitId);
-            // state.choosedEngine.limits.splice(index, 1);
+            const partSn = action.payload;
+            const index = state.choosedEngine.limits.findIndex((limit: ICfm56EngineLimit) => limit.sn === partSn);
+            state.choosedEngine.limits.splice(index, 1);
 
-            // const engine = state.engines.find((aircraft: IEngine) => aircraft.msn === state.choosedEngine.msn);
-            // const indexEngineArr = engine?.limits.findIndex((limit: ILimit) => limit._id === limitId);
-            // if (engine && (indexEngineArr || indexEngineArr === 0)) engine.limits.splice(indexEngineArr, 1);
-            // state.successMessage = "Limit successfully removed";
+            const engine = state.engines.find((aircraft: IEngine) => aircraft.msn === state.choosedEngine.msn);
+            const indexEngineArr = engine?.limits.findIndex((limit: ICfm56EngineLimit) => limit.sn === partSn);
+            if (engine && (indexEngineArr || indexEngineArr === 0)) engine.limits.splice(indexEngineArr, 1);
+            state.successMessage = "Limit successfully removed";
         })
         builder.addCase(delLimit.rejected, (state: IEngineState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;

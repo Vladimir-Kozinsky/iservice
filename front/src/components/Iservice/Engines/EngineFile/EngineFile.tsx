@@ -5,6 +5,7 @@ import { RootState } from "../../../../store/store";
 import FileWidget from "../../../../common/FileWidget/FileWidget";
 import Button from "../../../../common/buttons/Button";
 import printIcon from "../../../../assets/img/png/print-icon.png";
+import engineIcon from "../../../../assets/img/png/engine-icon.png";
 import timerIcon from "../../../../assets/img/jpeg/timer.jpg";
 import timerDelIcon from "../../../../assets/img/jpeg/timerDel.jpg";
 import { useNavigate } from "react-router-dom";
@@ -32,9 +33,10 @@ const EngineFile: React.FC = () => {
                     </div>
                 </div>
                 <div className={s.engineFile__container__buttons} >
+                    <FileWidget text="Edit Engine" img={engineIcon} handler={() => navigate('edit')} />
                     <FileWidget text="Print report" img={printIcon} handler={() => navigate('report')} />
-                    <FileWidget text="new limit" img={timerIcon} handler={() => navigate('limit')} />
-                    <FileWidget text="del limit" img={timerDelIcon} handler={() => navigate('limit/del')} />
+                    <FileWidget text="ADD LLP" img={timerIcon} handler={() => navigate('limit')} />
+                    <FileWidget text="Remove LLP" img={timerDelIcon} handler={() => navigate('limit/del')} />
                 </div>
             </div>
             <div className={s.engineFile__buttons} >

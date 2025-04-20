@@ -46,31 +46,19 @@ const AircraftWidget: React.FC<AircraftWidgetProps> = ({ aircraft }) => {
     }
 
     return (
-        <>
-            <div className={s.widget} onClick={widgetOnClick} >
+        <div className={s.widget__container} onClick={widgetOnClick}>
+            <div className={s.widget}  >
                 <img className={s.widget__plane} src={plane} alt="plane-icon" />
+            </div >
+            <div className={s.info}>
                 <div className={s.widget__data}>
+                    <h3 className={s.widget__data__value}>{`Reg.: ${aircraft?.regNum}`}</h3>
                     <h3 className={s.widget__data__value}>{`Type: ${aircraft?.type}`}</h3>
                     <h3 className={s.widget__data__value}>{`MSN: ${aircraft?.msn}`}</h3>
                 </div>
+            </div>
 
-                {/* <div className={s.widget__data__engines}>
-                    {aircraft.engines.map((engine: IEngine, pos: number) => (
-                        < div className={s.engine}>
-                            <img src={engineIcon} alt="engine-icon" />
-                            <span>{`${pos + 1}: ${cutData(setEngine(pos + 1, aircraft.engines))}`}</span>
-                        </div>
-                    ))}
-                </div > */}
-                <div className={s.engine}>
-                    <img src={apu} alt="engine-icon" />
-                    {aircraft.apu
-                        ? <span>{`${cutData(aircraft.apu.msn)}`}</span>
-                        : <span>None</span>}
-                </div>
-
-            </div >
-        </>
+        </div>
 
     )
 }

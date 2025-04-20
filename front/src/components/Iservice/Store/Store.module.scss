@@ -1,0 +1,67 @@
+@import "./../../../sass/main.scss";
+
+.store {
+    grid-area: b;
+    background-color: rgb(255, 255, 255, 0.4);
+    padding: 20px;
+    box-shadow: -2px 0px 7px -3px rgb(5, 29, 66, 0.3);
+    position: relative;
+    overflow-x: scroll;
+    max-width: 950px;
+}
+
+.store__header {
+    @include blue_text(26px);
+    text-align: center;
+}
+
+.unit {
+    padding-top: 20px;
+    display: flex;
+}
+
+.search {
+    position: relative;
+    padding-top: 20px;
+}
+
+.search__input {
+    width: 230px;
+    height: 38px;
+    border: #0A2640 2px solid;
+    border-radius: 24px;
+    background-color: #FFFFFF;
+    padding: 0 20px;
+    color: #0A2640;
+    font-size: 16px;
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 400;
+    text-align: start;
+
+    &:hover {
+        border: #2e6497 2px solid;
+    }
+
+    &:focus {
+        outline: none;
+        border: #2e6497 2px solid;
+    }
+}
+
+.search__icon {
+    position: absolute;
+    height: 35px;
+    left: 280px;
+    top: 24px;
+}
+
+
+.store__buttons {
+    position: absolute;
+    width: 300px;
+    left: calc(50% - 150px);
+    display: flex;
+    justify-content: space-between;
+    bottom: 20px;
+}

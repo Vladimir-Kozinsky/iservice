@@ -36,6 +36,9 @@ import InstallGear from "./Aircrafts/AircraftFile/InstallGear/InstallGear";
 import RemoveGear from "./Aircrafts/AircraftFile/RemoveGear/RemoveGear";
 import GearFile from "./Gears/GearFile/GearFile";
 import NewEngineLimit from "./Engines/EngineFile/NewCfm56Limit/NewCfm56Limit";
+import classNames from "classnames";
+import NewGearLimit from "./Gears/GearFile/NewGearLimit/NewGearLimit";
+import Store from "./Store/Store";
 
 
 const Iservice: React.FC = () => {
@@ -49,10 +52,24 @@ const Iservice: React.FC = () => {
                     <div className={s.nav_container}>
                         {/* <NavLink className={s.nav_container_link} to="profile">Profile</NavLink> */}
                         <NavLink className={s.nav_container_link} to="/i-service">Dashboard</NavLink>
-                        <NavLink className={s.nav_container_link} to="aircrafts">Aircrafts</NavLink>
-                        <NavLink className={s.nav_container_link} to="engines">Engines</NavLink>
-                        <NavLink className={s.nav_container_link} to="apus">APUs</NavLink>
-                        <NavLink className={s.nav_container_link} to="gears">Landing Gears</NavLink>
+                        <div className={s.block}>
+                            <NavLink className={({ isActive, isPending }) =>
+                                isPending ? "pending" : isActive ? classNames(s.nav_container_link, s.active) : s.nav_container_link
+                            } to="aircrafts">Aircrafts</NavLink>
+                            <NavLink className={({ isActive, isPending }) =>
+                                isPending ? "pending" : isActive ? classNames(s.nav_container_link, s.active) : s.nav_container_link
+                            } to="engines">Engines</NavLink>
+                            <NavLink className={({ isActive, isPending }) =>
+                                isPending ? "pending" : isActive ? classNames(s.nav_container_link, s.active) : s.nav_container_link
+                            } to="apus">APUs</NavLink>
+                            <NavLink className={({ isActive, isPending }) =>
+                                isPending ? "pending" : isActive ? classNames(s.nav_container_link, s.active) : s.nav_container_link
+                            } to="gears">Landing Gears</NavLink>
+                            <NavLink className={({ isActive, isPending }) =>
+                                isPending ? "pending" : isActive ? classNames(s.nav_container_link, s.active) : s.nav_container_link
+                            } to="store">Store</NavLink>
+                        </div>
+
                     </div>
                 </nav>
                 <Routes>
@@ -91,6 +108,9 @@ const Iservice: React.FC = () => {
                     <Route path="gears" element={<Gears />} />
                     <Route path="gears/new-gear" element={<NewGearForm />} />
                     <Route path="gear/:gearId" element={<GearFile />} />
+                    <Route path="gear/:gearId/limit" element={<NewGearLimit />} />
+
+                    <Route path="store" element={<Store />} />
                 </Routes>
             </main>
             <Footer theme="light" />

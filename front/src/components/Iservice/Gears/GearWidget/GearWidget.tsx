@@ -22,15 +22,18 @@ const GearWidget: React.FC<GearWidgetProps> = ({ gear }) => {
     }
 
     return (
-        <>
-            <div className={s.widget} onClick={widgetOnClick} >
+        <div className={s.widget__container} onClick={widgetOnClick}>
+            <div className={s.widget} >
                 <img className={s.widget__img} src={gearIcon} alt="gear-icon" />
+            </div>
+            <div className={s.info}>
                 <div className={s.widget__data}>
                     <h3 className={s.widget__data__value}>{`Type: ${gear.pos}`}</h3>
-                    <h3 className={s.widget__data__value}>{`MSN: ${gear.sn}`}</h3>
+                    <h3 className={s.widget__data__value}>{`PN: ${gear.pn}`}</h3>
+                    <h3 className={s.widget__data__value}>{`SN: ${gear.sn}`}</h3>
                 </div>
             </div>
-        </>
+        </div>
     )
 }
 

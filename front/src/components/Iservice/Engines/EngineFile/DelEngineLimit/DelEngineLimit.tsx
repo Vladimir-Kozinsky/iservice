@@ -7,14 +7,14 @@ import { useNavigate } from "react-router-dom";
 import Select, { ActionMeta, SingleValue } from "react-select";
 import { compose } from "@reduxjs/toolkit";
 import { AppDispatch, RootState } from "../../../../../store/store";
-import { ILimit } from "../../../../../types/types";
+import { ICfm56EngineLimit, ILimit } from "../../../../../types/types";
 import Button from "../../../../../common/buttons/Button";
 import withSuccessMessage from "../../../../../HOC/wirhSuccessMessage";
 import { delLimit } from "../../../../../store/reducers/engineReducer/engineReducer";
 
 export interface IDelEngineLimitDto {
     msn: string;
-    limitId: string;
+    sn: string;
 }
 
 interface IOption {
@@ -29,7 +29,8 @@ const customStyles = {
     }),
     control: (provided: any) => ({
         ...provided,
-        width: '232px',
+       // width: '232px',
+        width: '370px',
         height: '38px',
         border: '#0A2640 2px solid',
         borderRadius: '24px',
@@ -52,12 +53,12 @@ const DelEngineLimit = () => {
         }
     }
 
-    // const options: IOption[] = engine.limits.map((limit: ILimit) => {
-    //     return {
-    //         value: limit._id,
-    //         label: limit.title,
-    //     }
-    // })
+    const options: IOption[] = engine.limits.map((limit: ICfm56EngineLimit) => {
+        return {
+            value: limit.sn,
+            label: `${limit.section} ${limit.part} ${limit.pn} ${limit.sn}`,
+        }
+    })
 
     return (
         <div className={s.limit}>
@@ -65,7 +66,7 @@ const DelEngineLimit = () => {
             <Formik
                 initialValues={{
                     msn: '',
-                    limitId: '',
+                    sn: '',
                 }}
                 validate={values => {
                     interface IDelLimitErrorsDto {
@@ -78,7 +79,7 @@ const DelEngineLimit = () => {
                 onSubmit={(values: IDelEngineLimitDto) => {
                     (async () => {
                         if (engine.msn) values.msn = engine.msn;
-                        values.limitId = selectedOption;
+                        values.sn = selectedOption;
                         dispatch(delLimit(values));
                         setSelectedOption('');
                     })()
@@ -108,7 +109,7 @@ const DelEngineLimit = () => {
                     <div className={s.inputs}>
                         <div className={s.inputs__block}>
                             <label>Dependence<span>*</span></label>
-                            {/* <Select options={options} onChange={onChangeOption} styles={customStyles} /> */}
+                            <Select options={options} onChange={onChangeOption} styles={customStyles} />
                         </div>
                     </div>
                     <div className={s.btns}>

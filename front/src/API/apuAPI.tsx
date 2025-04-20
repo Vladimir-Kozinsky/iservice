@@ -34,10 +34,10 @@ const apuAPI = {
         const response = await proxy.post('/apu/limit/add', limitDto);
         return response;
     },
-    async delLimit(limitDto: IDelEngineLimitDto) {
-        const response = await proxy.post('/apu/limit/delete', limitDto);
-        return response;
-    },
+    // async delLimit(limitDto: IDelEngineLimitDto) {
+    //     const response = await proxy.post('/apu/limit/delete', limitDto);
+    //     return response;
+    // },
 
     // async updateEngine(apu: IApu) {
     //     const response = await proxy.post('/apu/update', apu);

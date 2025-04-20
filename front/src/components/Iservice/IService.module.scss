@@ -58,8 +58,15 @@
 
     .nav_container {
         display: flex;
-        width: fit-content;
+        width: 150px;
         margin: 20px auto 0px;
+        flex-direction: column;
+    }
+
+    .block {
+        display: flex;
+        width: fit-content;
+        margin-left: 18px;
         flex-direction: column;
     }
 
@@ -74,12 +81,16 @@
         &:hover {
             cursor: pointer;
             color: $blue_text_color_hover;
-            left: 5px;
+            left: 3px;
         }
 
         &:active {
             color: $blue_text_color_active;
         }
     }
+}
 
+.nav_container_link.active {
+    margin-left: 10px;
+    color: gray
 }

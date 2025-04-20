@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ICreateGearDto, IGear } from '../../../types/types';
+import { ICreateGearDto, IGear, IGearLimit } from '../../../types/types';
 import { IGearRejectResponse, IGearState } from './gearReducerTypes';
 import gearAPI from '../../../API/gearAPI';
+import { INewGearLimitDto } from '../../../components/Iservice/Gears/GearFile/NewGearLimit/NewGearLimit';
 
 const initialState: IGearState = {
     choosedGear: {
@@ -17,7 +18,8 @@ const initialState: IGearState = {
         nextInspDate: '',
         tsnAtNextInsp: '',
         csnAtNextInsp: '',
-        gearHistory: []
+        gearHistory: [],
+        limits: [],
     },
     gears: [],
     errorMessage: null,
@@ -46,13 +48,24 @@ const gearSlice = createSlice({
             state.errorMessage = action.payload.message;
         })
 
+        builder.addCase(addLimit.fulfilled, (state: IGearState, action: PayloadAction<IGearLimit>) => {
+            state.choosedGear.limits.push(action.payload);
+            const gear = state.gears.find((gear: IGear) => gear.sn === state.choosedGear.sn);
+            gear?.limits.push(action.payload);
+            state.successMessage = "New Life Limit successfully added";
+        })
+
+        builder.addCase(addLimit.rejected, (state: IGearState, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
+        })
+
         // builder.addCase(addLimit.fulfilled, (state: IApuState, action: PayloadAction<ILimit>) => {
         // state.choosedApu.limits.push(action.payload);
         // const apu = state.apus.find((apu: IApu) => apu.msn === state.choosedApu.msn);
         // apu?.limits.push(action.payload);
         // state.successMessage = "New limit successfully added";
         // })
-        
+
         // builder.addCase(addLimit.rejected, (state: IApuState, action: PayloadAction<any>) => {
         //     state.errorMessage = action.payload.message;
         // })
@@ -96,30 +109,18 @@ export const getGears = createAsyncThunk(
     }
 )
 
-// export const addLimit = createAsyncThunk(
-//     'apu/limit/add',
-//     async (limitDto: INewLimitDto, thunkAPI) => {
-//         try {
-//             const response = await apuAPI.addLimit(limitDto);
-//             return response.data;
-//         } catch (error: any) {
-//             return thunkAPI.rejectWithValue(error.response.data as IApuRejectResponse);
-//         }
+export const addLimit = createAsyncThunk(
+    'engine/limit/add',
+    async (limitDto: INewGearLimitDto, thunkAPI) => {
+        try {
+            const response = await gearAPI.addLimit(limitDto);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IGearRejectResponse);
+        }
 
-//     }
-// )
-
-// export const delLimit = createAsyncThunk(
-//     'apu/limit/delete',
-//     async (limitDto: IDelApuLimitDto, thunkAPI) => {
-//         try {
-//             const response = await apuAPI.delLimit(limitDto);
-//             return response.data;
-//         } catch (error: any) {
-//             return thunkAPI.rejectWithValue(error.response.data as IApuRejectResponse);
-//         }
-//     }
-// )
+    }
+)
 
 export const { setChoosedGear } = gearSlice.actions
 

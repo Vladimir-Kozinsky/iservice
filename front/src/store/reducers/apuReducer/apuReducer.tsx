@@ -65,7 +65,7 @@ const apuSlice = createSlice({
             state.errorMessage = action.payload.message;
         })
 
-        builder.addCase(delLimit.fulfilled, (state: IApuState, action: PayloadAction<string>) => {
+        // builder.addCase(delLimit.fulfilled, (state: IApuState, action: PayloadAction<string>) => {
             // const limitId = action.payload;
             // const index = state.choosedApu.limits.findIndex((limit: ILimit) => limit._id === limitId);
             // state.choosedApu.limits.splice(index, 1);
@@ -73,10 +73,10 @@ const apuSlice = createSlice({
             // const indexApuArr = apu?.limits.findIndex((limit: ILimit) => limit._id === limitId);
             // if (apu && (indexApuArr || indexApuArr === 0)) apu.limits.splice(indexApuArr, 1);
             // state.successMessage = "Limit successfully removed";
-        })
-        builder.addCase(delLimit.rejected, (state: IApuState, action: PayloadAction<any>) => {
-            state.errorMessage = action.payload.message;
-        })
+     //   })
+        // builder.addCase(delLimit.rejected, (state: IApuState, action: PayloadAction<any>) => {
+        //     state.errorMessage = action.payload.message;
+        // })
     },
 })
 
@@ -117,17 +117,17 @@ export const addLimit = createAsyncThunk(
     }
 )
 
-export const delLimit = createAsyncThunk(
-    'apu/limit/delete',
-    async (limitDto: IDelApuLimitDto, thunkAPI) => {
-        try {
-            const response = await apuAPI.delLimit(limitDto);
-            return response.data;
-        } catch (error: any) {
-            return thunkAPI.rejectWithValue(error.response.data as IApuRejectResponse);
-        }
-    }
-)
+// export const delLimit = createAsyncThunk(
+//     'apu/limit/delete',
+//     async (limitDto: IDelApuLimitDto, thunkAPI) => {
+//         try {
+//             const response = await apuAPI.delLimit(limitDto);
+//             return response.data;
+//         } catch (error: any) {
+//             return thunkAPI.rejectWithValue(error.response.data as IApuRejectResponse);
+//         }
+//     }
+// )
 
 export const { setChoosedApu, clearApuSuccessMessage, clearApuErrorMessage } = apuSlice.actions
 

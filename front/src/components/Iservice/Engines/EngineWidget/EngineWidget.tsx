@@ -22,16 +22,18 @@ const EngineWidget: React.FC<EngineWidgetProps> = ({ engine }) => {
     }
 
     return (
-        <>
-            <div className={s.widget} onClick={widgetOnClick} >
+        <div className={s.widget__container} onClick={widgetOnClick}>
+            <div className={s.widget} >
                 <img className={s.widget__engine} src={engineIcon} alt="plane-icon" />
+            </div>
+            <div className={s.info}>
                 <div className={s.widget__data}>
                     <h3 className={s.widget__data__value}>{`Type: ${engine?.type}`}</h3>
                     <h3 className={s.widget__data__value}>{`MSN: ${engine?.msn}`}</h3>
+                    <h3 className={s.widget__data__value}>{`Installed: ${engine?.position ? 'Yes' : 'No'}`}</h3>
                 </div>
-                
             </div>
-        </>
+        </div>
     )
 }
 

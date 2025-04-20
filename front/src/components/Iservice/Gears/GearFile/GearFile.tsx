@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import GearInfoSection from "./GearInfoSection/GearInfoSection";
 import GearOverhaulSection from "./GearOverhaulSection/GearOverhaulSection";
 import GearHistory from "./GearHistory/GearHistorySection";
+import GearLimitSection from "./LImitSection/GearLimitSection";
 
 const GearFile: React.FC = () => {
     const gear = useSelector((state: RootState) => state.gear.choosedGear);
@@ -18,13 +19,13 @@ const GearFile: React.FC = () => {
 
     return (
         <div className={s.gearFile} >
-            <h1 className={s.gearFile__header} >Gear File of {gear.sn}</h1>
+            <h1 className={s.gearFile__header} >Gear File of S/N {gear.sn}</h1>
             <div className={s.gearFile__container} >
                 <div className={s.info__container}>
                     <div className={s.info}>
                         <GearInfoSection gear={gear} />
                         <GearOverhaulSection gear={gear} />
-                        {/* <LimitSection engine={gear} /> */}
+                        <GearLimitSection gear={gear} />
                         <GearHistory gear={gear} />
                     </div>
                 </div>
