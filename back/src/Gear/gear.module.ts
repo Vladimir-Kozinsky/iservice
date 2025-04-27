@@ -5,6 +5,7 @@ import { Limit, LimitSchema } from 'src/schemas/limit.schema';
 import { GearController } from './gear.controller';
 import { GearService } from './gear.service';
 import { Gear, GearSchema } from 'src/schemas/gear.schema';
+import { GearLimit, GearLimitSchema } from 'src/schemas/gearLimit.schema';
 
 @Module({
   imports: [
@@ -13,11 +14,12 @@ import { Gear, GearSchema } from 'src/schemas/gear.schema';
       schema: GearSchema
     }]),
     MongooseModule.forFeature([{
-      name: Limit.name,
-      schema: LimitSchema
+      name: GearLimit.name,
+      schema: GearLimitSchema
     }]),
   ],
   controllers: [GearController],
   providers: [GearService]
 })
 export class GearModule {}
+

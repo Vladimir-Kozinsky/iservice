@@ -4,6 +4,8 @@ import { ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Gear } from 'src/schemas/gear.schema';
 import { CreateGearDto } from 'src/dto/create-gear.dto';
 import { Types } from 'mongoose';
+import { CreateGearLimitDto } from 'src/dto/create-gearLimit.dto';
+import { GearLimit } from 'src/schemas/gearLimit.schema';
 
 @Controller('gear')
 export class GearController {
@@ -33,13 +35,13 @@ export class GearController {
         return await this.gearService.getGear(getGearDto);
     }
 
-    // @ApiOperation({ summary: 'Add new limit' })
-    // @ApiResponse({ status: 201, type: Limit })
-    // @Post('/limit/add')
-    // @HttpCode(201)
-    // async addLimit(@Body() createLimitDto: CreateLimitDto ) {
-    //     return await this.apuService.addLimit(createLimitDto);
-    // }
+    @ApiOperation({ summary: 'Add new Life limit' })
+    @ApiResponse({ status: 201, type: GearLimit })
+    @Post('/limit/add')
+    @HttpCode(201)
+    async addLimit(@Body() createGearLimitDto: CreateGearLimitDto) {
+        return await this.gearService.addLimit(createGearLimitDto);
+    }
 
     // @ApiOperation({ summary: 'Delete limit' })
     // @ApiResponse({ status: 201, type: Limit })

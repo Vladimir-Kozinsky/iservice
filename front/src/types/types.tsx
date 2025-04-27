@@ -286,13 +286,16 @@ export interface IUnit {
     _id: string;
     ata: string;
     pn: string;
+    sn: string;
     type: string;
-    disc: string;
+    desc: string;
+    grn: string;
     quantity: number;
     eapack: string;
     location: string;
     condition: string;
     lifelimit: string;
     shelflife: string;
+    certificate: string;
     remarks: string;
 }

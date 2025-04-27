@@ -23,7 +23,7 @@ const Title: React.FC<TitlePropsType> = ({ text, sort, sortDirect, sortHandler, 
         isSortHandler({ name: text, isSort: true });
     }
 
-    const titleClass = text === 'Discription' || text === 'Remarks' 
+    const titleClass = text === 'Description' || text === 'Remarks' 
     ? classNames(s.title, s.title__wide) 
     :classNames(s.title) 
 

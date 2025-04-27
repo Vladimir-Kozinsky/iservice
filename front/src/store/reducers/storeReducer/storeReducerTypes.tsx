@@ -7,7 +7,7 @@ export interface IStoreState {
         pn: string | null;
         sn: string | null;
         type: string | null;
-        disc: string | null;
+        desc: string | null;
         grn: string | null;
         quantity: number | null;
         eapack: string | null;
@@ -33,14 +33,26 @@ export interface IUnitRejectResponse {
 }
 
 export interface ICreateUnitDto {
-    
+    ata: string;
+    pn: string;
+    sn: string;
+    type: string;
+    desc: string;
+    grn: string;
+    quantity: number;
+    eapack: string;
+    location: string;
+    condition: string;
+    lifelimit: string;
+    shelflife: string;
+    certificate: string;
+    remarks: string;
 }
 
 export interface IGetUnitsDto {
-    // aircraft: string;
-    // from: string;
-    // to: string;
-    // page: number;
+    // shelflife: string;
+    // certificate: string;
+    // remarks: string;
 }
 
 export interface IGetUnitsResponseDto {

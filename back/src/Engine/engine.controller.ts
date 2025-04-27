@@ -8,6 +8,7 @@ import { Types } from 'mongoose';
 import { Engine } from 'src/schemas/engine.schema';
 import { CreateCfm56LimitDto } from 'src/dto/create-engineLimit.dto';
 import { Cfm56Limit } from 'src/schemas/cfm56Limit.schema';
+import { DeleteEngineLLPDto } from 'src/dto/engine/delete-engineLLP.dto';
 
 @ApiTags('Engine')
 @Controller('engine')
@@ -56,10 +57,10 @@ export class EngineController {
     }
 
     @ApiOperation({ summary: 'Delete limit' })
-    @ApiResponse({ status: 201, type: Limit })
+    @ApiResponse({ status: 201, type: String })
     @Post('/limit/delete')
     @HttpCode(201)
-    async delLimit(@Body() deleteLimitDto: DeleteLimitDto) {
+    async delLimit(@Body() deleteLimitDto: DeleteEngineLLPDto) {
         return await this.engineService.delLimit(deleteLimitDto);
 
     }

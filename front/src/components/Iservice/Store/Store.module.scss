@@ -23,6 +23,7 @@
 .search {
     position: relative;
     padding-top: 20px;
+    margin-bottom: 20px;
 }
 
 .search__input {
@@ -64,4 +65,28 @@
     display: flex;
     justify-content: space-between;
     bottom: 20px;
+}
+
+.unit {
+    margin: 0;
+    padding: 0;
+}
+.unit__title {
+    position: relative;
+    // background-color: #5e5373;
+    border: 1px dashed #ece89d;
+    padding: 2px;
+    color: #5e5373;
+    font-size: 14px;
+    font-weight: 600;
+    min-width: 85px;
+
+    &:first-child {
+        min-width: 50px;
+    }
+
+}
+
+.title__wide {
+    min-width: 200px;
 }

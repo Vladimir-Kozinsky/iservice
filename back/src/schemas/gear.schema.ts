@@ -4,6 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import mongoose, { HydratedDocument, Types } from 'mongoose';
 import { GearHistory } from './gearHistory.schema';
 import { Leg } from './leg.schema';
+import { GearLimit } from './gearLimit.schema';
 
 export type GearDocument = HydratedDocument<Gear>;
 
@@ -70,6 +71,10 @@ export class Gear {
     @ApiProperty({ example: 'none', description: "Legs" })
     @Prop({ ref: 'Leg' })
     legs: Leg[];
+
+    @ApiProperty({ example: 'none', description: "Limits" })
+    @Prop({ ref: 'GearLimit' })
+    limits: GearLimit[];
 }
 
 export const GearSchema = SchemaFactory.createForClass(Gear);

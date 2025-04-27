@@ -11,6 +11,7 @@ import { Engine } from 'src/schemas/engine.schema';
 import { InstallGearDto } from 'src/dto/install-gear.dto';
 import { Gear } from 'src/schemas/gear.schema';
 import { Cfm56Limit } from 'src/schemas/cfm56Limit.schema';
+import { GearLimit } from 'src/schemas/gearLimit.schema';
 
 @Injectable()
 export class LegService {
@@ -132,7 +133,6 @@ export class LegService {
 
 
 
-
         // ADD LEG FOR LGs
         createLegDto.gears.forEach(async (g: { sn: string }) => {
             const gear = await this.gearModel.findOne({ sn: g.sn });
@@ -149,6 +149,11 @@ export class LegService {
             updatedGear.tsn = updatedFfFc.fh;
             updatedGear.csn = updatedFfFc.fc;
             await updatedGear.save();
+
+            //UPDATE GEAR LLP
+            const updatedLimits = this.reculcGearLLP(updatedGear);
+
+            await this.gearModel.updateOne({ sn: g.sn }, { $set: { limits: updatedLimits } })
         })
 
 
@@ -187,6 +192,29 @@ export class LegService {
             // UPDATE ENGINE LLP
             const updateLimits = this.reculcEngineLLP(updatedEngine);
             await this.engineModel.updateOne({ msn: eng.msn }, { $set: { limits: updateLimits } })
+        })
+        // UPDATE GEAR
+        deleteLegDto.gears.forEach(async (lg: { sn: string }) => {
+            const gear = await this.gearModel.findOne({ sn: lg.sn });
+            if (!gear) throw new HttpException('Engine not found', HttpStatus.BAD_REQUEST);
+            const index = gear.legs.findIndex((leg: Leg) => leg._id.toString() === deleteLegDto._id.toString());
+            gear.legs.splice(index, 1);
+            await gear.save();
+
+            const updatedGear = await this.gearModel.findOne({ sn: lg.sn });
+            if (!updatedGear) throw new HttpException('Engine not found', HttpStatus.BAD_REQUEST);
+
+            const sortedLegs = this.sortLegs(updatedGear.legs);
+            updatedGear.legs = this.reculcLegsFhFc(sortedLegs, updatedGear.initFh, updatedGear.initFc);
+            const updatedFfFc = this.reculcFhFc(updatedGear);
+            updatedGear.tsn = updatedFfFc.fh;
+            updatedGear.csn = updatedFfFc.fc;
+            await updatedGear.save();
+
+            // UPDATE GEAR LLP
+
+            const updatedLimits = this.reculcGearLLP(updatedGear);
+            await this.gearModel.updateOne({ sn: lg.sn }, { $set: { limits: updatedLimits } })
         })
 
         return deleteLegDto._id;
@@ -233,7 +261,6 @@ export class LegService {
     private reculcLegsFhFc(legs: Leg[], initFh: string, initFc: string) {
 
         const toMins = (str) => {
-            //console.log(str);
             const hh = +str.split(':')[0] * 60;
             const mm = +str.split(':')[1];
             return hh + mm
@@ -284,6 +311,30 @@ export class LegService {
 
 
         }) as [Cfm56Limit]
+        return updatedLimits;
+    }
+
+    private reculcGearLLP(gear: Gear): [GearLimit] {
+
+        const toMins = (str) => {
+            const hh = +str.split(':')[0] * 60;
+            const mm = +str.split(':')[1];
+            return hh + mm
+        }
+
+        const minsToStr = (mins) => {
+            const hh = Math.floor(mins / 60);
+            const mm = mins % 60;
+            return `${hh}:${mm}`;
+        }
+
+        const updatedLimits = gear.limits.map((limit: GearLimit) => {
+            const updatedTsn = minsToStr(toMins(gear.tsn) - toMins(limit.gearTsn) + toMins(limit.initTsn));
+            const updatedCsn = (+gear.csn - (+limit.gearCsn)) + (+limit.initCsn)
+            limit.tsn = updatedTsn;
+            limit.csn = updatedCsn.toString();
+            return limit;
+        }) as [GearLimit]
         return updatedLimits;
     }
 }

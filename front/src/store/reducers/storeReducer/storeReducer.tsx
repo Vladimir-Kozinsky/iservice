@@ -10,7 +10,7 @@ const initialState: IStoreState = {
         pn: null,
         sn: null,
         type: null,
-        disc: null,
+        desc: null,
         grn: null,
         quantity: null,
         eapack: null,
@@ -50,42 +50,13 @@ const storeSlice = createSlice({
             state.errorMessage = action.payload.message;
         })
 
-        // builder.addCase(deleteLeg.fulfilled, (state: ILegState, action: PayloadAction<ILeg>) => {
-        //     const legId = action.payload._id;
-        //     const legIndex = state.legs.findIndex((leg: ILeg) => leg._id === legId);
-        //     const legs = state.legs;
-        //     legs.splice(legIndex, 1);
-        //     state.legs = legs;
-        //     state.successMessage = "Leg successfully deleted";
-        // })
-        // builder.addCase(deleteLeg.rejected, (state: ILegState, action: PayloadAction<any>) => {
-        //     state.errorMessage = action.payload.message;
-        // })
-
-        // builder.addCase(getLegs.fulfilled, (state: ILegState, action: PayloadAction<IGetLegsResponseDto>) => {
-        //     state.legs = action.payload.legs;
-        //     state.totalPages = action.payload.totalPages;
-        //     state.currentPage = action.payload.currentPage;
-        // })
-        // builder.addCase(getLegs.rejected, (state: ILegState, action: PayloadAction<any>) => {
-        //     state.errorMessage = action.payload.message;
-        // })
-
-        // builder.addCase(getPrintLegs.fulfilled, (state: ILegState, action: PayloadAction<ILeg[]>) => {
-        //     state.printLegs = action.payload;
-        // })
-        // builder.addCase(getPrintLegs.rejected, (state: ILegState, action: PayloadAction<any>) => {
-        //     state.errorMessage = action.payload.message;
-        // })
-
-        // builder.addCase(getlastTenLegs.fulfilled, (state: ILegState, action: PayloadAction<ILeg[]>) => {
-        //     state.legs = action.payload;
-        //     state.totalPages = 1;
-        //     state.currentPage = 1;
-        // })
-        // builder.addCase(getlastTenLegs.rejected, (state: ILegState, action: PayloadAction<any>) => {
-        //    // state.errorMessage = action.payload.message;
-        // })
+        builder.addCase(getUnits.fulfilled, (state: IStoreState, action: PayloadAction<IUnit[]>) => {
+            state.units = action.payload;
+            state.successMessage = "Units successfully recieved";
+        })
+        builder.addCase(getUnits.rejected, (state: IStoreState, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
+        })
     },
 })
 
@@ -100,6 +71,20 @@ export const createUnit = createAsyncThunk(
         }
     }
 )
+
+export const getUnits = createAsyncThunk(
+    'unit/units',
+    async (none, thunkAPI) => {
+        try {
+            const response = await storeAPI.getUnits();
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IUnitRejectResponse);
+        }
+    }
+)
+
+
 
 // export const deleteLeg = createAsyncThunk(
 //     'leg/delete',

@@ -6,6 +6,7 @@ import { DeleteLimitDto } from 'src/dto/delete-limit.dto';
 import { Engine } from 'src/schemas/engine.schema';
 import { Cfm56Limit } from 'src/schemas/cfm56Limit.schema';
 import { CreateCfm56LimitDto } from 'src/dto/create-engineLimit.dto';
+import { DeleteEngineLLPDto } from 'src/dto/engine/delete-engineLLP.dto';
 
 @Injectable()
 export class EngineService {
@@ -52,20 +53,17 @@ export class EngineService {
         return limit;
     }
 
-    async delLimit(deleteLimitDto: DeleteLimitDto) {
-        const limit = await this.engineLimitModel.deleteOne({ _id: deleteLimitDto.limitId });
-        if (!limit.deletedCount) throw new HttpException('Limit not found', HttpStatus.BAD_REQUEST);
-
+    async delLimit(deleteLimitDto: DeleteEngineLLPDto) {
         const engine = await this.engineModel.findOne({ msn: deleteLimitDto.msn });
         if (!engine) throw new HttpException('Engine not found', HttpStatus.BAD_REQUEST);
 
-        const index = engine.limits.findIndex((limit: Cfm56Limit) => limit._id.toString() == deleteLimitDto.limitId)
+        const index = engine.limits.findIndex((limit: Cfm56Limit) => limit.sn == deleteLimitDto.sn)
         if (index < 0) throw new HttpException('Limit has already deleted', HttpStatus.BAD_REQUEST);
 
         engine.limits.splice(index, 1);
         await engine.save()
 
-        return deleteLimitDto.limitId;
+        return deleteLimitDto.sn;
     }
 
     async updateEngineLLP(eng: { esn: string }) {

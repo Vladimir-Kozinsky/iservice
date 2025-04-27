@@ -2,13 +2,17 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { CreateGearDto } from 'src/dto/create-gear.dto';
+import { CreateGearLimitDto } from 'src/dto/create-gearLimit.dto';
 import { Gear } from 'src/schemas/gear.schema';
+import { GearLimit } from 'src/schemas/gearLimit.schema';
 
 @Injectable()
 export class GearService {
     constructor(
         @InjectModel(Gear.name)
-        private readonly gearModel: Model<Gear>
+        private readonly gearModel: Model<Gear>,
+        @InjectModel(GearLimit.name)
+        private readonly gearLimitModel: Model<GearLimit>,
     ) { }
 
     async add(createGearDto: CreateGearDto) {
@@ -24,12 +28,21 @@ export class GearService {
     }
 
     async getGear(getGearDto: { id: Types.ObjectId }) {
-            console.log(getGearDto)
-            const gear = await this.gearModel.findById(getGearDto.id);
-            if (!gear) throw new HttpException('Gear not found', HttpStatus.BAD_REQUEST);
-            return gear;
-        }
+        console.log(getGearDto)
+        const gear = await this.gearModel.findById(getGearDto.id);
+        if (!gear) throw new HttpException('Gear not found', HttpStatus.BAD_REQUEST);
+        return gear;
+    }
 
+    async addLimit(createGearLimitDto: CreateGearLimitDto) {
+        const limit = await this.gearLimitModel.create(createGearLimitDto);
+        const gear = await this.gearModel.findOne({ sn: createGearLimitDto.gearSn });
+        if (!gear) throw new HttpException('Gear not found', HttpStatus.BAD_REQUEST);
+        gear.limits.push(limit);
+        await gear.save();
+        await this.gearLimitModel.findByIdAndRemove(limit._id);
+        return limit;
+    }
     // async addLimit(createLimitDto: CreateLimitDto) {
     //     const limit = await this.limitModel.create(createLimitDto);
     //     const apu = await this.apuModel.findOne({ msn: createLimitDto.msn });
