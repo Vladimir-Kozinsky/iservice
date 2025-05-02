@@ -16,14 +16,23 @@
 }
 
 .unit {
+    width: fit-content;
     padding-top: 20px;
     display: flex;
+
+    &:hover {
+        cursor: pointer;
+        background-color: rgb(236, 232, 157, 0.3);
+    }
 }
 
 .search {
     position: relative;
     padding-top: 20px;
     margin-bottom: 20px;
+    display: flex;
+    gap: 50px;
+    align-items: center;
 }
 
 .search__input {
@@ -52,11 +61,25 @@
 
 .search__icon {
     position: absolute;
-    height: 35px;
-    left: 280px;
+    height: 32px;
+    left: 226px;
     top: 24px;
+    z-index: 1;
+    opacity: 0.5;
+    cursor: pointer;
 }
 
+.filter {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    span {
+       color: grey;
+       font-size: 22px;
+       min-width: none;
+    }
+}
 
 .store__buttons {
     position: absolute;
@@ -71,6 +94,7 @@
     margin: 0;
     padding: 0;
 }
+
 .unit__title {
     position: relative;
     // background-color: #5e5373;

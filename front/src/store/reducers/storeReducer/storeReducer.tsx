@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { ICreateUnitDto, IStoreState, IUnitRejectResponse } from './storeReducerTypes';
+import { IChangeUnitDto, ICreateUnitDto, IDeleteUnitDto, IGetUnitsDto, IGetUnitsResponseDto, IStoreState, IUnitRejectResponse } from './storeReducerTypes';
 import { IUnit } from '../../../types/types';
 import storeAPI from '../../../API/storeAPI';
 
@@ -33,29 +33,49 @@ const storeSlice = createSlice({
     initialState,
     reducers: {
 
-        clearLegSuccessMessage(state: IStoreState) {
+        clearStoreSuccessMessage(state: IStoreState) {
             state.successMessage = null;
         },
 
-        clearLegErrorMessage(state: IStoreState) {
+        clearStoreErrorMessage(state: IStoreState) {
             state.errorMessage = null;
         }
     },
     extraReducers: (builder) => {
         builder.addCase(createUnit.fulfilled, (state: IStoreState, action: PayloadAction<IUnit>) => {
             state.units.push(action.payload);
-            state.successMessage = "Leg successfully added";
+            state.successMessage = "Unit successfully added";
         })
         builder.addCase(createUnit.rejected, (state: IStoreState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
         })
 
-        builder.addCase(getUnits.fulfilled, (state: IStoreState, action: PayloadAction<IUnit[]>) => {
-            state.units = action.payload;
-            state.successMessage = "Units successfully recieved";
+        builder.addCase(changeUnit.fulfilled, (state: IStoreState, action: PayloadAction<IUnit>) => {
+            const changedUnitIndex = state.units.findIndex((unit: IUnit) => unit._id === action.payload._id)
+            state.units[changedUnitIndex] = action.payload;
+            state.successMessage = "Unit successfully changed";
+        })
+        builder.addCase(changeUnit.rejected, (state: IStoreState, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
+        })
+
+        builder.addCase(deleteUnit.fulfilled, (state: IStoreState, action: PayloadAction<IUnit>) => {
+            const deletedUnitIndex = state.units.findIndex((unit: IUnit) => unit.sn === action.payload.sn)
+            state.units.splice(deletedUnitIndex, 1);
+            state.successMessage = "Unit successfully deleted";
+        })
+        builder.addCase(deleteUnit.rejected, (state: IStoreState, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
+        })
+
+        builder.addCase(getUnits.fulfilled, (state: IStoreState, action: PayloadAction<IGetUnitsResponseDto>) => {
+            state.units = action.payload.units;
+            state.currentPage = action.payload.currentPage;
+            state.totalPages = action.payload.totalPages;
         })
         builder.addCase(getUnits.rejected, (state: IStoreState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
+            state.units = [];
         })
     },
 })
@@ -72,11 +92,35 @@ export const createUnit = createAsyncThunk(
     }
 )
 
+export const changeUnit = createAsyncThunk(
+    'unit/edit',
+    async (editUnitDto: IChangeUnitDto, thunkAPI) => {
+        try {
+            const response = await storeAPI.editUnit(editUnitDto);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IUnitRejectResponse);
+        }
+    }
+)
+
+export const deleteUnit = createAsyncThunk(
+    'unit/delete',
+    async (deleteUnitDto: IDeleteUnitDto, thunkAPI) => {
+        try {
+            const response = await storeAPI.deleteUnit(deleteUnitDto);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IUnitRejectResponse);
+        }
+    }
+)
+
 export const getUnits = createAsyncThunk(
     'unit/units',
-    async (none, thunkAPI) => {
+    async (getUnitsDto: IGetUnitsDto, thunkAPI) => {
         try {
-            const response = await storeAPI.getUnits();
+            const response = await storeAPI.getUnits(getUnitsDto);
             return response.data;
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response.data as IUnitRejectResponse);
@@ -136,6 +180,6 @@ export const getUnits = createAsyncThunk(
 
 
 
-export const { clearLegSuccessMessage, clearLegErrorMessage } = storeSlice.actions
+export const { clearStoreSuccessMessage, clearStoreErrorMessage } = storeSlice.actions
 
 export default storeSlice.reducer;

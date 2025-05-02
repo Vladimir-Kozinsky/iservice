@@ -10,6 +10,16 @@
     font-weight: 600;
 }
 
+@mixin grey_text ($size: 16px) {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    color: $grey_text_color;
+    font-family: Manrope, sans-serif;
+    font-size: $size;
+    font-weight: 600;
+}
+
 @mixin dashboard_page () {
     grid-area: b;
     box-shadow: -2px 0px 7px -3px rgb(5, 29, 66, 0.3);

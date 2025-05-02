@@ -103,15 +103,30 @@ export const getCurrentDate = (): string => {
     const today = new Intl.DateTimeFormat('en-US', { day: 'numeric', month: 'long', year: 'numeric' })
         .format(date);
     return today;
-} 
+}
 
 export const kgToLbs = (value: string) => {
-return Math.ceil(+value/0.45359237)  
+    return Math.ceil(+value / 0.45359237)
 }
 export const lbTokg = (value: string) => {
-return Math.floor(+value*0.45359237)  
+    return Math.floor(+value * 0.45359237)
 }
 export const ltTogal = (value: string) => {
-return Math.round(+value*0.26417)  
+    return Math.round(+value * 0.26417)
 }
 
+export const cutText = (maxLetterNum: number, text: string) => {
+    if (!text) return 'N/A'
+    if (text.length <= maxLetterNum) return text;
+    const cutStr = text.slice(0, maxLetterNum)
+    return `${cutStr}...`;
+}
+
+
+
+const cutData = (str: string | undefined | null) => {
+    if (!str) return 'N/A'
+    if (str.length <= 5) return str;
+    const cutStr = str.slice(str.length - 3, str.length)
+    return `...${cutStr}`;
+}

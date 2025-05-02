@@ -1,6 +1,6 @@
 import axios from "axios";
 import generalAPIData from "./generalData";
-import { ICreateUnitDto } from "../store/reducers/storeReducer/storeReducerTypes";
+import { IChangeUnitDto, ICreateUnitDto, IDeleteUnitDto, IGetUnitsDto } from "../store/reducers/storeReducer/storeReducerTypes";
 
 const proxy = axios.create({
     baseURL: generalAPIData.baseURL,
@@ -12,13 +12,22 @@ const storeAPI = {
         const response = await proxy.post('/unit/create', createUnitDto);
         return response;
     },
+    async editUnit(editUnitDto: IChangeUnitDto) {
+        const response = await proxy.post('/unit/edit', editUnitDto);
+        return response;
+    },
+
+    async deleteUnit(deleteUnitDto: IDeleteUnitDto) {
+        const response = await proxy.post('/unit/delete', deleteUnitDto);
+        return response;
+    },
 
     // async deleteLeg(deleteLegDto: ILeg) {
     //     const response = await proxy.post('/leg/delete', deleteLegDto );
     //     return response;
     // },
-    async getUnits() {
-        const response = await proxy.get('/unit/units');
+    async getUnits(getUnitsDto: IGetUnitsDto) {
+        const response = await proxy.post('/unit/units', getUnitsDto);
         return response;
     },
     // async getPrintLegs(getPrintLegsDto: IGetPrintLegsDto) {

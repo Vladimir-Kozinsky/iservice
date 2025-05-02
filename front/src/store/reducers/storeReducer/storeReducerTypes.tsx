@@ -49,14 +49,38 @@ export interface ICreateUnitDto {
     remarks: string;
 }
 
+export interface IChangeUnitDto {
+    _id: string;
+    ata: string;
+    pn: string;
+    sn: string;
+    type: string;
+    desc: string;
+    grn: string;
+    quantity: number;
+    eapack: string;
+    location: string;
+    condition: string;
+    lifelimit: string;
+    shelflife: string;
+    certificate: string;
+    remarks: string;
+}
+export interface IDeleteUnitDto {
+    sn: string;
+}
+
 export interface IGetUnitsDto {
-    // shelflife: string;
-    // certificate: string;
-    // remarks: string;
+    page: number;
+    unitsAtPage: number;
+    locationFilter?: string[];
+    typeFilter?: string[];
+    filterDirection?: string;
+    searchText?: string;
 }
 
 export interface IGetUnitsResponseDto {
     totalPages: number;
     currentPage: number;
-    legs: IUnit[];
+    units: IUnit[];
 }
