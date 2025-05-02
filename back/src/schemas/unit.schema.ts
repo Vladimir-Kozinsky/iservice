@@ -30,6 +30,7 @@ export class Unit {
     desc: string;
 
     @ApiProperty({ example: 'NWY23423432', description: 'Part GRN number' })
+    @Prop({ required: false })
     grn: string;
 
     @ApiProperty({ example: '10', description: 'Parts quantity' })
