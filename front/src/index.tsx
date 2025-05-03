@@ -47,11 +47,12 @@ const App: React.FC = () => {
           timeout={500}
         >
           <Routes location={location}>
-            <Route path="*" element={<Main />} />
+            {/* <Route path="*" element={<Main />} /> */}
             <Route path="auth" element={<Auth />} />
             {/* <Route path="fleet" element={<Fleet />} /> */}
-            <Route path="i-service/*" element={<Iservice />} />
+            <Route path="*" element={<Iservice />} />
             <Route path="signup" element={<SignUp />} />
+            
           </Routes>
         </CSSTransition>
       </TransitionGroup>

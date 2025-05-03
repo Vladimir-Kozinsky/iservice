@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import s from "./Store.module.scss";
-import React, { MouseEventHandler, useEffect, useState } from "react";
+import React, { MouseEventHandler, useEffect, useRef, useState } from "react";
 import Button from "../../../common/buttons/Button";
 import { AppDispatch, RootState } from "../../../store/store";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,32 +9,38 @@ import Input from "../../../common/inputs/Input";
 import magnifIcon from "../../../assets/img/png/magnif__icon.png";
 import { getUnits } from "../../../store/reducers/storeReducer/storeReducer";
 import { IUnit } from "../../../types/types";
-import classNames from "classnames";
 import NewUnitForm from "./NewUnitForm/NewUnitForm";
 import EditUnitForm from "./EditUnitForm/EditUnitForm";
 import withSuccessMessage from "../../../HOC/wirhSuccessMessage";
 import withErrorMessage from "../../../HOC/wirhErrorMessage";
 import { compose } from "@reduxjs/toolkit";
 import Pagenator from "../../../common/Pagenator/Pagenator";
-import { cutText } from "../../../utils/utils";
 import Select, { ActionMeta, MultiValue } from 'react-select';
+import Unit from "./Unit/Unit";
+import UsageUnitForm from "./UsageUnitForm/UsageUnitForm";
+import UnitHistory from "./UnitHistory/UnitHistory";
+import PrintUnitForm from "./PrintUnitForm/PrintUnitForm";
 
 
 
 const Store: React.FC = () => {
     const navigate = useNavigate();
+    const componentRef = useRef(null);
     const dispatch = useDispatch<AppDispatch>();
     const unitsArr = useSelector((state: RootState) => state.store.units);
     const [isSort, setSort] = useState({ name: '', isSort: false });
     const [sortDir, setSortDir] = useState('az');
     const [newForm, setNewForm] = useState(false);
     const [editUnit, setEditUnit] = useState<null | IUnit>(null);
+    const [usageUnit, setUsageUnit] = useState<null | IUnit>(null);
+    const [historyUnit, setHistoryUnit] = useState<null | IUnit>(null);
+    const [printUnits, setPrintUnits] = useState<boolean>(false);
     const currentPage = useSelector((state: RootState) => state.store.currentPage);
     const totalPages = useSelector((state: RootState) => state.store.totalPages);
     const [isLoader, setIsLoader] = useState<boolean | undefined>(false);
     const [search, setSearch] = useState('');
     const [selectedLocations, setSelectedLocations] = useState<string[]>(['Sharjah', 'Manas', 'Aqaba']);
-    const [selectedTypes, setSelectedTypes] = useState<string[]>(['Rotable', 'Consumable']);
+
 
     interface IOption {
         value: string | null;
@@ -42,8 +48,8 @@ const Store: React.FC = () => {
     }
 
     const titlesArr = [
-        'ATA', 'P/N', 'S/N', 'Part Type', 'Description', 'GRN', 'Quantity', 'EA/Packs',
-        'Location', 'Condition', 'Life Limit', 'Shelf Life', 'Certificate', 'Remarks'
+        'ATA', 'P/N', 'S/N', 'Part Type', 'Description', 'GRN', 'Qty.', 'EA/Packs',
+        'Location', 'Rack', 'Shelf', 'Condition', 'Life Limit', 'Shelf Life', 'Remarks'
     ]
 
     const locationOptions = [
@@ -53,12 +59,6 @@ const Store: React.FC = () => {
         { value: 'Aqaba', label: 'Aqaba' },
     ]
 
-    const typeOptions = [
-        { value: 'All', label: 'All' },
-        { value: 'Rotable', label: 'Rotable' },
-        { value: 'Consumable', label: 'Consumable' },
-    ]
-
     const titles = () => titlesArr.map((title) => <Title text={title}
         sort={isSort.name === title ? isSort.isSort : false}
         sortDirect={sortDir}
@@ -66,24 +66,20 @@ const Store: React.FC = () => {
         isSortHandler={setSort} />
     )
 
-    const unitClickHandler = (unit: IUnit) => {
-        setEditUnit(unit)
-    }
-
     const changePage = async (page: number) => {
         setIsLoader(true);
-        await dispatch(getUnits({ page: page, searchText: search, locationFilter: selectedLocations, typeFilter: selectedTypes, unitsAtPage: 20 }));
+        await dispatch(getUnits({ page: page, searchText: search, locationFilter: selectedLocations, unitsAtPage: 20 }));
         setIsLoader(false);
     }
 
     const inputOnChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
         setSearch(value);
-        await dispatch(getUnits({ page: 1, unitsAtPage: 20, searchText: value, locationFilter: selectedLocations, typeFilter: selectedTypes }));
+        await dispatch(getUnits({ page: 1, unitsAtPage: 20, searchText: value, locationFilter: selectedLocations }));
     }
 
     const findHandler = async () => {
-        await dispatch(getUnits({ page: 1, unitsAtPage: 20, searchText: search, locationFilter: selectedLocations, typeFilter: selectedTypes }));
+        await dispatch(getUnits({ page: 1, unitsAtPage: 20, searchText: search, locationFilter: selectedLocations }));
     }
 
     const onChangeLocation = async (newValue: any, actionMeta: ActionMeta<IOption>) => {
@@ -95,19 +91,7 @@ const Store: React.FC = () => {
         });
         setSelectedLocations(filterArr);
         setIsLoader(true);
-        await dispatch(getUnits({ page: 1, unitsAtPage: 20, searchText: search, locationFilter: filterArr, typeFilter: selectedTypes }));
-        setIsLoader(false);
-    }
-    const onChangeType = async (newValue: any, actionMeta: ActionMeta<IOption>) => {
-        let filterArr = newValue.map((item: any) => item.value);
-        filterArr.forEach((element: string) => {
-            if (element === 'All') {
-                filterArr = ['Rotable', 'Consumable']
-            }
-        });
-        setSelectedTypes(filterArr);
-        setIsLoader(true);
-        await dispatch(getUnits({ page: 1, unitsAtPage: 20, searchText: search, locationFilter: selectedLocations,  typeFilter: filterArr }));
+        await dispatch(getUnits({ page: 1, unitsAtPage: 20, searchText: search, locationFilter: filterArr }));
         setIsLoader(false);
     }
 
@@ -124,45 +108,29 @@ const Store: React.FC = () => {
         }),
     }
 
-
-
-    const units = () => unitsArr.map((unit: IUnit) => {
-        return (
-            <div className={s.unit} onClick={() => unitClickHandler(unit)}>
-                <span className={s.unit__title} >{unit.ata}</span>
-                <span className={s.unit__title} >{unit.pn}</span>
-                <span className={s.unit__title}>{unit.sn}</span>
-                <span className={s.unit__title} >{unit.type}</span>
-                <span className={classNames(s.unit__title, s.title__wide)}>{unit.desc}</span>
-                <a className={s.unit__title}>{cutText(12, unit.grn)}</a>
-                <span className={s.unit__title}>{unit.quantity}</span>
-                <span className={s.unit__title}>{unit.eapack}</span>
-                <span className={s.unit__title}>{unit.location}</span>
-                <span className={s.unit__title}>{unit.condition}</span>
-                <span className={s.unit__title}>{unit.lifelimit}</span>
-                <span className={s.unit__title}>{unit.shelflife}</span>
-                <span className={s.unit__title}>{unit.certificate}</span>
-                <span className={classNames(s.unit__title, s.title__wide)}>{unit.remarks}</span>
-            </div>
-        )
-    }
+    const units = () => unitsArr.map((unit: IUnit) => <Unit unit={unit}
+        editHandler={setEditUnit}
+        usageHandler={setUsageUnit}
+        historyHandler={setHistoryUnit}
+    />
     )
 
     useEffect(() => {
-        dispatch(getUnits({ page: 1, unitsAtPage: 20, locationFilter: selectedLocations, typeFilter: selectedTypes }));
+        dispatch(getUnits({ page: 1, unitsAtPage: 20, locationFilter: selectedLocations }));
     }, [])
 
     return (
         <div className={s.store} >
             {newForm && <NewUnitForm isNewForm={setNewForm} />}
             {editUnit && <EditUnitForm editUnit={editUnit} isEditUnit={setEditUnit} />}
-            <h1 className={s.store__header}>Store</h1>
+            {usageUnit && <UsageUnitForm unit={usageUnit} isUsageUnit={setUsageUnit} />}
+            {historyUnit && <UnitHistory unit={historyUnit} isHistoryUnit={setHistoryUnit} />}
 
             <div className={s.search}>
                 <img className={s.search__icon} onClick={findHandler} src={magnifIcon} alt="maginf__icon" />
                 <Input onChange={inputOnChange} className={s.search__input} placeholder="Find" />
                 <div className={s.filter}>
-                    {/* <span>Filter</span> */}
+                    <span>Location</span>
                     <Select
                         onChange={onChangeLocation}
                         styles={customStyles}
@@ -173,31 +141,21 @@ const Store: React.FC = () => {
                         className="basic-multi-select"
                         classNamePrefix="select"
                     />
-                    <Select
-                        onChange={onChangeType}
-                        styles={customStyles}
-                        defaultValue={[typeOptions[0]]}
-                        isMulti
-                        name="filters"
-                        options={typeOptions}
-                        className="basic-multi-select"
-                        classNamePrefix="select"
-                    />
                 </div>
 
             </div>
-            <div className={s.filter}>
-
-            </div>
             <Pagenator totalPages={totalPages ? totalPages : 1} currentPage={currentPage ? currentPage : 1} changePage={changePage} />
-            <div className={s.unit}>
-                {titles()}
+            <div className={s.units__container}>
+                <div className={s.unit}>
+                    {titles()}
+                </div>
+                {units()}
             </div>
-            {units()}
-
+            {printUnits && <PrintUnitForm isPrintForm={setPrintUnits} searchText={search} locationFilter={selectedLocations} ref={componentRef} />}
             <div className={s.store__buttons} >
-                <Button text="Back" btnType="button" color="white" handler={() => navigate('/i-service')} />
+                {/* <Button text="Back" btnType="button" color="white" handler={() => navigate('/p')} /> */}
                 <Button text="Add" btnType="button" color="green" handler={() => setNewForm(true)} />
+                <Button text="Print report" btnType="button" color="green" handler={() => setPrintUnits(true)} />
             </div>
         </div>
     )

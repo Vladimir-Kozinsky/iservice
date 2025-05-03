@@ -22,15 +22,6 @@ const EditUnitForm: React.FC<NewUnitFormPropsType> = ({ editUnit, isEditUnit }) 
     const [isLoader, setIsLoader] = useState<boolean | undefined>(false);
     const [delMess, setDelMess] = useState(false);
 
-
-    const deleteLegHandler = async () => {
-        setIsLoader(true);
-        await dispatch(deleteUnit({ sn: editUnit.sn }));
-        setDelMess(false);
-        isEditUnit(null);
-        setIsLoader(false);
-    }
-
     return (
         <Formik
             initialValues={{
@@ -44,10 +35,11 @@ const EditUnitForm: React.FC<NewUnitFormPropsType> = ({ editUnit, isEditUnit }) 
                 quantity: editUnit.quantity,
                 eapack: editUnit.eapack,
                 location: editUnit.location,
+                rack: editUnit.rack,
+                shelf: editUnit.shelf,
                 condition: editUnit.condition,
                 lifelimit: editUnit.lifelimit,
                 shelflife: editUnit.shelflife,
-                certificate: editUnit.certificate,
                 remarks: editUnit.remarks
             }}
             validate={values => {
@@ -60,8 +52,9 @@ const EditUnitForm: React.FC<NewUnitFormPropsType> = ({ editUnit, isEditUnit }) 
                     quantity?: string;
                     eapack?: string;
                     location?: string;
+                    rack?: string;
+                    shelf?: string;
                     condition?: string;
-                    certificate?: string;
                 }
                 const errors: ICreateUnitErrorsDto = {};
                 if (!values.ata) errors.ata = 'ATA is required';
@@ -73,13 +66,12 @@ const EditUnitForm: React.FC<NewUnitFormPropsType> = ({ editUnit, isEditUnit }) 
                 if (!values.eapack) errors.eapack = 'EA / Pack is required';
                 if (!values.location) errors.location = 'Location is required';
                 if (!values.condition) errors.condition = 'Condition is required';
-                if (!values.certificate) errors.certificate = 'Certificate is required';
                 //if (!values.remarks) errors.remarks = 'Remarks is required';
                 return errors;
             }}
             onSubmit={(values: IChangeUnitDto) => {
                 (async () => {
-                   // values._id = editUnit._id
+                    // values._id = editUnit._id
                     setIsLoader(true);
                     await dispatch(changeUnit(values));
                     setIsLoader(false);
@@ -94,24 +86,11 @@ const EditUnitForm: React.FC<NewUnitFormPropsType> = ({ editUnit, isEditUnit }) 
             handleSubmit,
         }) => (
             <Form className={s.newUnitForm__container}>
-                {delMess && <DeleteMessage handleBack={() => setDelMess(false)}
-                    handleSubmit={deleteLegHandler}
-                    header='Would you like to delete this leg?'
-                    text='The leg will be permanently deleted' />}
+                <div className={s.newUnitForm__wrapper}>
                 <div className={s.newUnitForm}>
                     <div className={s.info__section}>
                         <h3 className={s.section__header}>Edit Item</h3>
                         <div className={s.inputs}>
-                            <div className={s.inputs__block}>
-                                <label>P/N<span>*</span></label>
-                                <Field type="text" id="pn" name="pn"
-                                    placeholder="P/N" error={errors.pn} as={StoreInput} />
-                            </div>
-                            <div className={s.inputs__block}>
-                                <label>S/N<span>*</span></label>
-                                <Field type="text" id="sn" name="sn"
-                                    placeholder="S/N" error={errors.sn} as={StoreInput} />
-                            </div>
                             <div className={s.inputs__block}>
                                 <label>ATA<span>*</span></label>
                                 <Field className={classNames(s.inputs__block__select, errors.ata && s.error)}
@@ -146,6 +125,17 @@ const EditUnitForm: React.FC<NewUnitFormPropsType> = ({ editUnit, isEditUnit }) 
                                 </Field>
                             </div>
                             <div className={s.inputs__block}>
+                                <label>P/N<span>*</span></label>
+                                <Field type="text" id="pn" name="pn"
+                                    placeholder="P/N" error={errors.pn} as={StoreInput} />
+                            </div>
+                            <div className={s.inputs__block}>
+                                <label>S/N<span>*</span></label>
+                                <Field type="text" id="sn" name="sn"
+                                    placeholder="S/N" error={errors.sn} as={StoreInput} />
+                            </div>
+
+                            <div className={s.inputs__block}>
                                 <label>Type<span>*</span></label>
                                 <Field className={classNames(s.inputs__block__select, errors.type && s.error)} type="text" id="type" name="type"
                                     error={errors.type} as="select">
@@ -159,20 +149,17 @@ const EditUnitForm: React.FC<NewUnitFormPropsType> = ({ editUnit, isEditUnit }) 
                                 <Field className={classNames(s.inputs__block__select, errors.condition && s.error)} type="text" id="condition" name="condition"
                                     error={errors.condition} as="select">
                                     <option value="">No value</option>
-                                    <option value="Used">Used</option>
+                                    <option value="Inspected">Inspected</option>
                                     <option value="New">New</option>
-                                    <option value="Servisable">Servisable</option>
+                                    <option value="Overhauled">Overhauled</option>
+                                    <option value="Repared">Repared</option>
+                                    <option value="Unservisable">Servisable</option>
                                 </Field>
                             </div>
                             <div className={s.inputs__block}>
-                                <label>Certificate<span>*</span></label>
-                                <Field className={classNames(s.inputs__block__select, errors.certificate && s.error)} type="text" id="certificate" name="certificate"
-                                    error={errors.certificate} as="select">
-                                    <option value="">No value</option>
-                                    <option value="Yes">Yes</option>
-                                    <option value="No">No</option>
-                                    <option value="Other">Other</option>
-                                </Field>
+                                <label>Quantity<span>*</span></label>
+                                <Field className={s.inputs__block__number} type="number" id="quantity" name="quantity"
+                                    error={errors.quantity} as={StoreInput} />
                             </div>
                             <div className={s.inputs__block}>
                                 <label>EA/Pack<span>*</span></label>
@@ -183,6 +170,13 @@ const EditUnitForm: React.FC<NewUnitFormPropsType> = ({ editUnit, isEditUnit }) 
                                     <option value="Pack">Pack</option>
                                 </Field>
                             </div>
+
+                            <div className={s.inputs__block}>
+                                <label>GRN<span></span></label>
+                                <Field type="text" id="grn" name="grn"
+                                    placeholder="grn" error={errors.grn} as={StoreInput} />
+                            </div>
+
                             <div className={s.inputs__block}>
                                 <label>Location<span>*</span></label>
                                 <Field className={classNames(s.inputs__block__select, errors.location && s.error)} type="text" id="location" name="location"
@@ -194,16 +188,42 @@ const EditUnitForm: React.FC<NewUnitFormPropsType> = ({ editUnit, isEditUnit }) 
                                     <option value="EX-37017">EX-37017</option>
                                 </Field>
                             </div>
+
                             <div className={s.inputs__block}>
-                                <label>GRN<span></span></label>
-                                <Field type="text" id="grn" name="grn"
-                                    placeholder="grn" error={errors.grn} as={StoreInput} />
+                                <label>Rack<span>*</span></label>
+                                <Field className={classNames(s.inputs__block__select, errors.rack && s.error)} type="text" id="rack" name="rack"
+                                    error={errors.rack} as="select">
+                                    <option value="">No value</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </Field>
                             </div>
                             <div className={s.inputs__block}>
-                                <label>Quantity<span>*</span></label>
-                                <Field className={s.inputs__block__number} type="number" id="quantity" name="quantity"
-                                    error={errors.quantity} as={StoreInput} />
+                                <label>Shelf<span>*</span></label>
+                                <Field className={classNames(s.inputs__block__select, errors.shelf && s.error)} type="text" id="shelf" name="shelf"
+                                    error={errors.shelf} as="select">
+                                    <option value="">No value</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                </Field>
                             </div>
+
                             <div className={s.inputs__block}>
                                 <label>Life Limit<span></span></label>
                                 <Field type="date" id="lifelimit" name="lifelimit"
@@ -235,8 +255,9 @@ const EditUnitForm: React.FC<NewUnitFormPropsType> = ({ editUnit, isEditUnit }) 
                 <div className={s.store__buttons} >
                     <Button text="Back" btnType="button" color="white" handler={() => isEditUnit(null)} />
                     <Button text="Change" color="green" btnType="submit" />
-                    <Button text="Delete" color="red" btnType="button" handler={() => setDelMess(true)} />
                 </div>
+                </div>
+                
             </Form>
         )}
         </Formik>

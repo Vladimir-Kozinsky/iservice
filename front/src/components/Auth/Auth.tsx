@@ -26,7 +26,7 @@ const Auth: React.FC = () => {
     const nodeRef = useRef(null);
 
     useEffect(() => {
-        if (isAuth) navigate("/i-service");
+        if (isAuth) navigate("/");
         if (authErrorMessage) setIsAuthError(authErrorMessage);
     }, [isAuth, authErrorMessage])
 

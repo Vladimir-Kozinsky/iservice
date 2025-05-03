@@ -9,7 +9,7 @@ const Footer: React.FC<FooterProps> = ({theme}) => {
     return (
         <footer className={s.footer} id={s[`${theme}__footer`]}  >
             <div className={s.footer__container} >
-                <span>© New Way Cargo Airlines 2022 - 2023. All rights reserved</span>
+                <span>© Developed by Uladzimir Kazinski 2025. All rights reserved</span>
                 <div className={s.links}>
                     <a href='https://www.facebook.com' className={s.links__item}>
                         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -1,58 +1,27 @@
 import React from "react";
 import s from './IService.module.scss'
 import { compose } from "@reduxjs/toolkit";
-import { NavLink, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Header from "../Header/Header";
 import { withAuthRedirect } from "../HOC/withAuthRedirect";
 import Profile from "./Profile/Profile";
-import Dashboard from "./Dashboard/Dashboard";
 import Footer from "../Footer/Footer";
-import Aircrafts from "./Aircrafts/Aircrafts";
-import Engines from "./Engines/Engines";
-import Apus from "./Apus/Apus";
-import AircraftFile from "./Aircrafts/AircraftFile/AircraftFile";
-import NewAircraftForm from "./Aircrafts/NewAircraftForm/NewAircraftForm";
-import NewEngineForm from "./Engines/NewEngineForm/NewEngineForm";
-import Legs from "./Aircrafts/Legs/Legs";
-import NewLimit from "./Aircrafts/AircraftFile/NewLimit/NewLimit";
-import DelLimit from "./Aircrafts/AircraftFile/DelLimit/DelLimit";
 import SignUp from "../SignUp/SignUp";
-import InstallEngine from "./Aircrafts/AircraftFile/InstallEngine/InstallEngine";
-import RemoveEngine from "./Aircrafts/AircraftFile/RemoveEngine/RemoveEngine";
-import NewLeg from "./Aircrafts/Legs/NewLeg/NewLeg";
-import PrintLegs from "./Aircrafts/Legs/PrintLegs/PrintLegs";
-import EngineFile from "./Engines/EngineFile/EngineFile";
-import DelEngineLimit from "./Engines/EngineFile/DelEngineLimit/DelEngineLimit";
-import PrintEngineReport from "./Engines/EngineFile/PrintEngineReport/PrintEngineReport";
-import ApuFile from "./Apus/ApuFile/ApuFile";
-import InstallApu from "./Aircrafts/AircraftFile/InstallApu/InstallApu";
-import RemoveApu from "./Aircrafts/AircraftFile/RemoveApu/RemoveApu";
-import NewApuForm from "./Apus/NewApuForm/NewApuForm";
-import NewApuLimit from "./Apus/ApuFile/NewApuLimit/NewApuLimit";
-import DelApuLimit from "./Apus/ApuFile/DelApuLimit/DelApuLimit";
-import Gears from "./Gears/Gears";
-import NewGearForm from "./Gears/NewGearForm/NewGearForm";
-import InstallGear from "./Aircrafts/AircraftFile/InstallGear/InstallGear";
-import RemoveGear from "./Aircrafts/AircraftFile/RemoveGear/RemoveGear";
-import GearFile from "./Gears/GearFile/GearFile";
-import NewEngineLimit from "./Engines/EngineFile/NewCfm56Limit/NewCfm56Limit";
-import classNames from "classnames";
-import NewGearLimit from "./Gears/GearFile/NewGearLimit/NewGearLimit";
 import Store from "./Store/Store";
 
 
 const Iservice: React.FC = () => {
     return (
-        <div className={s.iservice}>
-            <div className={s.iservice__content__back}></div>
-            <div className={s.iservice__content__back2}></div>
+        <div className={s.container}>
+            <div className={s.container__content__back}></div>
+            <div className={s.container__content__back2}></div>
             <Header theme="white" />
             <main className={s.main}>
-                <nav className={s.nav} >
-                    <div className={s.nav_container}>
-                        {/* <NavLink className={s.nav_container_link} to="profile">Profile</NavLink> */}
-                        <NavLink className={s.nav_container_link} to="/i-service">Dashboard</NavLink>
-                        <div className={s.block}>
+                {/* <nav className={s.nav} >
+                    <div className={s.nav_container}> */}
+                {/* <NavLink className={s.nav_container_link} to="profile">Profile</NavLink> */}
+                {/* <NavLink className={s.nav_container_link} to="/i-service">Dashboard</NavLink> */}
+                {/* <div className={s.block}>
                             <NavLink className={({ isActive, isPending }) =>
                                 isPending ? "pending" : isActive ? classNames(s.nav_container_link, s.active) : s.nav_container_link
                             } to="aircrafts">Aircrafts</NavLink>
@@ -68,16 +37,14 @@ const Iservice: React.FC = () => {
                             <NavLink className={({ isActive, isPending }) =>
                                 isPending ? "pending" : isActive ? classNames(s.nav_container_link, s.active) : s.nav_container_link
                             } to="store">Store</NavLink>
-                        </div>
-
-                    </div>
-                </nav>
+                        </div> */}
+                {/* </div>
+                </nav> */}
                 <Routes>
                     <Route path="profile" element={<Profile />} />
-                    <Route path="signup" element={<SignUp />} />
-                    <Route path="/" element={<Dashboard />} />
-
-                    <Route path="aircrafts" element={<Aircrafts />} />
+                    {/* <Route path="signup" element={<SignUp />} /> */}
+                    {/* <Route path="/" element={<Dashboard />} /> */}
+                    {/* <Route path="aircrafts" element={<Aircrafts />} />
                     <Route path="aircrafts/new-aircraft" element={<NewAircraftForm />} />
                     <Route path="aircraft/:aircraftId" element={<AircraftFile />} />
                     <Route path="aircraft/:aircraftId/legs" element={<Legs />} />
@@ -108,9 +75,8 @@ const Iservice: React.FC = () => {
                     <Route path="gears" element={<Gears />} />
                     <Route path="gears/new-gear" element={<NewGearForm />} />
                     <Route path="gear/:gearId" element={<GearFile />} />
-                    <Route path="gear/:gearId/limit" element={<NewGearLimit />} />
-
-                    <Route path="store" element={<Store />} />
+                    <Route path="gear/:gearId/limit" element={<NewGearLimit />} /> */}
+                    <Route path="/" element={<Store />} />
                 </Routes>
             </main>
             <Footer theme="light" />

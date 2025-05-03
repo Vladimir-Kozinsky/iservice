@@ -43,7 +43,7 @@ const Profile: React.FC = () => {
                 <Button text="Back"
                     color="white"
                     btnType={"button"}
-                    handler={() => navigate('/i-service')} />
+                    handler={() => navigate('/')} />
                 {user.role === "admin" && <Button text="Add User"
                     color="green"
                     btnType={"button"}

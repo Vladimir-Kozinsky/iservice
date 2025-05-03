@@ -282,6 +282,14 @@ export interface IGearHistory {
     reason: string
 }
 
+export interface IHistoryUnit {
+    date: string;
+    aircraft: string;
+    wo: string;
+    quantity: number;
+    remark: string;
+}
+
 export interface IUnit {
     _id: string;
     ata: string;
@@ -293,9 +301,11 @@ export interface IUnit {
     quantity: number;
     eapack: string;
     location: string;
+    rack: string;
+    shelf: string;
     condition: string;
     lifelimit: string;
     shelflife: string;
-    certificate: string;
     remarks: string;
+    usage: IHistoryUnit[];
 }

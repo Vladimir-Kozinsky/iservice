@@ -1,13 +1,9 @@
 @import "./../../../sass/main.scss";
 
 .store {
-    grid-area: b;
-    background-color: rgb(255, 255, 255, 0.4);
     padding: 20px;
     box-shadow: -2px 0px 7px -3px rgb(5, 29, 66, 0.3);
     position: relative;
-    overflow-x: scroll;
-    max-width: 950px;
 }
 
 .store__header {
@@ -15,15 +11,20 @@
     text-align: center;
 }
 
+.units__container {
+    margin-top: 30px;
+}
+
 .unit {
-    width: fit-content;
     padding-top: 20px;
     display: flex;
+    margin: 0;
+    padding: 0;
 
-    &:hover {
-        cursor: pointer;
-        background-color: rgb(236, 232, 157, 0.3);
-    }
+    // &:hover {
+    //     cursor: pointer;
+    //     background-color: rgb(236, 232, 157, 0.3);
+    // }
 }
 
 .search {
@@ -31,7 +32,7 @@
     padding-top: 20px;
     margin-bottom: 20px;
     display: flex;
-    gap: 50px;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -75,42 +76,17 @@
     align-items: center;
 
     span {
-       color: grey;
-       font-size: 22px;
-       min-width: none;
+        color: grey;
+        font-size: 22px;
+        min-width: none;
     }
 }
 
 .store__buttons {
-    position: absolute;
-    width: 300px;
+    margin: 30px auto;
+    width: 100%;
     left: calc(50% - 150px);
     display: flex;
     justify-content: space-between;
     bottom: 20px;
-}
-
-.unit {
-    margin: 0;
-    padding: 0;
-}
-
-.unit__title {
-    position: relative;
-    // background-color: #5e5373;
-    border: 1px dashed #ece89d;
-    padding: 2px;
-    color: #5e5373;
-    font-size: 14px;
-    font-weight: 600;
-    min-width: 85px;
-
-    &:first-child {
-        min-width: 50px;
-    }
-
-}
-
-.title__wide {
-    min-width: 200px;
 }

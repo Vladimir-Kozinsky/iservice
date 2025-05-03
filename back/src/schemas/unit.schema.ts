@@ -45,6 +45,14 @@ export class Unit {
     @Prop({ required: true })
     location: string;
 
+    @ApiProperty({ example: '1', description: 'Rack location' })
+    @Prop({ required: false })
+    rack: string;
+
+    @ApiProperty({ example: '2', description: 'Shelf location' })
+    @Prop({ required: false })
+    shelf: string;
+
     @ApiProperty({ example: 'NEW', description: 'Parts condition' })
     @Prop({ required: true })
     condition: string;
@@ -57,14 +65,22 @@ export class Unit {
     @Prop({ required: false })
     shelflife: string;
 
-    @ApiProperty({ example: '328472389', description: 'Certificate number' })
-    @Prop({ required: false })
-    certificate: string;
-
     @ApiProperty({ example: 'Remarks', description: 'Remarks' })
     @Prop({ required: false })
     remarks: string;
-    
+
+    @ApiProperty({ example: 'Remarks', description: 'Remarks' })
+    @Prop({ required: false })
+    usage: [
+        {
+            date: string,
+            aircraft: string,
+            wo: string,
+            quantity: number,
+            remark: string
+        }
+    ]
+
 }
 
 

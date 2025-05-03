@@ -38,6 +38,12 @@ export class CreateUnitDto {
     @IsNotEmpty()
     readonly location: string;
 
+    @ApiProperty({ example: '1', description: 'Rack location' })
+    readonly rack: string;
+
+    @ApiProperty({ example: '2', description: 'Shelf location' })
+    readonly shelf: string;
+
     @ApiProperty({ example: 'NEW', description: 'Parts condition' })
     @IsNotEmpty()
     readonly condition: string;
@@ -48,9 +54,6 @@ export class CreateUnitDto {
     @ApiProperty({ example: '25.06.2029', description: 'Shelf life' })
     readonly shelflife: string;
 
-    @ApiProperty({ example: '328472389', description: 'Certificate number' })
-    @IsNotEmpty()
-    readonly certificate: string;
 
     @ApiProperty({ example: 'Remarks', description: 'Remarks' })
     readonly remarks: string;

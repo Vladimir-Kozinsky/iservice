@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IChangeUnitDto, ICreateUnitDto, IDeleteUnitDto, IGetUnitsDto, IGetUnitsResponseDto, IStoreState, IUnitRejectResponse } from './storeReducerTypes';
+import { IChangeUnitDto, ICreateUnitDto, IDeleteUnitDto, IGetPrintUnitsDto, IGetUnitsDto, IGetUnitsResponseDto, IStoreState, IUnitRejectResponse, IUsageUnitDto } from './storeReducerTypes';
 import { IUnit } from '../../../types/types';
 import storeAPI from '../../../API/storeAPI';
 
@@ -15,13 +15,15 @@ const initialState: IStoreState = {
         quantity: null,
         eapack: null,
         location: null,
+        rack: null,
+        shelf: null,
         condition: null,
         lifelimit: null,
         shelflife: null,
-        certificate: null,
         remarks: null,
     },
     units: [],
+    unitsToPrint: [],
     totalPages: null,
     currentPage: null,
     errorMessage: null,
@@ -53,7 +55,7 @@ const storeSlice = createSlice({
         builder.addCase(changeUnit.fulfilled, (state: IStoreState, action: PayloadAction<IUnit>) => {
             const changedUnitIndex = state.units.findIndex((unit: IUnit) => unit._id === action.payload._id)
             state.units[changedUnitIndex] = action.payload;
-            state.successMessage = "Unit successfully changed";
+            state.successMessage = "Unit successfully updated";
         })
         builder.addCase(changeUnit.rejected, (state: IStoreState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
@@ -76,6 +78,23 @@ const storeSlice = createSlice({
         builder.addCase(getUnits.rejected, (state: IStoreState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
             state.units = [];
+        })
+
+        builder.addCase(getPrintUnits.fulfilled, (state: IStoreState, action: PayloadAction<IUnit[]>) => {
+            state.unitsToPrint = action.payload;
+        })
+        builder.addCase(getPrintUnits.rejected, (state: IStoreState, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
+            state.units = [];
+        })
+
+        builder.addCase(updateUnit.fulfilled, (state: IStoreState, action: PayloadAction<IUnit>) => {
+            const changedUnitIndex = state.units.findIndex((unit: IUnit) => unit._id === action.payload._id)
+            state.units[changedUnitIndex] = action.payload;
+            state.successMessage = "Unit successfully updated";
+        })
+        builder.addCase(updateUnit.rejected, (state: IStoreState, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
         })
     },
 })
@@ -121,6 +140,30 @@ export const getUnits = createAsyncThunk(
     async (getUnitsDto: IGetUnitsDto, thunkAPI) => {
         try {
             const response = await storeAPI.getUnits(getUnitsDto);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IUnitRejectResponse);
+        }
+    }
+)
+
+export const getPrintUnits = createAsyncThunk(
+    'unit/print',
+    async (getPrintUnitsDto: IGetPrintUnitsDto, thunkAPI) => {
+        try {
+            const response = await storeAPI.getPrintUnits(getPrintUnitsDto);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IUnitRejectResponse);
+        }
+    }
+)
+
+export const updateUnit = createAsyncThunk(
+    'unit/use',
+    async (useUnitDto: IUsageUnitDto, thunkAPI) => {
+        try {
+            const response = await storeAPI.useUnit(useUnitDto);
             return response.data;
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response.data as IUnitRejectResponse);

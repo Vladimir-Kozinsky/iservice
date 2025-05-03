@@ -10,6 +10,5 @@ export class GetUnitsDto {
     @ApiProperty({ example: '25', description: 'Units at page' })
     @IsNotEmpty()
     readonly unitsAtPage: number;
-
-
+    
 }

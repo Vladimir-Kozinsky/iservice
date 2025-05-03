@@ -15,7 +15,7 @@
 
 .header_container {
     margin: 0 auto;
-    width: 1200px;
+    width: 1900px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -84,6 +84,12 @@
         font-family: Manrope;
         font-size: 16px;
         font-weight: 600;
+    }
+}
+
+@media screen and (max-width: 1600px) {
+    .header_container {
+        max-width: 1200px;
     }
 }
 

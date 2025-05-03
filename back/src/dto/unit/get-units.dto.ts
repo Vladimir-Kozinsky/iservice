@@ -14,8 +14,8 @@ export class GetUnitsDto {
     @ApiProperty({ example: 'Manas', description: 'Location' })
     readonly locationFilter: string[];
 
-    @ApiProperty({ example: 'Rotable', description: 'Part type' })
-    readonly typeFilter: string[];
+    // @ApiProperty({ example: 'Rotable', description: 'Part type' })
+    // readonly typeFilter: string[];
 
     @ApiProperty({ example: 'up', description: 'Filter direction up or down' })
     readonly filterDirection: string;

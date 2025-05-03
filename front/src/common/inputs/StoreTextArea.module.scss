@@ -69,3 +69,31 @@
         font-size: 12px;
     }
 }
+
+@media screen and (max-width: 800px) {
+    .textarea__field {
+        width: 315px;
+        height: 60px;
+        border: #0A2640 2px solid;
+        border-radius: 8px;
+        background-color: #FFFFFF;
+        padding: 5px 10px;
+        color: #0A2640;
+        font-size: 14px;
+        font-family: 'Manrope';
+        font-style: normal;
+        font-weight: 400;
+    
+    
+        &:hover {
+            border: #2e6497 2px solid;
+        }
+    
+        &:focus {
+            outline: none;
+            border: #2e6497 2px solid;
+        }
+    }
+
+
+}

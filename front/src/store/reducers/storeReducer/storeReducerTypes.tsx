@@ -12,14 +12,16 @@ export interface IStoreState {
         quantity: number | null;
         eapack: string | null;
         location: string | null;
+        rack: string | null;
+        shelf: string | null;
         condition: string | null;
         lifelimit: string | null;
         shelflife: string | null;
-        certificate: string | null;
         remarks: string | null;
 
     },
     units: IUnit[],
+    unitsToPrint: IUnit[],
     totalPages: number | null;
     currentPage: number | null;
     errorMessage: string | null;
@@ -42,10 +44,11 @@ export interface ICreateUnitDto {
     quantity: number;
     eapack: string;
     location: string;
+    rack: string;
+    shelf: string;
     condition: string;
     lifelimit: string;
     shelflife: string;
-    certificate: string;
     remarks: string;
 }
 
@@ -60,22 +63,38 @@ export interface IChangeUnitDto {
     quantity: number;
     eapack: string;
     location: string;
+    rack: string;
+    shelf: string;
     condition: string;
     lifelimit: string;
     shelflife: string;
-    certificate: string;
     remarks: string;
 }
+
+export interface IUsageUnitDto {
+    _id: string;
+    quantity: number;
+    wo: string;
+    date: string;
+    aircraft: string;
+    remark: string;
+}
+
 export interface IDeleteUnitDto {
-    sn: string;
+    id: string;
 }
 
 export interface IGetUnitsDto {
     page: number;
     unitsAtPage: number;
     locationFilter?: string[];
-    typeFilter?: string[];
+    //typeFilter?: string[];
     filterDirection?: string;
+    searchText?: string;
+}
+
+export interface IGetPrintUnitsDto {
+    locationFilter?: string[];
     searchText?: string;
 }
 
