@@ -7,7 +7,10 @@ import classNames from 'classnames';
 
 
 type TitlePropsType = {
-    text: string;
+    text: {
+        title: string,
+        value: string,
+    };
     sort: boolean;
     sortDirect: string;
     sortHandler: (sortDir: string) => void;
@@ -23,13 +26,10 @@ const Title: React.FC<TitlePropsType> = ({ text, sort, sortDirect, sortHandler, 
         isSortHandler({ name: text, isSort: true });
     }
 
-    const titleClass = text === 'Description' || text === 'Remarks'
-        ? classNames(s.title, s.title__wide)
-        : text === 'Qty.' || text === 'Rack' || text === 'EA/Packs' || text === 'Shelf' ? classNames(s.title, s.title__narrow) : classNames(s.title)
 
     return (
-        <div className={titleClass}>
-            <span onClick={spanHandler}>{text}</span>
+        <div className={classNames(s.title, s[`title__${text.title}`])}>
+            <span onClick={spanHandler}>{text.value}</span>
             {sort && <button className={s.title__btn} onClick={sortDirect === 'az'
                 ? () => sortHandler('za')
                 : () => sortHandler('az')} >

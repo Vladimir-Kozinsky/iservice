@@ -90,3 +90,46 @@
     justify-content: space-between;
     bottom: 20px;
 }
+
+@media screen and (max-width: 1440px) {}
+
+@media screen and (max-width: 1280px) {}
+
+@media screen and (max-width: 960px) {
+    .search__input {
+        width: 220px;
+        height: 32px;
+        border-radius: 24px;
+        padding: 0 10px;
+        font-size: 16px;
+    }
+
+    .search__icon {
+        height: 28px;
+        left: 184px;
+    }
+    .filter {
+        span {
+            font-size: 18px;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .search {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .search__icon {
+        display: none;
+    }
+
+    .filter {
+        span {
+            display: none;
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {}

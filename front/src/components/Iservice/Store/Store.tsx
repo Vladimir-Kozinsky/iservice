@@ -48,8 +48,21 @@ const Store: React.FC = () => {
     }
 
     const titlesArr = [
-        'ATA', 'P/N', 'S/N', 'Part Type', 'Description', 'GRN', 'Qty.', 'EA/Packs',
-        'Location', 'Rack', 'Shelf', 'Condition', 'Life Limit', 'Shelf Life', 'Remarks'
+        { title: 'ata', value: 'ATA' },
+        { title: 'pn', value: 'P/N' },
+        { title: 'sn', value: 'S/N' },
+        { title: 'type', value: 'Part Type' },
+        { title: 'desc', value: 'Description' },
+        { title: 'grn', value: 'GRN' },
+        { title: 'quantity', value: 'Qty.' },
+        { title: 'eapack', value: 'EA/Pack' },
+        { title: 'location', value: 'Location' },
+        { title: 'rack', value: 'Rack' },
+        { title: 'shelf', value: 'Shelf' },
+        { title: 'condition', value: 'Condition' },
+        { title: 'lifelimit', value: 'Life Limit' },
+        { title: 'shelflife', value: 'Shelf Life' },
+        { title: 'remarks', value: 'Remarks' }
     ]
 
     const locationOptions = [
@@ -59,11 +72,14 @@ const Store: React.FC = () => {
         { value: 'Aqaba', label: 'Aqaba' },
     ]
 
-    const titles = () => titlesArr.map((title) => <Title text={title}
-        sort={isSort.name === title ? isSort.isSort : false}
-        sortDirect={sortDir}
-        sortHandler={setSortDir}
-        isSortHandler={setSort} />
+    const titles = () => titlesArr.map((title) => {
+        return <Title text={title}
+            sort={isSort.name === title.value ? isSort.isSort : false}
+            sortDirect={sortDir}
+            sortHandler={setSortDir}
+            isSortHandler={setSort} />
+    }
+
     )
 
     const changePage = async (page: number) => {

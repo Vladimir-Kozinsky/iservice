@@ -14,6 +14,7 @@
 }
 
 .header_container {
+    padding: 0 20px;
     margin: 0 auto;
     width: 1900px;
     display: flex;
@@ -87,21 +88,32 @@
     }
 }
 
-@media screen and (max-width: 1600px) {
-    .header_container {
-        max-width: 1200px;
-    }
-}
 
-@media (max-width: 480px) {
+
+@media (max-width: 768px) {
     .header_container {
+        padding-top: 5px;
         margin: 0 auto;
         max-width: 1200px;
+        gap: 10px;
         display: flex;
         flex-direction: column;
     }
 
     .header__nav {
         margin: 0 0 10px 0;
+    }
+
+    .header__logo {
+        img {
+            position: relative;
+            top: 0px;
+            width: 60px;
+        }
+    
+        .header__logo__title {
+            @include blue_text(22px);
+            margin-left: 20px;
+        }
     }
 }

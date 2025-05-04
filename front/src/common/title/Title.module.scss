@@ -1,25 +1,35 @@
 .title {
     position: relative;
+    display: flex;
+    align-items: center;
     background-color: #5e5373;
     border: 1px dashed #ece89d;
     padding: 2px;
     color: #fff;
     font-size: 14px;
     font-weight: 600;
-    width: 100px;
-
-    &:first-child {
-        width: 50px;
-    }
+    flex-basis: 110px;
+    height: 20px;
+    overflow: hidden;
 
     span {
         cursor: pointer;
     }
 }
 
-.title__wide {
-    flex-grow: 2;
+.title__ata,
+.title__quantity,
+.title__eapack,
+.title__rack,
+.title__shelf {
+    flex-basis: 50px;
 }
+
+.title__remarks,
+.title__desc {
+    flex-grow: 1;
+}
+
 
 .title__btn {
     position: absolute;
@@ -41,56 +51,76 @@
 
 }
 
-@media screen and (max-width: 1600px) {
+
+
+@media screen and (max-width: 1440px) {
     .title {
+        flex-basis: 80px;
         font-size: 12px;
-        font-weight: 600;
-        width: 70px;
-
-        &:first-child {
-            width: 30px;
-        }
     }
 
-    .title__narrow {
-        width: 50px;
+    .title__ata,
+    .title__quantity,
+    .title__eapack,
+    .title__rack,
+    .title__shelf {
+        flex-basis: 44px;
     }
-
-
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 1280px) {
     .title {
+        flex-basis: 60px;
         font-size: 10px;
-        font-weight: 600;
-        width: 70px;
-
-        &:first-child {
-            width: 30px;
-        }
     }
 
-    .title__narrow {
-        width: 50px;
+    .title__ata,
+    .title__quantity,
+    .title__eapack,
+    .title__rack,
+    .title__shelf {
+        flex-basis: 38px;
     }
-
-
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 960px) {
     .title {
-        font-size: 10px;
-        font-weight: 600;
-        width: 65px;
-
-        &:first-child {
-            width: 25px;
-        }
+        height: 12px;
+        flex-basis: 50px;
+        font-size: 8px;
     }
 
-    .title__narrow {
-        width: 10px;
+    .title__ata,
+    .title__quantity,
+    .title__eapack,
+    .title__rack,
+    .title__shelf {
+        flex-basis: 28px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .title {
+        flex-basis: 50px;
+        font-size: 8px;
     }
 
+    .title__ata,
+    .title__quantity,
+    .title__eapack,
+    .title__rack,
+    .title__shelf {
+        flex-basis: 28px;
+    }
 
+    .title__type, .title__grn, .title__rack,
+    .title__shelf, .title__lifelimit, .title__shelflife {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .title__ata {
+        display: none;
+    }
 }
