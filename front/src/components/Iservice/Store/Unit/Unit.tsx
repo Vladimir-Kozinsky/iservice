@@ -8,6 +8,7 @@ import DeleteMessage from "../../../../common/messages/DeleteMessage/DeleteMessa
 import { deleteUnit } from "../../../../store/reducers/storeReducer/storeReducer"
 import { useDispatch } from "react-redux"
 import { AppDispatch } from "../../../../store/store"
+import { Link } from "react-router-dom"
 
 
 type UnitPropsType = {
@@ -55,7 +56,7 @@ const Unit: React.FC<UnitPropsType> = ({ unit, editHandler, usageHandler, histor
             <span className={classNames(s.unit__title, s.unit__sn)}>{unit.sn}</span>
             <span className={classNames(s.unit__title, s.unit__type)} >{unit.type}</span>
             <span className={classNames(s.unit__title, s.unit__desc)}>{unit.desc}</span>
-            <a className={classNames(s.unit__title, s.unit__grn)}>{cutText(12, unit.grn)}</a>
+            <Link to={unit.grn}  target="_blank" className={classNames(s.unit__title, s.unit__grn)}>{cutText(12, unit.grn)}</Link>
             <span className={classNames(s.unit__title, s.unit__quantity)}>{unit.quantity}</span>
             <span className={classNames(s.unit__title, s.unit__eapack)}>{unit.eapack}</span>
             <span className={classNames(s.unit__title, s.unit__location)}>{unit.location}</span>
