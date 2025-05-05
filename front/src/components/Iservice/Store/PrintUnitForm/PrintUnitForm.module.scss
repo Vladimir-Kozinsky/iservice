@@ -6,7 +6,7 @@
     width: 100vw;
     height: 100vh;
     backdrop-filter: blur(5px);
-
+    display: none;
 }
 
 .PrintUnitForm__wrapper {
@@ -53,6 +53,10 @@
     img {
         width: 30px;
     }
+}
+
+.PrintUnitForm__buttons__print {
+    position: relative;
 }
 
 @media print {

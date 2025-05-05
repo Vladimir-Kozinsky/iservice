@@ -11,6 +11,7 @@ import Button from "../../../../common/buttons/Button";
 import Title from "../../../../common/title/Title";
 import PrintTitle from "../../../../common/printTitle/PrintTitle";
 import crosIcon from '../../../../assets/img/png/cross-input.png';
+import printIcon from '../../../../assets/img/png/print-icon.png';
 
 type PrintUnitFormPropsType = {
     searchText: string;
@@ -36,7 +37,12 @@ const PrintUnitForm = React.forwardRef(({ searchText, locationFilter, isPrintFor
     )
 
     useEffect(() => {
-        dispatch(getPrintUnits({ searchText: searchText, locationFilter: locationFilter }));
+        (async ()=>{
+           await dispatch(getPrintUnits({ searchText: searchText, locationFilter: locationFilter }));
+            await handlePrint();
+            await isPrintForm(false);
+        })()
+       
     }, [])
 
     const units = () => unitsToPrint.map((unit: IUnit) => <UnitToPrint unit={unit}
@@ -49,6 +55,7 @@ const PrintUnitForm = React.forwardRef(({ searchText, locationFilter, isPrintFor
             <div className={s.PrintUnitForm__wrapper}>
                 <button className={s.PrintUnitForm__btn} onClick={() => isPrintForm(false)} ><img src={crosIcon} alt="icon" /> </button>
                 <div className={s.PrintUnitForm__buttons} >
+                    {/* <button className={s.PrintUnitForm__buttons__print} onClick={handlePrint} ><img src={printIcon} alt="icon" /> </button> */}
                     <Button text="Print" color="green" btnType="button" handler={handlePrint} />
                 </div>
                 <div ref={componentRef} >

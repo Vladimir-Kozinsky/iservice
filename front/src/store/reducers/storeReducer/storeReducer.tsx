@@ -76,7 +76,7 @@ const storeSlice = createSlice({
             state.totalPages = action.payload.totalPages;
         })
         builder.addCase(getUnits.rejected, (state: IStoreState, action: PayloadAction<any>) => {
-            state.errorMessage = action.payload.message;
+            //state.errorMessage = action.payload.message;
             state.units = [];
         })
 
@@ -84,8 +84,8 @@ const storeSlice = createSlice({
             state.unitsToPrint = action.payload;
         })
         builder.addCase(getPrintUnits.rejected, (state: IStoreState, action: PayloadAction<any>) => {
-            state.errorMessage = action.payload.message;
-            state.units = [];
+            //state.errorMessage = action.payload.message;
+            state.unitsToPrint = [];
         })
 
         builder.addCase(updateUnit.fulfilled, (state: IStoreState, action: PayloadAction<IUnit>) => {

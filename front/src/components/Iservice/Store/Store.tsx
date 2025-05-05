@@ -171,7 +171,7 @@ const Store: React.FC = () => {
             <div className={s.store__buttons} >
                 {/* <Button text="Back" btnType="button" color="white" handler={() => navigate('/p')} /> */}
                 <Button text="Add" btnType="button" color="green" handler={() => setNewForm(true)} />
-                <Button text="Print report" btnType="button" color="green" handler={() => setPrintUnits(true)} />
+                <Button text="Print" btnType="button" color="green" handler={() => setPrintUnits(true)} />
             </div>
         </div>
     )
