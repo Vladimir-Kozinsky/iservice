@@ -102,7 +102,7 @@ const Store: React.FC = () => {
         let filterArr = newValue.map((item: any) => item.value);
         filterArr.forEach((element: string) => {
             if (element === 'All') {
-                filterArr = ['Sharjah', 'Manas', 'Aqaba']
+                filterArr = ['Sharjah', 'Manas', 'Aqaba', 'EX-37017']
             }
         });
         setSelectedLocations(filterArr);
