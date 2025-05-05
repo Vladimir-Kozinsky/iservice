@@ -70,6 +70,7 @@ const Store: React.FC = () => {
         { value: 'Sharjah', label: 'Sharjah' },
         { value: 'Manas', label: 'Manas' },
         { value: 'Aqaba', label: 'Aqaba' },
+        { value: 'EX-37017', label: 'EX-37017' },
     ]
 
     const titles = () => titlesArr.map((title) => {
