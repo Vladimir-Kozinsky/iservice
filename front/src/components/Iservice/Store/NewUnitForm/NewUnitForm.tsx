@@ -148,11 +148,15 @@ const NewUnitForm: React.FC<NewUnitFormPropsType> = ({ isNewForm }) => {
                                 <div className={s.inputs__block}>
                                     <label>Condition<span>*</span></label>
                                     <Field className={classNames(s.inputs__block__select, errors.condition && s.error)} type="text" id="condition" name="condition"
-                                        placeholder="Type" error={errors.condition} as="select">
+                                        placeholder="Condition" error={errors.condition} as="select">
                                         <option value="">No value</option>
-                                        <option value="Used">Used</option>
+                                        <option value="Inspected">Inspected</option>
                                         <option value="New">New</option>
-                                        <option value="Servisable">Servisable</option>
+                                        <option value="Overhauled">Overhauled</option>
+                                        <option value="Repaired">Repaired</option>
+                                        <option value="Unserviceable">Unserviceable</option>
+                                        <option value="Serviceable(AR)">Serviceable(AR)</option>
+                                        <option value="Scrap">Scrap</option>
                                     </Field>
                                 </div>
                                 <div className={s.inputs__block}>
