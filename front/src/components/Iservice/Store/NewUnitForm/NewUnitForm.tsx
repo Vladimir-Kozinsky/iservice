@@ -97,7 +97,7 @@ const NewUnitForm: React.FC<NewUnitFormPropsType> = ({ isNewForm }) => {
                                     <label>ATA<span>*</span></label>
                                     <Field className={classNames(s.inputs__block__select, errors.ata && s.error)} type="text" id="ata" name="ata"
                                         placeholder="25" error={errors.ata} as="select">
-                                        <option value="">No value</option>
+                                        <option value="N/A">No value</option>
                                         <option value="21">21 AIR CONDITIONING </option>
                                         <option value="22">22 AUTOFLIGHT </option>
                                         <option value="23">23 COMMUNICATIONS </option>
@@ -124,6 +124,16 @@ const NewUnitForm: React.FC<NewUnitFormPropsType> = ({ isNewForm }) => {
                                         <option value="55">55 STABILIZERS</option>
                                         <option value="56">56 WINDOWS</option>
                                         <option value="57">57 WINGS</option>
+                                        <option value="71">71 POWER PLANT</option>
+                                        <option value="72">72 ENGINE</option>
+                                        <option value="73">73 ENGINE FUEL AND CONTROL</option>
+                                        <option value="74">74 IGNITION</option>
+                                        <option value="75">75 AIR</option>
+                                        <option value="76">76 ENGINE CONTROLS</option>
+                                        <option value="77">77 ENGINE INDICATING</option>
+                                        <option value="78">78 EXHAUST</option>
+                                        <option value="79">79 OIL</option>
+                                        <option value="80">80 STARTING</option>
                                     </Field>
                                 </div>
                                 <div className={s.inputs__block}>
