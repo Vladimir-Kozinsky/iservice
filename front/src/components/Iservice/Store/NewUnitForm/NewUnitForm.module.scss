@@ -120,12 +120,13 @@
 
 @media screen and (max-width: 480px) {
     .newUnitForm__wrapper {
-        top: 0px;
-        left: 0px;
+        width: 80vw;
+        height: 90vh;
+        top: 20px;
+        left: 50%;
         transform: none;
-        width: 90vw;
-        height: 100vh;
-        overflow-y: scroll;
+        transform: translateX(-50%);
+        overflow-y: auto;
     }
 
     .inputs {
@@ -138,6 +139,5 @@
 
     .newUnitForm__buttons {
         margin-bottom: 20px;
-        padding-bottom: 200px;
     }
 }
