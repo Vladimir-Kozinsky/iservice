@@ -16,7 +16,6 @@ export class ChangeUnitDto {
     readonly pn: string;
 
     @ApiProperty({ example: '289134', description: 'Serial Number' })
-    @IsNotEmpty()
     readonly sn: string;
 
     @ApiProperty({ example: 'Consumables', description: 'Parts type' })

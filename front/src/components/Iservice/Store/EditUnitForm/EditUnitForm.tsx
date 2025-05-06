@@ -59,7 +59,7 @@ const EditUnitForm: React.FC<NewUnitFormPropsType> = ({ editUnit, isEditUnit }) 
                 const errors: ICreateUnitErrorsDto = {};
                 if (!values.ata) errors.ata = 'ATA is required';
                 if (!values.pn) errors.pn = 'P/N is required';
-                if (!values.sn) errors.sn = 'Serial number is required';
+                if (!values.sn && values.type === 'Rotable') errors.sn = 'Serial number is required';
                 if (!values.type) errors.type = 'Type is required';
                 if (!values.desc) errors.desc = 'Description is required';
                 if (!values.quantity) errors.quantity = 'Quantity is required';
@@ -72,6 +72,7 @@ const EditUnitForm: React.FC<NewUnitFormPropsType> = ({ editUnit, isEditUnit }) 
             onSubmit={(values: IChangeUnitDto) => {
                 (async () => {
                     // values._id = editUnit._id
+                    if (values.type === 'Consumable') values.sn = '';
                     setIsLoader(true);
                     await dispatch(changeUnit(values));
                     setIsLoader(false);
@@ -142,12 +143,12 @@ const EditUnitForm: React.FC<NewUnitFormPropsType> = ({ editUnit, isEditUnit }) 
                                 <div className={s.inputs__block}>
                                     <label>S/N<span>*</span></label>
                                     <Field type="text" id="sn" name="sn"
-                                        placeholder="S/N" error={errors.sn} as={StoreInput} />
+                                        disabled={values.type === 'Consumable' ? true : false} placeholder="S/N" error={errors.sn} as={StoreInput} />
                                 </div>
 
                                 <div className={s.inputs__block}>
                                     <label>Type<span>*</span></label>
-                                    <Field className={classNames(s.inputs__block__select, errors.type && s.error)} type="text" id="type" name="type"
+                                    <Field onClick={()=> values.sn = ''} className={classNames(s.inputs__block__select, errors.type && s.error)} type="text" id="type" name="type"
                                         error={errors.type} as="select">
                                         <option value="">No value</option>
                                         <option value="Rotable">Rotable</option>
@@ -197,6 +198,9 @@ const EditUnitForm: React.FC<NewUnitFormPropsType> = ({ editUnit, isEditUnit }) 
                                         <option value="Sharjah">Sharjah</option>
                                         <option value="Manas">Manas</option>
                                         <option value="Aqaba">Aqaba</option>
+                                        <option value="Ras-Al-Khaima">Ras-Al-Khaima</option>
+                                        <option value="Ajman">Ajman</option>
+                                        <option value="Shop">Shop</option>
                                         <option value="EX-37017">EX-37017</option>
                                     </Field>
                                 </div>

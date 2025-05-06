@@ -17,7 +17,7 @@ export class UnitService {
     ) { }
     async createUnit(createUnitDto: CreateUnitDto) {
         const unit = await this.unitModel.findOne({ sn: createUnitDto.sn });
-        if (unit) throw new HttpException('Unit with this sn already exists', HttpStatus.BAD_REQUEST);
+        if (unit && createUnitDto.sn) throw new HttpException('Unit with this sn already exists', HttpStatus.BAD_REQUEST);
         return await this.unitModel.create(createUnitDto);
     }
 

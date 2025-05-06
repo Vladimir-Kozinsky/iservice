@@ -52,7 +52,7 @@ const NewUnitForm: React.FC<NewUnitFormPropsType> = ({ isNewForm }) => {
                 const errors: ICreateUnitErrorsDto = {};
                 if (!values.ata) errors.ata = 'ATA is required';
                 if (!values.pn) errors.pn = 'P/N is required';
-                if (!values.sn) errors.sn = 'Serial number is required';
+                if (!values.sn && values.type === 'Rotable') errors.sn = 'Serial number is required';
                 if (!values.type) errors.type = 'Type is required';
                 if (!values.desc) errors.desc = 'Description is required';
                 if (!values.quantity) errors.quantity = 'Quantity is required';
@@ -64,6 +64,7 @@ const NewUnitForm: React.FC<NewUnitFormPropsType> = ({ isNewForm }) => {
             }}
             onSubmit={(values: ICreateUnitDto) => {
                 (async () => {
+                    if (values.type === 'Consumable') values.sn = '';
                     setIsLoader(true);
                     await dispatch(createUnit(values));
                     setIsLoader(false);
@@ -91,7 +92,7 @@ const NewUnitForm: React.FC<NewUnitFormPropsType> = ({ isNewForm }) => {
                                 <div className={s.inputs__block}>
                                     <label>S/N<span>*</span></label>
                                     <Field type="text" id="sn" name="sn"
-                                        placeholder="S/N" error={errors.sn} as={StoreInput} />
+                                        disabled={values.type === 'Consumable' ? true : false} placeholder={values.type === 'Consumable' ? "Not applicable" : "S/N"} error={errors.sn} as={StoreInput} />
                                 </div>
                                 <div className={s.inputs__block}>
                                     <label>ATA<span>*</span></label>
@@ -138,7 +139,7 @@ const NewUnitForm: React.FC<NewUnitFormPropsType> = ({ isNewForm }) => {
                                 </div>
                                 <div className={s.inputs__block}>
                                     <label>Type<span>*</span></label>
-                                    <Field className={classNames(s.inputs__block__select, errors.type && s.error)} type="text" id="type" name="type"
+                                    <Field onClick={()=> values.sn = ''} className={classNames(s.inputs__block__select, errors.type && s.error)} type="text" id="type" name="type"
                                         placeholder="Type" error={errors.type} as="select">
                                         <option value="">No value</option>
                                         <option value="Rotable">Rotable</option>
@@ -176,6 +177,9 @@ const NewUnitForm: React.FC<NewUnitFormPropsType> = ({ isNewForm }) => {
                                         <option value="Sharjah">Sharjah</option>
                                         <option value="Manas">Manas</option>
                                         <option value="Aqaba">Aqaba</option>
+                                        <option value="Ras-Al-Khaima">Ras-Al-Khaima</option>
+                                        <option value="Ajman">Ajman</option>
+                                        <option value="Shop">Shop</option>
                                         <option value="EX-37017">EX-37017</option>
                                     </Field>
                                 </div>

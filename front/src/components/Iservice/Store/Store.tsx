@@ -39,7 +39,7 @@ const Store: React.FC = () => {
     const totalPages = useSelector((state: RootState) => state.store.totalPages);
     const [isLoader, setIsLoader] = useState<boolean | undefined>(false);
     const [search, setSearch] = useState('');
-    const [selectedLocations, setSelectedLocations] = useState<string[]>(['Sharjah', 'Manas', 'Aqaba']);
+    const [selectedLocations, setSelectedLocations] = useState<string[]>(['Sharjah', 'Manas', 'Aqaba', 'Ras-Al-Khaima', 'Ajman', 'Shop', 'EX-37017']);
 
 
     interface IOption {
@@ -70,6 +70,9 @@ const Store: React.FC = () => {
         { value: 'Sharjah', label: 'Sharjah' },
         { value: 'Manas', label: 'Manas' },
         { value: 'Aqaba', label: 'Aqaba' },
+        { value: 'Ras-Al-Khaima', label: 'Ras-Al-Khaima' },
+        { value: 'Ajman', label: 'Ajman' },
+        { value: 'Shop', label: 'Shop' },
         { value: 'EX-37017', label: 'EX-37017' },
     ]
 
