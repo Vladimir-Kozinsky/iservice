@@ -20,21 +20,21 @@ const UnitToPrint: React.FC<UnitPropsType> = ({ unit }) => {
 
     return (
         <div className={s.unit} >
-            <span className={s.unit__title} >{unit.ata}</span>
-            <span className={s.unit__title} >{unit.pn}</span>
-            <span className={s.unit__title}>{unit.sn}</span>
-            <span className={s.unit__title} >{unit.type}</span>
-            <span className={classNames(s.unit__title, s.title__wide)}>{unit.desc}</span>
-            <a className={s.unit__title}>{cutText(12, unit.grn)}</a>
-            <span className={classNames(s.unit__title, s.title__narrow)}>{unit.quantity}</span>
-            <span className={classNames(s.unit__title, s.title__narrow)}>{unit.eapack}</span>
-            <span className={s.unit__title}>{unit.location}</span>
-            <span className={classNames(s.unit__title, s.title__narrow)}>{unit.rack}</span>
-            <span className={classNames(s.unit__title, s.title__narrow)}>{unit.shelf}</span>
-            <span className={s.unit__title}>{unit.condition}</span>
-            <span className={s.unit__title}>{unit.lifelimit}</span>
-            <span className={s.unit__title}>{unit.shelflife}</span>
-            <span className={classNames(s.unit__title, s.title__wide)}>{unit.remarks}</span>
+            <span className={classNames(s.unit__title, s.unit__ata)} >{unit.ata}</span>
+            <span className={classNames(s.unit__title, s.unit__pn)} >{unit.pn}</span>
+            <span className={classNames(s.unit__title, s.unit__sn)}>{unit.sn}</span>
+            <span className={classNames(s.unit__title, s.unit__type)} >{unit.type}</span>
+            <span className={classNames(s.unit__title, s.unit__desc)}>{unit.desc}</span>
+            <span className={classNames(s.unit__title, s.unit__grn)}>{cutText(12, unit.grn)}</span>
+            <span className={classNames(s.unit__title, s.unit__quantity)}>{unit.quantity}</span>
+            <span className={classNames(s.unit__title, s.unit__eapack)}>{unit.eapack}</span>
+            <span className={classNames(s.unit__title, s.unit__location)}>{unit.location}</span>
+            <span className={classNames(s.unit__title, s.unit__rack)}>{unit.rack}</span>
+            <span className={classNames(s.unit__title, s.unit__shelf)}>{unit.shelf}</span>
+            <span className={classNames(s.unit__title, s.unit__condition)}>{unit.condition}</span>
+            <span className={classNames(s.unit__title, s.unit__lifelimit)}>{unit.lifelimit}</span>
+            <span className={classNames(s.unit__title, s.unit__shelflife)}>{unit.shelflife}</span>
+            <span className={classNames(s.unit__title, s.unit__remarks)}>{unit.remarks}</span>
         </div>
     )
 }

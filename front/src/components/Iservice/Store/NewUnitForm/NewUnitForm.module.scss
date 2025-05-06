@@ -35,8 +35,18 @@
     margin-bottom: 20px;
 }
 
-.store__buttons {
-    margin-top: 10px;
+.textAreas {
+    display: flex;
+    gap: 20px;
+}
+
+.textAreas__block {
+    position: relative;
+    flex-grow: 1;
+}
+
+.newUnitForm__buttons {
+    margin-top: 20px;
     justify-content: center;
     display: flex;
     gap: 20px;
@@ -102,23 +112,32 @@
     }
 }
 
-
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 768px) {
     .newUnitForm__wrapper {
-        padding: 15px;
-        width: 340px;
-        max-height: 90vh;
-        border-radius: 10px;
-        overflow-y: auto;
+        width: 80vw;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .newUnitForm__wrapper {
+        top: 0px;
+        left: 0px;
+        transform: none;
+        width: 90vw;
+        height: 100vh;
+        overflow-y: scroll;
     }
 
     .inputs {
-        display: flex;
-        justify-content: space-between;
-        flex-wrap: wrap;
-        gap: 10px;
-        margin-bottom: 10px;
+        padding: 10px;
     }
 
+    .textAreas {
+        flex-direction: column;
+    }
 
+    .newUnitForm__buttons {
+        margin-bottom: 20px;
+        padding-bottom: 200px;
+    }
 }

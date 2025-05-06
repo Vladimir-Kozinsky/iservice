@@ -2,7 +2,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import s from './Header.module.scss';
 import { AppDispatch } from '../../store/store';
 import Button from '../../common/buttons/Button';
-import logo from './../../assets/img/png/logo_short.png';
+//import logo from './../../assets/img/png/logo_short.png';
+import logo from './../../assets/img/png/logo.png'
 import avatar from './../../assets/img/png/avatar.png';
 import { signOut } from '../../store/reducers/authReducer/authReducer';
 import { NavLink } from 'react-router-dom';

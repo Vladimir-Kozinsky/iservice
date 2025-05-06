@@ -240,13 +240,13 @@ const NewUnitForm: React.FC<NewUnitFormPropsType> = ({ isNewForm }) => {
                                 </div>
 
                             </div>
-                            <div className={s.inputs}>
-                                <div className={s.inputs__block}>
+                            <div className={s.textAreas}>
+                                <div className={s.textAreas__block}>
                                     <label>Description<span>*</span></label>
                                     <Field type="text" id="desc" name="desc"
                                         placeholder="Description" error={errors.desc} as={StoreTextArea} />
                                 </div>
-                                <div className={s.inputs__block}>
+                                <div className={s.textAreas__block}>
                                     <label>Remarks<span></span></label>
                                     <Field type="text" id="remarks" name="remarks"
                                         placeholder="Remarks" error={errors.remarks} as={StoreTextArea} />
@@ -255,7 +255,7 @@ const NewUnitForm: React.FC<NewUnitFormPropsType> = ({ isNewForm }) => {
 
                         </div>
                     </div>
-                    <div className={s.store__buttons} >
+                    <div className={s.newUnitForm__buttons} >
                         <Button text="Back" btnType="button" color="white" handler={() => isNewForm(false)} />
                         <Button text="Add" color="green" btnType="submit" />
                     </div>

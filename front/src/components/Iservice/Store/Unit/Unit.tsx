@@ -52,11 +52,11 @@ const Unit: React.FC<UnitPropsType> = ({ unit, editHandler, usageHandler, histor
                 text='The unit will be permanently deleted'
             />}
             <span className={classNames(s.unit__title, s.unit__ata)} >{unit.ata}</span>
-            <span className={classNames(s.unit__title, s.unit__pn)} >{unit.pn}</span>
-            <span className={classNames(s.unit__title, s.unit__sn)}>{unit.sn}</span>
+            <span title={unit.pn} className={classNames(s.unit__title, s.unit__pn)} >{unit.pn}</span>
+            <span title={unit.sn} className={classNames(s.unit__title, s.unit__sn)}>{unit.sn}</span>
             <span className={classNames(s.unit__title, s.unit__type)} >{unit.type}</span>
-            <span className={classNames(s.unit__title, s.unit__desc)}>{unit.desc}</span>
-            <Link to={unit.grn}  target="_blank" className={classNames(s.unit__title, s.unit__grn)}>{cutText(12, unit.grn)}</Link>
+            <span title={unit.desc} className={classNames(s.unit__title, s.unit__desc)}>{unit.desc}</span>
+            <Link to={unit.grn} title={unit.grn} target="_blank" className={classNames(s.unit__title, s.unit__grn)}>{cutText(12, unit.grn)}</Link>
             <span className={classNames(s.unit__title, s.unit__quantity)}>{unit.quantity}</span>
             <span className={classNames(s.unit__title, s.unit__eapack)}>{unit.eapack}</span>
             <span className={classNames(s.unit__title, s.unit__location)}>{unit.location}</span>

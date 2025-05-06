@@ -29,8 +29,21 @@ const PrintUnitForm = React.forwardRef(({ searchText, locationFilter, isPrintFor
     });
 
     const titlesArr = [
-        'ATA', 'P/N', 'S/N', 'Part Type', 'Description', 'GRN', 'Qty.', 'EA/Packs',
-        'Location', 'Rack', 'Shelf', 'Condition', 'Life Limit', 'Shelf Life', 'Remarks'
+        { title: 'ata', value: 'ATA' },
+        { title: 'pn', value: 'P/N' },
+        { title: 'sn', value: 'S/N' },
+        { title: 'type', value: 'Part Type' },
+        { title: 'desc', value: 'Description' },
+        { title: 'grn', value: 'GRN' },
+        { title: 'quantity', value: 'Qty.' },
+        { title: 'eapack', value: 'EA/Pack' },
+        { title: 'location', value: 'Location' },
+        { title: 'rack', value: 'Rack' },
+        { title: 'shelf', value: 'Shelf' },
+        { title: 'condition', value: 'Condition' },
+        { title: 'lifelimit', value: 'Life Limit' },
+        { title: 'shelflife', value: 'Shelf Life' },
+        { title: 'remarks', value: 'Remarks' }
     ]
 
     const titles = () => titlesArr.map((title) => <PrintTitle text={title} />
@@ -39,8 +52,8 @@ const PrintUnitForm = React.forwardRef(({ searchText, locationFilter, isPrintFor
     useEffect(() => {
         (async ()=>{
            await dispatch(getPrintUnits({ searchText: searchText, locationFilter: locationFilter }));
-            await handlePrint();
-            await isPrintForm(false);
+           await handlePrint();
+           await isPrintForm(false);
         })()
        
     }, [])
