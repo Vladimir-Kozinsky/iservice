@@ -97,6 +97,7 @@ const EditUnitForm: React.FC<NewUnitFormPropsType> = ({ editUnit, isEditUnit }) 
                                     <Field className={classNames(s.inputs__block__select, errors.ata && s.error)}
                                         type="text" id="ata" name="ata" error={errors.ata} as="select">
                                         <option value="N/A">No value</option>
+                                        <option value="00">00 GENERAL </option>
                                         <option value="21">21 AIR CONDITIONING </option>
                                         <option value="22">22 AUTOFLIGHT </option>
                                         <option value="23">23 COMMUNICATIONS </option>
