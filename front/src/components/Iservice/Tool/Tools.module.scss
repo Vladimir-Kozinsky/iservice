@@ -1,0 +1,135 @@
+@import "./../../../sass/main.scss";
+
+.store {
+    padding: 20px;
+    box-shadow: -2px 0px 7px -3px rgb(5, 29, 66, 0.3);
+    position: relative;
+}
+
+.store__header {
+    @include blue_text(26px);
+    text-align: center;
+}
+
+.tools__container {
+    margin-top: 30px;
+}
+
+.tool {
+    padding-top: 20px;
+    display: flex;
+    margin: 0;
+    padding: 0;
+
+    // &:hover {
+    //     cursor: pointer;
+    //     background-color: rgb(236, 232, 157, 0.3);
+    // }
+}
+
+.search {
+    position: relative;
+    padding-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.search__input {
+    width: 230px;
+    height: 38px;
+    border: #0A2640 2px solid;
+    border-radius: 24px;
+    background-color: #FFFFFF;
+    padding: 0 20px;
+    color: #0A2640;
+    font-size: 16px;
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 400;
+    text-align: start;
+
+    &:hover {
+        border: #2e6497 2px solid;
+    }
+
+    &:focus {
+        outline: none;
+        border: #2e6497 2px solid;
+    }
+}
+
+.search__icon {
+    position: absolute;
+    height: 32px;
+    left: 226px;
+    top: 24px;
+    z-index: 1;
+    opacity: 0.5;
+    cursor: pointer;
+}
+
+.filter {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+
+    span {
+        color: grey;
+        font-size: 22px;
+        min-width: none;
+    }
+}
+
+.tool__buttons {
+    margin: 30px auto;
+    width: 100%;
+    left: calc(50% - 150px);
+    display: flex;
+    justify-content: space-between;
+    bottom: 20px;
+}
+
+@media screen and (max-width: 1440px) {}
+
+@media screen and (max-width: 1280px) {}
+
+@media screen and (max-width: 960px) {
+    .search__input {
+        width: 220px;
+        height: 32px;
+        border-radius: 24px;
+        padding: 0 10px;
+        font-size: 16px;
+    }
+
+    .search__icon {
+        height: 28px;
+        left: 184px;
+    }
+    .filter {
+        span {
+            font-size: 18px;
+        }
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .search {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .search__icon {
+        display: none;
+    }
+
+    .filter {
+        span {
+            display: none;
+        }
+    }
+}
+
+@media screen and (max-width: 480px) {}

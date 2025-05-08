@@ -6,6 +6,7 @@ import legReducer from './reducers/legReducer/legReducer'
 import apuReducer from './reducers/apuReducer/apuReducer'
 import gearReducer from './reducers/gearReducer/gearReducer'
 import storeReducer from './reducers/storeReducer/storeReducer'
+import toolReducer from './reducers/toolReducer/toolReducer'
 
 export const store = configureStore({
     reducer: {
@@ -15,7 +16,8 @@ export const store = configureStore({
         apu: apuReducer,
         leg: legReducer,
         gear: gearReducer,
-        store: storeReducer
+        store: storeReducer,
+        tool: toolReducer
     }
 })
 

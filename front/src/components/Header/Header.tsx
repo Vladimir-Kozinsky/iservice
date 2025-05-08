@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import s from './Header.module.scss';
 import { AppDispatch } from '../../store/store';
 import Button from '../../common/buttons/Button';
-//import logo from './../../assets/img/png/logo_short.png';
 import logo from './../../assets/img/png/logo.png'
 import avatar from './../../assets/img/png/avatar.png';
 import { signOut } from '../../store/reducers/authReducer/authReducer';
@@ -25,6 +24,11 @@ const Header = ({ theme }: HeaderProps) => {
                 <div className={s.header__logo}>
                     <img src={logo} alt='logo' />
                     <h2 className={s.header__logo__title} >I-Service</h2>
+                </div>
+                <div className={s.header__links}>
+                    <NavLink className={s.link} to="/">Store</NavLink>
+                    <NavLink className={s.link} to="tools">Tools</NavLink>
+                    {/* <NavLink className={s.link} to="requests">Requests</NavLink> */}
                 </div>
                 <div className={s.header__nav} >
                     <NavLink className={s.link} to="profile">

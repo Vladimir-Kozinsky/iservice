@@ -10,7 +10,7 @@
     min-height: 75px;
     z-index: 10;
     display: flex;
-    align-items: center;
+
 }
 
 .header_container {
@@ -18,6 +18,7 @@
     margin: 0 auto;
     width: 1900px;
     display: flex;
+    gap: 80px;
     align-items: center;
     justify-content: space-between;
 }
@@ -25,6 +26,7 @@
 .header__logo {
     display: flex;
     align-items: center;
+    height: 60px;
 
     img {
         position: relative;
@@ -35,6 +37,20 @@
         @include blue_text(24px);
         margin-left: 20px;
     }
+}
+
+.header__links {
+    height: 60px;
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    padding-top: 3px;
+    gap: 20px;
+}
+
+.link {
+    @include blue_text(20px);
+
 }
 
 .header__nav {

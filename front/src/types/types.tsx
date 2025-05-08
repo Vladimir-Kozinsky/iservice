@@ -309,3 +309,16 @@ export interface IUnit {
     remarks: string;
     usage: IHistoryUnit[];
 }
+export interface ITool {
+    _id: string;
+    pn: string;
+    sn: string;
+    type: string;
+    desc: string;
+    quantity: number;
+    location: string;
+    rack: string;
+    shelf: string;
+    calibration: string;
+    remarks: string;
+}

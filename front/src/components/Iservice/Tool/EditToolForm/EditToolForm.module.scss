@@ -1,0 +1,143 @@
+.newUnitForm__container {
+    position: fixed;
+    z-index: 10;
+    top: 0px;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(5px);
+
+}
+
+.newUnitForm__wrapper {
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    width: 600px;
+    border: 1px #2e6497 solid;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.section__header {
+    margin: 0 0 10px 0;
+    text-align: center;
+}
+
+.inputs {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+.textAreas {
+    display: flex;
+    gap: 20px;
+}
+
+.textAreas__block {
+    position: relative;
+    flex-grow: 1;
+}
+
+.store__buttons {
+    margin-top: 10px;
+    justify-content: center;
+    display: flex;
+    gap: 20px;
+}
+
+.inputs__block {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputs__block__select {
+    width: fit-content;
+    padding: 0px 0px 0px 5px;
+    height: 25px;
+    border: #0A2640 2px solid;
+    border-radius: 8px;
+    background-color: hsl(0, 0%, 100%);
+    color: #0A2640;
+    font-size: 14px;
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 400;
+
+
+    &:hover {
+        border: #2e6497 2px solid;
+    }
+
+    &:focus {
+        outline: none;
+        border: #2e6497 2px solid;
+    }
+}
+
+.inputs__block__select.error {
+    background-color: rgb(253, 201, 201);
+
+    option {
+        background-color: #FFFFFF;
+    }
+}
+
+.inputs__block__number {
+    width: 50px;
+    padding: 0px 5px;
+    height: 25px;
+    border: #0A2640 2px solid;
+    border-radius: 8px;
+    background-color: #FFFFFF;
+    color: #0A2640;
+    font-size: 14px;
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 400;
+
+    &:hover {
+        border: #2e6497 2px solid;
+    }
+
+    &:focus {
+        outline: none;
+        border: #2e6497 2px solid;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .newUnitForm__wrapper {
+        width: 80vw;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .newUnitForm__wrapper {
+        width: 80vw;
+        height: 90vh;
+        top: 20px;
+        left: 50%;
+        transform: none;
+        transform: translateX(-50%);
+        overflow-y: auto;
+    }
+
+    .inputs {
+        padding: 10px;
+    }
+
+    .textAreas {
+        flex-direction: column;
+    }
+
+    .newUnitForm__buttons {
+        margin-bottom: 20px;
+    }
+}

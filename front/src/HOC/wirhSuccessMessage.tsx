@@ -6,6 +6,7 @@ import { clearLegSuccessMessage } from '../store/reducers/legReducer/legReducer'
 import { clearEngineSuccessMessage } from '../store/reducers/engineReducer/engineReducer';
 import { clearApuSuccessMessage } from '../store/reducers/apuReducer/apuReducer';
 import { clearStoreSuccessMessage } from '../store/reducers/storeReducer/storeReducer';
+import { clearToolSuccessMessage } from '../store/reducers/toolReducer/toolReducer';
 
 const withSuccessMessage = (Component: React.FC) => ({ ...props }) => {
     const aircraftSuccessMessage = useSelector((state: RootState) => state.aircraft.successMessage);
@@ -13,6 +14,7 @@ const withSuccessMessage = (Component: React.FC) => ({ ...props }) => {
     const engineSuccessMessage = useSelector((state: RootState) => state.engine.successMessage);
     const apuSuccessMessage = useSelector((state: RootState) => state.apu.successMessage);
     const storeSuccessMessage = useSelector((state: RootState) => state.store.successMessage);
+    const toolSuccessMessage = useSelector((state: RootState) => state.tool.successMessage);
 
     const NewComponent = () => {
         return (
@@ -21,7 +23,8 @@ const withSuccessMessage = (Component: React.FC) => ({ ...props }) => {
                 {legSuccessMessage && <SuccessMessage handler={clearLegSuccessMessage} message={legSuccessMessage} />}
                 {engineSuccessMessage && <SuccessMessage handler={clearEngineSuccessMessage} message={engineSuccessMessage} />}
                 {apuSuccessMessage && <SuccessMessage handler={clearApuSuccessMessage} message={apuSuccessMessage} />}
-                {storeSuccessMessage && <SuccessMessage handler={clearStoreSuccessMessage} message={apuSuccessMessage} />}
+                {storeSuccessMessage && <SuccessMessage handler={clearStoreSuccessMessage} message={storeSuccessMessage} />}
+                {toolSuccessMessage && <SuccessMessage handler={clearToolSuccessMessage} message={toolSuccessMessage} />}
                 <Component {...props} />
             </>)
 

@@ -8,6 +8,7 @@ import Profile from "./Profile/Profile";
 import Footer from "../Footer/Footer";
 import SignUp from "../SignUp/SignUp";
 import Store from "./Store/Store";
+import Tools from "./Tool/Tools";
 
 
 const Iservice: React.FC = () => {
@@ -77,6 +78,7 @@ const Iservice: React.FC = () => {
                     <Route path="gear/:gearId" element={<GearFile />} />
                     <Route path="gear/:gearId/limit" element={<NewGearLimit />} /> */}
                     <Route path="/" element={<Store />} />
+                    <Route path="tools" element={<Tools />} />
                 </Routes>
             </main>
             <Footer theme="light" />

@@ -113,8 +113,11 @@
         flex-basis: 28px;
     }
 
-    .title__type, .title__sn .title__rack,
-    .title__shelf, .title__lifelimit, .title__shelflife {
+    .title__type,
+    .title__sn .title__rack,
+    .title__shelf,
+    .title__lifelimit,
+    .title__shelflife {
         display: none;
     }
 }
