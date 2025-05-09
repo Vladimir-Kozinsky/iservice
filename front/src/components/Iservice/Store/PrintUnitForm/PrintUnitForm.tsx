@@ -12,6 +12,15 @@ import Title from "../../../../common/title/Title";
 import PrintTitle from "../../../../common/printTitle/PrintTitle";
 import crosIcon from '../../../../assets/img/png/cross-input.png';
 import printIcon from '../../../../assets/img/png/print-icon.png';
+import exelIcon from '../../../../assets/img/png/exel.png';
+import { CSVLink } from "react-csv";
+
+// const csvData = [
+//     ["firstname", "lastname", "email"],
+//     ["Ahmed", "Tomi", "ah@smthing.co.com"],
+//     ["Raed", "Labes", "rl@smthing.co.com"],
+//     ["Yezzi", "Min l3b", "ymin@cocococo.com"]
+// ];
 
 type PrintUnitFormPropsType = {
     searchText: string;
@@ -25,8 +34,25 @@ const PrintUnitForm = React.forwardRef(({ searchText, locationFilter, isPrintFor
     const unitsToPrint = useSelector((state: RootState) => state.store.unitsToPrint);
 
     const handlePrint = useReactToPrint({
-        content: () => componentRef.current,
+        content: () => {
+            isPrintForm(false)
+            return componentRef.current
+        }
     });
+
+
+    const csvData = unitsToPrint.map((unit: IUnit) => {
+        return [unit.ata, unit.pn, unit.sn, unit.type, unit.desc,
+        unit.quantity, unit.eapack, unit.location,
+        unit.rack, unit.shelf, unit.condition,
+        unit.lifelimit, unit.shelflife, unit.remarks]
+    })
+
+    const arr = [
+        ['ATA', 'P/N', 'S/N', 'Part Type', 'Description', 'Qty.', 'EA/Pack',
+            'Location', 'Rack', 'Shelf', 'Condition', 'Life Limit', 'Shelf Life', 'Remarks'],
+        ...csvData
+    ]
 
     const titlesArr = [
         { title: 'ata', value: 'ATA' },
@@ -50,12 +76,10 @@ const PrintUnitForm = React.forwardRef(({ searchText, locationFilter, isPrintFor
     )
 
     useEffect(() => {
-        (async ()=>{
-           await dispatch(getPrintUnits({ searchText: searchText, locationFilter: locationFilter }));
-           await handlePrint();
-           await isPrintForm(false);
+        (async () => {
+            await dispatch(getPrintUnits({ searchText: searchText, locationFilter: locationFilter }));
         })()
-       
+
     }, [])
 
     const units = () => unitsToPrint.map((unit: IUnit) => <UnitToPrint unit={unit}
@@ -68,15 +92,18 @@ const PrintUnitForm = React.forwardRef(({ searchText, locationFilter, isPrintFor
             <div className={s.PrintUnitForm__wrapper}>
                 <button className={s.PrintUnitForm__btn} onClick={() => isPrintForm(false)} ><img src={crosIcon} alt="icon" /> </button>
                 <div className={s.PrintUnitForm__buttons} >
-                    {/* <button className={s.PrintUnitForm__buttons__print} onClick={handlePrint} ><img src={printIcon} alt="icon" /> </button> */}
-                    <Button text="Print" color="green" btnType="button" handler={handlePrint} />
+                    <button className={s.PrintUnitForm__buttons__print} onClick={handlePrint}><img className={s.button__img__print} src={printIcon} alt="icon" /> </button>
+                    <button className={s.PrintUnitForm__buttons__exel} ><CSVLink data={arr}  filename={"iservice-export.csv"}><img className={s.button__img__exel} src={exelIcon} alt="icon" /></CSVLink>;  </button>
                 </div>
-                <div ref={componentRef} >
-                    <div className={s.unit}>
-                        {titles()}
+                <div className={s.print__block}>
+                    <div ref={componentRef} >
+                        <div className={s.unit}>
+                            {titles()}
+                        </div>
+                        {units()}
                     </div>
-                    {units()}
                 </div>
+
             </div>
 
         </div>

@@ -20,6 +20,9 @@ import Unit from "./Unit/Unit";
 import UsageUnitForm from "./UsageUnitForm/UsageUnitForm";
 import UnitHistory from "./UnitHistory/UnitHistory";
 import PrintUnitForm from "./PrintUnitForm/PrintUnitForm";
+//import { ExcelFile, ExcelSheet } from "react-data-export";
+import { CSVLink, CSVDownload } from "react-csv";
+
 
 
 
@@ -40,7 +43,9 @@ const Store: React.FC = () => {
     const [isLoader, setIsLoader] = useState<boolean | undefined>(false);
     const [search, setSearch] = useState('');
     const [selectedLocations, setSelectedLocations] = useState<string[]>(['Sharjah', 'Manas', 'Aqaba', 'Ras-Al-Khaima', 'Ajman', 'Shop', 'EX-37017']);
+    const [exel, setExel] = useState<boolean>(false);
 
+   
 
     interface IOption {
         value: string | null;
@@ -174,8 +179,9 @@ const Store: React.FC = () => {
             {printUnits && <PrintUnitForm isPrintForm={setPrintUnits} searchText={search} locationFilter={selectedLocations} ref={componentRef} />}
             <div className={s.store__buttons} >
                 {/* <Button text="Back" btnType="button" color="white" handler={() => navigate('/p')} /> */}
+                
                 <Button text="Add" btnType="button" color="green" handler={() => setNewForm(true)} />
-                <Button text="Print" btnType="button" color="green" handler={() => setPrintUnits(true)} />
+                <Button text="Export" btnType="button" color="green" handler={() => setPrintUnits(true)} />
             </div>
         </div>
     )
