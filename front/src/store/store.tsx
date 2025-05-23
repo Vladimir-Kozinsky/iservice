@@ -7,6 +7,7 @@ import apuReducer from './reducers/apuReducer/apuReducer'
 import gearReducer from './reducers/gearReducer/gearReducer'
 import storeReducer from './reducers/storeReducer/storeReducer'
 import toolReducer from './reducers/toolReducer/toolReducer'
+import requestReducer from './reducers/requestReducer/requestReducer'
 
 export const store = configureStore({
     reducer: {
@@ -17,7 +18,8 @@ export const store = configureStore({
         leg: legReducer,
         gear: gearReducer,
         store: storeReducer,
-        tool: toolReducer
+        tool: toolReducer,
+        request: requestReducer,
     }
 })
 

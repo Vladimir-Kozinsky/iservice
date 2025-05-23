@@ -1,0 +1,260 @@
+.newPoForm__container {
+    position: fixed;
+    z-index: 10;
+    top: 0px;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(5px);
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.newPoForm__wrapper {
+    padding: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 20;
+    width: 700px;
+    max-height: 90vh;
+    border: 1px #2e6497 solid;
+    background-color: white;
+    border-radius: 10px;
+    overflow-y: auto;
+}
+
+.newPoForm__no__block {
+    input {
+        border: grey 1px solid;
+    }
+}
+
+.section__header {
+    margin: 0 0 10px 0;
+    text-align: center;
+}
+
+// .inputs {
+//     padding: 0 0 0 28px;
+//     display: flex;
+//     justify-content: space-between;
+//     flex-wrap: wrap;
+//     gap: 20px;
+//     margin-bottom: 20px;
+// }
+// .textAreas {
+//     display: flex;
+//     gap: 20px;
+// }
+// .textAreas__block {
+//     position: relative;
+//     flex-grow: 1;
+// }
+.newPoForm__buttons {
+    margin-top: 20px;
+    justify-content: center;
+    display: flex;
+    gap: 20px;
+}
+
+// .inputs__block {
+//     display: flex;
+//     flex-direction: column;
+// }
+// .inputs__block__req {
+//     flex-direction: row;
+//     gap: 20px;
+//     span {
+//         font-size: 18px;
+//     }
+// }
+// .inputs__block__select {
+//     width: fit-content;
+//     padding: 0px 0px 0px 5px;
+//     height: 25px;
+//     border: #0A2640 2px solid;
+//     border-radius: 8px;
+//     background-color: #FFFFFF;
+//     color: #0A2640;
+//     font-size: 14px;
+//     font-family: 'Manrope';
+//     font-style: normal;
+//     font-weight: 400;
+//     &:hover {
+//         border: #2e6497 2px solid;
+//     }
+//     &:focus {
+//         outline: none;
+//         border: #2e6497 2px solid;
+//     }
+// }
+// .inputs__block__select.error {
+//     background-color: rgb(253, 201, 201);
+//     option {
+//         background-color: #FFFFFF;
+//     }
+// }
+// .inputs__block__number {
+//     width: 50px;
+//     padding: 0px 5px;
+//     height: 25px;
+//     border: #0A2640 2px solid;
+//     border-radius: 8px;
+//     background-color: #FFFFFF;
+//     color: #0A2640;
+//     font-size: 14px;
+//     font-family: 'Manrope';
+//     font-style: normal;
+//     font-weight: 400;
+//     &:hover {
+//         border: #2e6497 2px solid;
+//     }
+//     &:focus {
+//         outline: none;
+//         border: #2e6497 2px solid;
+//     }
+// }
+// .inputs__items {
+//     padding: 0;
+//     gap: 5px;
+// }
+// .inputs__item {
+//     display: flex;
+//     gap: 5px;
+//     span {
+//         display: block;
+//         width: 24px;
+//         font-size: 18px;
+//     }
+//     .item__title {
+//         border: #0A2640 2px solid;
+//         width: 140px;
+//         padding: 0 5px;
+//         border: #FFFFFF solid 2px;
+//     }
+//     .item__title__no {
+//         width: 24px;
+//         padding: 0;
+//         border: none;
+//     }
+//     .item__title__desc {
+//         width: 200px;
+//     }
+//     .item__title__qty {
+//         width: 32px;
+//     }
+// }
+.newPoForm__info {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    textarea {
+        font-family: 'Times New Roman', Times, serif;
+        font-size: 16px;
+        color: black;
+        width: 200px;
+        height: 120px;
+        border: grey 1px solid;
+    }
+}
+
+.newPoForm__no {
+    display: flex;
+    justify-content: end;
+}
+
+.newPoForm__no__block {
+    display: flex;
+    gap: 5px;
+}
+
+.items {
+    // display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Times New Roman', Times, serif;
+    span {
+        color: black;
+    }
+}
+
+table {
+    margin-top: 5px;
+    width: 100%;
+    border-top: 1px solid rgb(0, 0, 0);
+    text-align: center;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+    border: 1px solid #dddddd;
+}
+
+td {
+    text-align: center;
+    font-family: 'Times New Roman', Times, serif;
+    color: black;
+    border: 1px solid rgb(0, 0, 0);
+}
+
+th {
+    border: 1px solid rgb(0, 0, 0);
+}
+
+.newPoForm__approval {
+    margin-bottom: 40px;
+    td {
+        vertical-align: top;
+        margin: 0;
+        padding: 0 5px;
+        text-align: left;
+        height: 40px;
+    }
+}
+
+.merged__ceil {
+    border: none;
+}
+
+// @media screen and (max-width: 768px) {
+//     .newUnitForm__wrapper {
+//         width: 80vw;
+//     }
+// }
+// @media screen and (max-width: 480px) {
+//     .newUnitForm__wrapper {
+//         width: 80vw;
+//         height: 90vh;
+//         top: 20px;
+//         left: 50%;
+//         transform: none;
+//         transform: translateX(-50%);
+//         overflow-y: auto;
+//     }
+//     .inputs {
+//         padding: 10px;
+//     }
+//     .textAreas {
+//         flex-direction: column;
+//     }
+//     .newUnitForm__buttons {
+//         margin-bottom: 20px;
+//     }
+// }
+@media print {
+    @page {
+        size: A4 portrait;
+        margin: 20mm 10mm 20mm 10mm;
+    }
+    .newPoForm__info {
+        textarea {
+            border: none;
+            outline: none;
+        }
+    }
+    .newPoForm__no__block {
+        input {
+            border: none;
+        }
+    }
+}

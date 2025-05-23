@@ -1,4 +1,4 @@
-.newUnitForm__container {
+.updateStatusForm__container {
     position: fixed;
     z-index: 10;
     top: 0px;
@@ -6,17 +6,16 @@
     width: 100vw;
     height: 100vh;
     backdrop-filter: blur(5px);
-
 }
 
-.newUnitForm__wrapper {
+.updateStatusForm__wrapper {
     padding: 20px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 20;
-    width: 610px;
+    width: 400 px;
     border: 1px #2e6497 solid;
     background-color: white;
     border-radius: 10px;
@@ -30,23 +29,13 @@
 .inputs {
     padding: 0 0 0 28px;
     display: flex;
-    justify-content: space-between;
-    flex-wrap: wrap;
+    flex-direction: column;
+    align-items: center;
     gap: 20px;
     margin-bottom: 20px;
 }
 
-.textAreas {
-    display: flex;
-    gap: 20px;
-}
-
-.textAreas__block {
-    position: relative;
-    flex-grow: 1;
-}
-
-.newUnitForm__buttons {
+.updateStatusForm__buttons {
     margin-top: 20px;
     justify-content: center;
     display: flex;
@@ -61,7 +50,6 @@
 .inputs__block__req {
     flex-direction: row;
     gap: 20px;
-
     span {
         font-size: 18px;
     }
@@ -79,12 +67,9 @@
     font-family: 'Manrope';
     font-style: normal;
     font-weight: 400;
-
-
     &:hover {
         border: #2e6497 2px solid;
     }
-
     &:focus {
         outline: none;
         border: #2e6497 2px solid;
@@ -93,7 +78,6 @@
 
 .inputs__block__select.error {
     background-color: rgb(253, 201, 201);
-
     option {
         background-color: #FFFFFF;
     }
@@ -111,11 +95,9 @@
     font-family: 'Manrope';
     font-style: normal;
     font-weight: 400;
-
     &:hover {
         border: #2e6497 2px solid;
     }
-
     &:focus {
         outline: none;
         border: #2e6497 2px solid;
@@ -131,81 +113,38 @@
 .inputs__item {
     display: flex;
     gap: 5px;
-
     span {
         display: block;
         width: 24px;
         font-size: 18px;
     }
-
     .item__title {
         border: #0A2640 2px solid;
         width: 140px;
         padding: 0 5px;
         border: #FFFFFF solid 2px;
     }
-
     .item__title__no {
         width: 24px;
         padding: 0;
         border: none;
     }
-
     .item__title__desc {
         width: 200px;
     }
-
     .item__title__qty {
         width: 32px;
     }
 }
 
-.minus__btn,
-.cross__btn {
-    position: absolute;
-    bottom: -30px;
-    right: 0px;
-    width: 26px;
-    height: 26px;
-    border: none;
-    border-radius: 5px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.2s ease-in-out;
-
-    &:hover {
-        cursor: pointer;
-        width: 28px;
-        height: 28px;
-        bottom: -31px;
-        right: -1px;
-    }
-
-    img {
-        width: 18px;
-    }
-}
-
-.minus__btn {
-    right: 34px;
-
-    &:hover {
-        right: 33px;
-
-    }
-}
-
-
-
 @media screen and (max-width: 768px) {
-    .newUnitForm__wrapper {
+    .updateStatusForm__wrapper {
         width: 80vw;
     }
 }
 
 @media screen and (max-width: 480px) {
-    .newUnitForm__wrapper {
+    .updateStatusForm__wrapper {
         width: 80vw;
         height: 90vh;
         top: 20px;
@@ -214,16 +153,13 @@
         transform: translateX(-50%);
         overflow-y: auto;
     }
-
     .inputs {
         padding: 10px;
     }
-
     .textAreas {
         flex-direction: column;
     }
-
-    .newUnitForm__buttons {
+    .updateStatusForm__buttons {
         margin-bottom: 20px;
     }
 }

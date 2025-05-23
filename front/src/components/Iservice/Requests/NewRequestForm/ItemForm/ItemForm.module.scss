@@ -1,0 +1,31 @@
+.inputs__item {
+    display: flex;
+    gap: 5px;
+
+    span {
+        display: block;
+        width: 24px;
+        font-size: 18px;
+    }
+
+    .item__title {
+        border: #0A2640 2px solid;
+        width: 140px;
+        padding: 0 5px;
+        border: #FFFFFF solid 2px;
+    }
+
+    .item__title__no {
+        width: 24px;
+        padding: 0;
+        border: none;
+    }
+
+    .item__title__desc {
+        width: 200px;
+    }
+
+    .item__title__qty {
+        width: 32px;
+    }
+}

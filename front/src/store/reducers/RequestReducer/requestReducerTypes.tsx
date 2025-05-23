@@ -1,28 +1,81 @@
+import { IOrderItemType } from "../../../components/Iservice/Requests/NewPoForm/OrderItemForm/OrderItemForm";
+import { ItemType } from "../../../components/Iservice/Requests/NewRequestForm/NewRequestForm";
 import { IAircraft, ILeg, ILegEngine, ILegGear, ITool, IUnit } from "../../../types/types";
 
 export interface IRequestState {
     choosedRequest: {
         _id: string | null;
-        pn: string | null;
-        sn: string | null;
-        type: string | null;
-        desc: string | null;
-        quantity: number | null;
-        location: string | null;
-        rack: string | null;
-        shelf: string | null;
-        calibration: string | null;
-        remarks: string | null;
-
+        requestNumber: string | null;
+        date: string | null;
+        priority: string | null;
+        items: ItemType[] | null;
+        status: string | null;
+        statusHistory: ISatus[] | null;
     },
-    requests: ITool[],
-    requestsToPrint: ITool[],
+    requests: IRequest[],
+    orders: IOrder[],
+    requestsToPrint: IRequest[],
     totalPages: number | null;
     currentPage: number | null;
+    totalOrdersPages: number | null;
+    currentOrdersPage: number | null;
     errorMessage: string | null;
     successMessage: string | null;
 }
 
+export interface IRequest {
+    _id: string;
+    requestNumber: string;
+    date: string;
+    priority: string;
+    items: ItemType[];
+    status: string;
+    statusHistory: ISatus[];
+}
+
+export interface IOrder {
+    _id: string;
+    poNumber: string;
+    poDate: string;
+    requestNumber: string;
+    items: IOrderItemType[]
+    poPrice: string;
+    customer: string;
+    billTo: string;
+    supplier: string;
+    shipAdress: string;
+    status: string;
+    statusHistory: ISatus[];
+    acceptedBy: string;
+    acceptedDate: string;
+    approvedBy: string;
+    approvedDate: string;
+}
+
+export interface IApproveRequest {
+    requestNumber: string;
+    approvedBy: string;
+}
+
+export interface IApproveOrderDto {
+    poNumber: string;
+    approvedBy: string;
+}
+export interface IAcceptOrderDto {
+    poNumber: string;
+    acceptedBy: string;
+}
+export interface ICancelOrderDto {
+    poNumber: string;
+    canceledBy: string;
+}
+
+export interface IUpdateOrderStatusDto {
+    poNumber: string;
+    status: string;
+    remark: string;
+    user: string;
+}
 
 export interface IRequestRejectResponse {
     statusCode: number;
@@ -33,8 +86,30 @@ export interface ICreateRequestDto {
     requestNumber: string,
     date: string,
     priority: string,
-   // items: [],
-    requestedBy: string,
+    items: ItemType[];
+    status: string;
+    statusHistory: ISatus[];
+}
+
+export interface ISatus {
+    date: string;
+    status: string;
+    remark: string;
+    user: string;
+}
+
+export interface ICreateOrderDto {
+    poNumber: string;
+    poDate: string;
+    requestNumber: string;
+    items: IOrderItemType[] | ItemType[]
+    poPrice: string;
+    customer: string;
+    billTo: string;
+    supplier: string;
+    shipAdress: string;
+    status: string;
+    statusHistory: ISatus[];
 }
 
 export interface IChangeRequestDto {
@@ -57,16 +132,29 @@ export interface IDeleteRequestDto {
 
 export interface IGetRequestsDto {
     page: number;
-    toolsAtPage: number;
-    locationFilter?: string[];
+    requestsAtPage: number;
+    statusFilter: string[];
+    filterDirection?: string;
+    searchText?: string;
+}
+
+export interface IGetOrdersDto {
+    page: number;
+    ordersAtPage: number;
+    statusFilter: string[];
     filterDirection?: string;
     searchText?: string;
 }
 
 
-
 export interface IGetRequestsResponseDto {
     totalPages: number;
     currentPage: number;
-    tools: ITool[];
+    requests: IRequest[];
+}
+
+export interface IGetOrdersResponseDto {
+    totalPages: number;
+    currentPage: number;
+    orders: IOrder[];
 }
