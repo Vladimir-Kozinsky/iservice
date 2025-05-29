@@ -3,7 +3,7 @@ import Button from "../../../../common/buttons/Button";
 import s from "./NewPoForm.module.scss"
 import { AppDispatch, RootState } from "../../../../store/store";
 import { Field, Form, Formik } from "formik";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IRequest, ISatus } from "../../../../store/reducers/requestReducer/requestReducerTypes";
 import RequestInput from "../../../../common/inputs/RequestInput/RequestInput";
 import { ItemType } from "../NewRequestForm/NewRequestForm";
@@ -11,6 +11,11 @@ import OrderItemForm, { IOrderItemType } from "./OrderItemForm/OrderItemForm";
 import StoreTextArea from "../../../../common/inputs/StoreTextArea";
 import { createOrder } from "../../../../store/reducers/requestReducer/requestReducer";
 import { useReactToPrint } from "react-to-print";
+import Loader from "../../../../common/Loader/Loader";
+import { Transition } from "react-transition-group";
+import withSuccessMessage from "../../../../HOC/wirhSuccessMessage";
+import withErrorMessage from "../../../../HOC/wirhErrorMessage";
+import { compose } from "@reduxjs/toolkit";
 
 type NewpoFormPropsType = {
     parts: string[];
@@ -30,6 +35,7 @@ interface IPoValuesType {
     shipAdress: string;
     status: string;
     statusHistory: ISatus[];
+    createdBy: string;
 }
 
 
@@ -43,12 +49,12 @@ const NewPoForm: React.FC<NewpoFormPropsType> = ({ parts, handler, request }) =>
     const componentRef = useRef(null);
     const [isLoader, setIsLoader] = useState<boolean | undefined>(false);
 
-     const handlePrint = useReactToPrint({
-            content: () => {
-               // isPrintForm(false)
-                return componentRef.current
-            }
-        });
+    const handlePrint = useReactToPrint({
+        content: () => {
+            // isPrintForm(false)
+            return componentRef.current
+        }
+    });
 
     const textareaStyles = {
         width: '200px',
@@ -86,7 +92,8 @@ const NewPoForm: React.FC<NewpoFormPropsType> = ({ parts, handler, request }) =>
                 supplier: 'Dasi',
                 shipAdress: '',
                 status: '',
-                statusHistory: []
+                statusHistory: [],
+                createdBy: `${user.firstName} ${user.lastName}`,
             }}
             validate={values => {
                 interface ICreateRequestErrorsDto {
@@ -112,14 +119,14 @@ const NewPoForm: React.FC<NewpoFormPropsType> = ({ parts, handler, request }) =>
                 (async () => {
                     setIsLoader(true);
                     values.status = 'created';
+                    values.createdBy = `${user.firstName} ${user.lastName}`;
                     values.statusHistory.push({
                         date: date.toISOString().split('T')[0],
                         status: `created`,
                         user: `${user.firstName} ${user.lastName}`,
                         remark: ''
                     })
-                    dispatch(createOrder(values))
-                    console.log(values)
+                    await dispatch(createOrder(values))
                     setIsLoader(false);
                 })()
             }}
@@ -132,6 +139,9 @@ const NewPoForm: React.FC<NewpoFormPropsType> = ({ parts, handler, request }) =>
             handleSubmit,
         }) => (
             <Form className={s.newPoForm__container} >
+                <Transition in={isLoader} timeout={400} unmountOnExit mountOnEnter >
+                    {(state) => <Loader state={state} />}
+                </Transition>
                 <div className={s.newPoForm__wrapper}>
                     <div ref={componentRef}>
                         <h3 className={s.section__header}>PURCHASE ORDER</h3>
@@ -186,7 +196,11 @@ const NewPoForm: React.FC<NewpoFormPropsType> = ({ parts, handler, request }) =>
                         </div>
                         <table className={s.newPoForm__approval}>
                             <tr>
-                                <td>Prepared by:</td>
+                                <td>
+                                    <span>Prepared by:</span>
+                                    <br />
+                                    <span>{`${user.firstName} ${user.lastName}`}</span>
+                                </td>
                                 <td>Reviewed by:</td>
                                 <td>Approved by:</td>
                             </tr>
@@ -197,7 +211,7 @@ const NewPoForm: React.FC<NewpoFormPropsType> = ({ parts, handler, request }) =>
                         <Button text={'Back'} color={"white"} btnType={"button"}
                             handler={() => handler(false)} />
                         <Button text={'Create PO'} color={"green"} btnType="submit" />
-                        <Button text={'Print PO'} color={"white"} handler={handlePrint} btnType="button" />
+                        {/* <Button text={'Print PO'} color={"white"} handler={handlePrint} btnType="button" /> */}
                     </div>
                 </div>
             </Form>
@@ -206,5 +220,7 @@ const NewPoForm: React.FC<NewpoFormPropsType> = ({ parts, handler, request }) =>
     )
 }
 
-export default NewPoForm;
+
+
+export default NewPoForm
 

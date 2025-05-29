@@ -3,7 +3,7 @@ import { ITool } from '../../../types/types';
 import storeAPI from '../../../API/storeAPI';
 import { IUsageUnitDto } from '../storeReducer/storeReducerTypes';
 import toolAPI from '../../../API/toolAPI';
-import { IAcceptOrderDto, IApproveOrderDto, IApproveRequest, ICancelOrderDto, ICreateOrderDto, ICreateRequestDto, IGetOrdersDto, IGetOrdersResponseDto, IGetRequestsDto, IGetRequestsResponseDto, IOrder, IRequest, IRequestRejectResponse, IRequestState, IUpdateOrderStatusDto } from './requestReducerTypes';
+import { IAcceptOrderDto, IApproveOrderDto, IApproveRequest, ICancelOrderDto, ICancelRequestDto, ICreateOrderDto, ICreateRequestDto, IGetOrdersDto, IGetOrdersResponseDto, IGetRequestsDto, IGetRequestsResponseDto, IOrder, IRequest, IRequestRejectResponse, IRequestState, IUpdateOrderStatusDto } from './requestReducerTypes';
 import requestAPI from '../../../API/requestAPI';
 import orderAPI from '../../../API/orderAPI';
 
@@ -75,6 +75,15 @@ const requestSlice = createSlice({
             state.successMessage = "Order successfully cancelled";
         })
         builder.addCase(cancelOrder.rejected, (state: IRequestState, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
+        })
+
+        builder.addCase(cancelRequest.fulfilled, (state: IRequestState, action: PayloadAction<IRequest>) => {
+            const changedRequestIndex = state.requests.findIndex((request: IRequest) => request._id === action.payload._id)
+            state.requests[changedRequestIndex] = action.payload;
+            state.successMessage = "Request successfully cancelled";
+        })
+        builder.addCase(cancelRequest.rejected, (state: IRequestState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
         })
 
@@ -219,6 +228,18 @@ export const cancelOrder = createAsyncThunk(
     async (cancelOrderDto: ICancelOrderDto, thunkAPI) => {
         try {
             const response = await orderAPI.cancel(cancelOrderDto);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IRequestRejectResponse);
+        }
+    }
+)
+
+export const cancelRequest = createAsyncThunk(
+    'request/cancel',
+    async (cancelRequestDto: ICancelRequestDto, thunkAPI) => {
+        try {
+            const response = await requestAPI.cancelRequest(cancelRequestDto);
             return response.data;
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response.data as IRequestRejectResponse);

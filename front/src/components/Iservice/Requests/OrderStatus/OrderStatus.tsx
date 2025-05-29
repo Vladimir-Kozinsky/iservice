@@ -11,6 +11,10 @@ import { Field } from "formik";
 import { IOrderItemType } from "../NewPoForm/OrderItemForm/OrderItemForm";
 import { acceptOrder, approveOrder, cancelOrder } from "../../../../store/reducers/requestReducer/requestReducer";
 import UpdateStatusForm from "./UpdateStatusForm/UpdateStatusForm";
+import settIcon from "../../../../assets/img/png/edit-icon.png";
+import OrderHistory from "./OrderHistory/OrderHistory";
+import { NavLink } from "react-router-dom";
+import PrintPoForm from "../PrintPoForm/PrintPoForm";
 
 type RequestPropsType = {
     order: IOrder;
@@ -21,14 +25,73 @@ const OrderStatus: React.FC<RequestPropsType> = ({ order }) => {
     const user = useSelector((state: RootState) => state.auth.user);
     const [isMenu, setIsMenu] = useState<boolean>(false);
     const [isForm, setIsForm] = useState<boolean>(false);
+    const [menu, setMenu] = useState(false);
+    const [historyOrder, isHistoryOrder] = useState(false);
+    const [printForm, setPrintForm] = useState(false);
+
+    const onMouseLeave = () => {
+        setMenu(false);
+    }
+
     return (
         <div className={classNames(s.request, isMenu ? s.active : null)}>
+            {historyOrder && <OrderHistory history={order.statusHistory} isHistoryOrder={isHistoryOrder} />}
             {isForm && <UpdateStatusForm isForm={setIsForm} order={order} />}
+            {printForm && <PrintPoForm order={order} handler={setPrintForm} />}
             <button
                 onClick={() => isMenu ? setIsMenu(false) : setIsMenu(true)}
                 className={s.menu__btn}>
                 <img className={s.menu__btn__img} src={menuIcon} alt="icon" />
             </button>
+            <button className={s.setting__btn} onClick={() => setMenu(true)}>
+                <img className={s.setting__btn__img} src={settIcon} alt="icon" />
+            </button>
+            <div onMouseLeave={onMouseLeave} className={classNames(s.unit__menu, menu ? s.unit__menu__active : '')}>
+                <button
+                    className={classNames(s.unit__menu__button, user.role === 'admin'
+                        && !order.acceptedBy
+                        ? null
+                        : s.inactive)
+                    }
+                    onClick={() => dispatch(acceptOrder({
+                        poNumber: order.poNumber,
+                        acceptedBy: `${user.firstName} ${user.lastName}`
+                    }))}
+                    disabled={user.role === 'admin'
+                        && !order.acceptedBy
+                        ? false
+                        : true} >
+                    Accept
+                </button>
+
+                <button
+                    className={classNames(s.unit__menu__button, user.role === 'admin'
+                        && order.acceptedBy
+                        && !order.approvedBy
+                        ? null
+                        : s.inactive)}
+                    onClick={() => dispatch(approveOrder({
+                        poNumber: order.poNumber,
+                        approvedBy: `${user.firstName} ${user.lastName}`
+                    }))}
+                    disabled={user.role === 'admin'
+                        && order.acceptedBy
+                        && !order.approvedBy
+                        ? false
+                        : true} >
+                    Approve
+                </button>
+                <button className={classNames(s.unit__menu__button, order.approvedBy ? null : s.inactive)}
+                    onClick={() => setIsForm(true)} >Update Status</button>
+                <button className={s.unit__menu__button} onClick={() => setPrintForm(true)} >Print PO</button>
+                <button className={s.unit__menu__button}
+                    onClick={() => isHistoryOrder(true)} >History</button>
+
+                <button onClick={() => dispatch(cancelOrder({
+                    poNumber: order.poNumber,
+                    canceledBy: `${user.firstName} ${user.lastName}`
+                }))} className={s.unit__menu__button} >Cancel PO</button>
+            </div>
             <div className={s.request__container}>
                 <div className={s.request__block}>
                     <div className={s.request__block__title}><span>PO No.:</span> </div>
@@ -59,7 +122,12 @@ const OrderStatus: React.FC<RequestPropsType> = ({ order }) => {
                     <div className={s.request__status}>
                         <div className={s.request__block__title}><span>Remark:</span> </div>
                         <div className={s.request__status__value}>
-                            <span>{order.statusHistory[order.statusHistory.length - 1].remark}</span>
+                            {/* <span className={s.status__remark}> */}
+                            <NavLink rel="stylesheet" to={order.statusHistory[order.statusHistory.length - 1].remark}>
+                                {order.statusHistory[order.statusHistory.length - 1].remark}
+                            </NavLink>
+
+                            {/* </span> */}
                         </div>
                     </div>
                 </div>
@@ -88,36 +156,6 @@ const OrderStatus: React.FC<RequestPropsType> = ({ order }) => {
                     <span>Total:</span>
                     <span>{order.poPrice}</span>
                 </div>
-                <div className={s.menu__buttons}>
-                    {user.role === 'admin' && !order.acceptedBy && <Button width="80px" height="30px" fontSize="12px"
-                        text={'Accept'} color={"green"} btnType={"button"}
-                        handler={() => dispatch(acceptOrder({
-                            poNumber: order.poNumber,
-                            acceptedBy: `${user.firstName} ${user.lastName}`
-                        }))}
-                    />}
-
-                    {user.role === 'admin' && order.acceptedBy && !order.approvedBy && <Button width="80px" height="30px" fontSize="12px"
-                        text={'Approve'} color={"green"} btnType={"button"}
-                        handler={() => dispatch(approveOrder({
-                            poNumber: order.poNumber,
-                            approvedBy: `${user.firstName} ${user.lastName}`
-                        }))}
-                    />}
-
-                    {order.approvedBy && <Button width="80px" height="30px" fontSize="12px"
-                        text={'Update'} color={"green"} btnType={"button"} handler={() => setIsForm(true)}
-                    />}
-
-                    <Button width="80px" height="30px" fontSize="12px"
-                        text={'Cancel PO'} color={"red"} btnType={"button"}
-                        handler={() => dispatch(cancelOrder({
-                            poNumber: order.poNumber,
-                            canceledBy: `${user.firstName} ${user.lastName}`
-                        }))} />
-
-                </div>
-
             </div>
 
 

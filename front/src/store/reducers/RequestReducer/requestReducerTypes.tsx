@@ -70,6 +70,11 @@ export interface ICancelOrderDto {
     canceledBy: string;
 }
 
+export interface ICancelRequestDto {
+    requestNumber: string;
+    canceledBy: string;
+}
+
 export interface IUpdateOrderStatusDto {
     poNumber: string;
     status: string;
@@ -110,6 +115,7 @@ export interface ICreateOrderDto {
     shipAdress: string;
     status: string;
     statusHistory: ISatus[];
+    createdBy: string;
 }
 
 export interface IChangeRequestDto {

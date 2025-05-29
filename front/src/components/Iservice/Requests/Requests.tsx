@@ -12,6 +12,9 @@ import Select, { ActionMeta, MultiValue } from 'react-select';
 import Loader from "../../../common/Loader/Loader";
 import { Transition } from "react-transition-group";
 import Pagenator from "../../../common/Pagenator/Pagenator";
+import withSuccessMessage from "../../../HOC/wirhSuccessMessage";
+import withErrorMessage from "../../../HOC/wirhErrorMessage";
+import { compose } from "@reduxjs/toolkit";
 
 
 
@@ -30,8 +33,10 @@ const ordersFilterOptions = [
 
 const requestsFilterOptions = [
     { value: 'all', label: 'All' },
+    { value: 'open', label: 'Open' },
     { value: 'created', label: 'Created' },
     { value: 'approved', label: 'Approved' },
+    { value: 'cancelled', label: 'Cancelled' },
     { value: 'closed', label: 'Closed' },
 ]
 
@@ -51,7 +56,7 @@ const Requests: React.FC = () => {
     const currentOrdersPage = useSelector((state: RootState) => state.request.currentOrdersPage);
     const totalOrdersPages = useSelector((state: RootState) => state.request.totalOrdersPages);
     const [selectedOrderFilters, setSelectedOrderFilters] = useState<string[]>(['created', 'accepted', 'approved', 'paid', 'shipped', 'recieved']);
-    const [selectedRequestFilters, setSelectedRequestFilters] = useState<string[]>(['created', 'closed', 'approved']);
+    const [selectedRequestFilters, setSelectedRequestFilters] = useState<string[]>(['created', 'closed', 'approved', 'cancelled']);
 
     const changePage = async (page: number) => {
         setIsLoader(true);
@@ -88,7 +93,7 @@ const Requests: React.FC = () => {
         let filterArr = newValue.map((item: any) => item.value);
         filterArr.forEach((element: string) => {
             if (element === 'all') {
-                filterArr = ['created', 'closed', 'approved']
+                filterArr = ['created', 'closed', 'approved', 'cancelled']
             }
         });
 
@@ -113,8 +118,13 @@ const Requests: React.FC = () => {
     }
 
     useEffect(() => {
-        dispatch(getRequests({ page: 1, requestsAtPage: 10, statusFilter: selectedRequestFilters }));
-        dispatch(getOrders({ page: 1, ordersAtPage: 10, statusFilter: selectedOrderFilters }));
+        (async () => {
+            setIsLoader(true)
+            await dispatch(getRequests({ page: 1, requestsAtPage: 10, statusFilter: selectedRequestFilters }));
+            await dispatch(getOrders({ page: 1, ordersAtPage: 10, statusFilter: selectedOrderFilters }));
+            setIsLoader(false)
+        })()
+
     }, [])
     return (
         <div className={s.requests}>
@@ -176,4 +186,6 @@ const Requests: React.FC = () => {
     )
 }
 
-export default Requests;
+const EnhancedComponent = withSuccessMessage(Requests);
+
+export default compose(withErrorMessage)(EnhancedComponent);
