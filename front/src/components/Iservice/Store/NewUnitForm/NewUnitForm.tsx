@@ -22,6 +22,7 @@ const NewUnitForm: React.FC<NewUnitFormPropsType> = ({ isNewForm }) => {
             initialValues={{
                 ata: '',
                 pn: '',
+                altPn: '',
                 sn: '',
                 type: '',
                 desc: '',
@@ -88,6 +89,11 @@ const NewUnitForm: React.FC<NewUnitFormPropsType> = ({ isNewForm }) => {
                                     <label>P/N<span>*</span></label>
                                     <Field type="text" id="pn" name="pn"
                                         placeholder="P/N" error={errors.pn} as={StoreInput} />
+                                </div>
+                                <div className={s.inputs__block}>
+                                    <label>Alt. P/N<span>*</span></label>
+                                    <Field type="text" id="altPn" name="altPn"
+                                        placeholder="Alt. P/N" as={StoreInput} />
                                 </div>
                                 <div className={s.inputs__block}>
                                     <label>S/N<span>*</span></label>

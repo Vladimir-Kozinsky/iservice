@@ -42,14 +42,14 @@ const PrintUnitForm = React.forwardRef(({ searchText, locationFilter, isPrintFor
 
 
     const csvData = unitsToPrint.map((unit: IUnit) => {
-        return [unit.ata, unit.pn, unit.sn, unit.type, unit.desc,
+        return [unit.ata, unit.pn, unit.altPn, unit.sn, unit.type, unit.desc,
         unit.quantity, unit.eapack, unit.location,
         unit.rack, unit.shelf, unit.condition,
         unit.lifelimit, unit.shelflife, unit.remarks]
     })
 
     const arr = [
-        ['ATA', 'P/N', 'S/N', 'Part Type', 'Description', 'Qty.', 'EA/Pack',
+        ['ATA', 'P/N', 'Alt. P/N' , 'S/N', 'Part Type', 'Description', 'Qty.', 'EA/Pack',
             'Location', 'Rack', 'Shelf', 'Condition', 'Life Limit', 'Shelf Life', 'Remarks'],
         ...csvData
     ]
@@ -57,6 +57,7 @@ const PrintUnitForm = React.forwardRef(({ searchText, locationFilter, isPrintFor
     const titlesArr = [
         { title: 'ata', value: 'ATA' },
         { title: 'pn', value: 'P/N' },
+        { title: 'altPn', value: 'Alt. P/N' },
         { title: 'sn', value: 'S/N' },
         { title: 'type', value: 'Part Type' },
         { title: 'desc', value: 'Description' },
@@ -93,7 +94,7 @@ const PrintUnitForm = React.forwardRef(({ searchText, locationFilter, isPrintFor
                 <button className={s.PrintUnitForm__btn} onClick={() => isPrintForm(false)} ><img src={crosIcon} alt="icon" /> </button>
                 <div className={s.PrintUnitForm__buttons} >
                     <button className={s.PrintUnitForm__buttons__print} onClick={handlePrint}><img className={s.button__img__print} src={printIcon} alt="icon" /> </button>
-                    <button className={s.PrintUnitForm__buttons__exel} ><CSVLink data={arr}  filename={"iservice-export.csv"}><img className={s.button__img__exel} src={exelIcon} alt="icon" /></CSVLink>;  </button>
+                    <button className={s.PrintUnitForm__buttons__exel} ><CSVLink data={arr} filename={"iservice-export.csv"}><img className={s.button__img__exel} src={exelIcon} alt="icon" /></CSVLink>;  </button>
                 </div>
                 <div className={s.print__block}>
                     <div ref={componentRef} >

@@ -53,6 +53,7 @@ const Unit: React.FC<UnitPropsType> = ({ unit, editHandler, usageHandler, histor
             />}
             <span className={classNames(s.unit__title, s.unit__ata)} >{unit.ata}</span>
             <span title={unit.pn} className={classNames(s.unit__title, s.unit__pn)} >{unit.pn}</span>
+            <span title={unit.altPn} className={classNames(s.unit__title, s.unit__pn)} >{unit.altPn}</span>
             <span title={unit.sn} className={classNames(s.unit__title, s.unit__sn)}>{unit.sn}</span>
             <span className={classNames(s.unit__title, s.unit__type)} >{unit.type}</span>
             <span title={unit.desc} className={classNames(s.unit__title, s.unit__desc)}>{unit.desc}</span>

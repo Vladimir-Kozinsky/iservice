@@ -55,6 +55,7 @@ const Store: React.FC = () => {
     const titlesArr = [
         { title: 'ata', value: 'ATA' },
         { title: 'pn', value: 'P/N' },
+        { title: 'altPn', value: 'Alt. P/N' },
         { title: 'sn', value: 'S/N' },
         { title: 'type', value: 'Part Type' },
         { title: 'desc', value: 'Description' },

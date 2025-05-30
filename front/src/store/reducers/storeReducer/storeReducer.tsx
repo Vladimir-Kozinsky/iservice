@@ -8,6 +8,7 @@ const initialState: IStoreState = {
         _id: null,
         ata: null,
         pn: null,
+        altPn: null,
         sn: null,
         type: null,
         desc: null,

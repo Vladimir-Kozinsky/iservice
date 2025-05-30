@@ -294,6 +294,7 @@ export interface IUnit {
     _id: string;
     ata: string;
     pn: string;
+    altPn: string;
     sn: string;
     type: string;
     desc: string;

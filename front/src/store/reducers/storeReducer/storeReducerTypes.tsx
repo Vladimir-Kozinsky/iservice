@@ -5,6 +5,7 @@ export interface IStoreState {
         _id: string | null;
         ata: string | null;
         pn: string | null;
+        altPn: string | null;
         sn: string | null;
         type: string | null;
         desc: string | null;

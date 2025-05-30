@@ -4,6 +4,7 @@
   "homepage": "https://gitname.github.io/iservice",
   "private": true,
   "dependencies": {
+    "@react-pdf/renderer": "^4.3.0",
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -29,6 +30,7 @@
     "react-scripts": "5.0.1",
     "react-select": "^5.7.2",
     "react-switch": "^7.0.0",
+    "react-to-pdf": "^2.0.0",
     "react-to-print": "^2.14.13",
     "react-transition-group": "^4.4.5",
     "sass": "^1.62.1",
