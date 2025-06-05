@@ -81,6 +81,14 @@ export interface IUsageUnitDto {
     remark: string;
 }
 
+export interface ISplitUnitDto {
+    _id: string;
+    date: string;
+    quantity: number;
+    splitQuantity: number;
+    splitLocation: string;
+}
+
 export interface IDeleteUnitDto {
     id: string;
 }

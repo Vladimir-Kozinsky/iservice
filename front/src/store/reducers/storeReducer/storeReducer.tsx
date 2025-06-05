@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { IChangeUnitDto, ICreateUnitDto, IDeleteUnitDto, IGetPrintUnitsDto, IGetUnitsDto, IGetUnitsResponseDto, IStoreState, IUnitRejectResponse, IUsageUnitDto } from './storeReducerTypes';
+import { IChangeUnitDto, ICreateUnitDto, IDeleteUnitDto, IGetPrintUnitsDto, IGetUnitsDto, IGetUnitsResponseDto, ISplitUnitDto, IStoreState, IUnitRejectResponse, IUsageUnitDto } from './storeReducerTypes';
 import { IUnit } from '../../../types/types';
 import storeAPI from '../../../API/storeAPI';
 
@@ -97,6 +97,15 @@ const storeSlice = createSlice({
         builder.addCase(updateUnit.rejected, (state: IStoreState, action: PayloadAction<any>) => {
             state.errorMessage = action.payload.message;
         })
+        
+        builder.addCase(splitUnit.fulfilled, (state: IStoreState, action: PayloadAction<IUnit>) => {
+            const changedUnitIndex = state.units.findIndex((unit: IUnit) => unit._id === action.payload._id)
+            state.units[changedUnitIndex] = action.payload;
+            state.successMessage = "Unit successfully splited";
+        })
+        builder.addCase(splitUnit.rejected, (state: IStoreState, action: PayloadAction<any>) => {
+            state.errorMessage = action.payload.message;
+        })
     },
 })
 
@@ -172,57 +181,17 @@ export const updateUnit = createAsyncThunk(
     }
 )
 
-
-
-// export const deleteLeg = createAsyncThunk(
-//     'leg/delete',
-//     async (deleteLegDto: ILeg, thunkAPI) => {
-//         try {
-//             const response = await legAPI.deleteLeg(deleteLegDto);
-//             return response.data;
-//         } catch (error: any) {
-//             return thunkAPI.rejectWithValue(error.response.data as ILegRejectResponse);
-//         }
-//     }
-// )
-
-// export const getLegs = createAsyncThunk(
-//     'leg/legs',
-//     async (getLegsDto: IGetLegsDto, thunkAPI) => {
-//         try {
-//             const response = await legAPI.getLegs(getLegsDto);
-//             return response.data;
-//         } catch (error: any) {
-//             return thunkAPI.rejectWithValue(error.response.data as ILegRejectResponse);
-//         }
-//     }
-// )
-// export const getPrintLegs = createAsyncThunk(
-//     'leg/legs/print',
-//     async (getPrintLegsDto: IGetPrintLegsDto, thunkAPI) => {
-//         try {
-//             const response = await legAPI.getPrintLegs(getPrintLegsDto);
-//             return response.data;
-//         } catch (error: any) {
-//             return thunkAPI.rejectWithValue(error.response.data as ILegRejectResponse);
-//         }
-//     }
-// )
-
-// export const getlastTenLegs = createAsyncThunk(
-//     'leg/legs/last',
-//     async (aircraft: string, thunkAPI) => {
-//         try {
-//             const response = await legAPI.getLastTenLegs(aircraft);
-//             return response.data;
-//         } catch (error: any) {
-//             return thunkAPI.rejectWithValue(error.response.data as ILegRejectResponse);
-//         }
-//     }
-// )
-
-
-
+export const splitUnit = createAsyncThunk(
+    'unit/split',
+    async (splitUnitDto: ISplitUnitDto, thunkAPI) => {
+        try {
+            const response = await storeAPI.splitUnit(splitUnitDto);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IUnitRejectResponse);
+        }
+    }
+)
 
 export const { clearStoreSuccessMessage, clearStoreErrorMessage } = storeSlice.actions
 

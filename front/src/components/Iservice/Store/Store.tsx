@@ -22,6 +22,7 @@ import UnitHistory from "./UnitHistory/UnitHistory";
 import PrintUnitForm from "./PrintUnitForm/PrintUnitForm";
 //import { ExcelFile, ExcelSheet } from "react-data-export";
 import { CSVLink, CSVDownload } from "react-csv";
+import SplitUnitForm from "./SplitUnitForm/SplitUnitForm";
 
 
 
@@ -36,6 +37,7 @@ const Store: React.FC = () => {
     const [newForm, setNewForm] = useState(false);
     const [editUnit, setEditUnit] = useState<null | IUnit>(null);
     const [usageUnit, setUsageUnit] = useState<null | IUnit>(null);
+    const [splitUnit, setSplitUnit] = useState<null | IUnit>(null);
     const [historyUnit, setHistoryUnit] = useState<null | IUnit>(null);
     const [printUnits, setPrintUnits] = useState<boolean>(false);
     const currentPage = useSelector((state: RootState) => state.store.currentPage);
@@ -138,6 +140,7 @@ const Store: React.FC = () => {
         editHandler={setEditUnit}
         usageHandler={setUsageUnit}
         historyHandler={setHistoryUnit}
+        splitHandler={setSplitUnit}
     />
     )
 
@@ -150,6 +153,7 @@ const Store: React.FC = () => {
             {newForm && <NewUnitForm isNewForm={setNewForm} />}
             {editUnit && <EditUnitForm editUnit={editUnit} isEditUnit={setEditUnit} />}
             {usageUnit && <UsageUnitForm unit={usageUnit} isUsageUnit={setUsageUnit} />}
+            {splitUnit && <SplitUnitForm unit={splitUnit} isUsageUnit={setSplitUnit} />}
             {historyUnit && <UnitHistory unit={historyUnit} isHistoryUnit={setHistoryUnit} />}
 
             <div className={s.search}>

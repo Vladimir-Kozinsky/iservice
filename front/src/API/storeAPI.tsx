@@ -1,6 +1,6 @@
 import axios from "axios";
 import generalAPIData from "./generalData";
-import { IChangeUnitDto, ICreateUnitDto, IDeleteUnitDto, IGetPrintUnitsDto, IGetUnitsDto, IUsageUnitDto } from "../store/reducers/storeReducer/storeReducerTypes";
+import { IChangeUnitDto, ICreateUnitDto, IDeleteUnitDto, IGetPrintUnitsDto, IGetUnitsDto, ISplitUnitDto, IUsageUnitDto } from "../store/reducers/storeReducer/storeReducerTypes";
 
 const proxy = axios.create({
     baseURL: generalAPIData.baseURL,
@@ -24,6 +24,11 @@ const storeAPI = {
 
     async useUnit(useUnitDto: IUsageUnitDto) {
         const response = await proxy.post('/unit/use', useUnitDto);
+        return response;
+    },
+
+    async splitUnit(splitUnitDto: ISplitUnitDto) {
+        const response = await proxy.post('/unit/split', splitUnitDto);
         return response;
     },
 

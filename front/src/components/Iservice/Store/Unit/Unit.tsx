@@ -16,11 +16,12 @@ type UnitPropsType = {
     editHandler: (unit: IUnit) => void
     usageHandler: (unit: IUnit) => void
     historyHandler: (unit: IUnit) => void
+    splitHandler: (unit: IUnit) => void
 }
 
 
 
-const Unit: React.FC<UnitPropsType> = ({ unit, editHandler, usageHandler, historyHandler }) => {
+const Unit: React.FC<UnitPropsType> = ({ unit, splitHandler, editHandler, usageHandler, historyHandler }) => {
     const dispatch = useDispatch<AppDispatch>();
     const [menu, setMenu] = useState(false);
     const [delMess, setDelMess] = useState(false);
@@ -71,6 +72,7 @@ const Unit: React.FC<UnitPropsType> = ({ unit, editHandler, usageHandler, histor
             <div onMouseLeave={onMouseLeave} className={classNames(s.unit__menu, menu ? s.unit__menu__active : '')}>
                 <button onClick={() => usageHandler(unit)} className={s.unit__menu__button} >Usage</button>
                 <button onClick={() => editHandler(unit)} className={s.unit__menu__button} >Edit</button>
+                <button onClick={() => splitHandler(unit)} className={s.unit__menu__button} >Split</button>
                 <button onClick={() => historyHandler(unit)} className={s.unit__menu__button} >History</button>
                 <button onClick={() => setDelMess(true)} className={s.unit__menu__button} >Delete</button>
             </div>
