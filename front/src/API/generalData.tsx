@@ -3,9 +3,10 @@ interface IGeneralAPIData {
 }
 
 const generalAPIData: IGeneralAPIData = {
- // baseURL: "http://localhost:5000"
-  baseURL: "https://iservice-backend-production.up.railway.app/"
+ //baseURL: "http://localhost:5000"
+ baseURL: "https://iservice-backend-production.up.railway.app/"
   // baseURL: "https://i-service.onrender.com"
+ //baseURL: "https://iservice-backend-34ce5ioc8-uladzimirs-projects-457d517a.vercel.app/"
 }
 
 export default generalAPIData;
