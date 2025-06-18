@@ -7,7 +7,7 @@ import { clearEngineSuccessMessage } from '../store/reducers/engineReducer/engin
 import { clearApuSuccessMessage } from '../store/reducers/apuReducer/apuReducer';
 import { clearStoreSuccessMessage } from '../store/reducers/storeReducer/storeReducer';
 import { clearToolSuccessMessage } from '../store/reducers/toolReducer/toolReducer';
-import { clearRequestSuccessMessage } from '../store/reducers/requestReducer/requestReducer';
+import { clearRequestSuccessMessage } from '../store/reducers/requestReducer/RequestReducer';
 
 const withSuccessMessage = (Component: React.FC<any>) => ({ ...props }) => {
     const aircraftSuccessMessage = useSelector((state: RootState) => state.aircraft.successMessage);

@@ -2,12 +2,12 @@ import { useDispatch, useSelector } from "react-redux";
 import s from "./PrintPoForm.module.scss"
 import { AppDispatch, RootState } from "../../../../store/store";
 import { useEffect, useRef, useState } from "react";
-import { IOrder, ISatus } from "../../../../store/reducers/requestReducer/requestReducerTypes";
 import RequestInput from "../../../../common/inputs/RequestInput/RequestInput";
 import { ItemType } from "../NewRequestForm/NewRequestForm";
 import OrderItemForm, { IOrderItemType } from "../NewPoForm/OrderItemForm/OrderItemForm";
 import OrderPrintItem from "./OrderPrintItem/OrderPrintItem";
 import { useReactToPrint } from "react-to-print";
+import { IOrder } from "../../../../store/reducers/requestReducer/RequestReducerTypes";
 
 type PrintPoFormPropsType = {
     order: IOrder;

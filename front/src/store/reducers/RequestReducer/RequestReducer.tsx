@@ -3,7 +3,7 @@ import { ITool } from '../../../types/types';
 import storeAPI from '../../../API/storeAPI';
 import { IUsageUnitDto } from '../storeReducer/storeReducerTypes';
 import toolAPI from '../../../API/toolAPI';
-import { IAcceptOrderDto, IApproveOrderDto, IApproveRequest, ICancelOrderDto, ICancelRequestDto, ICreateOrderDto, ICreateRequestDto, IGetOrdersDto, IGetOrdersResponseDto, IGetRequestsDto, IGetRequestsResponseDto, IOrder, IRequest, IRequestRejectResponse, IRequestState, IUpdateOrderStatusDto } from './requestReducerTypes';
+import { IAcceptOrderDto, IApproveOrderDto, IApproveRequest, ICancelOrderDto, ICancelRequestDto, ICreateOrderDto, ICreateRequestDto, IGetOrdersDto, IGetOrdersResponseDto, IGetRequestsDto, IGetRequestsResponseDto, IOrder, IRequest, IRequestRejectResponse, IRequestState, IUpdateOrderStatusDto } from '../requestReducer/RequestReducerTypes';
 import requestAPI from '../../../API/requestAPI';
 import orderAPI from '../../../API/orderAPI';
 

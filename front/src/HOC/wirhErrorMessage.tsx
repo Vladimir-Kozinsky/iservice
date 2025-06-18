@@ -4,7 +4,7 @@ import { clearErrorMessage } from '../store/reducers/aircraftReducer/aircraftRed
 import ErrorMess from '../common/messages/ErrorMess/ErrorMess';
 import { clearLegErrorMessage } from '../store/reducers/legReducer/legReducer';
 import { clearStoreErrorMessage } from '../store/reducers/storeReducer/storeReducer';
-import { clearRequestErrorMessage } from '../store/reducers/requestReducer/requestReducer';
+import { clearRequestErrorMessage } from '../store/reducers/requestReducer/RequestReducer';
 
 const withErrorMessage = (Component: React.FC) => ({ ...props }) => {
     const aircraftErrorMessage = useSelector((state: RootState) => state.aircraft.errorMessage);

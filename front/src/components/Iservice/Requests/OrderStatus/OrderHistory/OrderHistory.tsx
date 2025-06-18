@@ -1,6 +1,6 @@
 import s from './OrderHistory.module.scss'
 import crosIcon from '../../../../../assets/img/png/cross-input.png'
-import { IOrder, ISatus } from '../../../../../store/reducers/requestReducer/requestReducerTypes';
+import { IOrder, ISatus } from '../../../../../store/reducers/requestReducer/RequestReducerTypes';
 
 type HistoryOrderPropsType = {
     isHistoryOrder: (isOrder: boolean) => void;

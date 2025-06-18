@@ -10,8 +10,8 @@ import Select from "../../../../common/inputs/Select/Select";
 import ItemForm from "./ItemForm/ItemForm";
 import crosIcon from "../../../../assets/img/png/cross.png"
 import minusIcon from "../../../../assets/img/png/minus.png"
-import { createRequest } from "../../../../store/reducers/requestReducer/requestReducer";
-import { ISatus } from "../../../../store/reducers/requestReducer/requestReducerTypes";
+import { createRequest } from "../../../../store/reducers/requestReducer/RequestReducer";
+import { ISatus } from "../../../../store/reducers/requestReducer/RequestReducerTypes";
 
 export interface ICreateRequestErrorsDto {
     requestNumber?: string;

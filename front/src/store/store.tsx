@@ -7,7 +7,7 @@ import apuReducer from './reducers/apuReducer/apuReducer'
 import gearReducer from './reducers/gearReducer/gearReducer'
 import storeReducer from './reducers/storeReducer/storeReducer'
 import toolReducer from './reducers/toolReducer/toolReducer'
-import requestReducer from './reducers/requestReducer/requestReducer'
+import requestReducer from './reducers/requestReducer/RequestReducer'
 
 export const store = configureStore({
     reducer: {

@@ -1,7 +1,7 @@
 import axios from "axios";
 import generalAPIData from "./generalData";
 import { IChangeTooltDto, ICreateToolDto, IDeleteToolDto, IGetPrintToolsDto, IGetToolsDto } from "../store/reducers/toolReducer/toolReducerTypes";
-import { IApproveRequest, ICancelRequestDto, ICreateRequestDto, IGetRequestsDto } from "../store/reducers/requestReducer/requestReducerTypes";
+import { IApproveRequest, ICancelRequestDto, ICreateRequestDto, IGetRequestsDto } from "../store/reducers/requestReducer/RequestReducerTypes";
 
 const proxy = axios.create({
     baseURL: generalAPIData.baseURL,

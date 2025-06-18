@@ -1,17 +1,17 @@
 import classNames from "classnames";
 import Button from "../../../../common/buttons/Button";
-import { IRequest } from "../../../../store/reducers/requestReducer/requestReducerTypes";
 import menuIcon from "../../../../assets/img/svg/arrow-down.svg";
 import s from "./RequestStatus.module.scss"
 import { useState } from "react";
 import { ItemType } from "../NewRequestForm/NewRequestForm";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../store/store";
-import { approveRequest, cancelRequest } from "../../../../store/reducers/requestReducer/requestReducer";
+import { approveRequest, cancelRequest } from "../../../../store/reducers/requestReducer/RequestReducer";
 import { Field, Form, Formik } from "formik";
 import NewPoForm from "../NewPoForm/NewPoForm";
 import settIcon from "../../../../assets/img/png/edit-icon.png";
 import OrderHistory from "../OrderStatus/OrderHistory/OrderHistory";
+import { IRequest } from "../../../../store/reducers/requestReducer/RequestReducerTypes";
 
 type RequestPropsType = {
     request: IRequest;
