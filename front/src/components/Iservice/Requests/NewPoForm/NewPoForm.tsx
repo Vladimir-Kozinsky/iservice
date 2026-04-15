@@ -49,12 +49,9 @@ const NewPoForm: React.FC<NewpoFormPropsType> = ({ parts, handler, request }) =>
     const componentRef = useRef(null);
     const [isLoader, setIsLoader] = useState<boolean | undefined>(false);
 
-    const handlePrint = useReactToPrint({
-        content: () => {
-            // isPrintForm(false)
-            return componentRef.current
-        }
-    });
+    // const handleCreateOrder = (values:IPoValuesType) => {
+    //     return dispatch(createOrder(values)
+    // }
 
     const textareaStyles = {
         width: '200px',
@@ -127,6 +124,7 @@ const NewPoForm: React.FC<NewpoFormPropsType> = ({ parts, handler, request }) =>
                         remark: ''
                     })
                     await dispatch(createOrder(values))
+                    console.log('send PO')
                     setIsLoader(false);
                 })()
             }}
@@ -210,8 +208,8 @@ const NewPoForm: React.FC<NewpoFormPropsType> = ({ parts, handler, request }) =>
                     <div className={s.newPoForm__buttons}>
                         <Button text={'Back'} color={"white"} btnType={"button"}
                             handler={() => handler(false)} />
-                        <Button text={'Create PO'} color={"green"} btnType="submit" />
-                        {/* <Button text={'Print PO'} color={"white"} handler={handlePrint} btnType="button" /> */}
+                        <Button text={'Create PO'} color={"green"} btnType="button" handler={handleSubmit} />
+                        {/* <Button text={'Create PO'} color={"green"} handler={handleCreateOrder} btnType="button" /> */}
                     </div>
                 </div>
             </Form>
