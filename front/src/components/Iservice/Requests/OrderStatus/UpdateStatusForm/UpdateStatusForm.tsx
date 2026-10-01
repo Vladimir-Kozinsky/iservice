@@ -5,9 +5,9 @@ import { useState } from "react";
 import { Field, Form, Formik } from "formik";
 import Select from "../../../../../common/inputs/Select/Select";
 import Button from "../../../../../common/buttons/Button";
-import { IOrder, IUpdateOrderStatusDto } from "../../../../../store/reducers/requestReducer/RequestReducerTypes";
+import { IOrder, IUpdateOrderStatusDto } from "../../../../../store/reducers/RequestReducer/requestReducerTypes";
 import StoreTextArea from "../../../../../common/inputs/StoreTextArea";
-import { updateOrderStatus } from "../../../../../store/reducers/requestReducer/RequestReducer";
+import { updateOrderStatus } from "../../../../../store/reducers/RequestReducer/RequestReducer";
 
 interface IUpdateStatusErrorsDto {
     status?: string;

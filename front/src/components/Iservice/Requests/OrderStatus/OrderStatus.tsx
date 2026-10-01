@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import Button from "../../../../common/buttons/Button";
-import { IOrder } from "../../../../store/reducers/requestReducer/RequestReducerTypes";
+import { IOrder } from "../../../../store/reducers/RequestReducer/requestReducerTypes";
 import menuIcon from "../../../../assets/img/svg/arrow-down.svg";
 import s from "./OrderStatus.module.scss";
 import { useState } from "react";
@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../store/store";
 import { Field } from "formik";
 import { IOrderItemType } from "../NewPoForm/OrderItemForm/OrderItemForm";
-import { acceptOrder, approveOrder, cancelOrder } from "../../../../store/reducers/requestReducer/RequestReducer";
+import { acceptOrder, approveOrder, cancelOrder } from "../../../../store/reducers/RequestReducer/RequestReducer";
 import UpdateStatusForm from "./UpdateStatusForm/UpdateStatusForm";
 import settIcon from "../../../../assets/img/png/edit-icon.png";
 import OrderHistory from "./OrderHistory/OrderHistory";

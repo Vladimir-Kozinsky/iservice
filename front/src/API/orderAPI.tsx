@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import generalAPIData from "./generalData";
-import { IAcceptOrderDto, IApproveOrderDto, ICancelOrderDto, ICreateOrderDto, IGetOrdersDto, IUpdateOrderStatusDto } from "../store/reducers/requestReducer/RequestReducerTypes";
+import { IAcceptOrderDto, IApproveOrderDto, ICancelOrderDto, ICreateOrderDto, IGetOrdersDto, IUpdateOrderStatusDto } from "../store/reducers/RequestReducer/requestReducerTypes";
 
 const proxy = axios.create({
     withCredentials: true,

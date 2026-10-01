@@ -7,7 +7,7 @@ import { ItemType } from "../NewRequestForm/NewRequestForm";
 import OrderItemForm, { IOrderItemType } from "../NewPoForm/OrderItemForm/OrderItemForm";
 import OrderPrintItem from "./OrderPrintItem/OrderPrintItem";
 import { useReactToPrint } from "react-to-print";
-import { IOrder } from "../../../../store/reducers/requestReducer/RequestReducerTypes";
+import { IOrder } from "../../../../store/reducers/RequestReducer/requestReducerTypes";
 
 type PrintPoFormPropsType = {
     order: IOrder;

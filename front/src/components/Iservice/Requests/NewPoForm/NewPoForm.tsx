@@ -4,12 +4,12 @@ import s from "./NewPoForm.module.scss"
 import { AppDispatch, RootState } from "../../../../store/store";
 import { Field, Form, Formik } from "formik";
 import { useEffect, useRef, useState } from "react";
-import { IRequest, ISatus } from "../../../../store/reducers/requestReducer/RequestReducerTypes";
+import { IRequest, ISatus } from "../../../../store/reducers/RequestReducer/requestReducerTypes";
 import RequestInput from "../../../../common/inputs/RequestInput/RequestInput";
 import { ItemType } from "../NewRequestForm/NewRequestForm";
 import OrderItemForm, { IOrderItemType } from "./OrderItemForm/OrderItemForm";
 import StoreTextArea from "../../../../common/inputs/StoreTextArea";
-import { createOrder } from "../../../../store/reducers/requestReducer/RequestReducer";
+import { createOrder } from "../../../../store/reducers/RequestReducer/RequestReducer";
 import { useReactToPrint } from "react-to-print";
 import Loader from "../../../../common/Loader/Loader";
 import { Transition } from "react-transition-group";
