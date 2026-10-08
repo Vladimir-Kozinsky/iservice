@@ -14,7 +14,7 @@ import Pagenator from "../../../common/Pagenator/Pagenator";
 import withSuccessMessage from "../../../HOC/wirhSuccessMessage";
 import withErrorMessage from "../../../HOC/wirhErrorMessage";
 import { compose } from "@reduxjs/toolkit";
-import { IOrder, IRequest } from "../../../store/reducers/requestReducer/RequestReducerTypes";
+import { IOrder, IRequest } from "../../../store/reducers/requestReducer/requestReducerTypes";
 
 
 
@@ -95,6 +95,11 @@ const Requests: React.FC = () => {
             if (element === 'all') {
                 filterArr = ['created', 'closed', 'approved', 'cancelled']
             }
+
+               if (element === 'open') {
+                filterArr = ['created', 'approved']
+            }
+
         });
 
         setSelectedRequestFilters(filterArr);

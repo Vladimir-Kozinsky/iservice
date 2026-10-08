@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import Button from "../../../../common/buttons/Button";
-import { IOrder } from "../../../../store/reducers/requestReducer/RequestReducerTypes";
+import { IOrder } from "../../../../store/reducers/requestReducer/requestReducerTypes";
 import menuIcon from "../../../../assets/img/svg/arrow-down.svg";
 import s from "./OrderStatus.module.scss";
 import { useState } from "react";
@@ -142,8 +142,8 @@ const OrderStatus: React.FC<RequestPropsType> = ({ order }) => {
                 {order.items.map((item: IOrderItemType, index: number) => {
                     return (
                         <div className={s.item}>
-                            <div className={classNames(s.item__value, s.item__value__pn)}>{item.pn}</div>
-                            <div className={classNames(s.item__value, s.item__value__desc)}>{item.desc}</div>
+                            <div title={item.pn} className={classNames(s.item__value, s.item__value__pn)}>{item.pn}</div>
+                            <div title={item.desc} className={classNames(s.item__value, s.item__value__desc)}>{item.desc}</div>
                             <div className={classNames(s.item__value, s.item__value__quantity)}>{item.quantity}</div>
                             <div className={classNames(s.item__value, s.item__value__oum)}>{item.uom}</div>
                             <div className={classNames(s.item__value, s.item__value__price)}>{item.price}</div>

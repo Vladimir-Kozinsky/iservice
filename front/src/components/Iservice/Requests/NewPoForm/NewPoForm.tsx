@@ -4,7 +4,7 @@ import s from "./NewPoForm.module.scss"
 import { AppDispatch, RootState } from "../../../../store/store";
 import { Field, Form, Formik } from "formik";
 import { useEffect, useRef, useState } from "react";
-import { IRequest, ISatus } from "../../../../store/reducers/requestReducer/RequestReducerTypes";
+import { IRequest, ISatus } from "../../../../store/reducers/requestReducer/requestReducerTypes";
 import RequestInput from "../../../../common/inputs/RequestInput/RequestInput";
 import { ItemType } from "../NewRequestForm/NewRequestForm";
 import OrderItemForm, { IOrderItemType } from "./OrderItemForm/OrderItemForm";
@@ -210,7 +210,7 @@ const NewPoForm: React.FC<NewpoFormPropsType> = ({ parts, handler, request }) =>
                     <div className={s.newPoForm__buttons}>
                         <Button text={'Back'} color={"white"} btnType={"button"}
                             handler={() => handler(false)} />
-                        <Button text={'Create PO'} color={"green"} btnType="submit" />
+                        <Button text={'Create PO'} color={"green"} btnType="submit" handler={handleSubmit} />
                         {/* <Button text={'Print PO'} color={"white"} handler={handlePrint} btnType="button" /> */}
                     </div>
                 </div>

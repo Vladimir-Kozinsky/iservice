@@ -7,7 +7,7 @@ import { ItemType } from "../NewRequestForm/NewRequestForm";
 import OrderItemForm, { IOrderItemType } from "../NewPoForm/OrderItemForm/OrderItemForm";
 import OrderPrintItem from "./OrderPrintItem/OrderPrintItem";
 import { useReactToPrint } from "react-to-print";
-import { IOrder } from "../../../../store/reducers/requestReducer/RequestReducerTypes";
+import { IOrder } from "../../../../store/reducers/requestReducer/requestReducerTypes";
 
 type PrintPoFormPropsType = {
     order: IOrder;
@@ -16,7 +16,7 @@ type PrintPoFormPropsType = {
 
 const PrintPoForm: React.FC<PrintPoFormPropsType> = ({ order, handler }) => {
     const componentRef = useRef(null);
-
+    const user = useSelector((state: RootState) => state.auth.user);
 
     const handlePrint = useReactToPrint({
         content: () => {
@@ -26,7 +26,7 @@ const PrintPoForm: React.FC<PrintPoFormPropsType> = ({ order, handler }) => {
     });
 
 
-      useEffect(() => {
+    useEffect(() => {
         handlePrint()
         handler(false);
     }, [])
@@ -85,7 +85,7 @@ const PrintPoForm: React.FC<PrintPoFormPropsType> = ({ order, handler }) => {
                         <td>
                             <span>Prepared by:</span>
                             <br />
-                            <span>Viscas</span></td>
+                            <span>{`${user.firstName} ${user.lastName}`}</span></td>
                         <td>
                             <span> Reviewed by: </span>
                             <br />
@@ -99,7 +99,7 @@ const PrintPoForm: React.FC<PrintPoFormPropsType> = ({ order, handler }) => {
                     </tr>
                 </table>
             </div>
-     </div>
+        </div>
     )
 }
 
