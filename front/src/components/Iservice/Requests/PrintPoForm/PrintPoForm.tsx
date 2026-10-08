@@ -15,6 +15,7 @@ type PrintPoFormPropsType = {
 }
 
 const PrintPoForm: React.FC<PrintPoFormPropsType> = ({ order, handler }) => {
+     const user = useSelector((state: RootState) => state.auth.user);
     const componentRef = useRef(null);
 
 
@@ -85,7 +86,7 @@ const PrintPoForm: React.FC<PrintPoFormPropsType> = ({ order, handler }) => {
                         <td>
                             <span>Prepared by:</span>
                             <br />
-                            <span>Viscas</span></td>
+                            <span>{user.firstName}{user.lastName}</span></td>
                         <td>
                             <span> Reviewed by: </span>
                             <br />

@@ -43,7 +43,7 @@ const Store: React.FC = () => {
     const totalPages = useSelector((state: RootState) => state.store.totalPages);
     const [isLoader, setIsLoader] = useState<boolean | undefined>(false);
     const [search, setSearch] = useState('');
-    const [selectedLocations, setSelectedLocations] = useState<string[]>(['Sharjah', 'Manas', 'Aqaba', 'Ras-Al-Khaima', 'Ajman', 'Shop', 'EX-37017']);
+    const [selectedLocations, setSelectedLocations] = useState<string[]>(['Sharjah', 'Manas', 'Aqaba', 'Ras-Al-Khaima', 'Ajman', 'Shop', '7Q-ASC']);
     const [exel, setExel] = useState<boolean>(false);
 
    
@@ -80,7 +80,7 @@ const Store: React.FC = () => {
         { value: 'Ras-Al-Khaima', label: 'Ras-Al-Khaima' },
         { value: 'Ajman', label: 'Ajman' },
         { value: 'Shop', label: 'Shop' },
-        { value: 'EX-37017', label: 'EX-37017' },
+        { value: '7Q-ASC', label: '7Q-ASC' },
     ]
 
     const titles = () => titlesArr.map((title) => {
@@ -113,7 +113,7 @@ const Store: React.FC = () => {
         let filterArr = newValue.map((item: any) => item.value);
         filterArr.forEach((element: string) => {
             if (element === 'All') {
-                filterArr = ['Sharjah', 'Manas', 'Aqaba', 'EX-37017']
+                filterArr = ['Sharjah', 'Manas', 'Aqaba', '7Q-ASC']
             }
         });
         setSelectedLocations(filterArr);

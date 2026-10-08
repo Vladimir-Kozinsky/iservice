@@ -95,6 +95,9 @@ const Requests: React.FC = () => {
             if (element === 'all') {
                 filterArr = ['created', 'closed', 'approved', 'cancelled']
             }
+             if (element === 'open') {
+                filterArr = ['created', 'approved']
+            }
         });
 
         setSelectedRequestFilters(filterArr);
