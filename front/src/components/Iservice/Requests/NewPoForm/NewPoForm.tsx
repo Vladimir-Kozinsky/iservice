@@ -9,13 +9,13 @@ import RequestInput from "../../../../common/inputs/RequestInput/RequestInput";
 import { ItemType } from "../NewRequestForm/NewRequestForm";
 import OrderItemForm, { IOrderItemType } from "./OrderItemForm/OrderItemForm";
 import StoreTextArea from "../../../../common/inputs/StoreTextArea";
-import { createOrder } from "../../../../store/reducers/RequestReducer/RequestReducer";
 import { useReactToPrint } from "react-to-print";
 import Loader from "../../../../common/Loader/Loader";
 import { Transition } from "react-transition-group";
 import withSuccessMessage from "../../../../HOC/wirhSuccessMessage";
 import withErrorMessage from "../../../../HOC/wirhErrorMessage";
 import { compose } from "@reduxjs/toolkit";
+import { createOrder } from "../../../../store/reducers/requestReducer/RequestReducer";
 
 type NewpoFormPropsType = {
     parts: string[];

@@ -4,7 +4,6 @@ import s from "./Requests.module.scss"
 import NewRequestForm from "./NewRequestForm/NewRequestForm";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../store/store";
-import { getOrders, getRequests } from "../../../store/reducers/RequestReducer/RequestReducer";
 import RequestStatus from "./RequestSatus/RequestStatus";
 import OrderStatus from "./OrderStatus/OrderStatus";
 import Select, { ActionMeta, MultiValue } from 'react-select';
@@ -15,6 +14,7 @@ import withSuccessMessage from "../../../HOC/wirhSuccessMessage";
 import withErrorMessage from "../../../HOC/wirhErrorMessage";
 import { compose } from "@reduxjs/toolkit";
 import { IOrder, IRequest } from "../../../store/reducers/requestReducer/requestReducerTypes";
+import { getOrders, getRequests } from "../../../store/reducers/requestReducer/RequestReducer";
 
 
 

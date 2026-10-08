@@ -6,12 +6,12 @@ import { useState } from "react";
 import { ItemType } from "../NewRequestForm/NewRequestForm";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../store/store";
-import { approveRequest, cancelRequest } from "../../../../store/reducers/RequestReducer/RequestReducer";
 import { Field, Form, Formik } from "formik";
 import NewPoForm from "../NewPoForm/NewPoForm";
 import settIcon from "../../../../assets/img/png/edit-icon.png";
 import OrderHistory from "../OrderStatus/OrderHistory/OrderHistory";
 import { IRequest } from "../../../../store/reducers/requestReducer/requestReducerTypes";
+import { approveRequest, cancelRequest } from "../../../../store/reducers/requestReducer/RequestReducer";
 
 type RequestPropsType = {
     request: IRequest;
