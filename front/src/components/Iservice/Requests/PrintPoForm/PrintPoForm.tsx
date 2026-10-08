@@ -86,7 +86,7 @@ const PrintPoForm: React.FC<PrintPoFormPropsType> = ({ order, handler }) => {
                         <td>
                             <span>Prepared by:</span>
                             <br />
-                            <span>{user.firstName}{user.lastName}</span></td>
+                            <span>{`${user.firstName} ${user.lastName}`}</span></td>
                         <td>
                             <span> Reviewed by: </span>
                             <br />
