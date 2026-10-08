@@ -15,9 +15,8 @@ type PrintPoFormPropsType = {
 }
 
 const PrintPoForm: React.FC<PrintPoFormPropsType> = ({ order, handler }) => {
+     const user = useSelector((state: RootState) => state.auth.user);
     const componentRef = useRef(null);
-    const user = useSelector((state: RootState) => state.auth.user);
-
     const handlePrint = useReactToPrint({
         content: () => {
             // isPrintForm(false)

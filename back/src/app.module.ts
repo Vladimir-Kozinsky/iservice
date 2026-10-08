@@ -10,9 +10,11 @@ import { GearModule } from './Gear/gear.module';
 import { UnitModule } from './Unit/unit.module';
 
 @Module({
-  imports: [MongooseModule.forRoot('mongodb+srv://user1:user1@cluster0.lswt8ul.mongodb.net/new-way?retryWrites=true&w=majority'),
+  imports: [MongooseModule.forRoot('mongodb+srv://user1:user1@cluster0.73gv4by.mongodb.net/?appName=Cluster0'),
     AuthModule, AircraftModule, EngineModule, LegModule, ApuModule, GearModule, UnitModule],
-  controllers: [],
+  // imports: [MongooseModule.forRoot('mongodb+srv://user1:user1@cluster0.lswt8ul.mongodb.net/new-way?retryWrites=true&w=majority'),
+  //   AuthModule, AircraftModule, EngineModule, LegModule, ApuModule, GearModule, UnitModule],
+  // controllers: [],
   providers: [AppService],
 })
 export class AppModule { }

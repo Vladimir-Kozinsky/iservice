@@ -100,7 +100,7 @@ const NewToolForm: React.FC<NewToolFormPropsType> = ({ isNewForm }) => {
                                         <option value="Ras-Al-Khaima">Ras-Al-Khaima</option>
                                         <option value="Ajman">Ajman</option>
                                         <option value="Shop">Shop</option>
-                                        <option value="EX-37017">EX-37017</option>
+                                        <option value="7Q-ASC">7Q-ASC</option>
                                     </Field>
                                 </div>
                                 <div className={s.inputs__block}>

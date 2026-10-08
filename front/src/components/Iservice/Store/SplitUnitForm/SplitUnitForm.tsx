@@ -115,7 +115,7 @@ const SplitUnitForm: React.FC<NewUnitFormPropsType> = ({ unit, isUsageUnit }) =>
                                         <option disabled={unit.location === "Ras-Al-Khaima" ? true : false} value="Ras-Al-Khaima">Ras-Al-Khaima</option>
                                         <option disabled={unit.location === "Ajman" ? true : false} value="Ajman">Ajman</option>
                                         <option disabled={unit.location === "Shop" ? true : false} value="Shop">Shop</option>
-                                        <option disabled={unit.location === "EX-37017" ? true : false} value="EX-37017">EX-37017</option>
+                                        <option disabled={unit.location === "7Q-ASC" ? true : false} value="7Q-ASC">7Q-ASC</option>
                                     </Field>
                                 </div>
                                 <div className={s.inputs__block}>

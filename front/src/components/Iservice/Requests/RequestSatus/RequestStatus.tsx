@@ -6,7 +6,7 @@ import { useState } from "react";
 import { ItemType } from "../NewRequestForm/NewRequestForm";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../../../../store/store";
-import { approveRequest, cancelRequest } from "../../../../store/reducers/requestReducer/RequestReducer";
+import { approveRequest, cancelRequest } from "../../../../store/reducers/RequestReducer/RequestReducer";
 import { Field, Form, Formik } from "formik";
 import NewPoForm from "../NewPoForm/NewPoForm";
 import settIcon from "../../../../assets/img/png/edit-icon.png";

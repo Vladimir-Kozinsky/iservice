@@ -36,10 +36,10 @@ const OrderPrintItem: React.FC<NewItemPropsType> = ({ no, item }) => {
     const [isLoader, setIsLoader] = useState<boolean | undefined>(false);
     return (
         <tr className={s.inputs__item}>
-            <td>
+            <td title={item.pn}>
                 <span>{item.pn}</span>
             </td>
-            <td>
+            <td title={item.desc}>
                 <span>{item.desc}</span>
             </td>
             <td>

@@ -9,7 +9,7 @@ import RequestInput from "../../../../common/inputs/RequestInput/RequestInput";
 import { ItemType } from "../NewRequestForm/NewRequestForm";
 import OrderItemForm, { IOrderItemType } from "./OrderItemForm/OrderItemForm";
 import StoreTextArea from "../../../../common/inputs/StoreTextArea";
-import { createOrder } from "../../../../store/reducers/requestReducer/RequestReducer";
+import { createOrder } from "../../../../store/reducers/RequestReducer/RequestReducer";
 import { useReactToPrint } from "react-to-print";
 import Loader from "../../../../common/Loader/Loader";
 import { Transition } from "react-transition-group";
@@ -49,12 +49,9 @@ const NewPoForm: React.FC<NewpoFormPropsType> = ({ parts, handler, request }) =>
     const componentRef = useRef(null);
     const [isLoader, setIsLoader] = useState<boolean | undefined>(false);
 
-    const handlePrint = useReactToPrint({
-        content: () => {
-            // isPrintForm(false)
-            return componentRef.current
-        }
-    });
+    // const handleCreateOrder = (values:IPoValuesType) => {
+    //     return dispatch(createOrder(values)
+    // }
 
     const textareaStyles = {
         width: '200px',
@@ -127,6 +124,7 @@ const NewPoForm: React.FC<NewpoFormPropsType> = ({ parts, handler, request }) =>
                         remark: ''
                     })
                     await dispatch(createOrder(values))
+                    console.log('send PO')
                     setIsLoader(false);
                 })()
             }}
