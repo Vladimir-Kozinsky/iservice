@@ -70,26 +70,26 @@ const RequestStatus: React.FC<RequestPropsType> = ({ request }) => {
                 }, 500);
 
             }}>
-                <div className={classNames(s.request)}>
+                <div className={classNames(s.request, request.status === 'closed' && s.request__dark)}>
                     {poForm && <NewPoForm handler={setPoForm} parts={parts} request={request} />}
                     {historyOrder && <OrderHistory history={request.statusHistory} isHistoryOrder={isHistoryOrder} />}
-                    <button
+                    {/* <button
                         onClick={() => isMenu ? setIsMenu(false) : setIsMenu(true)}
                         className={s.menu__btn}
                         type="button">
                         <img className={s.menu__btn__img} src={menuIcon} alt="icon" />
-                    </button>
+                    </button> */}
                     <button className={s.setting__btn} onClick={() => setMenu(true)} type="button">
                         <img className={s.setting__btn__img} src={settIcon} alt="icon" />
                     </button>
                     <div onMouseLeave={onMouseLeave} className={classNames(s.unit__menu, menu ? s.unit__menu__active : '')}>
                         <button className={
-                            classNames(s.unit__menu__button, user.role === 'admin' && (request.status !== 'approved') ? null : s.inactive)}
+                            classNames(s.unit__menu__button, user.role === 'admin' && (request.status !== 'approved' && request.status !== 'closed') ? null : s.inactive)}
                             onClick={() => dispatch(approveRequest({
                                 requestNumber: request.requestNumber,
                                 approvedBy: `${user.firstName} ${user.lastName}`
                             }))}
-                            disabled={user.role === 'admin' && (request.status !== 'approved')
+                            disabled={user.role === 'admin' && (request.status !== 'approved' && request.status !== 'closed')
                                 ? false
                                 : true}
                             type="button">Approve</button>
@@ -135,8 +135,15 @@ const RequestStatus: React.FC<RequestPropsType> = ({ request }) => {
                             <div className={s.request__block__value}> <span>{`${request.status}`.toUpperCase()}</span></div>
                         </div>
                         <div className={s.request__block}>
-                            <div className={s.request__block__title}><span>Updated:</span> </div>
-                            <div className={s.request__block__value}><span>{request.statusHistory[request.statusHistory.length - 1].date}</span></div>
+                            <div className={s.request__block__title}><span>Priority:</span> </div>
+                            <div className={classNames(s.request__block__value, 
+                                request.priority === "A" 
+                                ? s.aog 
+                                : request.priority === "B" 
+                                ? s.critical 
+                                : s.asap)}><span>{request.priority === "A" ? "AOG" : request.priority === "B" ? "CRITICAL" : request.priority === "B" ? "ASAP" : "STOCK"}
+                                {/* {request.statusHistory[request.statusHistory.length - 1].date} */}
+                            </span></div>
                         </div>
                     </div>
 
@@ -163,12 +170,12 @@ const RequestStatus: React.FC<RequestPropsType> = ({ request }) => {
                                 </div>
                             )
                         })}
-                        <div className={s.menu__buttons}>
+                        {/* <div className={s.menu__buttons}>
                             {request.status === 'approved' && <Button width="80px" height="30px" fontSize="12px"
                                 text={'Create PO'} color={"green"} btnType={"submit"}
                             />}
 
-                        </div>
+                        </div> */}
                     </div>
 
 

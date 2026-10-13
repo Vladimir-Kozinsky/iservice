@@ -38,11 +38,11 @@ const OrderStatus: React.FC<RequestPropsType> = ({ order }) => {
             {historyOrder && <OrderHistory history={order.statusHistory} isHistoryOrder={isHistoryOrder} />}
             {isForm && <UpdateStatusForm isForm={setIsForm} order={order} />}
             {printForm && <PrintPoForm order={order} handler={setPrintForm} />}
-            <button
+            {/* <button
                 onClick={() => isMenu ? setIsMenu(false) : setIsMenu(true)}
                 className={s.menu__btn}>
                 <img className={s.menu__btn__img} src={menuIcon} alt="icon" />
-            </button>
+            </button> */}
             <button className={s.setting__btn} onClick={() => setMenu(true)}>
                 <img className={s.setting__btn__img} src={settIcon} alt="icon" />
             </button>

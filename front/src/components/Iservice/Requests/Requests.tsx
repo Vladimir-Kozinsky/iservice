@@ -58,6 +58,7 @@ const Requests: React.FC = () => {
     const [selectedOrderFilters, setSelectedOrderFilters] = useState<string[]>(['created', 'accepted', 'approved', 'paid', 'shipped', 'recieved']);
     const [selectedRequestFilters, setSelectedRequestFilters] = useState<string[]>(['created', 'closed', 'approved', 'cancelled']);
 
+    
     const changePage = async (page: number) => {
         setIsLoader(true);
         await dispatch(getRequests({ page: page, requestsAtPage: 10, statusFilter: selectedRequestFilters, }));
@@ -96,7 +97,7 @@ const Requests: React.FC = () => {
                 filterArr = ['created', 'closed', 'approved', 'cancelled']
             }
 
-               if (element === 'open') {
+            if (element === 'open') {
                 filterArr = ['created', 'approved']
             }
 
