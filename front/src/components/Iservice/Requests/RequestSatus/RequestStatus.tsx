@@ -70,7 +70,7 @@ const RequestStatus: React.FC<RequestPropsType> = ({ request }) => {
                 }, 500);
 
             }}>
-                <div className={classNames(s.request, request.status === 'closed' && s.request__dark)}>
+                <div className={classNames(s.request, (request.status === 'closed') || (request.status === 'cancelled') && s.request__dark)}>
                     {poForm && <NewPoForm handler={setPoForm} parts={parts} request={request} />}
                     {historyOrder && <OrderHistory history={request.statusHistory} isHistoryOrder={isHistoryOrder} />}
                     {/* <button
@@ -136,14 +136,14 @@ const RequestStatus: React.FC<RequestPropsType> = ({ request }) => {
                         </div>
                         <div className={s.request__block}>
                             <div className={s.request__block__title}><span>Priority:</span> </div>
-                            <div className={classNames(s.request__block__value, 
-                                request.priority === "A" 
-                                ? s.aog 
-                                : request.priority === "B" 
-                                ? s.critical 
-                                : s.asap)}><span>{request.priority === "A" ? "AOG" : request.priority === "B" ? "CRITICAL" : request.priority === "B" ? "ASAP" : "STOCK"}
-                                {/* {request.statusHistory[request.statusHistory.length - 1].date} */}
-                            </span></div>
+                            <div className={classNames(s.request__block__value,
+                                request.priority === "A"
+                                    ? s.aog
+                                    : request.priority === "B"
+                                        ? s.critical
+                                        : s.asap)}><span>{request.priority === "A" ? "AOG" : request.priority === "B" ? "CRITICAL" : request.priority === "B" ? "ASAP" : "STOCK"}
+                                    {/* {request.statusHistory[request.statusHistory.length - 1].date} */}
+                                </span></div>
                         </div>
                     </div>
 
