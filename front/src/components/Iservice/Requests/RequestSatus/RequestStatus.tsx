@@ -70,7 +70,7 @@ const RequestStatus: React.FC<RequestPropsType> = ({ request }) => {
                 }, 500);
 
             }}>
-                <div className={classNames(s.request, (request.status === 'closed') || (request.status === 'cancelled') && s.request__dark)}>
+                <div className={classNames(s.request, (request.status === 'closed') && s.request__dark, (request.status === 'cancelled') && s.request__dark)}>
                     {poForm && <NewPoForm handler={setPoForm} parts={parts} request={request} />}
                     {historyOrder && <OrderHistory history={request.statusHistory} isHistoryOrder={isHistoryOrder} />}
                     {/* <button

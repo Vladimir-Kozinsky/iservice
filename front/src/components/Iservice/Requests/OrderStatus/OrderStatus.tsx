@@ -34,7 +34,7 @@ const OrderStatus: React.FC<RequestPropsType> = ({ order }) => {
     }
 
     return (
-        <div className={classNames(s.request, (order.status === 'closed') || (order.status === 'cancelled') && s.request__dark)}>
+        <div className={classNames(s.request, (order.status === 'closed') && s.request__dark, (order.status === 'cancelled') && s.request__dark)}>
             {historyOrder && <OrderHistory history={order.statusHistory} isHistoryOrder={isHistoryOrder} />}
             {isForm && <UpdateStatusForm isForm={setIsForm} order={order} />}
             {printForm && <PrintPoForm order={order} handler={setPrintForm} />}
