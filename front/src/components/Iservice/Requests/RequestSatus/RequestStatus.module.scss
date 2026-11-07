@@ -91,6 +91,25 @@
     width: 70px;
 }
 
+.request__time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.request__time__title {
+    font-size: 14px;
+    color: grey;
+}
+
+.request__time__value {
+    font-size: 20px;
+    flex-grow: 1;
+    font-weight: 600;
+    padding-bottom: 3px;
+}
+
 .request__status {
     display: flex;
     gap: 5px;

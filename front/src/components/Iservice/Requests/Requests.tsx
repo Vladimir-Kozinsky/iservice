@@ -55,7 +55,7 @@ const Requests: React.FC = () => {
     const totalPages = useSelector((state: RootState) => state.request.totalPages);
     const currentOrdersPage = useSelector((state: RootState) => state.request.currentOrdersPage);
     const totalOrdersPages = useSelector((state: RootState) => state.request.totalOrdersPages);
-    const [selectedOrderFilters, setSelectedOrderFilters] = useState<string[]>(['created', 'accepted', 'approved', 'paid', 'shipped', 'recieved']);
+    const [selectedOrderFilters, setSelectedOrderFilters] = useState<string[]>(['created', 'accepted', 'approved', 'paid', 'shipped', 'recieved', 'cancelled', 'closed']);
     const [selectedRequestFilters, setSelectedRequestFilters] = useState<string[]>(['created', 'closed', 'approved', 'cancelled']);
 
     

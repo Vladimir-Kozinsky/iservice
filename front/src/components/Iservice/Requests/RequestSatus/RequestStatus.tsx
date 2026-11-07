@@ -26,6 +26,27 @@ const RequestStatus: React.FC<RequestPropsType> = ({ request }) => {
     const [menu, setMenu] = useState(false);
     const [historyOrder, isHistoryOrder] = useState(false);
 
+
+    const requstTime = () => {
+        const date1 = new Date(request.date) as Date;
+
+
+        if (request.status === "closed" || request.status === "cancelled") {
+            const closeDate = request.statusHistory[request.statusHistory.length - 1].date
+            const date2 = new Date(closeDate) as Date;
+            const diffInMs: number = date2.getTime() - date1.getTime();
+            const millisecondsInDay: number = 1000 * 60 * 60 * 24;
+            const diffInDays: number = Math.floor(diffInMs / millisecondsInDay);
+            return diffInDays
+        } else {
+            const date2 = new Date() as Date;
+            const diffInMs: number = date2.getTime() - date1.getTime();
+            const millisecondsInDay: number = 1000 * 60 * 60 * 24;
+            const diffInDays: number = Math.floor(diffInMs / millisecondsInDay);
+            return diffInDays
+        }
+    }
+
     const onMouseLeave = () => {
         setMenu(false);
     }
@@ -103,6 +124,12 @@ const RequestStatus: React.FC<RequestPropsType> = ({ request }) => {
                         >Create PO
                         </button>
 
+                        <button className={
+                            classNames(s.unit__menu__button, s.inactive)}
+                            disabled={true}
+                            onClick={() => isHistoryOrder(true)}
+                            type="button">Add Quote</button>
+
                         <button className={s.unit__menu__button}
                             onClick={() => isHistoryOrder(true)}
                             type="button">History</button>
@@ -118,6 +145,12 @@ const RequestStatus: React.FC<RequestPropsType> = ({ request }) => {
                                 canceledBy: `${user.firstName} ${user.lastName}`
                             }))}
                             type="button">Cancel RFQ</button>
+                    </div>
+                    <div className={s.request__container}>
+                        <div className={s.request__time}>
+                            <div className={s.request__time__title}><span>RFQ PROCESSING TIME:</span> </div>
+                            <div className={s.request__time__value}><span>{requstTime()} days</span></div>
+                        </div>
                     </div>
                     <div className={s.request__container}>
                         <div className={s.request__block}>
