@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import Button from "../../../../common/buttons/Button";
-import { IOrder } from "../../../../store/reducers/requestReducer/requestReducerTypes";
+import { IOrder } from "../../../../store/reducers/RequestReducer/requestReducerTypes";
 import menuIcon from "../../../../assets/img/svg/arrow-down.svg";
 import s from "./OrderStatus.module.scss";
 import { useState } from "react";
@@ -14,7 +14,7 @@ import settIcon from "../../../../assets/img/png/edit-icon.png";
 import OrderHistory from "./OrderHistory/OrderHistory";
 import { NavLink } from "react-router-dom";
 import PrintPoForm from "../PrintPoForm/PrintPoForm";
-import { acceptOrder, approveOrder, cancelOrder } from "../../../../store/reducers/requestReducer/RequestReducer";
+import { acceptOrder, approveOrder, cancelOrder } from "../../../../store/reducers/RequestReducer/RequestReducer";
 
 type RequestPropsType = {
     order: IOrder;

@@ -13,8 +13,8 @@ import Pagenator from "../../../common/Pagenator/Pagenator";
 import withSuccessMessage from "../../../HOC/wirhSuccessMessage";
 import withErrorMessage from "../../../HOC/wirhErrorMessage";
 import { compose } from "@reduxjs/toolkit";
-import { IOrder, IRequest } from "../../../store/reducers/requestReducer/requestReducerTypes";
-import { getOrders, getRequests } from "../../../store/reducers/requestReducer/RequestReducer";
+import { IOrder, IRequest } from "../../../store/reducers/RequestReducer/requestReducerTypes";
+import { getOrders, getRequests } from "../../../store/reducers/RequestReducer/RequestReducer";
 
 
 

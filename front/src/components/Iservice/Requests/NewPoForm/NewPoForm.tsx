@@ -4,7 +4,7 @@ import s from "./NewPoForm.module.scss"
 import { AppDispatch, RootState } from "../../../../store/store";
 import { Field, Form, Formik } from "formik";
 import { useEffect, useRef, useState } from "react";
-import { IRequest, ISatus } from "../../../../store/reducers/requestReducer/requestReducerTypes";
+import { IRequest, ISatus } from "../../../../store/reducers/RequestReducer/requestReducerTypes";
 import RequestInput from "../../../../common/inputs/RequestInput/RequestInput";
 import { ItemType } from "../NewRequestForm/NewRequestForm";
 import OrderItemForm, { IOrderItemType } from "./OrderItemForm/OrderItemForm";
@@ -15,7 +15,7 @@ import { Transition } from "react-transition-group";
 import withSuccessMessage from "../../../../HOC/wirhSuccessMessage";
 import withErrorMessage from "../../../../HOC/wirhErrorMessage";
 import { compose } from "@reduxjs/toolkit";
-import { createOrder } from "../../../../store/reducers/requestReducer/RequestReducer";
+import { createOrder } from "../../../../store/reducers/RequestReducer/RequestReducer";
 
 type NewpoFormPropsType = {
     parts: string[];
