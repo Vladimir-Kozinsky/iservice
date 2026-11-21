@@ -46,7 +46,8 @@
     right: 5px;
     background: none;
     border: none;
-     :hover {
+
+    :hover {
         cursor: pointer;
     }
 }
@@ -57,8 +58,10 @@
     right: 0px;
     background: none;
     border: none;
-     :hover {
+
+    :hover {
         cursor: pointer;
+
         &.setting__btn__img {
             width: 26px;
         }
@@ -79,6 +82,7 @@
     display: flex;
     align-items: center;
     gap: 5px;
+
     .request__block__value {
         font-size: 14px;
         flex-grow: 1;
@@ -127,6 +131,7 @@
     padding: 0;
     display: flex;
     align-items: center;
+
     .item__value {
         margin: 0;
         padding: 1px 2px;
@@ -136,13 +141,19 @@
         font-size: 14px;
         border: 1px dashed #ece89d;
     }
+
     .item__value__no,
     .item__value__quantity {
         width: 25px;
     }
+
     .item__value__desc {
         flex-grow: 1;
     }
+}
+
+.item.mute {
+   // background-color: #e6e6e6;
 }
 
 .item__value__checkbox {
@@ -157,13 +168,16 @@
         padding: 1px 2px;
         color: #fff;
     }
+
     .item__value__no,
     .item__value__quantity {
         width: 25px;
     }
+
     .item__value__desc {
         flex-grow: 1;
     }
+
     .item__value__checkbox {
         background-color: #5e5373;
         border: 1px dashed #ece89d;
@@ -173,11 +187,23 @@
     }
 }
 
+
+.item_po {
+    width: calc(100% - 0px);
+    font-size: 10px;
+    height: 12px;
+    border: #0A2640;
+    text-align: end;
+    font-weight: 600;
+    color: green;
+}
+
 .menu__buttons {
     margin-top: 20px;
     display: flex;
     gap: 40px;
     justify-content: center;
+
     .menu__buttons__btn {
         width: 100px;
         height: 28px;
@@ -192,6 +218,7 @@
     right: 20px;
     flex-direction: column;
     z-index: 2;
+
     .unit__menu__button {
         height: 24px;
         background-color: #5e5373;
@@ -202,9 +229,11 @@
         font-weight: 600;
         letter-spacing: 0.8px;
         cursor: pointer;
+
         &:hover {
             background-color: #423a53;
         }
+
         &:last-child {
             border-bottom: none;
             background-color: #d5393a;
@@ -214,9 +243,11 @@
 
 .unit__menu__button.inactive {
     cursor: default;
+
     &:hover {
         background-color: #5e5373;
     }
+
     color: grey;
 }
 
@@ -251,4 +282,15 @@
     border-radius: 10px;
     font-weight: 600;
     color: white;
+}
+
+@media screen and (max-width: 480px) {
+    .request {
+
+        width: 320px;
+    }
+
+    .item__value__ref {
+        display: none;
+    }
 }

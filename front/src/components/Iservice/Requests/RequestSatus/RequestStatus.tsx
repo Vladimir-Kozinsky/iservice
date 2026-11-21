@@ -10,8 +10,8 @@ import { Field, Form, Formik } from "formik";
 import NewPoForm from "../NewPoForm/NewPoForm";
 import settIcon from "../../../../assets/img/png/edit-icon.png";
 import OrderHistory from "../OrderStatus/OrderHistory/OrderHistory";
-import { IRequest } from "../../../../store/reducers/requestReducer/requestReducerTypes";
-import { approveRequest, cancelRequest } from "../../../../store/reducers/requestReducer/RequestReducer";
+import { IRequest } from "../../../../store/reducers/RequestReducer/requestReducerTypes";
+import { approveRequest, cancelRequest } from "../../../../store/reducers/RequestReducer/RequestReducer";
 
 type RequestPropsType = {
     request: IRequest;
@@ -193,14 +193,19 @@ const RequestStatus: React.FC<RequestPropsType> = ({ request }) => {
                         </div>
                         {request.items.map((item: ItemType, index: number) => {
                             return (
-                                <div className={s.item}>
-                                    <Field disabled={item.poRef === 'no' ? false : true} className={classNames(s.item__value__checkbox)} type="checkbox" id={item.pn} name={item.pn} />
-                                    <div className={classNames(s.item__value, s.item__value__no)}> {index + 1}</div>
-                                    <div title={item.pn} className={classNames(s.item__value, s.item__value__pn)}>{item.pn}</div>
-                                    <div title={item.desc} className={classNames(s.item__value, s.item__value__desc)}>{item.desc}</div>
-                                    <div title={item.ref} className={classNames(s.item__value, s.item__value__ref)}>{item.ref}</div>
-                                    <div className={classNames(s.item__value, s.item__value__quantity)}>{item.quantity}</div>
-                                </div>
+                                <>
+
+                                    <div className={classNames(s.item, item.poRef === 'no' ? null : s.mute)}>
+                                        <Field disabled={item.poRef === 'no' ? false : true} className={classNames(s.item__value__checkbox)} type="checkbox" id={item.pn} name={item.pn} />
+                                        <div className={classNames(s.item__value, s.item__value__no)}> {index + 1}</div>
+                                        <div title={item.pn} className={classNames(s.item__value, s.item__value__pn)}>{item.pn}</div>
+                                        <div title={item.desc} className={classNames(s.item__value, s.item__value__desc)}>{item.desc}</div>
+                                        <div title={item.ref} className={classNames(s.item__value, s.item__value__ref)}>{item.ref}</div>
+                                        <div className={classNames(s.item__value, s.item__value__quantity)}>{item.quantity}</div>
+                                    </div>
+                                    {item.poRef !== 'no' && <div className={s.item_po}>PO: {item.poRef}</div>}
+
+                                </>
                             )
                         })}
                         {/* <div className={s.menu__buttons}>
