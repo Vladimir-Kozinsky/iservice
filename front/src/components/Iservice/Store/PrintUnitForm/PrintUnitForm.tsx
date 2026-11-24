@@ -94,7 +94,7 @@ const PrintUnitForm = React.forwardRef(({ searchText, locationFilter, isPrintFor
                 <button className={s.PrintUnitForm__btn} onClick={() => isPrintForm(false)} ><img src={crosIcon} alt="icon" /> </button>
                 <div className={s.PrintUnitForm__buttons} >
                     <button className={s.PrintUnitForm__buttons__print} onClick={handlePrint}><img className={s.button__img__print} src={printIcon} alt="icon" /> </button>
-                    <button className={s.PrintUnitForm__buttons__exel} ><CSVLink data={arr} filename={"iservice-export.csv"}><img className={s.button__img__exel} src={exelIcon} alt="icon" /></CSVLink>;  </button>
+                    <button className={s.PrintUnitForm__buttons__exel} ><CSVLink data={arr} separator=";" filename={"iservice-export.csv"}><img className={s.button__img__exel} src={exelIcon} alt="icon" /></CSVLink>;  </button>
                 </div>
                 <div className={s.print__block}>
                     <div ref={componentRef} >

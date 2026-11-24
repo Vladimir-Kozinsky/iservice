@@ -21,6 +21,7 @@ export interface IRequestState {
     currentOrdersPage: number | null;
     errorMessage: string | null;
     successMessage: string | null;
+    ordersToPrint: IOrder[];
 }
 
 export interface IRequest {
@@ -150,6 +151,10 @@ export interface IGetOrdersDto {
     statusFilter: string[];
     filterDirection?: string;
     searchText?: string;
+}
+
+export interface IGetPrintOrdersDto {
+    statusFilter: string[];
 }
 
 

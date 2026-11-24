@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "../../../common/buttons/Button";
 import s from "./Requests.module.scss"
 import NewRequestForm from "./NewRequestForm/NewRequestForm";
@@ -15,6 +15,8 @@ import withErrorMessage from "../../../HOC/wirhErrorMessage";
 import { compose } from "@reduxjs/toolkit";
 import { IOrder, IRequest } from "../../../store/reducers/RequestReducer/requestReducerTypes";
 import { getOrders, getRequests } from "../../../store/reducers/RequestReducer/RequestReducer";
+import PrintUnitForm from "./PrintOrdersForm/PrintUnitForm";
+import PrintOrdersForm from "./PrintOrdersForm/PrintUnitForm";
 
 
 
@@ -57,8 +59,12 @@ const Requests: React.FC = () => {
     const totalOrdersPages = useSelector((state: RootState) => state.request.totalOrdersPages);
     const [selectedOrderFilters, setSelectedOrderFilters] = useState<string[]>(['created', 'accepted', 'approved', 'paid', 'shipped', 'recieved', 'cancelled', 'closed']);
     const [selectedRequestFilters, setSelectedRequestFilters] = useState<string[]>(['created', 'closed', 'approved', 'cancelled']);
+    const [printUnits, setPrintUnits] = useState<boolean>(false);
 
-    
+    const [search, setSearch] = useState('');
+    const componentRef = useRef(null);
+
+
     const changePage = async (page: number) => {
         setIsLoader(true);
         await dispatch(getRequests({ page: page, requestsAtPage: 10, statusFilter: selectedRequestFilters, }));
@@ -178,7 +184,9 @@ const Requests: React.FC = () => {
                             className="basic-multi-select"
                             classNamePrefix="select"
                         />
+                        <Button text="Export" btnType="button" color="green" handler={() => setPrintUnits(true)} />
                     </div>
+                    {printUnits && <PrintOrdersForm isPrintForm={setPrintUnits} searchText={search} statusFilter={selectedOrderFilters} ref={componentRef} />}
                     {orders.length
                         ? <Pagenator totalPages={totalOrdersPages ? totalOrdersPages : 1} currentPage={currentOrdersPage ? currentOrdersPage : 1} changePage={changeOrdersPage} />
                         : <div className={s.request__wrapper__message}>No requests are found</div>}
@@ -187,6 +195,7 @@ const Requests: React.FC = () => {
                         )}
                     </div>
                 </div>
+
             </div>
         </div>
     )

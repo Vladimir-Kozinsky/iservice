@@ -119,21 +119,26 @@
     }
 }
 
-.title__ata,
-.title__quantity,
-.title__eapack,
-.title__rack,
-.title__shelf {
-    flex-basis: 50px;
+.title__number,
+.title__date,
+.title__price {
+    flex-basis: 80px;
 }
 
-.title__remarks,
-.title__desc {
+.title__status {
+    flex-basis: 80px;
+}
+
+.title__supplier {
+    flex-grow: 1;
+}
+
+.title__unit {
     flex-grow: 1;
 }
 
 
-.title__btn {
+.title__button {
     position: absolute;
     border: none;
     border-radius: 2px;

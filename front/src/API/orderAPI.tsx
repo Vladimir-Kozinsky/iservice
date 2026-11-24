@@ -1,6 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import generalAPIData from "./generalData";
-import { IAcceptOrderDto, IApproveOrderDto, ICancelOrderDto, ICreateOrderDto, IGetOrdersDto, IUpdateOrderStatusDto } from "../store/reducers/RequestReducer/requestReducerTypes";
+import { IAcceptOrderDto, IApproveOrderDto, ICancelOrderDto, ICreateOrderDto, IGetOrdersDto, IGetPrintOrdersDto, IUpdateOrderStatusDto } from "../store/reducers/RequestReducer/requestReducerTypes";
 
 const proxy = axios.create({
     withCredentials: true,
@@ -29,6 +29,11 @@ const orderAPI = {
 
     async getOrders(getOrdersDto: IGetOrdersDto) {
         const response = await proxy.post('/order/orders', getOrdersDto);
+        return response;
+    },
+
+    async getPrintOrders(getPrintOrdersDto: IGetPrintOrdersDto) {
+        const response = await proxy.post('/order/print', getPrintOrdersDto);
         return response;
     },
 

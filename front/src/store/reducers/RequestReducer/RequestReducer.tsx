@@ -3,7 +3,7 @@ import { ITool } from '../../../types/types';
 import storeAPI from '../../../API/storeAPI';
 import { IUsageUnitDto } from '../storeReducer/storeReducerTypes';
 import toolAPI from '../../../API/toolAPI';
-import { IAcceptOrderDto, IApproveOrderDto, IApproveRequest, ICancelOrderDto, ICancelRequestDto, ICreateOrderDto, ICreateRequestDto, IGetOrdersDto, IGetOrdersResponseDto, IGetRequestsDto, IGetRequestsResponseDto, IOrder, IRequest, IRequestRejectResponse, IRequestState, IUpdateOrderStatusDto } from '../RequestReducer/requestReducerTypes';
+import { IAcceptOrderDto, IApproveOrderDto, IApproveRequest, ICancelOrderDto, ICancelRequestDto, ICreateOrderDto, ICreateRequestDto, IGetOrdersDto, IGetOrdersResponseDto, IGetPrintOrdersDto, IGetRequestsDto, IGetRequestsResponseDto, IOrder, IRequest, IRequestRejectResponse, IRequestState, IUpdateOrderStatusDto } from '../RequestReducer/requestReducerTypes';
 import requestAPI from '../../../API/requestAPI';
 import orderAPI from '../../../API/orderAPI';
 
@@ -26,6 +26,7 @@ const initialState: IRequestState = {
     currentOrdersPage: null,
     errorMessage: null,
     successMessage: null,
+    ordersToPrint: [],
 }
 
 const requestSlice = createSlice({
@@ -160,6 +161,14 @@ const requestSlice = createSlice({
             state.orders = [];
         })
 
+        builder.addCase(getPrintOrders.fulfilled, (state: IRequestState, action: PayloadAction<IOrder[]>) => {
+            state.ordersToPrint = action.payload;
+        })
+        builder.addCase(getPrintOrders.rejected, (state: IRequestState, action: PayloadAction<any>) => {
+            //state.errorMessage = action.payload.message;
+            state.ordersToPrint = [];
+        })
+
     },
 })
 
@@ -204,6 +213,18 @@ export const getOrders = createAsyncThunk(
     async (getOrdersDto: IGetOrdersDto, thunkAPI) => {
         try {
             const response = await orderAPI.getOrders(getOrdersDto);
+            return response.data;
+        } catch (error: any) {
+            return thunkAPI.rejectWithValue(error.response.data as IRequestRejectResponse);
+        }
+    }
+)
+
+export const getPrintOrders = createAsyncThunk(
+    'order/print',
+    async (getPrintOrdersDto: IGetPrintOrdersDto, thunkAPI) => {
+        try {
+            const response = await orderAPI.getPrintOrders(getPrintOrdersDto);
             return response.data;
         } catch (error: any) {
             return thunkAPI.rejectWithValue(error.response.data as IRequestRejectResponse);
