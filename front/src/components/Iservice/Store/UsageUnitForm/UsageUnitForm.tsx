@@ -98,6 +98,7 @@ const UsageUnitForm: React.FC<NewUnitFormPropsType> = ({ unit, isUsageUnit }) =>
                                         error={errors.aircraft} as="select">
                                         <option value="">No value</option>
                                         <option value="EX-37017">EX-37017</option>
+                                        <option value="7Q-ASC">7Q-ASC</option>
                                     </Field>
                                 </div>
 
